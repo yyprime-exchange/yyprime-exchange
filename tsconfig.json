@@ -1,19 +1,10 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
-
   "compilerOptions": {
-    "outDir": "./lib",
+    "types": ["mocha", "chai"],
+    "typeRoots": ["./node_modules/@types"],
+    "lib": ["es2015"],
+    "module": "commonjs",
     "target": "es6",
-    "lib": ["es2019"],
-    "allowJs": true,
-    "checkJs": true,
-    "declaration": true,
-    "declarationMap": true,
-    "noImplicitAny": false,
-    "resolveJsonModule": true,
-    "sourceMap": true,
     "esModuleInterop": true
-  },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/*.test.js", "node_modules", "**/node_modules"]
+  }
 }
