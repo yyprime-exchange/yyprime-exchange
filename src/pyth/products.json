@@ -1,4 +1,97 @@
 {
+  "devnet": [
+    {
+      "symbol": "ADA/USD",
+      "baseSymbol": "ADA",
+      "quoteSymbol": "USD",
+      "product":"31HTfSgBs7PJmY6YgRKaA3ionPmBHrzPnbwZSqRGs2Zx",
+      "price": "8oGTURNmSQkrBS1AQ5NjB2p8qY34UVmMA9ojrw8vnHus"
+    },
+    {
+      "symbol": "BNB/USD",
+      "baseSymbol": "BNB",
+      "quoteSymbol": "USD",
+      "product":"2weC6fjXrfaCLQpqEzdgBHpz6yVNvmSN133m7LDuZaDb",
+      "price": "GwzBgrXb4PG59zjce24SF2b9JXbLEjJJTBkmytuEZj1b"
+    },
+    {
+      "symbol": "BTC/USD",
+      "baseSymbol": "BTC",
+      "quoteSymbol": "USD",
+      "product":"3m1y5h2uv7EQL3KaJZehvAJa4yDNvgc5yAdL9KPMKwvk",
+      "price": "HovQMDrbAgAYPCmHVSrezcSmkMtXSSUsLDFANExrZh2J"
+    },
+    {
+      "symbol": "COPE/USD",
+      "baseSymbol": "COPE",
+      "quoteSymbol": "USD",
+      "product":"8g9qN2XBoTr53dcescpHjQUkhKL6pHrcHzHQ9MWpkLJa",
+      "price": "BAXDJUXtz6P5ARhHH1aPwgv4WENzHwzyhmLYK4daFwiM"
+    },
+    {
+      "symbol": "ETH/USD",
+      "baseSymbol": "ETH",
+      "quoteSymbol": "USD",
+      "product":"2ciUuGZiee5macAMeQ7bHGTJtwcYTgnt6jdmQnnKZrfu",
+      "price": "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
+    },
+    {
+      "symbol": "FTT/USD",
+      "baseSymbol": "FTT",
+      "quoteSymbol": "USD",
+      "product":"63VWd2FVbukVozZ1okHt8wVMq7enAYFXYnmp2DUQtBBJ",
+      "price": "6vivTRs5ZPeeXbjo7dfburfaYDWoXjBtdtuYgQRuGfu"
+    },
+    {
+      "symbol": "MNGO/USD",
+      "baseSymbol": "MNGO",
+      "quoteSymbol": "USD",
+      "product":"EssaQC37YW2LVXTsEVjijNte3FTUw21MJBkZYHDdyakc",
+      "price": "DCNw5mwZgjfTcoNsSZWUiXqU61ushNvr3JRQJRi1Nf95"
+    },
+    {
+      "symbol": "MSOL/USD",
+      "baseSymbol": "MSOL",
+      "quoteSymbol": "USD",
+      "product":"os3is9HtWPHW4EXpGAkdr2prdWVs2pS8qKtf2ZYJdBw",
+      "price": "9a6RNx3tCu1TSs6TBSfV2XRXEPEZXQ6WB7jRojZRvyeZ"
+    },
+    {
+      "symbol": "RAY/USD",
+      "baseSymbol": "RAY",
+      "quoteSymbol": "USD",
+      "product":"3BtxtRxitVDcsd7pPUWUnFm9KvmNDy9usS4gE6pUFhpH",
+      "price": "EhgAdTrgxi4ZoVZLQx1n93vULucPpiFi2BQtz9RJr1y6"
+    },
+    {
+      "symbol": "SOL/USD",
+      "baseSymbol": "SOL",
+      "quoteSymbol": "USD",
+      "product":"3Mnn2fX6rQyUsyELYms1sBJyChWofzSNRoqYzvgMVz5E",
+      "price": "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
+    },
+    {
+      "symbol": "SRM/USD",
+      "baseSymbol": "SRM",
+      "quoteSymbol": "USD",
+      "product":"6MEwdxe4g1NeAF9u6KDG14anJpFsVEa2cvr5H6iriFZ8",
+      "price": "992moaMQKs32GKZ9dxi8keyM2bUmbrwBZpK4p2K6X5Vs"
+    },
+    {
+      "symbol": "USDC/USD",
+      "baseSymbol": "USDC",
+      "quoteSymbol": "USD",
+      "product":"6NpdXrQEpmDZ3jZKmM2rhdmkd3H6QAk23j2x8bkXcHKA",
+      "price": "5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy7"
+    },
+    {
+      "symbol": "USDT/USD",
+      "baseSymbol": "USDT",
+      "quoteSymbol": "USD",
+      "product":"C5wDxND9E61RZ1wZhaSTWkoA8udumaHnoQY6BBsiaVpn",
+      "price": "38xoQ4oeJCBrcVvca2cGk7iV1dAfrmTR1kmhSCJQ8Jto"
+    }
+  ],
   "mainnet": [
     {
       "symbol": "ADA/USD",
