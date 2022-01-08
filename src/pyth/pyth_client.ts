@@ -17,7 +17,6 @@ import {
 
 import PYTH_PRODUCTS from './products.json';
 import PYTH_PROGRAMS from './programs.json';
-import SOLANA_CLUSTERS from '../solana/clusters.json';
 
 export interface Product {
   symbol: string
@@ -36,7 +35,7 @@ export class PythClient {
 
   constructor(cluster: string) {
     this.cluster = cluster;
-    this.connection = new Connection(SOLANA_CLUSTERS[cluster].http);
+    this.connection = new Connection(PYTH_PROGRAMS[cluster].url);
 
     this.products = new Map<string, Product>();
     PYTH_PRODUCTS[cluster].forEach(product => {
