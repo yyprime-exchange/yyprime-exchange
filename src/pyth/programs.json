@@ -1,11 +1,14 @@
 {
   "devnet": {
-    "programAddress": "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s"
+    "program": "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s",
+    "url": ""
   },
   "mainnet": {
-    "programAddress": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH"
+    "program": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+    "url": ""
   },
   "testnet": {
-    "programAddress": "8tfDNiaEyrV6Q1U4DEXrEigs9DoDtkugzFbybENEbCDz"
+    "program": "8tfDNiaEyrV6Q1U4DEXrEigs9DoDtkugzFbybENEbCDz",
+    "url": ""
   }
 }

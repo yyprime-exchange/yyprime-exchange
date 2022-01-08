@@ -5,14 +5,19 @@ import { PythClient } from '../src/pyth'
 
 describe('pyth', () => {
 
-  //it('Query Products.', async () => {
-    //const cluster: Cluster = 'devnet';
-    //const pythClient = new PythClient(cluster);
-    //await pythClient.queryProducts();
-  //});
+  /*
+  it('Query Products.', async () => {
+    const cluster: string = 'devnet';
+    const pythClient = new PythClient(cluster);
+    const products = await pythClient.queryProducts();
+    products.forEach(product => {
+      console.log(JSON.stringify(product));
+    });
+  });
+  */
 
   //it('Subscribe.', async () => {
-    //const cluster: Cluster = 'devnet';
+    //const cluster: string = 'devnet';
     //const pythClient = new PythClient(cluster);
     //await pythClient.subscribe();
   //});
