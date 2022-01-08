@@ -1,0 +1,8 @@
+{
+  "devnet": {
+    "programAddress": "DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY"
+  },
+  "mainnet": {
+    "programAddress": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"
+  }
+}
