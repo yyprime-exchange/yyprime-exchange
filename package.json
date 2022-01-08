@@ -1,9 +1,9 @@
 {
-  "name": "eigen-exchange",
+  "name": "yyprime-exchange",
   "version": "1.0.0",
   "description": "Library for creating and testing Serum markets.",
-  "repository": "git@github.com:partiallysorted/eigen-exchange.git",
-  "author": "Partially Sorted <partially.sorted@gmail.com>",
+  "repository": "git@github.com:yyprime-exchange/yyprime-exchange.git",
+  "author": "yyprime exchange <yyprime.exchange@gmail.com>",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
   "license": "MIT",

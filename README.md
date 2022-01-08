@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Eigen Exchange</h1>
+  <h1>YY' Exchange</h1>
 </div>
 
 ## Purpose
