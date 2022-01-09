@@ -22,19 +22,30 @@ To get started first install the required build tools:
 npm install -g yarn
 ```
 
-Then bootstrap the workspace:
+Then bootstrap the workspace in root:
 
 ```
 yarn
 ```
 
-### Building
+### Building trading strategies program
 
-To build the workspace:
+Build yyprime_program package:
 
 ```
-yarn build
+yarn yyprime_program:build
 ```
+
+### Building Frontend
+
+Build yyprime_program package:
+
+```
+yarn frontend:build
+yarn frontend:dev
+```
+
+
 
 ### Testing
 

@@ -6,4 +6,13 @@ lib
 .DS_Store
 target
 **/*.rs.bk
-node_modules
+**/node_modules
+**/.next
+
+.eslintcache
+.anchor
+out
+package-lock.json
+yarn.lock
+*.log
+

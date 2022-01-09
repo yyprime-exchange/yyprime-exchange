@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "strictPropertyInitialization": false, 
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "strictNullChecks": true,
+    "paths": {
+      "@yyprime/*": [
+        "../packages/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
