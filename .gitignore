@@ -12,7 +12,7 @@ target
 .eslintcache
 .anchor
 out
-package-lock.json
-yarn.lock
+**/package-lock.json
+**/yarn.lock
 *.log
 
