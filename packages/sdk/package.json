@@ -1,5 +1,5 @@
 {
-  "name": "yyprime-exchange",
+  "name": "@yyprime/yyprime_exchange",
   "version": "1.0.0",
   "description": "Library for creating and testing Serum markets.",
   "repository": "git@github.com:yyprime-exchange/yyprime-exchange.git",
@@ -15,9 +15,6 @@
     "test-pyth": "mocha -r ts-node/register test/pyth.test.ts --timeout 0",
     "test-serum": "mocha -r ts-node/register test/serum.test.ts --timeout 0",
     "test-solana": "mocha -r ts-node/register test/solana.test.ts --timeout 0",
-
-
-
     "build-docs": "yarn typedoc src/index.ts",
     "cli": "ts-node src/cli.ts",
     "checkMarginBaskets": "ts-node src/checkMarginBaskets.ts",
