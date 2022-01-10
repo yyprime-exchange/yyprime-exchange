@@ -9,8 +9,6 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint . --ext ts --ext tsx --ext js --quiet",
-    "query-pyth-products": "ts-node src/pyth/queryPythProducts.ts",
     "test": "mocha -r ts-node/register test/**/*.test.ts --timeout 0",
     "test-pyth": "mocha -r ts-node/register test/pyth.test.ts --timeout 0",
     "test-serum": "mocha -r ts-node/register test/serum.test.ts --timeout 0",

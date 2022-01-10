@@ -31,7 +31,7 @@ export class PythClient {
   commitment: Commitment = 'finalized';
   connection: Connection;
   products: Map<string, Product>;
-  pythProgramKey: PublicKey;
+  pythProgram: PublicKey;
 
   constructor(cluster: string) {
     this.cluster = cluster;
@@ -48,7 +48,7 @@ export class PythClient {
       });
     });
 
-    this.pythProgramKey = new PublicKey(PYTH_PROGRAMS[cluster].program);
+    this.pythProgram = new PublicKey(PYTH_PROGRAMS[cluster].program);
   }
 
   public onPrice(price: PriceData, product: Product) {
@@ -66,7 +66,7 @@ export class PythClient {
   public async queryProducts() {
     let products: {}[] = [];
 
-    const programAccounts = await this.connection.getProgramAccounts(this.pythProgramKey, this.commitment);
+    const programAccounts = await this.connection.getProgramAccounts(this.pythProgram, this.commitment);
     programAccounts.forEach(account => {
       const base = parseBaseData(account.account.data);
       if (base != null) {
@@ -102,7 +102,7 @@ export class PythClient {
   }
 
   public async subscribe() {
-    (await this.connection.getProgramAccounts(this.pythProgramKey, this.commitment)).forEach(account => {
+    (await this.connection.getProgramAccounts(this.pythProgram, this.commitment)).forEach(account => {
       const base = parseBaseData(account.account.data);
       if (base != null) {
         if (AccountType[base.type] == 'Price') {
@@ -120,7 +120,7 @@ export class PythClient {
     });
 
     this.connection.onProgramAccountChange(
-      this.pythProgramKey,
+      this.pythProgram,
       (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
         const base = parseBaseData(keyedAccountInfo.accountInfo.data);
         if (base != null) {

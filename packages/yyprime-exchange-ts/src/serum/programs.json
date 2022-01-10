@@ -1,8 +1,10 @@
 {
   "devnet": {
-    "programAddress": "DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY"
+    "program": "DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY",
+    "url": "https://api.devnet.solana.com/"
   },
   "mainnet": {
-    "programAddress": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"
+    "program": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
+    "url": "https://solana-api.projectserum.com"
   }
 }

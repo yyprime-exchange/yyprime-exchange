@@ -11,7 +11,6 @@
   "mainnet": {
     "http": "http://api.mainnet-beta.solana.com",
     "https": "https://api.mainnet-beta.solana.com",
-    "serumHttps": "https://solana-api.projectserum.com",
     "wss": "wss://api.devnet.solana.com"
   },
   "testnet": {
