@@ -1,41 +1,32 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src",
-    "src/**/*",
-  ],
-  "moduleResolution": "node",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "typeRoots": ["types/", "node_modules/@types"],
-    "outDir": "dist/cjs/",
-    "target": "esnext",
-    "module": "commonjs",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "importHelpers": true,
+    "strictPropertyInitialization": true,
+    "module": "esnext",
     "moduleResolution": "node",
+    "downlevelIteration": true,
     "resolveJsonModule": true,
-    "noImplicitAny": false,
-    "isolatedModules": true,
-    "declaration": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "typeRoots": [
+      "./types"
+    ],
+    "jsx": "react-jsx",
+    "isolatedModules": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [ "src/**/*.ts",  "src/custom.d.ts", "src/**/*.ts", "tests/**/*.ts"]
 }
