@@ -1,1 +1,1 @@
-export * from "./pyth_client"
+export * from "./pyth-client"

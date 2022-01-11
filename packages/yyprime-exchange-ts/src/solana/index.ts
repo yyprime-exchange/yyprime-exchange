@@ -1,1 +1,1 @@
-export * from "./solana_client"
+export * from "./solana-client"

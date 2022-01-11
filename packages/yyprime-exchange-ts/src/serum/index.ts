@@ -1,1 +1,2 @@
-export * from "./serum_client"
+export * from "./serum-client"
+export * from "./serum-simulator"
