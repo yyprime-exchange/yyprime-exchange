@@ -33,7 +33,7 @@ yarn
 Build yyprime_program package:
 
 ```
-yarn yyprime_program:build
+yarn yyx-program:build
 ```
 
 ### Building Frontend
@@ -42,10 +42,9 @@ Build yyprime_program package:
 
 ```
 yarn frontend:build
-yarn frontend:dev
+yarn frontend:start
+
 ```
-
-
 
 ### Testing
 

@@ -1,25 +1,25 @@
 a {
-  color: black;
+    color: black;
 }
-a:hover {
-  color: black;
-}
-
-a:active {
-  color: white;
+a:hover{
+    color: black;
 }
 
-.item {
-  cursor: pointer;
-  border-radius: 10px !important;
+a:active{
+    color: white;
+}
+
+.item{
+    cursor: pointer;
+    border-radius: 10px !important;
 }
 
 .item:hover {
-  background-color: rgba(214, 208, 208, 0.1);
+    background-color: rgba(214, 208, 208, 0.1);
 }
-
+  
 .clickedItem {
-  cursor: pointer;
-  border-radius: 10px !important;
-  background-color: rgba(214, 48, 49, 0.2);
+    cursor: pointer;
+    border-radius: 10px !important;
+    background-color: rgba(214, 48, 49,0.2);
 }
