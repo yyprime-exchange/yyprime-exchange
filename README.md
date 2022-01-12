@@ -61,3 +61,21 @@ To lint:
 ```
 yarn lint
 ```
+
+# Attribution
+
+**The strenght of the Solana ecosystem derives from the Open Source contributions of its participants. If we have created something useful, it is by standing on the shoulders of giants. Without the Open Source community yyprime would not have been possible.**
+
+## Projects
+
+- *Mango*
+
+Mango is the GOAT. The Mango code is well designed, well written, and easy to read. If you want to understand the Serum DEX this is a great starting point.
+
+https://github.com/blockworks-foundation/mango-client-v3
+
+- *Serum*
+
+Putting an order book on-chain is truly revolutionary. Thank you for providing the tools to make it work including the Serum DEX UI and the Anchor framework.
+
+https://github.com/project-serum/serum-dex-ui
