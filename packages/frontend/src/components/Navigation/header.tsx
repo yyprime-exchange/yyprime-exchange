@@ -19,9 +19,9 @@ export default function Header(){
         {/* <ul className="hidden lg:flex flex-row justify-around table-bg w-56 container mx-auto p-3 my-5 rounded-lg text-base font-semibold">
             <NavLink exact={true} activeClassName="is-activeLink" to="/">Market Simulator</NavLink>
         </ul> */}
-        <div className="flex flex-row justify-between">
+        {/* <div className="flex flex-row justify-between">
             <WalletConnector/>
-        </div>
+        </div> */}
     </nav>
   );
 };

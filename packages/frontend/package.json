@@ -56,7 +56,8 @@
     "web-vitals": "^1.1.2",
     "sass-loader": "^10",
     "@emotion/react":"11.7.1",
-    "@emotion/styled":"11.6.0"
+    "@emotion/styled":"11.6.0",
+    "numeral":"2.0.6"
   },
   "scripts": {
     "start": "craco start",
