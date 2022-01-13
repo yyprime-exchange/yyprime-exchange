@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@craco/craco": "^6.1.2",
+    "@craco/craco": "^5.9.0",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
     "@formspree/react": "^2.2.3",
@@ -43,14 +43,14 @@
     "notistack": "^1.0.9",
     "numeral": "2.0.6",
     "postcss-import": "^14.0.1",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^7.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-ga": "^3.3.0",
     "react-icons": "^4.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.0",
     "react-simple-marquee": "^1.2.2",
     "react-toastify": "^7.0.4",
     "sass-loader": "^10",
@@ -91,12 +91,12 @@
     "@types/react-virtualized": "^9.21.11",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.4.2",
     "eslint": "^7.31.0",
     "eslint-plugin-unused-imports": "^1.1.2",
-    "postcss": "^7.0.36",
+    "postcss": "10.4.2",
     "react-async-hook": "^3.6.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2",
-    "webpack": "^4.44.2"
+    "webpack": "^5.66.0"
   }
 }
