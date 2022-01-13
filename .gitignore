@@ -1,6 +1,7 @@
 lib
 **.swp
 **.TODO
+**/test-ledger
 
 .anchor
 .DS_Store
