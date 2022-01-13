@@ -1,28 +1,18 @@
 import { useCallback, useState } from "react";
 import { MintInfo } from "@solana/spl-token";
 
+import { TokenAccount } from "./../models";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
 import { WAD, ZERO } from "../constants";
 import { TokenInfo } from "@solana/spl-token-registry";
-import {
-  HumanizeDuration,
-  HumanizeDurationLanguage,
-} from "humanize-duration-ts";
-import { AccountInfo as TokenAccountInfo, Token } from "@solana/spl-token";
-import {
-  AccountInfo,
-} from "@solana/web3.js";
+
 export type KnownTokenMap = Map<string, TokenInfo>;
-export interface TokenAccount {
-  pubkey: PublicKey;
-  account: AccountInfo<Buffer>;
-  info: TokenAccountInfo;
-}
+
 export const formatPriceNumber = new Intl.NumberFormat("en-US", {
   style: "decimal",
   minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
+  maximumFractionDigits: 8,
 });
 
 export function useLocalStorageState(key: string, defaultState?: string) {
@@ -57,16 +47,6 @@ export function useLocalStorageState(key: string, defaultState?: string) {
 // shorten the checksummed version of the input address to have 4 characters at start and end
 export function shortenAddress(address: string, chars = 4): string {
   return `${address.slice(0, chars)}...${address.slice(-chars)}`;
-}
-
-// shorten the checksummed version of the input address to have 8 characters at start and end
-export function shortenAddress6Char(address: string, chars = 6): string {
-  return `${address.slice(0, chars)}...${address.slice(-chars)}`;
-}
-
-// shorten the checksummed version of the input address to have all characters at start and end
-export function shortenAddressFullChar(address: string): string {
-  return `${address}...${address}`;
 }
 
 export function getTokenName(
@@ -117,6 +97,13 @@ export function isKnownMint(map: KnownTokenMap, mintAddress: string) {
 }
 
 export const STABLE_COINS = new Set(["USDC", "wUSDC", "USDT"]);
+
+export function chunks<T>(array: T[], size: number): T[][] {
+  return Array.apply<number, T[], T[][]>(
+    0,
+    new Array(Math.ceil(array.length / size))
+  ).map((_, index) => array.slice(index * size, (index + 1) * size));
+}
 
 export function toLamports(
   account?: TokenAccount | number,
@@ -255,31 +242,3 @@ export function convert(
 
   return result;
 }
-
-export const humanizeDuration = new HumanizeDuration(new HumanizeDurationLanguage());
-humanizeDuration.setOptions({
-  language: "short",
-  spacer: "",
-  delimiter: " ",
-  round: true,
-  units: ["d", "h", "m", "s"],
-  largest: 3,
-});
-humanizeDuration.addLanguage("short", {
-  y: () => "y",
-  mo: () => "mo",
-  w: () => "w",
-  d: () => "d",
-  h: () => "h",
-  m: () => "m",
-  s: () => "s",
-  ms: () => "ms",
-  decimal: ".",
-});
-
-export function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-
