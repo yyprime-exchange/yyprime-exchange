@@ -1,3 +1,15 @@
+//
+
+import * as config from './example-0.json';
+
+console.log(`Running crank on ${config.cluster}`);
+
+setInterval(() => {
+  //TODO
+
+}, 1000);
+
+
 
 
 /*

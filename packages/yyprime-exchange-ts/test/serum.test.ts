@@ -8,57 +8,6 @@ import { SolanaClient } from '../src/solana'
 
 describe('serum', () => {
 
-  /*
-  const cluster = 'localnet';
-
-  let tokens = [
-    {
-      symbol: "ABC",
-      decimals: 6
-    },
-    {
-      symbol: "DEF",
-      decimals: 6
-    }
-  ];
-
-  const markets = [
-  ];
-  */
-
-  before(async () => {
-    /*
-    const solanaClient: SolanaClient = new SolanaClient(cluster);
-
-    tokens = Promise.all(tokens.map(async token => {
-      const keypair: Keypair = solanaClient.generateKeypair();
-      console.log(`Create mint: ${keypair.publicKey.toBase58()}`);
-      await solanaClient.requestAirdrop(2, keypair.publicKey);
-
-      const mintToken = await solanaClient.createMint(keypair, 1_000_000);
-      return {
-        symbol: token.symbol,
-        mintToken: mintToken,
-        decimals: token.decimals
-      };
-    }));
-
-    console.log(JSON.stringify(tokens));
-    */
-  });
-
-  beforeEach(() => {
-    //console.log('beforeEach');
-  });
-
-  after(() => {
-    //console.log('after');
-  });
-
-  afterEach(() => {
-    //console.log('afterEach');
-  });
-
   it('Create Serum Simulator.', async () => {
     const cluster: string = 'localnet';
     const serumSimulator: SerumSimulator = new SerumSimulator(cluster);
@@ -184,53 +133,5 @@ describe('serum', () => {
 
 
   });
-
-
-
-  /*
-    set +e
-    #
-    # Build the program.
-    #
-    cd ./dex && cargo build-bpf && cd ../
-    #
-    # Start the local validator.
-    #
-    solana-test-validator --bpf-program $PROGRAM_ID dex/target/deploy/serum_dex.so > validator.log &
-    #
-    # Wait for the validator to start.
-    #
-    sleep 5
-    #
-    # Run the whole-shebang.
-    #
-    pushd dex/crank
-    cargo run -- $CLUSTER whole-shebang $KEYPAIR_FILE $PROGRAM_ID
-    popd
-    #
-    # Create a keypair for the tests.
-    #
-    yes | solana-keygen new --outfile $KEYPAIR_FILE
-    #
-    # Fund the keypair.
-    #
-    yes | solana airdrop --url $CLUSTER_URL 100
-    set -e
-    #
-    # Run the unit tests.
-    #
-    pushd dex
-    cargo test
-    popd
-  */
-
-
-
-
-  //it('Subscribe.', async () => {
-    //const cluster: string = 'devnet';
-    //const serumClient = new SerumClient(cluster);
-    //await serumClient.subscribe();
-  //});
 
 });

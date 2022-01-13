@@ -14,4 +14,5 @@ describe('yyprime-exchange', () => {
     const tx = await program.rpc.initialize({});
     console.log("Your transaction signature", tx);
   });
+
 });

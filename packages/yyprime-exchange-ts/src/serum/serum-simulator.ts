@@ -74,6 +74,14 @@ export class SerumSimulator {
   }
 
   public async createMarket(
+    market: Keypair,
+    requestQueue: Keypair,
+    eventQueue: Keypair,
+    bids: Keypair,
+    asks: Keypair,
+    baseVault: Keypair,
+    quoteVault: Keypair,
+
     marketAuthority: PublicKey,
     pruneAuthority: PublicKey,
     crankAuthority: PublicKey,
@@ -83,13 +91,13 @@ export class SerumSimulator {
     quoteLotSize: number,
     feeRateBps: number,
   ) {
-    const market: Keypair = Keypair.generate();
-    const requestQueue: Keypair = Keypair.generate();
-    const eventQueue: Keypair = Keypair.generate();
-    const bids: Keypair = Keypair.generate();
-    const asks: Keypair = Keypair.generate();
-    const baseVault: Keypair = Keypair.generate();
-    const quoteVault: Keypair = Keypair.generate();
+    //const market: Keypair = Keypair.generate();
+    //const requestQueue: Keypair = Keypair.generate();
+    //const eventQueue: Keypair = Keypair.generate();
+    //const bids: Keypair = Keypair.generate();
+    //const asks: Keypair = Keypair.generate();
+    //const baseVault: Keypair = Keypair.generate();
+    //const quoteVault: Keypair = Keypair.generate();
     const quoteDustThreshold = new BN(100);
 
     const [vaultOwner, vaultSignerNonce] = await this.getVaultOwnerAndNonce(

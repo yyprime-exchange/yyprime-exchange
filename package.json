@@ -25,10 +25,15 @@
     "anchor:build": "anchor build",
     "anchor:build_release": "cargo build-bpf --features production",
     "anchor:deploy": "anchor deploy",
-    "watch": "yarn ts-node-dev --respawn"
+    "watch": "yarn ts-node-dev --respawn",
+    "crank": "yarn workspace @yyprime/yyprime-exchange-ts build && npx ts-node scripts/crank.ts",
+    "create-sim": "yarn workspace @yyprime/yyprime-exchange-ts build && npx ts-node scripts/create-simulation.ts",
+    "sim": "yarn workspace @yyprime/yyprime-exchange-ts build && npx ts-node scripts/simulator.ts",
+    "mon": "yarn workspace @yyprime/yyprime-exchange-ts build && npx ts-node scripts/monitor.ts"
   },
   "dependencies": {
     "@project-serum/anchor": "^0.18.2",
+    "@yyprime/yyprime-exchange-ts": "file:packages/yyprime-exchange-ts",
     "postinstall": "^0.7.4"
   },
   "devDependencies": {

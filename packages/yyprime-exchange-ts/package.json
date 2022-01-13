@@ -9,12 +9,14 @@
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "build": "tsc",
+    "clean": "rm -rf lib",
+    "build": "yarn clean && tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts --timeout 0",
-    "test-psy-american": "mocha -r ts-node/register test/psy-american.test.ts --timeout 0",
+    "test-psy": "mocha -r ts-node/register test/psy-american.test.ts --timeout 0",
     "test-pyth": "mocha -r ts-node/register test/pyth.test.ts --timeout 0",
     "test-serum": "mocha -r ts-node/register test/serum.test.ts --timeout 0",
-    "test-solana": "mocha -r ts-node/register test/solana.test.ts --timeout 0"
+    "test-solana": "mocha -r ts-node/register test/solana.test.ts --timeout 0",
+    "test-zeta": "mocha -r ts-node/register test/zetamarkets.test.ts --timeout 0"
   },
   "files": [
     "lib"
@@ -26,12 +28,14 @@
   "dependencies": {
     "@mithraic-labs/psy-american": "^0.1.1-rc.2",
     "@project-serum/anchor": "^0.16.1",
+    "@project-serum/common": "^0.0.1-beta.3",
     "@project-serum/serum": "^0.13.60",
+    "@pythnetwork/client": "^2.5.1",
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.28.0",
-    "@pythnetwork/client": "^2.5.1",
     "@tsconfig/recommended": "^1.0.1",
     "@types/chai": "^4.3.0",
+    "@zetamarkets/sdk": "^0.9.10",
     "chai": "^4.3.4"
   },
   "devDependencies": {

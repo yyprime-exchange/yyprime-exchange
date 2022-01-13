@@ -1,6 +1,6 @@
 
 
-export class PsyAmericanClient {
+export class ZetaMarketsClient {
   cluster: string;
 
   constructor(cluster: string) {

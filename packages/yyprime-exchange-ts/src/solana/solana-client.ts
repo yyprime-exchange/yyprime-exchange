@@ -97,10 +97,6 @@ console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer, mint])}`)
     return mintToken;
   }
 
-  public generateKeypair(): Keypair {
-    return Keypair.generate();
-  }
-
   public async getBalance(publicKey: PublicKey) {
     return this.connection.getBalance(publicKey, this.commitment);
   }
