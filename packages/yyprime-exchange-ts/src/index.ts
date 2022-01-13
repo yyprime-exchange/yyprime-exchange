@@ -1,4 +1,5 @@
 export * from "./bots"
+export * from "./psyoptions"
 export * from "./pyth"
 export * from "./serum"
 export * from "./solana"

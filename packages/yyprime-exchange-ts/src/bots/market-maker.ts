@@ -220,6 +220,91 @@ export class MarketMaker extends Bot {
     */
   }
 
+
+
+
+  /*
+try:
+    # Update current state
+    price = self.oracle.fetch_price(self.context)
+    self.logger.info(f"Price is: {price}")
+    inventory = self.fetch_inventory()
+
+    # Calculate what we want the orders to be.
+    bid, ask = self.calculate_order_prices(price)
+    buy_quantity, sell_quantity = self.calculate_order_quantities(price, inventory)
+
+    current_orders = self.market_operations.load_my_orders()
+    buy_orders = [order for order in current_orders if order.side == mango.Side.BUY]
+    if self.orders_require_action(buy_orders, bid, buy_quantity):
+        self.logger.info("Cancelling BUY orders.")
+        for order in buy_orders:
+            self.market_operations.cancel_order(order)
+        buy_order: mango.Order = mango.Order.from_basic_info(
+            mango.Side.BUY, bid, buy_quantity, mango.OrderType.POST_ONLY)
+        self.market_operations.place_order(buy_order)
+
+    sell_orders = [order for order in current_orders if order.side == mango.Side.SELL]
+    if self.orders_require_action(sell_orders, ask, sell_quantity):
+        self.logger.info("Cancelling SELL orders.")
+        for order in sell_orders:
+            self.market_operations.cancel_order(order)
+        sell_order: mango.Order = mango.Order.from_basic_info(
+            mango.Side.SELL, ask, sell_quantity, mango.OrderType.POST_ONLY)
+        self.market_operations.place_order(sell_order)
+
+    self.update_health_on_successful_iteration()
+except Exception as exception:
+    self.logger.warning(
+        f"Pausing and continuing after problem running market-making iteration: {exception} - {traceback.format_exc()}")
+
+# Wait and hope for fills.
+self.logger.info(f"Pausing for {self.pause} seconds.")
+time.sleep(self.pause.seconds)
+  */
+
+
+
+
+  /*
+def pulse(self, context: mango.Context, model_state: ModelState):
+    try:
+        payer = mango.CombinableInstructions.from_wallet(self.wallet)
+
+        desired_orders = self.desired_orders_builder.build(context, model_state)
+        existing_orders = self.order_tracker.existing_orders(model_state)
+        reconciled = self.order_reconciler.reconcile(model_state, existing_orders, desired_orders)
+
+        cancellations = mango.CombinableInstructions.empty()
+        for to_cancel in reconciled.to_cancel:
+            self.logger.info(f"Cancelling {self.market.symbol} {to_cancel}")
+            cancel = self.market_instruction_builder.build_cancel_order_instructions(to_cancel)
+            cancellations += cancel
+
+        place_orders = mango.CombinableInstructions.empty()
+        for to_place in reconciled.to_place:
+            desired_client_id: int = context.random_client_id()
+            to_place_with_client_id = to_place.with_client_id(desired_client_id)
+            self.order_tracker.track(to_place_with_client_id)
+
+            self.logger.info(f"Placing {self.market.symbol} {to_place_with_client_id}")
+            place_order = self.market_instruction_builder.build_place_order_instructions(to_place_with_client_id)
+            place_orders += place_order
+
+        crank = self.market_instruction_builder.build_crank_instructions([])
+        settle = self.market_instruction_builder.build_settle_instructions()
+        (payer + cancellations + place_orders + crank + settle).execute(context, on_exception_continue=True)
+
+        self.pulse_complete.on_next(datetime.now())
+    except Exception as exception:
+        self.logger.error(f"[{context.name}] Market-maker error on pulse: {exception} - {traceback.format_exc()}")
+        self.pulse_error.on_next(exception)
+  */
+
+
+
+
+
   /*
 {
   "group": "mainnet.1",

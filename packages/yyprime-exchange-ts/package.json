@@ -11,6 +11,7 @@
   "scripts": {
     "build": "tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts --timeout 0",
+    "test-psy-american": "mocha -r ts-node/register test/psy-american.test.ts --timeout 0",
     "test-pyth": "mocha -r ts-node/register test/pyth.test.ts --timeout 0",
     "test-serum": "mocha -r ts-node/register test/serum.test.ts --timeout 0",
     "test-solana": "mocha -r ts-node/register test/solana.test.ts --timeout 0"
