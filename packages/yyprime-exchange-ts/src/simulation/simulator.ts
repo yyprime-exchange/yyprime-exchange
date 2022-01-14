@@ -2,8 +2,8 @@
 
 export class Simulator {
 
-  constructor(config) {
-    console.log(`Running simulation on ${config.cluster}`);
+  constructor(simulation) {
+    console.log(`Running simulation on ${simulation.config.cluster}`);
   }
 
 
