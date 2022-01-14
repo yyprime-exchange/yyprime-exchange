@@ -8,15 +8,11 @@ import {
 import {
   AccountType,
   parseBaseData,
-  parseMappingData,
   parsePriceData,
   parseProductData,
   PriceData,
   ProductData,
 } from '@pythnetwork/client'
-
-import PYTH_PRODUCTS from './products.json';
-import PYTH_PROGRAMS from './programs.json';
 
 export interface Product {
   symbol: string
@@ -33,37 +29,28 @@ export class PythClient {
   products: Map<string, Product>;
   pythProgram: PublicKey;
 
-  constructor(cluster: string) {
+  constructor(
+    cluster: string,
+    program: string,
+    url: string,
+  ) {
     this.cluster = cluster;
-    this.connection = new Connection(PYTH_PROGRAMS[cluster].url);
-
+    this.connection = new Connection(url);
     this.products = new Map<string, Product>();
-    PYTH_PRODUCTS[cluster].forEach(product => {
-      this.products.set(product.price, {
-        symbol: product.symbol,
-        baseSymbol: product.baseSymbol,
-        quoteSymbol: product.quoteSymbol,
-        product: new PublicKey(product.product),
-        price: new PublicKey(product.price),
-      });
-    });
-
-    this.pythProgram = new PublicKey(PYTH_PROGRAMS[cluster].program);
+    this.pythProgram = new PublicKey(program);
   }
 
   public onPrice(price: PriceData, product: Product) {
-    //console.log(`product = ${product.symbol}`);
-    //console.log(`price = ${price.price}`);
-    //console.log(`product = ${price.productAccountKey.toBase58()}`);
-    //console.log(`confidence = ${price.confidence}`);
-    //console.log('');
-  }
-
-  public onProduct(product: ProductData) {
+    //TODO callback.
+    console.log(`[PRICE]`);
+    console.log(`product = ${product.symbol}`);
+    console.log(`price = ${price.price}`);
+    console.log(`confidence = ${price.confidence}`);
+    console.log('');
   }
 
   // Query the products listed onchain.
-  public async queryProducts() {
+  public async queryProducts2() {
     let products: {}[] = [];
 
     const programAccounts = await this.connection.getProgramAccounts(this.pythProgram, this.commitment);
@@ -106,15 +93,23 @@ export class PythClient {
       const base = parseBaseData(account.account.data);
       if (base != null) {
         if (AccountType[base.type] == 'Price') {
-          const price = parsePriceData(account.account.data)
+          const priceData = parsePriceData(account.account.data)
           const product = this.products.get(account.pubkey.toBase58());
           if (product) {
-            this.onPrice(price, product);
+            this.onPrice(priceData, product);
           }
         }
         else if (AccountType[base.type] == 'Product') {
-          const product = parseProductData(account.account.data)
-          this.onProduct(product);
+          const product = account.pubkey;
+          const productData = parseProductData(account.account.data)
+          console.log(JSON.stringify(productData));
+          this.products.set(productData.priceAccountKey.toBase58(), {
+            symbol: productData.product.symbol,
+            baseSymbol: productData.product.baseSymbol,
+            quoteSymbol: productData.product.quote_currency,
+            product: product,
+            price: productData.priceAccountKey,
+          });
         }
       }
     });

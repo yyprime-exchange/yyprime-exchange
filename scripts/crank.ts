@@ -1,8 +1,8 @@
 //
 
-import * as config from './simulation.json';
+import * as simulation from './simulation.json';
 
-console.log(`Running crank on ${config.cluster}`);
+console.log(`Running crank on ${simulation.config.cluster}`);
 
 setInterval(() => {
   //TODO

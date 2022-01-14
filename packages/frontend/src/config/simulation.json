@@ -3,7 +3,7 @@
     "cluster": "mainnet",
     "pyth": {
       "program": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
-      "url": "https://pyth-network.rpcpool.com/"
+      "url": "https://api.mainnet-beta.solana.com/"
     },
     "serum": {
       "program": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
