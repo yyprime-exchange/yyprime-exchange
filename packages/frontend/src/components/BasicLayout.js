@@ -4,6 +4,7 @@ import TopBar from './TopBar';
 import { CustomFooter as Footer } from './Footer';
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
+import { notify } from '../utils/notifications';
 const { Header, Content } = Layout;
 
 export default function BasicLayout({ children }) {

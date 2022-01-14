@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import { useMarket, useBonfidaTrades } from '../utils/markets';
-import { getDecimalCount } from '../utils/utils';
+import { getDecimalCount } from '../utils/utilsSerum';
 import FloatingElement from './layout/FloatingElement';
 import { BonfidaTrade } from '../utils/types';
 
@@ -30,7 +30,7 @@ export default function PublicTrades({ smallScreen }) {
             }
       }
     >
-      <Title>Bonfida Trades</Title>
+      <Title>Recent Market trades</Title>
       <SizeTitle>
         <Col span={8}>Price ({quoteCurrency}) </Col>
         <Col span={8} style={{ textAlign: 'right' }}>

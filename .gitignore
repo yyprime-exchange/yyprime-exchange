@@ -14,6 +14,5 @@ target
 .anchor
 out
 **/package-lock.json
-**/yarn.lock
 *.log
 

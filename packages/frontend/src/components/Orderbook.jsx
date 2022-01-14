@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import React, { useRef, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useMarket, useOrderbook, useMarkPrice } from '../utils/markets';
-import { isEqual, getDecimalCount } from '../utils/utils';
+import { isEqual, getDecimalCount } from '../utils/utilsSerum';
 import { useInterval } from '../utils/useInterval';
 import FloatingElement from './layout/FloatingElement';
 import usePrevious from '../utils/usePrevious';
@@ -111,7 +111,7 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
         smallScreen ? { flex: 1 } : { height: '500px', overflow: 'hidden' }
       }
     >
-      <Title>Serum Orderbook</Title>
+      <Title>Orderbook</Title>
       <SizeTitle>
         <Col span={12} style={{ textAlign: 'left' }}>
           Size ({baseCurrency})
