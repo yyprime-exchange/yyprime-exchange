@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Col, Popover, Row, Select } from 'antd';
+import { Button, Col, Popover, Row, Select, Typography } from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
+// import UserInfoTable from '../components/UserInfoTable';
 import {
   getMarketInfos,
-  getSerumPageUrl,
+  getTradePageUrl,
   MarketProvider,
   useMarket,
   useMarketsList,
@@ -14,9 +15,18 @@ import LinkAddress from '../components/LinkAddress';
 import {
   DeleteOutlined,
   InfoCircleOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
+import CustomMarketDialog from '../components/CustomMarketDialog';
+import { notify } from '../utils/notifications';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+
+// import { TVChartContainer } from '../components/TradingView';
+// Use following stub for quick setup without the TradingView private dependency
+// function TVChartContainer() {
+//   return <></>
+// }
 
 const { Option, OptGroup } = Select;
 
@@ -30,7 +40,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function SerumPage() {
+export default function TradePage() {
   const { marketAddress } = useParams();
   useEffect(() => {
     if (marketAddress) {
@@ -39,7 +49,7 @@ export default function SerumPage() {
   }, [marketAddress]);
   const history = useHistory();
   function setMarketAddress(address) {
-    history.push(getSerumPageUrl(address));
+    history.push(getTradePageUrl(address));
   }
 
   return (
@@ -47,19 +57,22 @@ export default function SerumPage() {
       marketAddress={marketAddress}
       setMarketAddress={setMarketAddress}
     >
-      <SerumPageInner />
+      <TradePageInner />
     </MarketProvider>
   );
 }
 
-function SerumPageInner() {
+function TradePageInner() {
   const {
     market,
     marketName,
     customMarkets,
+    setCustomMarkets,
     setMarketAddress,
   } = useMarket();
   const markets = useMarketsList();
+  const [handleDeprecated, setHandleDeprecated] = useState(false);
+  const [addMarketVisible, setAddMarketVisible] = useState(false);
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -98,7 +111,7 @@ function SerumPageInner() {
     ),
   };
   const component = (() => {
-    if (width < 1000) {
+      if (width < 1000) {
       return <RenderSmaller {...componentProps} />;
     } else if (width < 1450) {
       return <RenderSmall {...componentProps} />;
@@ -107,8 +120,34 @@ function SerumPageInner() {
     }
   })();
 
+  const onAddCustomMarket = (customMarket) => {
+    const marketInfo = getMarketInfos(customMarkets).some(
+      (m) => m.address.toBase58() === customMarket.address,
+    );
+    if (marketInfo) {
+      notify({
+        message: `A market with the given ID already exists`,
+        type: 'error',
+      });
+      return;
+    }
+    const newCustomMarkets = [...customMarkets, customMarket];
+    setCustomMarkets(newCustomMarkets);
+    setMarketAddress(customMarket.address);
+  };
+
+  const onDeleteCustomMarket = (address) => {
+    const newCustomMarkets = customMarkets.filter((m) => m.address !== address);
+    setCustomMarkets(newCustomMarkets);
+  };
+
   return (
     <>
+      <CustomMarketDialog
+        visible={addMarketVisible}
+        onClose={() => setAddMarketVisible(false)}
+        onAddCustomMarket={onAddCustomMarket}
+      />
       <Wrapper>
         <Row
           align="middle"
@@ -118,8 +157,10 @@ function SerumPageInner() {
           <Col>
             <MarketSelector
               markets={markets}
+              setHandleDeprecated={setHandleDeprecated}
               placeholder={'Select market'}
               customMarkets={customMarkets}
+              onDeleteCustomMarket={onDeleteCustomMarket}
             />
           </Col>
           {market ? (
@@ -134,6 +175,13 @@ function SerumPageInner() {
               </Popover>
             </Col>
           ) : null}
+          <Col>
+            <PlusCircleOutlined
+              style={{ color: '#2abdd2' }}
+              onClick={() => setAddMarketVisible(true)}
+            />
+          </Col>
+     
         </Row>
         {component}
       </Wrapper>
@@ -144,11 +192,14 @@ function SerumPageInner() {
 function MarketSelector({
   markets,
   placeholder,
+  setHandleDeprecated,
   customMarkets,
+  onDeleteCustomMarket,
 }) {
   const { market, setMarketAddress } = useMarket();
 
   const onSetMarketAddress = (marketAddress) => {
+    setHandleDeprecated(false);
     setMarketAddress(marketAddress);
   };
 
@@ -197,6 +248,7 @@ function MarketSelector({
                       onClick={(e) => {
                         e.stopPropagation();
                         e.nativeEvent.stopImmediatePropagation();
+                        onDeleteCustomMarket && onDeleteCustomMarket(address);
                       }}
                     />
                   </Col>
@@ -242,6 +294,8 @@ function MarketSelector({
   );
 }
 
+
+
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <Row
@@ -250,9 +304,19 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
         flexWrap: 'nowrap',
       }}
     >
+      <Col flex="auto" style={{ height: '50vh' }}>
+        <Row style={{ height: '100%' }}>
+          {/* <TVChartContainer /> */}
+        </Row>
+      </Col>
       <Col flex={'360px'} style={{ height: '100%' }}>
         <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
         <TradesTable smallScreen={false} />
+      </Col>
+      <Col
+        flex="400px"
+        style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+      >
       </Col>
     </Row>
   );
@@ -261,6 +325,9 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
 const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
+      <Row style={{ height: '30vh' }}>
+        {/* <TVChartContainer /> */}
+      </Row>
       <Row
         style={{
           height: '900px',
@@ -277,6 +344,12 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
           <TradesTable smallScreen={true} />
         </Col>
+        <Col
+          flex="400px"
+          style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+        >
+
+        </Col>
       </Row>
     </>
   );
@@ -285,6 +358,12 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
+      <Row style={{ height: '50vh' }}>
+        {/* <TVChartContainer /> */}
+      </Row>
+      <Row>
+
+      </Row>
       <Row
         style={{
           height: '500px',

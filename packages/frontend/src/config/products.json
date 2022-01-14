@@ -1,6 +1,7 @@
 {
     "devnet":
-    [{"symbol": "BTC/USD", "productOracle":"3m1y5h2uv7EQL3KaJZehvAJa4yDNvgc5yAdL9KPMKwvk", "priceAccountKey": "HovQMDrbAgAYPCmHVSrezcSmkMtXSSUsLDFANExrZh2J" },
+    [
+    {"symbol": "BTC/USD", "productOracle":"3m1y5h2uv7EQL3KaJZehvAJa4yDNvgc5yAdL9KPMKwvk", "priceAccountKey": "HovQMDrbAgAYPCmHVSrezcSmkMtXSSUsLDFANExrZh2J" },
     {"symbol": "ETH/USD", "productOracle":"2ciUuGZiee5macAMeQ7bHGTJtwcYTgnt6jdmQnnKZrfu", "priceAccountKey": "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw" },
     {"symbol": "SOL/USD", "productOracle":"3Mnn2fX6rQyUsyELYms1sBJyChWofzSNRoqYzvgMVz5E", "priceAccountKey": "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix" }]
 }

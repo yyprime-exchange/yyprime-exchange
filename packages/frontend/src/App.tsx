@@ -1,4 +1,5 @@
 import './index.css';
+import './App.less';
 import "antd/dist/antd.css";
 import {
   BrowserRouter as Router,
@@ -7,9 +8,16 @@ import {
 import Simulator from './views';
 import Background from '../src/components/Background'
 import { SnackbarProvider } from 'notistack';
-import { WalletKitProvider } from "@gokiprotocol/walletkit";
+// import { WalletKitProvider } from "@gokiprotocol/walletkit";
 import { clusterApiUrl } from '@solana/web3.js';
 import PythProvider from './contexts/pyth';
+import TradePage from './views/TradePage';
+import { Routes } from './routes';
+import { ConnectionProvider } from './utils/connection';
+import { GlobalStyle } from './global_style';
+
+
+
 // import { ReactComponent as logo } from './assets/yyprime_logo.svg';
 function App() {
   const ENDPOINTS = [
@@ -38,16 +46,22 @@ function App() {
   //     name: "Yyprime",
   //   }}
   // >
+
+ <ConnectionProvider>
     <PythProvider>
           <SnackbarProvider 
             maxSnack={5} 
             autoHideDuration={400}>
-              
+
             <Router>
-              <Route exact path='/' component={Simulator}/>
+              {/* <Route exact path='/' component={Simulator}/> */}
+              <Routes />
+
             </Router>
           </SnackbarProvider>
     </PythProvider>
+    </ConnectionProvider>
+
     // </WalletKitProvider>
 
   );

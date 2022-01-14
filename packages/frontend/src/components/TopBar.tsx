@@ -1,16 +1,22 @@
 import {
   InfoCircleOutlined,
+  PlusCircleOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
-import { Col, Menu, Popover, Row, Select } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import logo from '../assets/knot.svg';
+import { Button, Col, Menu, Popover, Row, Select } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import logo from '../assets/logo.svg';
 import styled from 'styled-components';
 import { ENDPOINTS, useConnectionConfig } from '../utils/connection';
+// import Settings from './Settings';
+import CustomClusterEndpointDialog from './CustomClusterEndpointDialog';
 import { EndpointInfo } from '../utils/types';
 import { notify } from '../utils/notifications';
 import { Connection } from '@solana/web3.js';
-import { getSerumPageUrl } from '../utils/markets';
+// import WalletConnect from './WalletConnect';
+import AppSearch from './AppSearch';
+import { getTradePageUrl } from '../utils/markets';
 
 const Wrapper = styled.div`
   background-color: #0d1017;
@@ -32,7 +38,19 @@ const LogoWrapper = styled.div`
   }
 `;
 
+const EXTERNAL_LINKS = {
+  '/learn': 'https://docs.projectserum.com/trade-on-serum-dex/trade-on-serum-dex-1',
+  '/add-market': 'https://serum-academy.com/en/add-market/',
+  '/wallet-support': 'https://serum-academy.com/en/wallet-support',
+  '/dex-list': 'https://serum-academy.com/en/dex-list/',
+  '/developer-resources': 'https://serum-academy.com/en/developer-resources/',
+  '/explorer': 'https://solscan.io',
+  '/srm-faq': 'https://projectserum.com/srm-faq',
+  '/swap': 'https://swap.projectserum.com',
+};
+
 export default function TopBar() {
+  // const { connected, wallet } = useWallet();
   const {
     endpoint,
     endpointInfo,
@@ -43,6 +61,17 @@ export default function TopBar() {
   const [addEndpointVisible, setAddEndpointVisible] = useState(false);
   const [testingConnection, setTestingConnection] = useState(false);
   const location = useLocation();
+  const history = useHistory();
+  const [searchFocussed, setSearchFocussed] = useState(false);
+
+  const handleClick = useCallback(
+    (e) => {
+      if (!(e.key in EXTERNAL_LINKS)) {
+        history.push(e.key);
+      }
+    },
+    [history],
+  );
 
   const onAddCustomEndpoint = (info: EndpointInfo) => {
     const existingEndpoint = availableEndpoints.some(
@@ -97,19 +126,26 @@ export default function TopBar() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [endpointInfoCustom, setEndpoint]);
 
-  const serumPageUrl = location.pathname.startsWith('/market/')
+  const tradePageUrl = location.pathname.startsWith('/market/')
     ? location.pathname
-    : getSerumPageUrl();
+    : getTradePageUrl();
 
   return (
     <>
+      <CustomClusterEndpointDialog
+        visible={addEndpointVisible}
+        testingConnection={testingConnection}
+        onAddCustomEndpoint={onAddCustomEndpoint}
+        onClose={() => setAddEndpointVisible(false)}
+      />
       <Wrapper>
-        <LogoWrapper>
+        <LogoWrapper onClick={() => history.push(tradePageUrl)}>
           <img src={logo} alt="" />
           {"YY'X"}
         </LogoWrapper>
         <Menu
           mode="horizontal"
+          onClick={handleClick}
           selectedKeys={[location.pathname]}
           style={{
             borderBottom: 'none',
@@ -119,16 +155,58 @@ export default function TopBar() {
             flex: 1,
           }}
         >
-          <Menu.Item key={serumPageUrl} style={{ margin: '0 10px 0 20px' }}>
-            SERUM
+          <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
+            TRADE
           </Menu.Item>
+ 
+          {/* {connected && (!searchFocussed || location.pathname === '/balances') && (
+            <Menu.Item key="/balances" style={{ margin: '0 10px' }}>
+              BALANCES
+            </Menu.Item>
+          )}
+          {connected && (!searchFocussed || location.pathname === '/orders') && (
+            <Menu.Item key="/orders" style={{ margin: '0 10px' }}>
+              ORDERS
+            </Menu.Item>
+          )}
+          {connected && (!searchFocussed || location.pathname === '/convert') && (
+            <Menu.Item key="/convert" style={{ margin: '0 10px' }}>
+              CONVERT
+            </Menu.Item>
+          )} */}
+          {/* {(!searchFocussed || location.pathname === '/list-new-market') && (
+            <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
+              ADD MARKET
+            </Menu.Item>
+          )}
+           */}
         </Menu>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: 5,
+          }}
+        >
+          <AppSearch
+            onFocus={() => setSearchFocussed(true)}
+            onBlur={() => setSearchFocussed(false)}
+            focussed={searchFocussed}
+            width={searchFocussed ? '350px' : '35px'}
+          />
+        </div>
         <div>
           <Row
             align="middle"
             style={{ paddingLeft: 5, paddingRight: 5 }}
             gutter={16}
           >
+            <Col>
+              <PlusCircleOutlined
+                style={{ color: '#2abdd2' }}
+                onClick={() => setAddEndpointVisible(true)}
+              />
+            </Col>
             <Col>
               <Popover
                 content={endpoint}
@@ -153,6 +231,24 @@ export default function TopBar() {
               </Select>
             </Col>
           </Row>
+        </div>
+        {/* {connected && (
+          <div>
+            <Popover
+              content={<Settings autoApprove={wallet?.autoApprove} />}
+              placement="bottomRight"
+              title="Settings"
+              trigger="click"
+            >
+              <Button style={{ marginRight: 8 }}>
+                <SettingOutlined />
+                Settings
+              </Button>
+            </Popover>
+          </div>
+        )} */}
+        <div>
+          {/* <WalletConnect /> */}
         </div>
       </Wrapper>
     </>

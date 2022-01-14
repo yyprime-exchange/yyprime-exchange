@@ -11,7 +11,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { notify } from "./../utils/notifications";
 import { ExplorerLink } from "../components/ExplorerLink";
 import { setProgramIds } from "../utils/ids";
-import { WalletAdapter } from "@saberhq/use-solana";
+// import { WalletAdapter } from "@saberhq/use-solana";
 import { cache, getMultipleAccounts, MintParser } from "./accounts";
 import { TokenListProvider, ENV as ChainID, TokenInfo } from "@solana/spl-token-registry";
 
@@ -244,67 +244,67 @@ export function useSolanaExplorerUrlSuffix() {
     return '';
 }
 
-export const sendTransaction = async (
-  connection: Connection,
-  wallet: WalletAdapter,
-  instructions: TransactionInstruction[],
-  signers: Account[],
-  awaitConfirmation = true
-) => {
-  if (!wallet?.publicKey) {
-    throw new Error("Wallet is not connected");
-  }
+// export const sendTransaction = async (
+//   connection: Connection,
+//   wallet: WalletAdapter,
+//   instructions: TransactionInstruction[],
+//   signers: Account[],
+//   awaitConfirmation = true
+// ) => {
+//   if (!wallet?.publicKey) {
+//     throw new Error("Wallet is not connected");
+//   }
 
-  let transaction = new Transaction();
-  instructions.forEach((instruction) => transaction.add(instruction));
-  transaction.recentBlockhash = (
-    await connection.getRecentBlockhash("max")
-  ).blockhash;
-  transaction.setSigners(
-    // fee payied by the wallet owner
-    wallet.publicKey,
-    ...signers.map((s) => s.publicKey)
-  );
-  if (signers.length > 0) {
-    transaction.partialSign(...signers);
-  }
-  transaction = await wallet.signTransaction(transaction);
-  const rawTransaction = transaction.serialize();
-  let options = {
-    skipPreflight: true,
-    commitment: "singleGossip",
-  };
+//   let transaction = new Transaction();
+//   instructions.forEach((instruction) => transaction.add(instruction));
+//   transaction.recentBlockhash = (
+//     await connection.getRecentBlockhash("max")
+//   ).blockhash;
+//   transaction.setSigners(
+//     // fee payied by the wallet owner
+//     wallet.publicKey,
+//     ...signers.map((s) => s.publicKey)
+//   );
+//   if (signers.length > 0) {
+//     transaction.partialSign(...signers);
+//   }
+//   transaction = await wallet.signTransaction(transaction);
+//   const rawTransaction = transaction.serialize();
+//   let options = {
+//     skipPreflight: true,
+//     commitment: "singleGossip",
+//   };
 
-  const txid = await connection.sendRawTransaction(rawTransaction, options);
+//   const txid = await connection.sendRawTransaction(rawTransaction, options);
 
-  if (awaitConfirmation) {
-    const status = (
-      await connection.confirmTransaction(
-        txid,
-        options && (options.commitment as any)
-      )
-    ).value;
+//   if (awaitConfirmation) {
+//     const status = (
+//       await connection.confirmTransaction(
+//         txid,
+//         options && (options.commitment as any)
+//       )
+//     ).value;
 
-    if (status?.err) {
-      const errors = await getErrorForTransaction(connection, txid);
-      notify({
-        message: "Transaction failed...",
-        description: (
-          <>
-            {errors.map((err) => (
-              <div>{err}</div>
-            ))}
-            <ExplorerLink address={txid} type="transaction" />
-          </>
-        ),
-        type: "error",
-      });
+//     if (status?.err) {
+//       const errors = await getErrorForTransaction(connection, txid);
+//       notify({
+//         message: "Transaction failed...",
+//         description: (
+//           <>
+//             {errors.map((err) => (
+//               <div>{err}</div>
+//             ))}
+//             <ExplorerLink address={txid} type="transaction" />
+//           </>
+//         ),
+//         type: "error",
+//       });
 
-      throw new Error(
-        `Raw transaction ${txid} failed (${JSON.stringify(status)})`
-      );
-    }
-  }
+//       throw new Error(
+//         `Raw transaction ${txid} failed (${JSON.stringify(status)})`
+//       );
+//     }
+//   }
 
-  return txid;
-};
+//   return txid;
+// };

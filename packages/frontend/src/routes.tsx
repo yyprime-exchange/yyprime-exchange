@@ -1,20 +1,26 @@
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import TradePage from './views/TradePage';
+
 import React from 'react';
+
 import BasicLayout from './components/BasicLayout';
-import SerumPage from './pages/SerumPage';
-import { getSerumPageUrl } from './utils/markets';
+
+import { getTradePageUrl } from './utils/markets';
+import Simulator from './views';
+
 
 export function Routes() {
   return (
     <>
+    <Route exact path="/simulator">
+              <Simulator />
+            </Route>
       <HashRouter basename={'/'}>
         <BasicLayout>
           <Switch>
-            <Route exact path="/">
-              <Redirect to={getSerumPageUrl()} />
-            </Route>
+          
             <Route exact path="/market/:marketAddress">
-              <SerumPage />
+              <TradePage />
             </Route>
           </Switch>
         </BasicLayout>
