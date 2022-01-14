@@ -11,7 +11,7 @@
   "mainnet": {
     "http": "http://api.mainnet-beta.solana.com",
     "https": "https://api.mainnet-beta.solana.com",
-    "wss": "wss://api.devnet.solana.com"
+    "wss": "wss://api.mainnet-beta.solana.com"
   },
   "testnet": {
     "http": "http://api.testnet.solana.com",
