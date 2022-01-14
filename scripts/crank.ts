@@ -1,6 +1,6 @@
 //
 
-import * as config from './example-0.json';
+import * as config from './simulation.json';
 
 console.log(`Running crank on ${config.cluster}`);
 

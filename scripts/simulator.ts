@@ -1,6 +1,6 @@
 import { Simulator } from '../packages/yyprime-exchange-ts/lib';
 
-import * as config from './example-0.json';
+import * as config from './simulation.json';
 
 const simulator: Simulator = new Simulator(config);
 
