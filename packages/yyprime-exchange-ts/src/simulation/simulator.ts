@@ -17,20 +17,21 @@ export class Simulator {
     this.serumClient = new SerumClient(simulation, this.onAsk, this.onBid);
     this.simulation = simulation;
     this.solanaClient = new SolanaClient(simulation);
-    console.log(`Running simulation on ${simulation.config.cluster}`);
   }
 
-  public initialize() {
+  public initialize(): void {
     (async () => {
       const payer: Keypair = Keypair.generate();
       await this.solanaClient.requestAirdrop(100, payer.publicKey);
 
-      await this.solanaClient.createTokens(payer);
+      await this.solanaClient.createFaucets(payer);
 
-      await this.serumClient.createMarkets(payer);
+      //await this.serumClient.createMarkets(payer);
 
       // Create bots that will trade.
       // Fund bots.
+
+      console.log(`Simulation initialized.`);
     })();
 
     //this.pythClient.subscribe();
@@ -56,9 +57,13 @@ export class Simulator {
 
 }
 
+
+
 const simulator: Simulator = new Simulator(simulation);
 
 simulator.initialize();
+
+console.log(`Running simulation on ${simulation.config.cluster}`);
 
 /*
 let timerId = setTimeout(function process() {

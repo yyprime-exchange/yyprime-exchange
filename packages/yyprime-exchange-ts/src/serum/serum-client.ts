@@ -87,7 +87,7 @@ export class SerumClient {
   }
 
   public async createMarkets(payer: Keypair) {
-    await this.simulation.markets.forEach(async (market) => {
+    this.simulation.markets.forEach(async (market) => {
       this.createMarket(
         payer,
         Keypair.fromSecretKey(Buffer.from(market.marketPrivateKey, 'base64')),
@@ -243,7 +243,7 @@ export class SerumClient {
 
   public initialize(): void {
     (async () => {
-      await this.simulation.markets.forEach(async (market) => {
+      this.simulation.markets.forEach(async (market) => {
         this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), undefined, this.serumProgram);
       });
     })();

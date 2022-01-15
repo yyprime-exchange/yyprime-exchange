@@ -1,9 +1,3 @@
-//
-
-import * as simulation from './simulation.json';
-
-console.log(`Running crank on ${simulation.config.cluster}`);
-
 /*
 //This will probably move to its own repo at some point but easier to keep it here for now
  import * as os from 'os';
@@ -104,6 +98,13 @@ console.log(`Running crank on ${simulation.config.cluster}`);
      (market) => market['_decoded'].eventQueue,
    );
  */
+
+
+import * as simulation from './simulation.json';
+
+console.log(`Running crank on ${simulation.config.cluster}`);
+
+
 
 let timerId = setTimeout(function process() {
 

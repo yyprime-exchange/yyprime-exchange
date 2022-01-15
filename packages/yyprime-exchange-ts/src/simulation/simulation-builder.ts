@@ -30,12 +30,12 @@ export class SimulationBuilder {
     this.markets.push({ symbol: `${base}/${quote}`, base: base, quote: quote });
   }
 
-  public market_maker(base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
-    this.bots.push({ type: 'market_maker', symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
+  public market_maker(name: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
+    this.bots.push({ name: name, type: 'market_maker', symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
   }
 
-  public random_taker(base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
-    this.bots.push({ type: 'random_taker', symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
+  public random_taker(name: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
+    this.bots.push({ name: name, type: 'random_taker', symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
   }
 
   public build() {
@@ -153,11 +153,16 @@ export class SimulationBuilder {
 
 
       const bots_private = this.bots.map(bot => {
-
-        /*
-        */
-
-        return bot;
+        return {
+          name: bot.name,
+          type: bot.type,
+          symbol: bot.symbol,
+          base: bot.base,
+          baseBalance: bot.baseBalance,
+          quote: bot.quote,
+          quoteBalance: bot.quoteBalance,
+          params: bot.params,
+        };
       });
 
 
@@ -191,6 +196,14 @@ export class SimulationBuilder {
 
       const bots_public = bots_private.map(bot => {
         return {
+          name: bot.name,
+          type: bot.type,
+          symbol: bot.symbol,
+          base: bot.base,
+          baseBalance: bot.baseBalance,
+          quote: bot.quote,
+          quoteBalance: bot.quoteBalance,
+          params: bot.params,
         };
       });
 
