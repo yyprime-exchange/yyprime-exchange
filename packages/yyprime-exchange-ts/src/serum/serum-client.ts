@@ -132,10 +132,7 @@ export class SerumClient {
     //TODO this should be in the simulation config.
     const quoteDustThreshold = new BN(100);
 
-    const [vaultOwner, vaultSignerNonce] = await this.getVaultOwnerAndNonce(
-      market.publicKey,
-      this.serumProgram
-    );
+    const [vaultOwner, vaultSignerNonce] = await this.getVaultOwnerAndNonce(market.publicKey);
 
     const tx1 = new Transaction();
     tx1.add(
@@ -234,7 +231,8 @@ export class SerumClient {
     }
   }
 
-  private async getVaultOwnerAndNonce(publicKey: PublicKey, programId: PublicKey) {
+  private async getVaultOwnerAndNonce(publicKey: PublicKey) {
+    const programId: PublicKey = this.serumProgram;
     const nonce = new BN(0);
     while (nonce.toNumber() < 255) {
       try {
