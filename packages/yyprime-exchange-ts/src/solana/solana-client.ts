@@ -57,12 +57,14 @@ export class SolanaClient {
         await this.requestAirdrop(1, faucet.publicKey);
 
         const mintSupply = 1_000_000; //TODO this should be in the simulation config.
-        await this.createMint(payer, mint, token.decimals, faucet, mintSupply);
+        await this.createMint(token.symbol, payer, mint, token.decimals, faucet, mintSupply);
       //}
     }
   }
 
-  private async createMint(payer: Keypair, mint: Keypair, decimals: number, faucet: Keypair, amount: number) {
+  private async createMint(symbol: string, payer: Keypair, mint: Keypair, decimals: number, faucet: Keypair, amount: number) {
+    console.log(`createMint(${symbol})`);
+
     const tokenAddress = await this.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey);
 
     let transaction = new Transaction().add(

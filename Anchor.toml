@@ -8,9 +8,9 @@ url = "https://anchor.projectserum.com"
 cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
-[[test.genesis]]
-address = "2SXFv8tTmavm8uSAg3ft1JjttzJvgwXZiUPa9xuUbqH2"
-program = "tests/deps/serum_dex.so"
+#[[test.genesis]]
+#address = "2SXFv8tTmavm8uSAg3ft1JjttzJvgwXZiUPa9xuUbqH2"
+#program = "tests/deps/serum_dex.so"
 
 [scripts]
 test = "ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

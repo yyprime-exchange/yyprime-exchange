@@ -19,24 +19,26 @@ export class Simulator {
     this.solanaClient = new SolanaClient(simulation);
   }
 
-  public initialize(): void {
-    (async () => {
+  public initialize(): Promise<void> {
+    return (async () => {
       const payer: Keypair = Keypair.generate();
+
       await this.solanaClient.requestAirdrop(100, payer.publicKey);
 
       await this.solanaClient.createFaucets(payer);
 
-      //await this.serumClient.createMarkets(payer);
+      await this.serumClient.createMarkets(payer);
 
       // Create bots that will trade.
       // Fund bots.
 
+    })().then(() => {
       console.log(`Simulation initialized.`);
-    })();
 
-    //this.pythClient.subscribe();
+      //this.pythClient.subscribe();
 
-    //this.serumClient.subscribe();
+      //this.serumClient.subscribe();
+    });
   }
 
   private onAsk(book: SerumBook) {
@@ -61,14 +63,17 @@ export class Simulator {
 
 const simulator: Simulator = new Simulator(simulation);
 
-simulator.initialize();
+(async () => {
+  await simulator.initialize();
+})().then(() => {
+  console.log(`Running simulation on ${simulation.config.cluster}`);
 
-console.log(`Running simulation on ${simulation.config.cluster}`);
+  /*
+  let timerId = setTimeout(function process() {
+    simulator.onTime();
 
-/*
-let timerId = setTimeout(function process() {
-  simulator.onTime();
+    timerId = setTimeout(process, 1000);
+  }, 1000);
+  */
 
-  timerId = setTimeout(process, 1000);
-}, 1000);
-*/
+});

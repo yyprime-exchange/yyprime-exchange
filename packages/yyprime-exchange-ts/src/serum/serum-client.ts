@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import {
   BN,
 } from "@project-serum/anchor";
@@ -89,6 +90,7 @@ export class SerumClient {
   public async createMarkets(payer: Keypair) {
     this.simulation.markets.forEach(async (market) => {
       this.createMarket(
+        market.symbol,
         payer,
         Keypair.fromSecretKey(Buffer.from(market.marketPrivateKey, 'base64')),
         Keypair.fromSecretKey(Buffer.from(market.requestQueuePrivateKey, 'base64')),
@@ -107,6 +109,7 @@ export class SerumClient {
   }
 
   public async createMarket(
+    symbol: string,
     payer: Keypair,
     market: Keypair,
     requestQueue: Keypair,
@@ -124,6 +127,9 @@ export class SerumClient {
     quoteLotSize: number,
     feeRateBps: number,
   ) {
+    console.log(`createMarket(${symbol})`);
+
+    //TODO this should be in the simulation config.
     const quoteDustThreshold = new BN(100);
 
     const [vaultOwner, vaultSignerNonce] = await this.getVaultOwnerAndNonce(
@@ -158,17 +164,13 @@ export class SerumClient {
         owner: vaultOwner,
       })
     );
-    await sendAndConfirmTransaction(this.connection, tx1, [payer, baseVault, quoteVault]);
 
-    /*
     const tx2 = new Transaction();
     tx2.add(
       SystemProgram.createAccount({
         fromPubkey: payer.publicKey,
         newAccountPubkey: market.publicKey,
-        lamports: await this.connection.getMinimumBalanceForRentExemption(
-          MARKET_STATE_LAYOUT_V3.span
-        ),
+        lamports: await this.connection.getMinimumBalanceForRentExemption(MARKET_STATE_LAYOUT_V3.span),
         space: MARKET_STATE_LAYOUT_V3.span,
         programId: this.serumProgram,
       }),
@@ -221,8 +223,15 @@ export class SerumClient {
         //crankAuthority: crankAuthority,
       })
     );
-    await sendAndConfirmTransaction(this.connection, tx2, [payer, market, requestQueue, eventQueue, bids, asks]);
-    */
+
+    const transactions = [
+      { transaction: tx1, signers: [payer, baseVault, quoteVault] },
+      { transaction: tx2, signers: [payer, market, requestQueue, eventQueue, bids, asks],
+      },
+    ];
+    for (let tx of transactions) {
+      await sendAndConfirmTransaction(this.connection, tx.transaction, tx.signers);
+    }
   }
 
   private async getVaultOwnerAndNonce(publicKey: PublicKey, programId: PublicKey) {
@@ -241,12 +250,14 @@ export class SerumClient {
     throw new Error("Unable to find nonce");
   }
 
-  public initialize(): void {
-    (async () => {
+  public initialize2(): Promise<void> {
+    return (async () => {
       this.simulation.markets.forEach(async (market) => {
         this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), undefined, this.serumProgram);
       });
-    })();
+    })().then(() => {
+      console.log(`Serum initialized.`);
+    });
   }
 
   public subscribe() {

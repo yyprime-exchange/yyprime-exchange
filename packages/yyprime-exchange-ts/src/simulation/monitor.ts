@@ -30,21 +30,41 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log('');
   }
 
-  /*
+  //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(simulation.config.serum.program)))}`);
+
   for (const market of simulation.markets) {
     console.log(`MARKET: ${market.symbol}`);
+
+    const baseMint: PublicKey = new PublicKey(market.baseMint);
+    const baseVault: Keypair = Keypair.fromSecretKey(Buffer.from(market.baseVaultPrivateKey, 'base64'));
+
+    const quoteMint: PublicKey = new PublicKey(market.quoteMint);
+    const quoteVault: Keypair = Keypair.fromSecretKey(Buffer.from(market.quoteVaultPrivateKey, 'base64'));
+
+    //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(baseVault.publicKey))}`);
+    //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(quoteVault.publicKey))}`);
+
+    const requestQueue: PublicKey = new PublicKey(market.requestQueue);
+    const eventQueue: PublicKey = new PublicKey(market.eventQueue);
+    const bids: PublicKey = new PublicKey(market.bids);
+    const asks: PublicKey = new PublicKey(market.asks);
+
+    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(requestQueue))}`);
+    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(eventQueue))}`);
+    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bids))}`);
+    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(asks))}`);
+
     console.log('');
   }
 
+  /*
   for (const bot of simulation.bots) {
     console.log(`BOT: ${bot.name}`);
     console.log('');
   }
   */
 
-
-
-
+})().then(() => {
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
 
   /*
@@ -75,4 +95,4 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
   serumClient.subscribe();
   */
 
-})();
+});

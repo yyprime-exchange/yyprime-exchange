@@ -1,4 +1,5 @@
 import assert from 'assert';
+import { Buffer } from 'buffer';
 import { Keypair } from "@solana/web3.js";
 
 import PYTH_PRODUCTS from '../pyth/products.json';
