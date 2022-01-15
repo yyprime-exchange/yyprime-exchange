@@ -6,6 +6,8 @@ const simulator: Simulator = new Simulator(simulation);
 
 simulator.initialize();
 
-setInterval(() => {
-  simulator.process();
+let timerId = setTimeout(function process() {
+  simulator.onTime();
+
+  timerId = setTimeout(process, 1000);
 }, 1000);
