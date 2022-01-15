@@ -1,15 +1,15 @@
-import React from 'react';
-import { Button } from 'antd';
-import { LinkOutlined } from '@ant-design/icons';
+import React from 'react'
+import { Button } from 'antd'
+import { LinkOutlined } from '@ant-design/icons'
 
 export default function LinkAddress({
   title,
   address,
   shorten = false,
 }: {
-  title?: undefined | any;
-  address: string;
-  shorten?: boolean;
+  title?: undefined | any
+  address: string
+  shorten?: boolean
 }) {
   return (
     <div>
@@ -25,5 +25,5 @@ export default function LinkAddress({
         {shorten ? `${address.slice(0, 4)}...${address.slice(-4)}` : address}
       </Button>
     </div>
-  );
+  )
 }

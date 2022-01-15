@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
 html,body{
@@ -88,4 +88,4 @@ input[type=number]:focus::-webkit-inner-spin-button {
   -moz-animation: highlight 0.5s ease 0s 1 alternate ;
   -webkit-animation: highlight 0.5s ease 0s 1 alternate;
   animation: highlight 0.5s ease 0s 1 alternate;
-}`;
+}`

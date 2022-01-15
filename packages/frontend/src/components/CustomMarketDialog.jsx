@@ -1,84 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Modal, Row, Typography } from 'antd';
-import { notify } from '../utils/notifications';
-import { isValidPublicKey } from '../utils/utilsSerum';
-import { PublicKey } from '@solana/web3.js';
-import { Market, MARKETS, TOKEN_MINTS } from '@project-serum/serum';
-import { useAccountInfo, useConnection } from '../utils/connection';
-import { LoadingOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react'
+import { Col, Input, Modal, Row, Typography } from 'antd'
+import { notify } from '../utils/notifications'
+import { isValidPublicKey } from '../utils/utilsSerum'
+import { PublicKey } from '@solana/web3.js'
+import { Market, MARKETS, TOKEN_MINTS } from '@project-serum/serum'
+import { useAccountInfo, useConnection } from '../utils/connection'
+import { LoadingOutlined } from '@ant-design/icons'
 
-const { Text } = Typography;
+const { Text } = Typography
 
 export default function CustomMarketDialog({
   visible,
   onAddCustomMarket,
   onClose,
 }) {
-  const connection = useConnection();
+  const connection = useConnection()
 
-  const [marketId, setMarketId] = useState('');
+  const [marketId, setMarketId] = useState('')
 
-  const [marketLabel, setMarketLabel] = useState('');
-  const [baseLabel, setBaseLabel] = useState('');
-  const [quoteLabel, setQuoteLabel] = useState('');
+  const [marketLabel, setMarketLabel] = useState('')
+  const [baseLabel, setBaseLabel] = useState('')
+  const [quoteLabel, setQuoteLabel] = useState('')
 
-  const [market, setMarket] = useState(null);
-  const [loadingMarket, setLoadingMarket] = useState(false);
+  const [market, setMarket] = useState(null)
+  const [loadingMarket, setLoadingMarket] = useState(false)
 
-  const wellFormedMarketId = isValidPublicKey(marketId);
+  const wellFormedMarketId = isValidPublicKey(marketId)
 
   const [marketAccountInfo] = useAccountInfo(
-    wellFormedMarketId ? new PublicKey(marketId) : null,
-  );
+    wellFormedMarketId ? new PublicKey(marketId) : null
+  )
   const programId = marketAccountInfo
     ? marketAccountInfo.owner.toBase58()
-    : MARKETS.find(({ deprecated }) => !deprecated).programId.toBase58();
+    : MARKETS.find(({ deprecated }) => !deprecated).programId.toBase58()
 
   useEffect(() => {
     if (!wellFormedMarketId || !programId) {
-      resetLabels();
-      return;
+      resetLabels()
+      return
     }
-    setLoadingMarket(true);
+    setLoadingMarket(true)
     Market.load(
       connection,
       new PublicKey(marketId),
       {},
-      new PublicKey(programId),
+      new PublicKey(programId)
     )
       .then((market) => {
-        setMarket(market);
+        setMarket(market)
       })
       .catch(() => {
-        resetLabels();
-        setMarket(null);
+        resetLabels()
+        setMarket(null)
       })
-      .finally(() => setLoadingMarket(false));
+      .finally(() => setLoadingMarket(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connection, marketId, programId]);
+  }, [connection, marketId, programId])
 
   const resetLabels = () => {
-    setMarketLabel(null);
-    setBaseLabel(null);
-    setQuoteLabel(null);
-  };
+    setMarketLabel(null)
+    setBaseLabel(null)
+    setQuoteLabel(null)
+  }
 
   const knownMarket = MARKETS.find(
     (m) =>
-      m.address.toBase58() === marketId && m.programId.toBase58() === programId,
-  );
-  const knownProgram = MARKETS.find(
-    (m) => m.programId.toBase58() === programId,
-  );
+      m.address.toBase58() === marketId && m.programId.toBase58() === programId
+  )
+  const knownProgram = MARKETS.find((m) => m.programId.toBase58() === programId)
   const knownBaseCurrency =
     market?.baseMintAddress &&
     TOKEN_MINTS.find((token) => token.address.equals(market.baseMintAddress))
-      ?.name;
+      ?.name
 
   const knownQuoteCurrency =
     market?.quoteMintAddress &&
     TOKEN_MINTS.find((token) => token.address.equals(market.quoteMintAddress))
-      ?.name;
+      ?.name
 
   const canSubmit =
     !loadingMarket &&
@@ -89,38 +87,38 @@ export default function CustomMarketDialog({
     marketLabel &&
     (knownBaseCurrency || baseLabel) &&
     (knownQuoteCurrency || quoteLabel) &&
-    wellFormedMarketId;
+    wellFormedMarketId
 
   const onSubmit = () => {
     if (!canSubmit) {
       notify({
         message: 'Please fill in all fields with valid values',
         type: 'error',
-      });
-      return;
+      })
+      return
     }
 
     let params = {
       address: marketId,
       programId,
       name: marketLabel,
-    };
+    }
     if (!knownBaseCurrency) {
-      params.baseLabel = baseLabel;
+      params.baseLabel = baseLabel
     }
     if (!knownQuoteCurrency) {
-      params.quoteLabel = quoteLabel;
+      params.quoteLabel = quoteLabel
     }
-    onAddCustomMarket(params);
-    onDoClose();
-  };
+    onAddCustomMarket(params)
+    onDoClose()
+  }
 
   const onDoClose = () => {
-    resetLabels();
-    setMarket(null);
-    setMarketId(null);
-    onClose();
-  };
+    resetLabels()
+    setMarket(null)
+    setMarketId(null)
+    onClose()
+  }
 
   return (
     <Modal
@@ -215,5 +213,5 @@ export default function CustomMarketDialog({
         </Row>
       </div>
     </Modal>
-  );
+  )
 }

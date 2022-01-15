@@ -1,15 +1,15 @@
-import { Layout } from 'antd';
-import React, { useEffect } from 'react';
-import TopBar from './TopBar';
-import { CustomFooter as Footer } from './Footer';
-import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
-import { notify } from '../utils/notifications';
-const { Header, Content } = Layout;
+import { Layout } from 'antd'
+import React, { useEffect } from 'react'
+import TopBar from './TopBar'
+import { CustomFooter as Footer } from './Footer'
+import queryString from 'query-string'
+import { useLocation } from 'react-router-dom'
+import { notify } from '../utils/notifications'
+const { Header, Content } = Layout
 
 export default function BasicLayout({ children }) {
-  const { search } = useLocation();
-  const parsed = queryString.parse(search);
+  const { search } = useLocation()
+  const parsed = queryString.parse(search)
 
   return (
     <React.Fragment>
@@ -23,5 +23,5 @@ export default function BasicLayout({ children }) {
         <Footer />
       </Layout>
     </React.Fragment>
-  );
+  )
 }

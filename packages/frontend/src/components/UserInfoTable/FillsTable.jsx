@@ -1,11 +1,10 @@
-import React from 'react';
-import { Row, Col, Tag } from 'antd';
-import { useMarket } from '../../utils/markets';
-import DataTable from '../layout/DataTable';
+import React from 'react'
+import { Row, Col, Tag } from 'antd'
+import { useMarket } from '../../utils/markets'
+import DataTable from '../layout/DataTable'
 
 export default function FillsTable() {
-
-  const { quoteCurrency } = useMarket();
+  const { quoteCurrency } = useMarket()
 
   const columns = [
     {
@@ -46,13 +45,13 @@ export default function FillsTable() {
       dataIndex: 'feeCost',
       key: 'feeCost',
     },
-  ];
+  ]
 
-  const dataSource = ([]).map((fill) => ({
+  const dataSource = [].map((fill) => ({
     ...fill,
     key: `${fill.orderId}${fill.side}`,
     liquidity: fill.eventFlags.maker ? 'Maker' : 'Taker',
-  }));
+  }))
 
   return (
     <>
@@ -68,5 +67,5 @@ export default function FillsTable() {
         </Col>
       </Row>
     </>
-  );
+  )
 }

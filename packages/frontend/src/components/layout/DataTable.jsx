@@ -1,5 +1,5 @@
-import React from 'react';
-import { ConfigProvider, Table } from 'antd';
+import React from 'react'
+import { ConfigProvider, Table } from 'antd'
 
 export default function DataTable({
   dataSource,
@@ -20,7 +20,7 @@ export default function DataTable({
     >
       {emptyLabel}
     </div>
-  );
+  )
 
   return (
     <ConfigProvider renderEmpty={customizeRenderEmpty}>
@@ -31,5 +31,5 @@ export default function DataTable({
         loading={loading}
       />
     </ConfigProvider>
-  );
+  )
 }

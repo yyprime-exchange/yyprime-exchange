@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Typography } from 'antd';
+import React, { Component } from 'react'
+import { Typography } from 'antd'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 export default class ErrorBoundary extends Component {
   state = {
     hasError: false,
-  };
+  }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return { hasError: true }
   }
 
   render() {
@@ -21,9 +21,9 @@ export default class ErrorBoundary extends Component {
             <Title level={4}>Please try again later.</Title>
           </div>
         </div>
-      );
+      )
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }

@@ -1,13 +1,30 @@
-import {Market, MARKETS, OpenOrders, Orderbook, TOKEN_MINTS, TokenInstructions,} from '@project-serum/serum';
-import {PublicKey} from '@solana/web3.js';
-import React, {useContext, useEffect, useState} from 'react';
-import {divideBnToNumber, floorToDecimal, getTokenMultiplierFromDecimals, sleep, useLocalStorageState,} from './utilsSerum';
-import {refreshCache, useAsyncData} from './fetch-loop';
-import {useAccountData, useAccountInfo, useConnection} from './connection';
-import tuple from 'immutable-tuple';
-import {notify} from './notifications';
-import BN from 'bn.js';
-import {getTokenAccountInfo, parseTokenAccountData, useMintInfos,} from './tokens';
+import {
+  Market,
+  MARKETS,
+  OpenOrders,
+  Orderbook,
+  TOKEN_MINTS,
+  TokenInstructions,
+} from '@project-serum/serum'
+import { PublicKey } from '@solana/web3.js'
+import React, { useContext, useEffect, useState } from 'react'
+import {
+  divideBnToNumber,
+  floorToDecimal,
+  getTokenMultiplierFromDecimals,
+  sleep,
+  useLocalStorageState,
+} from './utilsSerum'
+import { refreshCache, useAsyncData } from './fetch-loop'
+import { useAccountData, useAccountInfo, useConnection } from './connection'
+import tuple from 'immutable-tuple'
+import { notify } from './notifications'
+import BN from 'bn.js'
+import {
+  getTokenAccountInfo,
+  parseTokenAccountData,
+  useMintInfos,
+} from './tokens'
 import {
   Balances,
   CustomMarketInfo,
@@ -18,31 +35,34 @@ import {
   OrderWithMarketAndMarketName,
   SelectedTokenAccounts,
   TokenAccount,
-} from './types';
-import {WRAPPED_SOL_MINT} from '@project-serum/serum/lib/token-instructions';
-import {Order} from '@project-serum/serum/lib/market';
-import BonfidaApi from './bonfidaConnector';
+} from './types'
+import { WRAPPED_SOL_MINT } from '@project-serum/serum/lib/token-instructions'
+import { Order } from '@project-serum/serum/lib/market'
+import BonfidaApi from './bonfidaConnector'
 
 // Used in debugging, should be false in production
-const _IGNORE_DEPRECATED = false;
+const _IGNORE_DEPRECATED = false
 
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
   ? MARKETS.map((m) => ({ ...m, deprecated: false }))
-  : MARKETS;
+  : MARKETS
 
 export function useMarketsList() {
-  return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
+  return USE_MARKETS.filter(
+    ({ name, deprecated }) =>
+      !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name)
+  )
 }
 
 export function useAllMarkets() {
-  const connection = useConnection();
-  const { customMarkets } = useCustomMarkets();
+  const connection = useConnection()
+  const { customMarkets } = useCustomMarkets()
 
   const getAllMarkets = async () => {
     const markets: Array<{
-      market: Market;
-      marketName: string;
-      programId: PublicKey;
+      market: Market
+      marketName: string
+      programId: PublicKey
     } | null> = await Promise.all(
       getMarketInfos(customMarkets).map(async (marketInfo) => {
         try {
@@ -50,75 +70,73 @@ export function useAllMarkets() {
             connection,
             marketInfo.address,
             {},
-            marketInfo.programId,
-          );
+            marketInfo.programId
+          )
           return {
             market,
             marketName: marketInfo.name,
             programId: marketInfo.programId,
-          };
+          }
         } catch (e) {
           notify({
             message: 'Error loading all market',
             description: e.message,
             type: 'error',
-          });
-          return null;
+          })
+          return null
         }
-      }),
-    );
+      })
+    )
     return markets.filter(
       (m): m is { market: Market; marketName: string; programId: PublicKey } =>
-        !!m,
-    );
-  };
+        !!m
+    )
+  }
   return useAsyncData(
     getAllMarkets,
     tuple('getAllMarkets', customMarkets.length, connection),
-    { refreshInterval: _VERY_SLOW_REFRESH_INTERVAL },
-  );
+    { refreshInterval: _VERY_SLOW_REFRESH_INTERVAL }
+  )
 }
 
+const MarketContext: React.Context<null | MarketContextValues> =
+  React.createContext<null | MarketContextValues>(null)
 
-const MarketContext: React.Context<null | MarketContextValues> = React.createContext<null | MarketContextValues>(
-  null,
-);
-
-const _VERY_SLOW_REFRESH_INTERVAL = 5000 * 1000;
+const _VERY_SLOW_REFRESH_INTERVAL = 5000 * 1000
 
 // For things that don't really change
-const _SLOW_REFRESH_INTERVAL = 5 * 1000;
+const _SLOW_REFRESH_INTERVAL = 5 * 1000
 
 // For things that change frequently
-const _FAST_REFRESH_INTERVAL = 1000;
+const _FAST_REFRESH_INTERVAL = 1000
 
 export const DEFAULT_MARKET = USE_MARKETS.find(
-  ({ name, deprecated }) => name === 'SRM/USDT' && !deprecated,
-);
+  ({ name, deprecated }) => name === 'SRM/USDT' && !deprecated
+)
 
 export function getMarketDetails(
   market: Market | undefined | null,
-  customMarkets: CustomMarketInfo[],
+  customMarkets: CustomMarketInfo[]
 ): FullMarketInfo {
   if (!market) {
-    return {};
+    return {}
   }
-  const marketInfos = getMarketInfos(customMarkets);
+  const marketInfos = getMarketInfos(customMarkets)
   const marketInfo = marketInfos.find((otherMarket) =>
-    otherMarket.address.equals(market.address),
-  );
+    otherMarket.address.equals(market.address)
+  )
   const baseCurrency =
     (market?.baseMintAddress &&
       TOKEN_MINTS.find((token) => token.address.equals(market.baseMintAddress))
         ?.name) ||
     (marketInfo?.baseLabel && `${marketInfo?.baseLabel}*`) ||
-    'UNKNOWN';
+    'UNKNOWN'
   const quoteCurrency =
     (market?.quoteMintAddress &&
       TOKEN_MINTS.find((token) => token.address.equals(market.quoteMintAddress))
         ?.name) ||
     (marketInfo?.quoteLabel && `${marketInfo?.quoteLabel}*`) ||
-    'UNKNOWN';
+    'UNKNOWN'
 
   return {
     ...marketInfo,
@@ -126,37 +144,37 @@ export function getMarketDetails(
     baseCurrency,
     quoteCurrency,
     marketInfo,
-  };
+  }
 }
 
 export function useCustomMarkets() {
   const [customMarkets, setCustomMarkets] = useLocalStorageState<
     CustomMarketInfo[]
-  >('customMarkets', []);
-  return { customMarkets, setCustomMarkets };
+  >('customMarkets', [])
+  return { customMarkets, setCustomMarkets }
 }
 
 export function MarketProvider({ marketAddress, setMarketAddress, children }) {
-  const { customMarkets, setCustomMarkets } = useCustomMarkets();
+  const { customMarkets, setCustomMarkets } = useCustomMarkets()
 
-  const address = marketAddress && new PublicKey(marketAddress);
-  const connection = useConnection();
-  const marketInfos = getMarketInfos(customMarkets);
+  const address = marketAddress && new PublicKey(marketAddress)
+  const connection = useConnection()
+  const marketInfos = getMarketInfos(customMarkets)
   const marketInfo =
-    address && marketInfos.find((market) => market.address.equals(address));
+    address && marketInfos.find((market) => market.address.equals(address))
 
   // Replace existing market with a non-deprecated one on first load
   useEffect(() => {
     if (marketInfo && marketInfo.deprecated) {
-      console.log('Switching markets from deprecated', marketInfo);
+      console.log('Switching markets from deprecated', marketInfo)
       if (DEFAULT_MARKET) {
-        setMarketAddress(DEFAULT_MARKET.address.toBase58());
+        setMarketAddress(DEFAULT_MARKET.address.toBase58())
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
-  const [market, setMarket] = useState<Market | null>();
+  const [market, setMarket] = useState<Market | null>()
   useEffect(() => {
     if (
       market &&
@@ -164,16 +182,16 @@ export function MarketProvider({ marketAddress, setMarketAddress, children }) {
       // @ts-ignore
       market._decoded.ownAddress?.equals(marketInfo?.address)
     ) {
-      return;
+      return
     }
-    setMarket(null);
+    setMarket(null)
     if (!marketInfo || !marketInfo.address) {
       notify({
         message: 'Error loading market',
         description: 'Please select a market from the dropdown',
         type: 'error',
-      });
-      return;
+      })
+      return
     }
     Market.load(connection, marketInfo.address, {}, marketInfo.programId)
       .then(setMarket)
@@ -182,10 +200,10 @@ export function MarketProvider({ marketAddress, setMarketAddress, children }) {
           message: 'Error loading market',
           description: e.message,
           type: 'error',
-        }),
-      );
+        })
+      )
     // eslint-disable-next-line
-  }, [connection, marketInfo]);
+  }, [connection, marketInfo])
 
   return (
     <MarketContext.Provider
@@ -199,78 +217,76 @@ export function MarketProvider({ marketAddress, setMarketAddress, children }) {
     >
       {children}
     </MarketContext.Provider>
-  );
+  )
 }
 
 export function getTradePageUrl(marketAddress?: string) {
   if (!marketAddress) {
-    const saved = localStorage.getItem('marketAddress');
+    const saved = localStorage.getItem('marketAddress')
     if (saved) {
-      marketAddress = JSON.parse(saved);
+      marketAddress = JSON.parse(saved)
     }
-    marketAddress = marketAddress || DEFAULT_MARKET?.address.toBase58() || '';
+    marketAddress = marketAddress || DEFAULT_MARKET?.address.toBase58() || ''
   }
-  return `/market/${marketAddress}`;
+  return `/market/${marketAddress}`
 }
 
 export function useSelectedTokenAccounts(): [
   SelectedTokenAccounts,
-  (newSelectedTokenAccounts: SelectedTokenAccounts) => void,
+  (newSelectedTokenAccounts: SelectedTokenAccounts) => void
 ] {
-  const [
-    selectedTokenAccounts,
-    setSelectedTokenAccounts,
-  ] = useLocalStorageState<SelectedTokenAccounts>('selectedTokenAccounts', {});
-  return [selectedTokenAccounts, setSelectedTokenAccounts];
+  const [selectedTokenAccounts, setSelectedTokenAccounts] =
+    useLocalStorageState<SelectedTokenAccounts>('selectedTokenAccounts', {})
+  return [selectedTokenAccounts, setSelectedTokenAccounts]
 }
 
 export function useMarket() {
-  const context = useContext(MarketContext);
+  const context = useContext(MarketContext)
   if (!context) {
-    throw new Error('Missing market context');
+    throw new Error('Missing market context')
   }
-  return context;
+  return context
 }
 
 export function useMarkPrice() {
-  const [markPrice, setMarkPrice] = useState<null | number>(null);
+  const [markPrice, setMarkPrice] = useState<null | number>(null)
 
-  const [orderbook] = useOrderbook();
-  const trades = useTrades();
+  const [orderbook] = useOrderbook()
+  const trades = useTrades()
 
   useEffect(() => {
-    let bb = orderbook?.bids?.length > 0 && Number(orderbook.bids[0][0]);
-    let ba = orderbook?.asks?.length > 0 && Number(orderbook.asks[0][0]);
-    let last = trades && trades.length > 0 && trades[0].price;
+    let bb = orderbook?.bids?.length > 0 && Number(orderbook.bids[0][0])
+    let ba = orderbook?.asks?.length > 0 && Number(orderbook.asks[0][0])
+    let last = trades && trades.length > 0 && trades[0].price
 
     let markPrice =
       bb && ba
         ? last
           ? [bb, ba, last].sort((a, b) => a - b)[1]
           : (bb + ba) / 2
-        : null;
+        : null
 
-    setMarkPrice(markPrice);
-  }, [orderbook, trades]);
+    setMarkPrice(markPrice)
+  }, [orderbook, trades])
 
-  return markPrice;
+  return markPrice
 }
 
 export function _useUnfilteredTrades(limit = 10000) {
-  const { market } = useMarket();
-  const connection = useConnection();
+  const { market } = useMarket()
+  const connection = useConnection()
   async function getUnfilteredTrades(): Promise<any[] | null> {
     if (!market || !connection) {
-      return null;
+      return null
     }
-    return await market.loadFills(connection, limit);
+    return await market.loadFills(connection, limit)
   }
   const [trades] = useAsyncData(
     getUnfilteredTrades,
     tuple('getUnfilteredTrades', market, connection),
-    { refreshInterval: _SLOW_REFRESH_INTERVAL },
-  );
-  return trades;
+    { refreshInterval: _SLOW_REFRESH_INTERVAL }
+  )
+  return trades
   // NOTE: For now, websocket is too expensive since the event queue is large
   // and updates very frequently
 
@@ -285,61 +301,59 @@ export function _useUnfilteredTrades(limit = 10000) {
 }
 
 export function useBonfidaTrades() {
-  const { market } = useMarket();
-  const marketAddress = market?.address.toBase58();
+  const { market } = useMarket()
+  const marketAddress = market?.address.toBase58()
 
   async function getBonfidaTrades() {
     if (!marketAddress) {
-      return null;
+      return null
     }
-    return await BonfidaApi.getRecentTrades(marketAddress);
+    return await BonfidaApi.getRecentTrades(marketAddress)
   }
 
   return useAsyncData(
     getBonfidaTrades,
     tuple('getBonfidaTrades', marketAddress),
     { refreshInterval: _SLOW_REFRESH_INTERVAL },
-    false,
-  );
+    false
+  )
 }
 
 export function useOrderbookAccounts() {
-  const { market } = useMarket();
+  const { market } = useMarket()
   // @ts-ignore
-  let bidData = useAccountData(market && market._decoded.bids);
+  let bidData = useAccountData(market && market._decoded.bids)
   // @ts-ignore
-  let askData = useAccountData(market && market._decoded.asks);
+  let askData = useAccountData(market && market._decoded.asks)
   return {
     bidOrderbook: market && bidData ? Orderbook.decode(market, bidData) : null,
     askOrderbook: market && askData ? Orderbook.decode(market, askData) : null,
-  };
+  }
 }
 
 export function useOrderbook(
-  depth = 20,
+  depth = 20
 ): [{ bids: number[][]; asks: number[][] }, boolean] {
-  const { bidOrderbook, askOrderbook } = useOrderbookAccounts();
-  const { market } = useMarket();
+  const { bidOrderbook, askOrderbook } = useOrderbookAccounts()
+  const { market } = useMarket()
   const bids =
     !bidOrderbook || !market
       ? []
-      : bidOrderbook.getL2(depth).map(([price, size]) => [price, size]);
+      : bidOrderbook.getL2(depth).map(([price, size]) => [price, size])
   const asks =
     !askOrderbook || !market
       ? []
-      : askOrderbook.getL2(depth).map(([price, size]) => [price, size]);
-  return [{ bids, asks }, !!bids || !!asks];
+      : askOrderbook.getL2(depth).map(([price, size]) => [price, size])
+  return [{ bids, asks }, !!bids || !!asks]
 }
-
-
 
 export function getSelectedTokenAccountForMint(
   accounts: TokenAccount[] | undefined | null,
   mint: PublicKey | undefined,
-  selectedPubKey?: string | PublicKey | null,
+  selectedPubKey?: string | PublicKey | null
 ) {
   if (!accounts || !mint) {
-    return null;
+    return null
   }
   const filtered = accounts.filter(
     ({ effectiveMint, pubkey }) =>
@@ -347,15 +361,15 @@ export function getSelectedTokenAccountForMint(
       (!selectedPubKey ||
         (typeof selectedPubKey === 'string'
           ? selectedPubKey
-          : selectedPubKey.toBase58()) === pubkey.toBase58()),
-  );
-  return filtered && filtered[0];
+          : selectedPubKey.toBase58()) === pubkey.toBase58())
+  )
+  return filtered && filtered[0]
 }
 
 export function useTrades(limit = 100) {
-  const trades = _useUnfilteredTrades(limit);
+  const trades = _useUnfilteredTrades(limit)
   if (!trades) {
-    return null;
+    return null
   }
   // Until partial fills are each given their own fill, use maker fills
   return trades
@@ -363,42 +377,39 @@ export function useTrades(limit = 100) {
     .map((trade) => ({
       ...trade,
       side: trade.side === 'buy' ? 'sell' : 'buy',
-    }));
+    }))
 }
 
 export function useLocallyStoredFeeDiscountKey(): {
-  storedFeeDiscountKey: PublicKey | undefined;
-  setStoredFeeDiscountKey: (key: string) => void;
+  storedFeeDiscountKey: PublicKey | undefined
+  setStoredFeeDiscountKey: (key: string) => void
 } {
-  const [
-    storedFeeDiscountKey,
-    setStoredFeeDiscountKey,
-  ] = useLocalStorageState<string>(`feeDiscountKey`, undefined);
+  const [storedFeeDiscountKey, setStoredFeeDiscountKey] =
+    useLocalStorageState<string>(`feeDiscountKey`, undefined)
   return {
     storedFeeDiscountKey: storedFeeDiscountKey
       ? new PublicKey(storedFeeDiscountKey)
       : undefined,
     setStoredFeeDiscountKey,
-  };
+  }
 }
 
-
 export function getMarketInfos(
-  customMarkets: CustomMarketInfo[],
+  customMarkets: CustomMarketInfo[]
 ): MarketInfo[] {
   const customMarketsInfo = customMarkets.map((m) => ({
     ...m,
     address: new PublicKey(m.address),
     programId: new PublicKey(m.programId),
     deprecated: false,
-  }));
+  }))
 
-  return [...customMarketsInfo, ...USE_MARKETS];
+  return [...customMarketsInfo, ...USE_MARKETS]
 }
 
 export function useMarketInfos() {
-  const { customMarkets } = useCustomMarkets();
-  return getMarketInfos(customMarkets);
+  const { customMarkets } = useCustomMarkets()
+  return getMarketInfos(customMarkets)
 }
 
 /**
@@ -414,60 +425,64 @@ export function useMarketInfos() {
 export function getMarketOrderPrice(
   orderbook: Orderbook,
   cost: number,
-  tickSizeDecimals?: number,
+  tickSizeDecimals?: number
 ) {
   if (orderbook.isBids) {
-    return orderbook.market.tickSize;
+    return orderbook.market.tickSize
   }
-  let spentCost = 0;
-  let price, sizeAtLevel, costAtLevel: number;
-  const asks = orderbook.getL2(1000);
+  let spentCost = 0
+  let price, sizeAtLevel, costAtLevel: number
+  const asks = orderbook.getL2(1000)
   for ([price, sizeAtLevel] of asks) {
-    costAtLevel = price * sizeAtLevel;
+    costAtLevel = price * sizeAtLevel
     if (spentCost + costAtLevel > cost) {
-      break;
+      break
     }
-    spentCost += costAtLevel;
+    spentCost += costAtLevel
   }
-  const sendPrice = Math.min(price * 1.02, asks[0][0] * 1.05);
-  let formattedPrice;
+  const sendPrice = Math.min(price * 1.02, asks[0][0] * 1.05)
+  let formattedPrice
   if (tickSizeDecimals) {
-    formattedPrice = floorToDecimal(sendPrice, tickSizeDecimals);
+    formattedPrice = floorToDecimal(sendPrice, tickSizeDecimals)
   } else {
-    formattedPrice = sendPrice;
+    formattedPrice = sendPrice
   }
-  return formattedPrice;
+  return formattedPrice
 }
 
 export function getExpectedFillPrice(
   orderbook: Orderbook,
   cost: number,
-  tickSizeDecimals?: number,
+  tickSizeDecimals?: number
 ) {
-  let spentCost = 0;
-  let avgPrice = 0;
-  let price, sizeAtLevel, costAtLevel: number;
+  let spentCost = 0
+  let avgPrice = 0
+  let price, sizeAtLevel, costAtLevel: number
   for ([price, sizeAtLevel] of orderbook.getL2(1000)) {
-    costAtLevel = (orderbook.isBids ? 1 : price) * sizeAtLevel;
+    costAtLevel = (orderbook.isBids ? 1 : price) * sizeAtLevel
     if (spentCost + costAtLevel > cost) {
-      avgPrice += (cost - spentCost) * price;
-      spentCost = cost;
-      break;
+      avgPrice += (cost - spentCost) * price
+      spentCost = cost
+      break
     }
-    avgPrice += costAtLevel * price;
-    spentCost += costAtLevel;
+    avgPrice += costAtLevel * price
+    spentCost += costAtLevel
   }
-  const totalAvgPrice = avgPrice / Math.min(cost, spentCost);
-  let formattedPrice;
+  const totalAvgPrice = avgPrice / Math.min(cost, spentCost)
+  let formattedPrice
   if (tickSizeDecimals) {
-    formattedPrice = floorToDecimal(totalAvgPrice, tickSizeDecimals);
+    formattedPrice = floorToDecimal(totalAvgPrice, tickSizeDecimals)
   } else {
-    formattedPrice = totalAvgPrice;
+    formattedPrice = totalAvgPrice
   }
-  return formattedPrice;
+  return formattedPrice
 }
 
-export function useCurrentlyAutoSettling(): [boolean, (currentlyAutoSettling: boolean) => void] {
-  const [currentlyAutoSettling, setCurrentlyAutosettling] = useState<boolean>(false);
-  return [currentlyAutoSettling, setCurrentlyAutosettling];
+export function useCurrentlyAutoSettling(): [
+  boolean,
+  (currentlyAutoSettling: boolean) => void
+] {
+  const [currentlyAutoSettling, setCurrentlyAutosettling] =
+    useState<boolean>(false)
+  return [currentlyAutoSettling, setCurrentlyAutosettling]
 }

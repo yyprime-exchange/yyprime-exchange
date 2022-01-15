@@ -1,122 +1,192 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "antd/dist/antd.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&display=swap');
 
-/* TailwindCSS fix for Antd Design Icon Alignment */
-svg { vertical-align: baseline; }
+  /* TailwindCSS fix for Antd Design Icon Alignment */ 
+  
+  svg {
+  vertical-align: baseline;
+}
 
 /* Increase native progress height */
-.ant-progress-bg{
-    background: #E9EDF9;
+.ant-progress-bg {
+  background: #e9edf9;
 }
 .ant-modal-content {
-    padding-bottom: 20px;
-    overflow: auto;
-    border-radius: 24px !important;
+  padding-bottom: 20px;
+  overflow: auto;
+  border-radius: 24px !important;
 }
-.ant-progress-text{
-    font-size: 12px !important;
+.ant-progress-text {
+  font-size: 12px !important;
 }
 
 /* Carousel Styling */
 .embla {
-    overflow: hidden;
+  overflow: hidden;
 }
 .embla__container {
-display: flex;
+  display: flex;
 }
 .embla__slide {
-position: relative;
-flex: 0 0 100%;
+  position: relative;
+  flex: 0 0 100%;
 }
 
-*{
-    font-family: 'Poppins', sans-serif;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-*, :after, :before {
-    box-sizing: border-box;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-.bg__yyprime{
-    position: fixed;
-    z-index: -1;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    overflow: hidden;
-    transform: translate3d(0px, 0px, 0px);
-    height: -webkit-fill-available;
-    background: #191919;
-    opacity: 0.15;
-    user-select: none;
-    pointer-events: none;
+.bg__yyprime {
+  position: fixed;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  overflow: hidden;
+  transform: translate3d(0px, 0px, 0px);
+  height: -webkit-fill-available;
+  background: #191919;
+  opacity: 0.15;
+  user-select: none;
+  pointer-events: none;
 }
 
-.launch__button{
-    background : -moz-linear-gradient(0% 50% 0deg,rgba(238, 50, 89, 1) 0.36%,rgba(238, 65, 106, 1) 13.51%,rgba(239, 82, 126, 1) 32.25%,rgba(185, 82, 138, 1) 47.88%,rgba(132, 83, 149, 1) 65.19%,rgba(93, 83, 157, 1) 80.22%,rgba(70, 83, 162, 1) 92.2%,rgba(61, 83, 164, 1) 99.64%);
-    background : -webkit-linear-gradient(0deg, rgba(238, 50, 89, 1) 0.36%, rgba(238, 65, 106, 1) 13.51%, rgba(239, 82, 126, 1) 32.25%, rgba(185, 82, 138, 1) 47.88%, rgba(132, 83, 149, 1) 65.19%, rgba(93, 83, 157, 1) 80.22%, rgba(70, 83, 162, 1) 92.2%, rgba(61, 83, 164, 1) 99.64%);
-    background : -webkit-gradient(linear,0% 50% ,100% 50% ,color-stop(0.0036,rgba(238, 50, 89, 1) ),color-stop(0.1351,rgba(238, 65, 106, 1) ),color-stop(0.3225,rgba(239, 82, 126, 1) ),color-stop(0.4788,rgba(185, 82, 138, 1) ),color-stop(0.6519,rgba(132, 83, 149, 1) ),color-stop(0.8022,rgba(93, 83, 157, 1) ),color-stop(0.922,rgba(70, 83, 162, 1) ),color-stop(0.9964,rgba(61, 83, 164, 1) ));
-    background : -o-linear-gradient(0deg, rgba(238, 50, 89, 1) 0.36%, rgba(238, 65, 106, 1) 13.51%, rgba(239, 82, 126, 1) 32.25%, rgba(185, 82, 138, 1) 47.88%, rgba(132, 83, 149, 1) 65.19%, rgba(93, 83, 157, 1) 80.22%, rgba(70, 83, 162, 1) 92.2%, rgba(61, 83, 164, 1) 99.64%);
-    background : -ms-linear-gradient(0deg, rgb(179, 109, 123) 0.36%, rgba(238, 65, 106, 1) 13.51%, rgba(239, 82, 126, 1) 32.25%, rgba(185, 82, 138, 1) 47.88%, rgba(132, 83, 149, 1) 65.19%, rgba(93, 83, 157, 1) 80.22%, rgba(70, 83, 162, 1) 92.2%, rgba(61, 83, 164, 1) 99.64%);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#EE3259', endColorstr='#3D53A4' ,GradientType=0)";
-    background : linear-gradient(90deg, rgba(238, 50, 89, 1) 0.36%, rgba(238, 65, 106, 1) 13.51%, rgba(239, 82, 126, 1) 32.25%, rgba(185, 82, 138, 1) 47.88%, rgba(132, 83, 149, 1) 65.19%, rgba(93, 83, 157, 1) 80.22%, rgba(70, 83, 162, 1) 92.2%, rgba(61, 83, 164, 1) 99.64%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EE3259',endColorstr='#3D53A4' , GradientType=1);
+.launch__button {
+  background: -moz-linear-gradient(
+    0% 50% 0deg,
+    rgba(238, 50, 89, 1) 0.36%,
+    rgba(238, 65, 106, 1) 13.51%,
+    rgba(239, 82, 126, 1) 32.25%,
+    rgba(185, 82, 138, 1) 47.88%,
+    rgba(132, 83, 149, 1) 65.19%,
+    rgba(93, 83, 157, 1) 80.22%,
+    rgba(70, 83, 162, 1) 92.2%,
+    rgba(61, 83, 164, 1) 99.64%
+  );
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(238, 50, 89, 1) 0.36%,
+    rgba(238, 65, 106, 1) 13.51%,
+    rgba(239, 82, 126, 1) 32.25%,
+    rgba(185, 82, 138, 1) 47.88%,
+    rgba(132, 83, 149, 1) 65.19%,
+    rgba(93, 83, 157, 1) 80.22%,
+    rgba(70, 83, 162, 1) 92.2%,
+    rgba(61, 83, 164, 1) 99.64%
+  );
+  background: -webkit-gradient(
+    linear,
+    0% 50%,
+    100% 50%,
+    color-stop(0.0036, rgba(238, 50, 89, 1)),
+    color-stop(0.1351, rgba(238, 65, 106, 1)),
+    color-stop(0.3225, rgba(239, 82, 126, 1)),
+    color-stop(0.4788, rgba(185, 82, 138, 1)),
+    color-stop(0.6519, rgba(132, 83, 149, 1)),
+    color-stop(0.8022, rgba(93, 83, 157, 1)),
+    color-stop(0.922, rgba(70, 83, 162, 1)),
+    color-stop(0.9964, rgba(61, 83, 164, 1))
+  );
+  background: -o-linear-gradient(
+    0deg,
+    rgba(238, 50, 89, 1) 0.36%,
+    rgba(238, 65, 106, 1) 13.51%,
+    rgba(239, 82, 126, 1) 32.25%,
+    rgba(185, 82, 138, 1) 47.88%,
+    rgba(132, 83, 149, 1) 65.19%,
+    rgba(93, 83, 157, 1) 80.22%,
+    rgba(70, 83, 162, 1) 92.2%,
+    rgba(61, 83, 164, 1) 99.64%
+  );
+  background: -ms-linear-gradient(
+    0deg,
+    rgb(179, 109, 123) 0.36%,
+    rgba(238, 65, 106, 1) 13.51%,
+    rgba(239, 82, 126, 1) 32.25%,
+    rgba(185, 82, 138, 1) 47.88%,
+    rgba(132, 83, 149, 1) 65.19%,
+    rgba(93, 83, 157, 1) 80.22%,
+    rgba(70, 83, 162, 1) 92.2%,
+    rgba(61, 83, 164, 1) 99.64%
+  );
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#EE3259', endColorstr='#3D53A4' ,GradientType=0)";
+  background: linear-gradient(
+    90deg,
+    rgba(238, 50, 89, 1) 0.36%,
+    rgba(238, 65, 106, 1) 13.51%,
+    rgba(239, 82, 126, 1) 32.25%,
+    rgba(185, 82, 138, 1) 47.88%,
+    rgba(132, 83, 149, 1) 65.19%,
+    rgba(93, 83, 157, 1) 80.22%,
+    rgba(70, 83, 162, 1) 92.2%,
+    rgba(61, 83, 164, 1) 99.64%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EE3259',endColorstr='#3D53A4' , GradientType=1);
 }
-@layer components{
-    .headerLink{
-        @apply px-4;
-    }
-    .is-activeLink{
-        @apply text-white bg-red rounded-md px-2 hover:text-white;
-    }
-    .table__title{
-        @apply text-red text-base font-semibold;
-    }
-    .disconnect__button{
-        @apply launch__button inline-flex items-center justify-center h-10 text-sm font-medium text-white rounded-xl;
-    }
-    .main__button{
-        @apply launch__button inline-flex items-center justify-center h-10 px-6 text-base font-medium text-white rounded-xl hover:shadow-lg transition duration-500 transform hover:scale-105;
-    }
-    .walletConnect__button{
-        @apply launch__button inline-flex items-center justify-center h-10 px-4 text-sm font-medium text-white rounded-xl hover:shadow-lg transition duration-500 transform hover:scale-105;
-    }
-    .db__button{
-        @apply inline-flex items-center justify-center h-10 px-6 text-base font-medium text-white rounded-xl hover:shadow-lg transition duration-500 transform hover:scale-105;
-    }
-    .text-gradient {
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    .steaking-gradient{
-        @apply text-gradient bg-gradient-to-r from-red to-yellow;
-    }
-    .bg__yellow{
-        @apply bg-yellow;
-    }
-    .title__badge--red{
-        @apply inline-block px-2 py-px text-sm font-semibold text-white uppercase rounded-full bg-red;
-    }
-    .centered__message--darkgray{
-        @apply mx-auto my-5 text-2xl font-bold text-darkgray sm:text-3xl md:text-6xl md:leading-normal;
-    }
-    .feature__icon{
-        @apply flex items-center justify-center my-5 w-16 h-16 rounded-full bg-red;
-    }
-    .feature__title{
-        @apply mb-3 text-2xl font-bold leading-5;
-    }
-    .feature__paragraph{
-        @apply mb-3 text-base md:text-lg whitespace-pre-wrap text-darkgray;
-    }
-    .step__paragraph{
-        @apply text-base text-darkgray;
-    }
-    .footer__link{
-        @apply text-xs;
-    }
+@layer components {
+  .headerLink {
+    @apply px-4;
+  }
+  .is-activeLink {
+    @apply text-white bg-red rounded-md px-2 hover:text-white;
+  }
+  .table__title {
+    @apply text-red text-base font-semibold;
+  }
+  .disconnect__button {
+    @apply launch__button inline-flex items-center justify-center h-10 text-sm font-medium text-white rounded-xl;
+  }
+  .main__button {
+    @apply launch__button inline-flex items-center justify-center h-10 px-6 text-base font-medium text-white rounded-xl hover:shadow-lg transition duration-500 transform hover:scale-105;
+  }
+  .walletConnect__button {
+    @apply launch__button inline-flex items-center justify-center h-10 px-4 text-sm font-medium text-white rounded-xl hover:shadow-lg transition duration-500 transform hover:scale-105;
+  }
+  .db__button {
+    @apply inline-flex items-center justify-center h-10 px-6 text-base font-medium text-white rounded-xl hover:shadow-lg transition duration-500 transform hover:scale-105;
+  }
+  .text-gradient {
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .steaking-gradient {
+    @apply text-gradient bg-gradient-to-r from-red to-yellow;
+  }
+  .bg__yellow {
+    @apply bg-yellow;
+  }
+  .title__badge--red {
+    @apply inline-block px-2 py-px text-sm font-semibold text-white uppercase rounded-full bg-red;
+  }
+  .centered__message--darkgray {
+    @apply mx-auto my-5 text-2xl font-bold text-darkgray sm:text-3xl md:text-6xl md:leading-normal;
+  }
+  .feature__icon {
+    @apply flex items-center justify-center my-5 w-16 h-16 rounded-full bg-red;
+  }
+  .feature__title {
+    @apply mb-3 text-2xl font-bold leading-5;
+  }
+  .feature__paragraph {
+    @apply mb-3 text-base md:text-lg whitespace-pre-wrap text-darkgray;
+  }
+  .step__paragraph {
+    @apply text-base text-darkgray;
+  }
+  .footer__link {
+    @apply text-xs;
+  }
 }

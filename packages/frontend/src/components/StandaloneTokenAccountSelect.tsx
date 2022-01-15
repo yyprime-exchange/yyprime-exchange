@@ -1,32 +1,30 @@
-import React from 'react';
-import { TokenAccount } from '../utils/types';
-import { useSelectedTokenAccounts } from '../utils/markets';
-import { Button, Col, Select, Typography } from 'antd';
-import { CopyOutlined } from '@ant-design/icons';
-import { abbreviateAddress } from '../utils/utilsSerum';
-import { notify } from '../utils/notifications';
+import React from 'react'
+import { TokenAccount } from '../utils/types'
+import { useSelectedTokenAccounts } from '../utils/markets'
+import { Button, Col, Select, Typography } from 'antd'
+import { CopyOutlined } from '@ant-design/icons'
+import { abbreviateAddress } from '../utils/utilsSerum'
+import { notify } from '../utils/notifications'
 
 export default function StandaloneTokenAccountsSelect({
   accounts,
   mint,
   label,
 }: {
-  accounts: TokenAccount[] | null | undefined;
-  mint: string | undefined;
-  label?: boolean;
+  accounts: TokenAccount[] | null | undefined
+  mint: string | undefined
+  label?: boolean
 }) {
-  const [
-    selectedTokenAccounts,
-    setSelectedTokenAccounts,
-  ] = useSelectedTokenAccounts();
+  const [selectedTokenAccounts, setSelectedTokenAccounts] =
+    useSelectedTokenAccounts()
 
-  let selectedValue: string | undefined;
+  let selectedValue: string | undefined
   if (mint && mint in selectedTokenAccounts) {
-    selectedValue = selectedTokenAccounts[mint];
+    selectedValue = selectedTokenAccounts[mint]
   } else if (accounts && accounts?.length > 0) {
-    selectedValue = accounts[0].pubkey.toBase58();
+    selectedValue = accounts[0].pubkey.toBase58()
   } else {
-    selectedValue = undefined;
+    selectedValue = undefined
   }
 
   const setTokenAccountForCoin = (value) => {
@@ -35,13 +33,13 @@ export default function StandaloneTokenAccountsSelect({
         message: 'Error selecting token account',
         description: 'Mint is undefined',
         type: 'error',
-      });
-      return;
+      })
+      return
     }
-    const newSelectedTokenAccounts = { ...selectedTokenAccounts };
-    newSelectedTokenAccounts[mint] = value;
-    setSelectedTokenAccounts(newSelectedTokenAccounts);
-  };
+    const newSelectedTokenAccounts = { ...selectedTokenAccounts }
+    newSelectedTokenAccounts[mint] = value
+    setSelectedTokenAccounts(newSelectedTokenAccounts)
+  }
 
   return (
     <React.Fragment>
@@ -67,15 +65,15 @@ export default function StandaloneTokenAccountsSelect({
         </Select>
       </Col>
       <Col span={2} offset={1}>
-        <Button
+        {/* <Button
           shape="round"
           icon={<CopyOutlined />}
           size={'small'}
           onClick={() =>
             selectedValue && navigator.clipboard.writeText(selectedValue)
           }
-        />
+        /> */}
       </Col>
     </React.Fragment>
-  );
+  )
 }

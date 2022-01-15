@@ -1,26 +1,26 @@
-import { Col, Row } from 'antd';
-import React, { useRef, useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
-import { useMarket, useOrderbook, useMarkPrice } from '../utils/markets';
-import { isEqual, getDecimalCount } from '../utils/utilsSerum';
-import { useInterval } from '../utils/useInterval';
-import FloatingElement from './layout/FloatingElement';
-import usePrevious from '../utils/usePrevious';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { Col, Row } from 'antd'
+import React, { useRef, useEffect, useState } from 'react'
+import styled, { css } from 'styled-components'
+import { useMarket, useOrderbook, useMarkPrice } from '../utils/markets'
+import { isEqual, getDecimalCount } from '../utils/utilsSerum'
+import { useInterval } from '../utils/useInterval'
+import FloatingElement from './layout/FloatingElement'
+import usePrevious from '../utils/usePrevious'
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 
 const Title = styled.div`
   color: rgba(255, 255, 255, 1);
-`;
+`
 
 const SizeTitle = styled(Row)`
   padding: 20px 0 14px;
   color: #434a59;
-`;
+`
 
 const MarkPriceTitle = styled(Row)`
   padding: 20px 0 14px;
   font-weight: 700;
-`;
+`
 
 const Line = styled.div`
   text-align: right;
@@ -36,23 +36,23 @@ const Line = styled.div`
     css`
       background-color: ${props['data-bgcolor']};
     `}
-`;
+`
 
 const Price = styled.div`
   position: absolute;
   right: 5px;
   color: white;
-`;
+`
 
 export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
-  const markPrice = useMarkPrice();
-  const [orderbook] = useOrderbook();
-  const { baseCurrency, quoteCurrency } = useMarket();
+  const markPrice = useMarkPrice()
+  const [orderbook] = useOrderbook()
+  const { baseCurrency, quoteCurrency } = useMarket()
 
-  const currentOrderbookData = useRef(null);
-  const lastOrderbookData = useRef(null);
+  const currentOrderbookData = useRef(null)
+  const lastOrderbookData = useRef(null)
 
-  const [orderbookData, setOrderbookData] = useState(null);
+  const [orderbookData, setOrderbookData] = useState(null)
 
   useInterval(() => {
     if (
@@ -60,49 +60,49 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
       JSON.stringify(currentOrderbookData.current) !==
         JSON.stringify(lastOrderbookData.current)
     ) {
-      let bids = orderbook?.bids || [];
-      let asks = orderbook?.asks || [];
+      let bids = orderbook?.bids || []
+      let asks = orderbook?.asks || []
 
       let sum = (total, [, size], index) =>
-        index < depth ? total + size : total;
-      let totalSize = bids.reduce(sum, 0) + asks.reduce(sum, 0);
+        index < depth ? total + size : total
+      let totalSize = bids.reduce(sum, 0) + asks.reduce(sum, 0)
 
-      let bidsToDisplay = getCumulativeOrderbookSide(bids, totalSize, false);
-      let asksToDisplay = getCumulativeOrderbookSide(asks, totalSize, true);
+      let bidsToDisplay = getCumulativeOrderbookSide(bids, totalSize, false)
+      let asksToDisplay = getCumulativeOrderbookSide(asks, totalSize, true)
 
       currentOrderbookData.current = {
         bids: orderbook?.bids,
         asks: orderbook?.asks,
-      };
+      }
 
-      setOrderbookData({ bids: bidsToDisplay, asks: asksToDisplay });
+      setOrderbookData({ bids: bidsToDisplay, asks: asksToDisplay })
     }
-  }, 250);
+  }, 250)
 
   useEffect(() => {
     lastOrderbookData.current = {
       bids: orderbook?.bids,
       asks: orderbook?.asks,
-    };
-  }, [orderbook]);
+    }
+  }, [orderbook])
 
   function getCumulativeOrderbookSide(orders, totalSize, backwards = false) {
     let cumulative = orders
       .slice(0, depth)
       .reduce((cumulative, [price, size], i) => {
-        const cumulativeSize = (cumulative[i - 1]?.cumulativeSize || 0) + size;
+        const cumulativeSize = (cumulative[i - 1]?.cumulativeSize || 0) + size
         cumulative.push({
           price,
           size,
           cumulativeSize,
           sizePercent: Math.round((cumulativeSize / (totalSize || 1)) * 100),
-        });
-        return cumulative;
-      }, []);
+        })
+        return cumulative
+      }, [])
     if (backwards) {
-      cumulative = cumulative.reverse();
+      cumulative = cumulative.reverse()
     }
-    return cumulative;
+    return cumulative
   }
 
   return (
@@ -144,37 +144,37 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
         />
       ))}
     </FloatingElement>
-  );
+  )
 }
 
 const OrderbookRow = React.memo(
   ({ side, price, size, sizePercent, onSizeClick, onPriceClick }) => {
-    const element = useRef();
+    const element = useRef()
 
-    const { market } = useMarket();
+    const { market } = useMarket()
 
     useEffect(() => {
       // eslint-disable-next-line
       !element.current?.classList.contains('flash') &&
-        element.current?.classList.add('flash');
+        element.current?.classList.add('flash')
       const id = setTimeout(
         () =>
           element.current?.classList.contains('flash') &&
           element.current?.classList.remove('flash'),
-        250,
-      );
-      return () => clearTimeout(id);
-    }, [price, size]);
+        250
+      )
+      return () => clearTimeout(id)
+    }, [price, size])
 
     let formattedSize =
       market?.minOrderSize && !isNaN(size)
         ? Number(size).toFixed(getDecimalCount(market.minOrderSize) + 1)
-        : size;
+        : size
 
     let formattedPrice =
       market?.tickSize && !isNaN(price)
         ? Number(price).toFixed(getDecimalCount(market.tickSize) + 1)
-        : price;
+        : price
 
     return (
       <Row ref={element} style={{ marginBottom: 1 }} onClick={onSizeClick}>
@@ -193,28 +193,28 @@ const OrderbookRow = React.memo(
           <Price onClick={onPriceClick}>{formattedPrice}</Price>
         </Col>
       </Row>
-    );
+    )
   },
   (prevProps, nextProps) =>
-    isEqual(prevProps, nextProps, ['price', 'size', 'sizePercent']),
-);
+    isEqual(prevProps, nextProps, ['price', 'size', 'sizePercent'])
+)
 
 const MarkPriceComponent = React.memo(
   ({ markPrice }) => {
-    const { market } = useMarket();
-    const previousMarkPrice = usePrevious(markPrice);
+    const { market } = useMarket()
+    const previousMarkPrice = usePrevious(markPrice)
 
     let markPriceColor =
       markPrice > previousMarkPrice
         ? '#41C77A'
         : markPrice < previousMarkPrice
         ? '#F23B69'
-        : 'white';
+        : 'white'
 
     let formattedMarkPrice =
       markPrice &&
       market?.tickSize &&
-      markPrice.toFixed(getDecimalCount(market.tickSize));
+      markPrice.toFixed(getDecimalCount(market.tickSize))
 
     return (
       <MarkPriceTitle justify="center">
@@ -228,7 +228,7 @@ const MarkPriceComponent = React.memo(
           {formattedMarkPrice || '----'}
         </Col>
       </MarkPriceTitle>
-    );
+    )
   },
-  (prevProps, nextProps) => isEqual(prevProps, nextProps, ['markPrice']),
-);
+  (prevProps, nextProps) => isEqual(prevProps, nextProps, ['markPrice'])
+)

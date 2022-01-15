@@ -1,14 +1,14 @@
-import "../App.css";
-import Header from "../components/Navigation/header";
-import { PriceStatus } from "@pythnetwork/client";
-import sigFigs from "../utils/sigFigs";
-import { Button, Col, Row, Table } from "antd";
-import { useContext, useEffect, useMemo } from "react";
-import usePyth from "../hooks/usePyth";
-import { PythContext } from "../contexts/pyth";
+import '../App.css'
+import Header from '../components/Navigation/header'
+import { PriceStatus } from '@pythnetwork/client'
+import sigFigs from '../utils/sigFigs'
+import { Button, Col, Row, Table } from 'antd'
+import { useContext, useEffect, useMemo } from 'react'
+import usePyth from '../hooks/usePyth'
+import { PythContext } from '../contexts/pyth'
 
 const columns = [
-  { title: "Symbol", dataIndex: ["symbol"] },
+  { title: 'Symbol', dataIndex: ['symbol'] },
   // { title: "Asset Type", dataIndex: ["product", "asset_type"] },
   // {
   //   title: "Status",
@@ -21,9 +21,9 @@ const columns = [
   //   render: (value: BigInt) => value.toString(),
   // },
   {
-    title: "Price",
-    dataIndex: ["price"],
-    align: "right" as "right",
+    title: 'Price',
+    dataIndex: ['price'],
+    align: 'right' as 'right',
     render: (value: number) => `$${sigFigs(value)}`,
   },
   // {
@@ -32,15 +32,15 @@ const columns = [
   //   align: "right" as "right",
   //   render: (value: number) => `\xB1$${sigFigs(value)}`,
   // },
-];
+]
 function Simulator() {
-  const {} = usePyth();
+  const {} = usePyth()
 
-  const [priceState, _] = useContext(PythContext);
+  const [priceState, _] = useContext(PythContext)
 
   useEffect(() => {
-    console.log("price changed");
-  }, [priceState.pricingMap]);
+    console.log('price changed')
+  }, [priceState.pricingMap])
 
   return (
     // <div className='max-h bg-gray-600'>
@@ -71,7 +71,7 @@ function Simulator() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {priceState.pricingMap &&
                     Object.keys(priceState.pricingMap).map((key) => (
-                      <tr key = {key}>
+                      <tr key={key}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10"></div>
@@ -94,7 +94,7 @@ function Simulator() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Simulator;
+export default Simulator

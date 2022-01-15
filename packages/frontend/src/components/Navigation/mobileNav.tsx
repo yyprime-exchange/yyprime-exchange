@@ -1,13 +1,13 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { RiMoreLine } from "react-icons/ri";
+import { RiMoreLine } from 'react-icons/ri'
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    NavLink
-  } from "react-router-dom";
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+} from 'react-router-dom'
 
 export default function MobileNav() {
   return (
@@ -15,7 +15,7 @@ export default function MobileNav() {
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="flex flex-col items-center justify-center w-full font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            <RiMoreLine className="text-2xl text-darkgray"/>
+            <RiMoreLine className="text-2xl text-darkgray" />
           </Menu.Button>
         </div>
         <Transition
@@ -36,7 +36,13 @@ export default function MobileNav() {
                       active ? 'text-darkgray' : 'text-gray-900'
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                   >
-                    <NavLink exact={true} activeClassName="is-activeLink" to="/">Simulator</NavLink>
+                    <NavLink
+                      exact={true}
+                      activeClassName="is-activeLink"
+                      to="/"
+                    >
+                      Simulator
+                    </NavLink>
                   </button>
                 )}
               </Menu.Item>
@@ -58,4 +64,3 @@ export default function MobileNav() {
     </div>
   )
 }
-

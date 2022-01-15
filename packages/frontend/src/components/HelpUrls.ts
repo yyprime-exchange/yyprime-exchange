@@ -7,4 +7,4 @@ export const helpUrls = {
   github: 'https://github.com/project-serum',
   yyprime: 'https://projectserum.com/',
   solanaBeach: 'https://solanabeach.io',
-};
+}

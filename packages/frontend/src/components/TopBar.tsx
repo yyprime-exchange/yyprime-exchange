@@ -2,21 +2,22 @@ import {
   InfoCircleOutlined,
   PlusCircleOutlined,
   SettingOutlined,
-} from '@ant-design/icons';
-import { Button, Col, Menu, Popover, Row, Select } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.svg';
-import styled from 'styled-components';
-import { ENDPOINTS, useConnectionConfig } from '../utils/connection';
+} from '@ant-design/icons'
+import { Button, Col, Menu, Popover, Row, Select } from 'antd'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+
+import styled from 'styled-components'
+import { ENDPOINTS, useConnectionConfig } from '../utils/connection'
 // import Settings from './Settings';
-import CustomClusterEndpointDialog from './CustomClusterEndpointDialog';
-import { EndpointInfo } from '../utils/types';
-import { notify } from '../utils/notifications';
-import { Connection } from '@solana/web3.js';
+import CustomClusterEndpointDialog from './CustomClusterEndpointDialog'
+import { EndpointInfo } from '../utils/types'
+import { notify } from '../utils/notifications'
+import { Connection } from '@solana/web3.js'
 // import WalletConnect from './WalletConnect';
-import AppSearch from './AppSearch';
-import { getTradePageUrl } from '../utils/markets';
+import { getTradePageUrl } from '../utils/markets'
+// import  { ReactComponent as logo } from '../assets/logo.svg';
+const logo = require('../assets/logo.svg') as string
 
 const Wrapper = styled.div`
   background-color: #0d1017;
@@ -25,7 +26,7 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   padding: 0px 30px;
   flex-wrap: wrap;
-`;
+`
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -36,10 +37,11 @@ const LogoWrapper = styled.div`
     height: 30px;
     margin-right: 8px;
   }
-`;
+`
 
 const EXTERNAL_LINKS = {
-  '/learn': 'https://docs.projectserum.com/trade-on-serum-dex/trade-on-serum-dex-1',
+  '/learn':
+    'https://docs.projectserum.com/trade-on-serum-dex/trade-on-serum-dex-1',
   '/add-market': 'https://serum-academy.com/en/add-market/',
   '/wallet-support': 'https://serum-academy.com/en/wallet-support',
   '/dex-list': 'https://serum-academy.com/en/dex-list/',
@@ -47,7 +49,7 @@ const EXTERNAL_LINKS = {
   '/explorer': 'https://solscan.io',
   '/srm-faq': 'https://projectserum.com/srm-faq',
   '/swap': 'https://swap.projectserum.com',
-};
+}
 
 export default function TopBar() {
   // const { connected, wallet } = useWallet();
@@ -57,78 +59,78 @@ export default function TopBar() {
     setEndpoint,
     availableEndpoints,
     setCustomEndpoints,
-  } = useConnectionConfig();
-  const [addEndpointVisible, setAddEndpointVisible] = useState(false);
-  const [testingConnection, setTestingConnection] = useState(false);
-  const location = useLocation();
-  const history = useHistory();
-  const [searchFocussed, setSearchFocussed] = useState(false);
+  } = useConnectionConfig()
+  const [addEndpointVisible, setAddEndpointVisible] = useState(false)
+  const [testingConnection, setTestingConnection] = useState(false)
+  const location = useLocation()
+  const history = useHistory()
+  const [searchFocussed, setSearchFocussed] = useState(false)
 
   const handleClick = useCallback(
     (e) => {
       if (!(e.key in EXTERNAL_LINKS)) {
-        history.push(e.key);
+        history.push(e.key)
       }
     },
-    [history],
-  );
+    [history]
+  )
 
   const onAddCustomEndpoint = (info: EndpointInfo) => {
     const existingEndpoint = availableEndpoints.some(
-      (e) => e.endpoint === info.endpoint,
-    );
+      (e) => e.endpoint === info.endpoint
+    )
     if (existingEndpoint) {
       notify({
         message: `An endpoint with the given url already exists`,
         type: 'error',
-      });
-      return;
+      })
+      return
     }
 
     const handleError = (e) => {
-      console.log(`Connection to ${info.endpoint} failed: ${e}`);
+      console.log(`Connection to ${info.endpoint} failed: ${e}`)
       notify({
         message: `Failed to connect to ${info.endpoint}`,
         type: 'error',
-      });
-    };
+      })
+    }
 
     try {
-      const connection = new Connection(info.endpoint, 'recent');
+      const connection = new Connection(info.endpoint, 'recent')
       connection
         .getBlockTime(0)
         .then(() => {
-          setTestingConnection(true);
-          console.log(`testing connection to ${info.endpoint}`);
+          setTestingConnection(true)
+          console.log(`testing connection to ${info.endpoint}`)
           const newCustomEndpoints = [
             ...availableEndpoints.filter((e) => e.custom),
             info,
-          ];
-          setEndpoint(info.endpoint);
-          setCustomEndpoints(newCustomEndpoints);
+          ]
+          setEndpoint(info.endpoint)
+          setCustomEndpoints(newCustomEndpoints)
         })
-        .catch(handleError);
+        .catch(handleError)
     } catch (e) {
-      handleError(e);
+      handleError(e)
     } finally {
-      setTestingConnection(false);
+      setTestingConnection(false)
     }
-  };
+  }
 
-  const endpointInfoCustom = endpointInfo && endpointInfo.custom;
+  const endpointInfoCustom = endpointInfo && endpointInfo.custom
   useEffect(() => {
     const handler = () => {
       if (endpointInfoCustom) {
-        setEndpoint(ENDPOINTS[0].endpoint);
+        setEndpoint(ENDPOINTS[0].endpoint)
       }
-    };
-    window.addEventListener('beforeunload', handler);
-    return () => window.removeEventListener('beforeunload', handler);
-  }, [endpointInfoCustom, setEndpoint]);
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [endpointInfoCustom, setEndpoint])
 
   const tradePageUrl = location.pathname.startsWith('/market/')
     ? location.pathname
-    : getTradePageUrl();
+    : getTradePageUrl()
 
   return (
     <>
@@ -158,7 +160,7 @@ export default function TopBar() {
           <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
             TRADE
           </Menu.Item>
- 
+
           {/* {connected && (!searchFocussed || location.pathname === '/balances') && (
             <Menu.Item key="/balances" style={{ margin: '0 10px' }}>
               BALANCES
@@ -181,20 +183,7 @@ export default function TopBar() {
           )}
            */}
         </Menu>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingRight: 5,
-          }}
-        >
-          <AppSearch
-            onFocus={() => setSearchFocussed(true)}
-            onBlur={() => setSearchFocussed(false)}
-            focussed={searchFocussed}
-            width={searchFocussed ? '350px' : '35px'}
-          />
-        </div>
+    
         <div>
           <Row
             align="middle"
@@ -247,10 +236,8 @@ export default function TopBar() {
             </Popover>
           </div>
         )} */}
-        <div>
-          {/* <WalletConnect /> */}
-        </div>
+        <div>{/* <WalletConnect /> */}</div>
       </Wrapper>
     </>
-  );
+  )
 }

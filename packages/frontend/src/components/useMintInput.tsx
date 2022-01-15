@@ -1,35 +1,35 @@
-import { PublicKey } from '@solana/web3.js';
-import React, { ReactElement, useMemo, useState } from 'react';
-import { useAccountInfo } from '../utils/connection';
-import { isValidPublicKey } from '../utils/utilsSerum';
-import { ValidateStatus } from 'antd/lib/form/FormItem';
-import { TokenInstructions } from '@project-serum/serum';
-import { parseTokenMintData, useMintToTickers } from '../utils/tokens';
-import { AutoComplete, Form, Tooltip } from 'antd';
-import Link from './Link';
+import { PublicKey } from '@solana/web3.js'
+import React, { ReactElement, useMemo, useState } from 'react'
+import { useAccountInfo } from '../utils/connection'
+import { isValidPublicKey } from '../utils/utilsSerum'
+import { ValidateStatus } from 'antd/lib/form/FormItem'
+import { TokenInstructions } from '@project-serum/serum'
+import { parseTokenMintData, useMintToTickers } from '../utils/tokens'
+import { AutoComplete, Form, Tooltip } from 'antd'
+import Link from './Link'
 
 export interface MintInfo {
-  address: PublicKey;
-  decimals: number;
+  address: PublicKey
+  decimals: number
 }
 
 export function useMintInput(
   name,
   label: string | ReactElement,
-  tooltip?: string | ReactElement,
+  tooltip?: string | ReactElement
 ): [ReactElement, MintInfo | null] {
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState('')
   const [accountInfo, loaded] = useAccountInfo(
-    isValidPublicKey(address) ? new PublicKey(address) : null,
-  );
+    isValidPublicKey(address) ? new PublicKey(address) : null
+  )
 
-  const mintToTickers = useMintToTickers();
+  const mintToTickers = useMintToTickers()
   const options = useMemo(() => {
     return Object.entries(mintToTickers)
       .filter(
         ([mintAddress, ticker]) =>
           mintAddress.includes(address) ||
-          ticker.toLowerCase().includes(address.toLowerCase()),
+          ticker.toLowerCase().includes(address.toLowerCase())
       )
       .map(([mintAddress, ticker]) => ({
         value: mintAddress,
@@ -38,45 +38,45 @@ export function useMintInput(
             {ticker} ({mintAddress})
           </>
         ),
-      }));
-  }, [mintToTickers, address]);
+      }))
+  }, [mintToTickers, address])
 
   const { validateStatus, hasFeedback, help, mintInfo } = useMemo(() => {
-    let validateStatus: ValidateStatus = '';
-    let hasFeedback = false;
-    let help: string | null = null;
-    let mintInfo: MintInfo | null = null;
+    let validateStatus: ValidateStatus = ''
+    let hasFeedback = false
+    let help: string | null = null
+    let mintInfo: MintInfo | null = null
     if (address) {
-      hasFeedback = true;
+      hasFeedback = true
       if (accountInfo) {
         if (
           accountInfo.owner.equals(TokenInstructions.TOKEN_PROGRAM_ID) &&
           accountInfo.data.length === 82
         ) {
-          let parsed = parseTokenMintData(accountInfo.data);
+          let parsed = parseTokenMintData(accountInfo.data)
           if (parsed.initialized) {
-            validateStatus = 'success';
+            validateStatus = 'success'
             mintInfo = {
               address: new PublicKey(address),
               decimals: parsed.decimals,
-            };
+            }
           } else {
-            validateStatus = 'error';
-            help = 'Invalid SPL mint';
+            validateStatus = 'error'
+            help = 'Invalid SPL mint'
           }
         } else {
-          validateStatus = 'error';
-          help = 'Invalid SPL mint address';
+          validateStatus = 'error'
+          help = 'Invalid SPL mint address'
         }
       } else if (isValidPublicKey(address) && !loaded) {
-        validateStatus = 'validating';
+        validateStatus = 'validating'
       } else {
-        validateStatus = 'error';
-        help = 'Invalid Solana address';
+        validateStatus = 'error'
+        help = 'Invalid Solana address'
       }
     }
-    return { validateStatus, hasFeedback, help, mintInfo };
-  }, [address, accountInfo, loaded]);
+    return { validateStatus, hasFeedback, help, mintInfo }
+  }, [address, accountInfo, loaded])
 
   const input = (
     <Form.Item
@@ -106,7 +106,7 @@ export function useMintInput(
         onChange={(value) => setAddress(value)}
       />
     </Form.Item>
-  );
+  )
 
-  return [input, mintInfo];
+  return [input, mintInfo]
 }

@@ -1,8 +1,10 @@
 // tailwind.config.js
 const colors = require('tailwindcss/colors')
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false,
+  content: [
+    './public/**/*.html',
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     container:{
       padding: '3rem'
@@ -45,11 +47,6 @@ module.exports = {
   },
   fontFamily: {
     sans: ['Poppins', 'sans-serif'],
-  },
-  variants: {
-    extend: {
-      scale: ['active', 'group-hover'],
-    },
   },
   plugins: [],
 };

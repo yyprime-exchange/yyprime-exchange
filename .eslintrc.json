@@ -4,7 +4,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:prettier:recommended"
   ],
   "env": {
     "es6": true,
@@ -13,6 +14,7 @@
     "node": true
   },
   "rules": {
+    
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/explicit-function-return-type": 0,

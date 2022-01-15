@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Col, Popover, Row, Select, Typography } from 'antd';
-import styled from 'styled-components';
-import Orderbook from '../components/Orderbook';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { Button, Col, Popover, Row, Select, Typography } from 'antd'
+import styled from 'styled-components'
+import Orderbook from '../components/Orderbook'
 // import UserInfoTable from '../components/UserInfoTable';
 import {
   getMarketInfos,
@@ -9,18 +9,18 @@ import {
   MarketProvider,
   useMarket,
   useMarketsList,
-} from '../utils/markets';
-import TradesTable from '../components/TradesTable';
-import LinkAddress from '../components/LinkAddress';
+} from '../utils/markets'
+import TradesTable from '../components/TradesTable'
+import LinkAddress from '../components/LinkAddress'
 import {
   DeleteOutlined,
   InfoCircleOutlined,
   PlusCircleOutlined,
-} from '@ant-design/icons';
-import CustomMarketDialog from '../components/CustomMarketDialog';
-import { notify } from '../utils/notifications';
-import { useHistory, useParams } from 'react-router-dom';
-import { nanoid } from 'nanoid';
+} from '@ant-design/icons'
+import CustomMarketDialog from '../components/CustomMarketDialog'
+import { notify } from '../utils/notifications'
+import { useHistory, useParams } from 'react-router-dom'
+import { nanoid } from 'nanoid'
 
 // import { TVChartContainer } from '../components/TradingView';
 // Use following stub for quick setup without the TradingView private dependency
@@ -28,7 +28,7 @@ import { nanoid } from 'nanoid';
 //   return <></>
 // }
 
-const { Option, OptGroup } = Select;
+const { Option, OptGroup } = Select
 
 const Wrapper = styled.div`
   height: 100%;
@@ -38,18 +38,18 @@ const Wrapper = styled.div`
   .borderNone .ant-select-selector {
     border: none !important;
   }
-`;
+`
 
 export default function TradePage() {
-  const { marketAddress } = useParams();
+  const { marketAddress } = useParams()
   useEffect(() => {
     if (marketAddress) {
-      localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
+      localStorage.setItem('marketAddress', JSON.stringify(marketAddress))
     }
-  }, [marketAddress]);
-  const history = useHistory();
+  }, [marketAddress])
+  const history = useHistory()
   function setMarketAddress(address) {
-    history.push(getTradePageUrl(address));
+    history.push(getTradePageUrl(address))
   }
 
   return (
@@ -59,7 +59,7 @@ export default function TradePage() {
     >
       <TradePageInner />
     </MarketProvider>
-  );
+  )
 }
 
 function TradePageInner() {
@@ -69,77 +69,76 @@ function TradePageInner() {
     customMarkets,
     setCustomMarkets,
     setMarketAddress,
-  } = useMarket();
-  const markets = useMarketsList();
-  const [handleDeprecated, setHandleDeprecated] = useState(false);
-  const [addMarketVisible, setAddMarketVisible] = useState(false);
+  } = useMarket()
+  const markets = useMarketsList()
+  const [handleDeprecated, setHandleDeprecated] = useState(false)
+  const [addMarketVisible, setAddMarketVisible] = useState(false)
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
-  });
+  })
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — Serum` : 'Serum';
-  }, [marketName]);
+    document.title = marketName ? `${marketName} — Serum` : 'Serum'
+  }, [marketName])
 
-  const changeOrderRef = useRef<
-    ({ size, price }: { size?: number; price?: number }) => void
-  >();
+  const changeOrderRef =
+    useRef<({ size, price }: { size?: number; price?: number }) => void>()
 
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth,
-      });
-    };
+      })
+    }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
-  const width = dimensions?.width;
+  const width = dimensions?.width
   const componentProps = {
     onChangeOrderRef: (ref) => (changeOrderRef.current = ref),
     onPrice: useCallback(
       (price) => changeOrderRef.current && changeOrderRef.current({ price }),
-      [],
+      []
     ),
     onSize: useCallback(
       (size) => changeOrderRef.current && changeOrderRef.current({ size }),
-      [],
+      []
     ),
-  };
+  }
   const component = (() => {
-      if (width < 1000) {
-      return <RenderSmaller {...componentProps} />;
+    if (width < 1000) {
+      return <RenderSmaller {...componentProps} />
     } else if (width < 1450) {
-      return <RenderSmall {...componentProps} />;
+      return <RenderSmall {...componentProps} />
     } else {
-      return <RenderNormal {...componentProps} />;
+      return <RenderNormal {...componentProps} />
     }
-  })();
+  })()
 
   const onAddCustomMarket = (customMarket) => {
     const marketInfo = getMarketInfos(customMarkets).some(
-      (m) => m.address.toBase58() === customMarket.address,
-    );
+      (m) => m.address.toBase58() === customMarket.address
+    )
     if (marketInfo) {
       notify({
         message: `A market with the given ID already exists`,
         type: 'error',
-      });
-      return;
+      })
+      return
     }
-    const newCustomMarkets = [...customMarkets, customMarket];
-    setCustomMarkets(newCustomMarkets);
-    setMarketAddress(customMarket.address);
-  };
+    const newCustomMarkets = [...customMarkets, customMarket]
+    setCustomMarkets(newCustomMarkets)
+    setMarketAddress(customMarket.address)
+  }
 
   const onDeleteCustomMarket = (address) => {
-    const newCustomMarkets = customMarkets.filter((m) => m.address !== address);
-    setCustomMarkets(newCustomMarkets);
-  };
+    const newCustomMarkets = customMarkets.filter((m) => m.address !== address)
+    setCustomMarkets(newCustomMarkets)
+  }
 
   return (
     <>
@@ -181,12 +180,11 @@ function TradePageInner() {
               onClick={() => setAddMarketVisible(true)}
             />
           </Col>
-     
         </Row>
         {component}
       </Wrapper>
     </>
-  );
+  )
 }
 
 function MarketSelector({
@@ -196,22 +194,22 @@ function MarketSelector({
   customMarkets,
   onDeleteCustomMarket,
 }) {
-  const { market, setMarketAddress } = useMarket();
+  const { market, setMarketAddress } = useMarket()
 
   const onSetMarketAddress = (marketAddress) => {
-    setHandleDeprecated(false);
-    setMarketAddress(marketAddress);
-  };
+    setHandleDeprecated(false)
+    setMarketAddress(marketAddress)
+  }
 
-  const extractBase = (a) => a.split('/')[0];
-  const extractQuote = (a) => a.split('/')[1];
+  const extractBase = (a) => a.split('/')[0]
+  const extractQuote = (a) => a.split('/')[1]
 
   const selectedMarket = getMarketInfos(customMarkets)
     .find(
       (proposedMarket) =>
-        market?.address && proposedMarket.address.equals(market.address),
+        market?.address && proposedMarket.address.equals(market.address)
     )
-    ?.address?.toBase58();
+    ?.address?.toBase58()
 
   return (
     <Select
@@ -246,9 +244,9 @@ function MarketSelector({
                   <Col>
                     <DeleteOutlined
                       onClick={(e) => {
-                        e.stopPropagation();
-                        e.nativeEvent.stopImmediatePropagation();
-                        onDeleteCustomMarket && onDeleteCustomMarket(address);
+                        e.stopPropagation()
+                        e.nativeEvent.stopImmediatePropagation()
+                        onDeleteCustomMarket && onDeleteCustomMarket(address)
                       }}
                     />
                   </Col>
@@ -266,14 +264,14 @@ function MarketSelector({
               : extractQuote(a.name) !== 'USDT' &&
                 extractQuote(b.name) === 'USDT'
               ? 1
-              : 0,
+              : 0
           )
           .sort((a, b) =>
             extractBase(a.name) < extractBase(b.name)
               ? -1
               : extractBase(a.name) > extractBase(b.name)
               ? 1
-              : 0,
+              : 0
           )
           .map(({ address, name, deprecated }, i) => (
             <Option
@@ -291,10 +289,8 @@ function MarketSelector({
           ))}
       </OptGroup>
     </Select>
-  );
+  )
 }
-
-
 
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
@@ -305,9 +301,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
       }}
     >
       <Col flex="auto" style={{ height: '50vh' }}>
-        <Row style={{ height: '100%' }}>
-          {/* <TVChartContainer /> */}
-        </Row>
+        <Row style={{ height: '100%' }}>{/* <TVChartContainer /> */}</Row>
       </Col>
       <Col flex={'360px'} style={{ height: '100%' }}>
         <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
@@ -316,18 +310,15 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
       <Col
         flex="400px"
         style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-      >
-      </Col>
+      ></Col>
     </Row>
-  );
-};
+  )
+}
 
 const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
-      <Row style={{ height: '30vh' }}>
-        {/* <TVChartContainer /> */}
-      </Row>
+      <Row style={{ height: '30vh' }}>{/* <TVChartContainer /> */}</Row>
       <Row
         style={{
           height: '900px',
@@ -347,23 +338,17 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
         <Col
           flex="400px"
           style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-        >
-
-        </Col>
+        ></Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
-      <Row style={{ height: '50vh' }}>
-        {/* <TVChartContainer /> */}
-      </Row>
-      <Row>
-
-      </Row>
+      <Row style={{ height: '50vh' }}>{/* <TVChartContainer /> */}</Row>
+      <Row></Row>
       <Row
         style={{
           height: '500px',
@@ -377,5 +362,5 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Col, Input, Modal, Row } from 'antd';
-import { EndpointInfo } from '../utils/types';
+import React, { useState } from 'react'
+import { Col, Input, Modal, Row } from 'antd'
+import { EndpointInfo } from '../utils/types'
 
 export default function CustomClusterEndpointDialog({
   visible,
@@ -8,30 +8,30 @@ export default function CustomClusterEndpointDialog({
   onAddCustomEndpoint,
   onClose,
 }: {
-  visible: boolean;
-  testingConnection: boolean;
-  onAddCustomEndpoint: (info: EndpointInfo) => void;
-  onClose?: () => void;
+  visible: boolean
+  testingConnection: boolean
+  onAddCustomEndpoint: (info: EndpointInfo) => void
+  onClose?: () => void
 }) {
-  const [customEndpoint, setCustomEndpoint] = useState('');
-  const [customEndpointName, setCustomEndpointName] = useState('');
+  const [customEndpoint, setCustomEndpoint] = useState('')
+  const [customEndpointName, setCustomEndpointName] = useState('')
 
   const onSubmit = () => {
-    const fullEndpoint = 'https://' + customEndpoint;
+    const fullEndpoint = 'https://' + customEndpoint
     const params = {
       name: customEndpointName,
       endpoint: fullEndpoint,
       custom: true,
-    };
-    onAddCustomEndpoint(params);
-    onDoClose();
-  };
+    }
+    onAddCustomEndpoint(params)
+    onDoClose()
+  }
   const onDoClose = () => {
-    setCustomEndpoint('');
-    setCustomEndpointName('');
-    onClose && onClose();
-  };
-  const canSubmit = customEndpoint !== '' && customEndpointName !== '';
+    setCustomEndpoint('')
+    setCustomEndpointName('')
+    onClose && onClose()
+  }
+  const canSubmit = customEndpoint !== '' && customEndpointName !== ''
 
   return (
     <Modal
@@ -62,5 +62,5 @@ export default function CustomClusterEndpointDialog({
         </Col>
       </Row>
     </Modal>
-  );
+  )
 }

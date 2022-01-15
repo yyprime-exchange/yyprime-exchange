@@ -1,22 +1,22 @@
-import { Col, Row } from 'antd';
-import React from 'react';
-import styled from 'styled-components';
-import { useMarket, useBonfidaTrades } from '../utils/markets';
-import { getDecimalCount } from '../utils/utilsSerum';
-import FloatingElement from './layout/FloatingElement';
-import { BonfidaTrade } from '../utils/types';
+import { Col, Row } from 'antd'
+import React from 'react'
+import styled from 'styled-components'
+import { useMarket, useBonfidaTrades } from '../utils/markets'
+import { getDecimalCount } from '../utils/utilsSerum'
+import FloatingElement from './layout/FloatingElement'
+import { BonfidaTrade } from '../utils/types'
 
 const Title = styled.div`
   color: rgba(255, 255, 255, 1);
-`;
+`
 const SizeTitle = styled(Row)`
   padding: 20px 0 14px;
   color: #434a59;
-`;
+`
 
 export default function PublicTrades({ smallScreen }) {
-  const { baseCurrency, quoteCurrency, market } = useMarket();
-  const [trades, loaded] = useBonfidaTrades();
+  const { baseCurrency, quoteCurrency, market } = useMarket()
+  const [trades, loaded] = useBonfidaTrades()
 
   return (
     <FloatingElement
@@ -61,14 +61,14 @@ export default function PublicTrades({ smallScreen }) {
               >
                 {market?.tickSize && !isNaN(trade.price)
                   ? Number(trade.price).toFixed(
-                      getDecimalCount(market.tickSize),
+                      getDecimalCount(market.tickSize)
                     )
                   : trade.price}
               </Col>
               <Col span={8} style={{ textAlign: 'right' }}>
                 {market?.minOrderSize && !isNaN(trade.size)
                   ? Number(trade.size).toFixed(
-                      getDecimalCount(market.minOrderSize),
+                      getDecimalCount(market.minOrderSize)
                     )
                   : trade.size}
               </Col>
@@ -80,5 +80,5 @@ export default function PublicTrades({ smallScreen }) {
         </div>
       )}
     </FloatingElement>
-  );
+  )
 }
