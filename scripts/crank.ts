@@ -105,8 +105,7 @@ console.log(`Running crank on ${simulation.config.cluster}`);
    );
  */
 
-setInterval(() => {
-  //TODO
+let timerId = setTimeout(function process() {
 
   /*
   const eventQueueAccts = await getMultipleAccounts(
@@ -157,10 +156,7 @@ setInterval(() => {
     );
     await client.sendTransaction(transaction, payer, []);
   }
-  await sleep(interval);
   */
 
+  timerId = setTimeout(process, 1000);
 }, 1000);
-
-
-
