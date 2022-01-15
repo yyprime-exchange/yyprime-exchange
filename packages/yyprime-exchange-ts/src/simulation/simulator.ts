@@ -25,7 +25,9 @@ export class Simulator {
 
       await this.solanaClient.requestAirdrop(100, payer.publicKey);
 
+      /*
       await this.solanaClient.createFaucets(payer);
+      */
 
       await this.serumClient.createMarkets(payer);
 

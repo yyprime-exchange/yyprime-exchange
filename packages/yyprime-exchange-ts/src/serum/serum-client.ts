@@ -5,7 +5,6 @@ import {
 import {
   DexInstructions,
   Market,
-  MARKET_STATE_LAYOUT_V3,
   Orderbook,
   TokenInstructions,
 } from "@project-serum/serum";
@@ -167,8 +166,8 @@ export class SerumClient {
       SystemProgram.createAccount({
         fromPubkey: payer.publicKey,
         newAccountPubkey: market.publicKey,
-        lamports: await this.connection.getMinimumBalanceForRentExemption(MARKET_STATE_LAYOUT_V3.span),
-        space: MARKET_STATE_LAYOUT_V3.span,
+        lamports: await this.connection.getMinimumBalanceForRentExemption(Market.getLayout(this.serumProgram).span),
+        space: Market.getLayout(this.serumProgram).span,
         programId: this.serumProgram,
       }),
       SystemProgram.createAccount({
@@ -223,10 +222,10 @@ export class SerumClient {
 
     const transactions = [
       { transaction: tx1, signers: [payer, baseVault, quoteVault] },
-      { transaction: tx2, signers: [payer, market, requestQueue, eventQueue, bids, asks],
-      },
+      { transaction: tx2, signers: [payer, market, requestQueue, eventQueue, bids, asks] },
     ];
     for (let tx of transactions) {
+      tx.transaction.feePayer = payer.publicKey;
       await sendAndConfirmTransaction(this.connection, tx.transaction, tx.signers);
     }
   }

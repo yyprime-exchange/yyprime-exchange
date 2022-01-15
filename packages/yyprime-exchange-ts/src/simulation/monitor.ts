@@ -14,7 +14,7 @@ console.log('');
 const solanaClient: SolanaClient = new SolanaClient(simulation);
 
 (async () => {
-  console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(simulation.config.serum.program)))}`);
+  //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(simulation.config.serum.program)))}`);
 
   for (const token of simulation.tokens) {
     console.log(`TOKEN: ${token.symbol}`);
@@ -24,11 +24,11 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
 
     const faucet: Keypair = Keypair.fromSecretKey(Buffer.from(token.faucetPrivateKey, 'base64'));
 
-    console.log(`MintSupply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
-    console.log(`FaucetTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(mint.publicKey, faucet.publicKey))}`);
-    //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(mint.publicKey))}`);
-    //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(faucet.publicKey))}`);
-    //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(await solanaClient.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey)))}`);
+    console.log(`  MintSupply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
+    console.log(`  FaucetTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(mint.publicKey, faucet.publicKey))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(mint.publicKey))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(faucet.publicKey))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(await solanaClient.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey)))}`);
     console.log('');
   }
 
@@ -46,12 +46,12 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     const bids: PublicKey = new PublicKey(market.bids);
     const asks: PublicKey = new PublicKey(market.asks);
 
-    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(baseVault.publicKey))}`);
-    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(quoteVault.publicKey))}`);
-    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(requestQueue))}`);
-    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(eventQueue))}`);
-    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bids))}`);
-    console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(asks))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(baseVault.publicKey))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(quoteVault.publicKey))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(requestQueue))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(eventQueue))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bids))}`);
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(asks))}`);
 
     console.log('');
   }
