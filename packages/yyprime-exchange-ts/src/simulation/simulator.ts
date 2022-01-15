@@ -57,7 +57,7 @@ export class Simulator {
   private onPrice(token: PythToken, price: PythPrice) {
   }
 
-  public process() {
+  public onTime() {
   }
 
 }
