@@ -1,0 +1,52 @@
+{
+  "config": {
+    "cluster": "localnet",
+    "pyth": {
+      "program": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+      "url": "https://api.mainnet-beta.solana.com/"
+    },
+    "serum": {
+      "program": "2SXFv8tTmavm8uSAg3ft1JjttzJvgwXZiUPa9xuUbqH2",
+      "url": "http://127.0.0.1:8899/"
+    },
+    "solana": {
+      "http": "http://localhost:8899",
+      "ws": "ws://localhost:8900"
+    }
+  },
+  "tokens": [
+    {
+      "symbol": "BTC",
+      "mint": "2xi82qV8xAuWWxNoJCZa1LT3sHhBU3qFnYy9SQJKM5c7",
+      "decimals": 6,
+      "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
+    },
+    {
+      "symbol": "USDC",
+      "mint": "prbPoJgqMHwSbaNifMDGrLB5znxrSDmTbw9YbTrLtZX",
+      "decimals": 6,
+      "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
+    }
+  ],
+  "markets": [
+    {
+      "symbol": "BTC/USDC",
+      "market": "6CEdmvTnAHadrLJ6eWn7dKrey3pCco5gNGXY4nuFC74W",
+      "baseMint": "2xi82qV8xAuWWxNoJCZa1LT3sHhBU3qFnYy9SQJKM5c7",
+      "baseSymbol": "BTC",
+      "baseDecimals": 6,
+      "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
+      "quoteMint": "prbPoJgqMHwSbaNifMDGrLB5znxrSDmTbw9YbTrLtZX",
+      "quoteSymbol": "USDC",
+      "quoteDecimals": 6,
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "2rEVRhdegud2DDYbUphyTLt49A1EWCVVo8zfPk59L5hU",
+      "eventQueue": "GGTriJQ8QPbTRgbZHJ3Eu6ar3DPfhbBecRPD36v5Unqn",
+      "bids": "HMSoa4Yv8TZY79zgfd4xx94Y43oPEYvBcwXRTNxCjnZQ",
+      "asks": "4sr5M4m1WVQgPe9e6pSE91EFViuf12woDHomiZgnNYXS"
+    }
+  ],
+  "bots": [
+    {}
+  ]
+}

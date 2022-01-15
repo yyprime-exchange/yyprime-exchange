@@ -1,0 +1,14 @@
+{
+  "devnet": {
+    "program": "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s",
+    "url": "https://api.devnet.solana.com/"
+  },
+  "mainnet": {
+    "program": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+    "url": "https://api.mainnet-beta.solana.com/"
+  },
+  "testnet": {
+    "program": "8tfDNiaEyrV6Q1U4DEXrEigs9DoDtkugzFbybENEbCDz",
+    "url": "https://api.testnet.solana.com/"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "@yyprime/yyprime-exchange-ts",
+  "version": "1.0.0",
+  "description": "Library for creating and testing Serum markets.",
+  "repository": "git@github.com:yyprime-exchange/yyprime-exchange.git",
+  "author": "yyprime exchange <yyprime.exchange@gmail.com>",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
+  "license": "MIT",
+  "private": "true",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "yarn clean && tsc",
+    "test": "mocha -r ts-node/register test/**/*.test.ts --timeout 0",
+    "test-psy": "mocha -r ts-node/register test/psy-american.test.ts --timeout 0",
+    "test-pyth": "mocha -r ts-node/register test/pyth.test.ts --timeout 0",
+    "test-serum": "mocha -r ts-node/register test/serum.test.ts --timeout 0",
+    "test-solana": "mocha -r ts-node/register test/solana.test.ts --timeout 0",
+    "test-zeta": "mocha -r ts-node/register test/zetamarkets.test.ts --timeout 0",
+    "build-sim": "yarn build && npx ts-node src/simulation/build-simulation.ts",
+    "crank": "yarn build && npx ts-node src/simulation/crank.ts",
+    "mon": "yarn build && npx ts-node src/simulation/monitor.ts",
+    "sim": "yarn build && npx ts-node src/simulation/simulator.ts"
+  },
+  "files": [
+    "lib"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "dependencies": {
+    "@mithraic-labs/psy-american": "^0.1.1-rc.2",
+    "@project-serum/anchor": "^0.16.1",
+    "@project-serum/common": "^0.0.1-beta.3",
+    "@project-serum/serum": "^0.13.60",
+    "@pythnetwork/client": "^2.5.1",
+    "@solana/spl-token": "^0.1.8",
+    "@solana/web3.js": "^1.28.0",
+    "@tsconfig/recommended": "^1.0.1",
+    "@zetamarkets/sdk": "^0.9.10"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "chai": "^4.3.4",
+    "typescript": "^4.5.4"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all",
+    "maintained node versions"
+  ],
+  "resolutions": {}
+}

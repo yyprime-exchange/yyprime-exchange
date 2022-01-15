@@ -1,0 +1,78 @@
+{
+  "config": {
+    "cluster": "localnet",
+    "pyth": {
+      "program": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+      "url": "https://api.mainnet-beta.solana.com/"
+    },
+    "serum": {
+      "program": "2SXFv8tTmavm8uSAg3ft1JjttzJvgwXZiUPa9xuUbqH2",
+      "url": "http://127.0.0.1:8899/"
+    },
+    "solana": {
+      "http": "http://localhost:8899",
+      "ws": "ws://localhost:8900"
+    }
+  },
+  "tokens": [
+    {
+      "symbol": "BTC",
+      "mint": "2xi82qV8xAuWWxNoJCZa1LT3sHhBU3qFnYy9SQJKM5c7",
+      "mintPrivateKey": "GK106bQ1YwrA21jqt8+y+R95euQpqBSy3o1Iq6kuXcYdISCaT6Bp5jsU0TENDWyMse+eajyVLJFetm9VWFoUpA==",
+      "faucet": "HHtrKpu5uDW49joGXWa7MPj4iivKQ4ZVUyJw52PqRJ5Z",
+      "faucetPrivateKey": "yNxgILxZtsiXU7ZzNyUPL4KRbOa+pMqRwtCelzvybt3yDulGPNj/6N7q3Stqba1Gpv4jwtHaVeav8VYtJwFbLA==",
+      "decimals": 6,
+      "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
+    },
+    {
+      "symbol": "USDC",
+      "mint": "prbPoJgqMHwSbaNifMDGrLB5znxrSDmTbw9YbTrLtZX",
+      "mintPrivateKey": "HMoLmnrlTwsoiLHNWyKo96aXlLLrkq1eGIU2jnEp/UwMQl98bYWgFLYPu5gTKSNZYI4ogpoq8DgREmI4zhAe0g==",
+      "faucet": "C7Ccu9kzMUJYgj9wn4wN18aWVmVz3GVJigEU3HGxFCgT",
+      "faucetPrivateKey": "7EIEO57JRAuWRTGP8JABYHIJTeluj3oxMqwI8PvIgdalBy269haQGgfDZpW8YschkI3enoAXGaXQh6JuU200fA==",
+      "decimals": 6,
+      "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
+    }
+  ],
+  "markets": [
+    {
+      "symbol": "BTC/USDC",
+      "baseVault": "DsmZKQm2TvM6kJ79N5CA18MRsnZ5s2h4UW8xREYTcmem",
+      "baseVaultPrivateKey": "uZCKVgiV6sl6PR6M3RqLW6d7TVXHIuXnxx/pje6xxXq/TaogI1ExG3Eo/GToavOrS4PW+v70Sr29bs1Ui3+mdg==",
+      "quoteVault": "9uSYp7MUWaNu7vYEXB9hkQ5j76pdrzG7N36XXtMWPmQm",
+      "quoteVaultPrivateKey": "eQ3hCdFAzoyrZhSskYJZcynt0htZ66eW5Ixg+R1xDDSETJXS3eMwExW0LfwiCnOvXj/X8xSq+/h+akJk81d8Eg==",
+      "market": "6CEdmvTnAHadrLJ6eWn7dKrey3pCco5gNGXY4nuFC74W",
+      "marketPrivateKey": "1VkOLCGk1XabWtdjtHcj97of3M3VSiMTW3N86py21vBNKz1WAFGZ27+P7bYICTPYV79E1OqRt83VKzc2XzbCew==",
+      "baseLotSize": 1,
+      "baseMint": "2xi82qV8xAuWWxNoJCZa1LT3sHhBU3qFnYy9SQJKM5c7",
+      "baseSymbol": "BTC",
+      "baseDecimals": 6,
+      "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
+      "quoteLotSize": 1,
+      "quoteMint": "prbPoJgqMHwSbaNifMDGrLB5znxrSDmTbw9YbTrLtZX",
+      "quoteSymbol": "USDC",
+      "quoteDecimals": 6,
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "feeRateBps": 0,
+      "requestQueue": "2rEVRhdegud2DDYbUphyTLt49A1EWCVVo8zfPk59L5hU",
+      "requestQueuePrivateKey": "f2S2QcKvyVNL64Y1u9UNRvP9fPre+mbyZ8tIkUBFc5obeGZeWNvX0oMZ4JWYSA49otSEslc5rDAsjmyDMNldcw==",
+      "eventQueue": "GGTriJQ8QPbTRgbZHJ3Eu6ar3DPfhbBecRPD36v5Unqn",
+      "eventQueuePrivateKey": "OObOXSGVQHflKLc8xAz40iN42IBZYodDbuFQKKMpWGXi1WIqM1v9bDeYrN0XQlakqoc0q/NR6xlWM1FH5v+POQ==",
+      "bids": "HMSoa4Yv8TZY79zgfd4xx94Y43oPEYvBcwXRTNxCjnZQ",
+      "bidsPrivateKey": "Uz0supPz0Qm+6wWQrs4M/8yVWzPx0aNvl5p9V8Ea4eDy98hP/5tfI7pRMMXnPHjKlVhfUtbnu0X/JXH17K8+iw==",
+      "asks": "4sr5M4m1WVQgPe9e6pSE91EFViuf12woDHomiZgnNYXS",
+      "asksPrivateKey": "NOXxkFDHIOAbt0okJsgUfDUHtbwpczMM7IR9THQMefI5mZcmoKP9qKtVibBP8376K35lVBrQhbhKmaRWpT5pOQ=="
+    }
+  ],
+  "bots": [
+    {
+      "type": "market_maker",
+      "symbol": "BTC/USDC",
+      "base": "BTC",
+      "baseBalance": 2,
+      "quote": "USDC",
+      "quoteBalance": 100000,
+      "params": {}
+    }
+  ]
+}
