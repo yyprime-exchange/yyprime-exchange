@@ -49,15 +49,19 @@ export class Simulator {
   }
 
   private onAsk(book: SerumBook) {
+    //TODO
   }
 
   private onBid(book: SerumBook) {
+    //TODO
   }
 
   private onPrice(token: PythToken, price: PythPrice) {
+    //TODO
   }
 
   public onTime() {
+    //TODO
   }
 
 }
