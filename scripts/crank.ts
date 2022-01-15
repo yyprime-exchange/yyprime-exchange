@@ -4,14 +4,6 @@ import * as simulation from './simulation.json';
 
 console.log(`Running crank on ${simulation.config.cluster}`);
 
-setInterval(() => {
-  //TODO
-
-}, 1000);
-
-
-
-
 /*
 //This will probably move to its own repo at some point but easier to keep it here for now
  import * as os from 'os';
@@ -111,60 +103,64 @@ setInterval(() => {
    const eventQueuePks = spotMarkets.map(
      (market) => market['_decoded'].eventQueue,
    );
-
-   // eslint-disable-next-line
-   while (true) {
-     const eventQueueAccts = await getMultipleAccounts(
-       connection,
-       eventQueuePks,
-     );
-     for (let i = 0; i < eventQueueAccts.length; i++) {
-       const accountInfo = eventQueueAccts[i].accountInfo;
-       const events = decodeEventQueue(accountInfo.data);
-
-       if (events.length === 0) {
-         continue;
-       }
-
-       const accounts: Set<string> = new Set();
-       for (const event of events) {
-         accounts.add(event.openOrders.toBase58());
-
-         // Limit unique accounts to first 10
-         if (accounts.size >= maxUniqueAccounts) {
-           break;
-         }
-       }
-
-       const openOrdersAccounts = [...accounts]
-         .map((s) => new PublicKey(s))
-         .sort((a, b) => a.toBuffer().swap64().compare(b.toBuffer().swap64()));
-
-       const instr = DexInstructions.consumeEvents({
-         market: spotMarkets[i].publicKey,
-         eventQueue: spotMarkets[i]['_decoded'].eventQueue,
-         coinFee: baseWallets[i],
-         pcFee: quoteWallet,
-         openOrdersAccounts,
-         limit: consumeEventsLimit,
-         programId: mangoGroup.dexProgramId,
-       });
-
-       const transaction = new Transaction();
-       transaction.add(instr);
-
-       console.log(
-         'market',
-         i,
-         'sending consume events for',
-         events.length,
-         'events',
-       );
-       await client.sendTransaction(transaction, payer, []);
-     }
-     await sleep(interval);
-   }
- }
-
- run();
  */
+
+setInterval(() => {
+  //TODO
+
+  /*
+  const eventQueueAccts = await getMultipleAccounts(
+    connection,
+    eventQueuePks,
+  );
+  for (let i = 0; i < eventQueueAccts.length; i++) {
+    const accountInfo = eventQueueAccts[i].accountInfo;
+    const events = decodeEventQueue(accountInfo.data);
+
+    if (events.length === 0) {
+      continue;
+    }
+
+    const accounts: Set<string> = new Set();
+    for (const event of events) {
+      accounts.add(event.openOrders.toBase58());
+
+      // Limit unique accounts to first 10
+      if (accounts.size >= maxUniqueAccounts) {
+        break;
+      }
+    }
+
+    const openOrdersAccounts = [...accounts]
+      .map((s) => new PublicKey(s))
+      .sort((a, b) => a.toBuffer().swap64().compare(b.toBuffer().swap64()));
+
+    const instr = DexInstructions.consumeEvents({
+      market: spotMarkets[i].publicKey,
+      eventQueue: spotMarkets[i]['_decoded'].eventQueue,
+      coinFee: baseWallets[i],
+      pcFee: quoteWallet,
+      openOrdersAccounts,
+      limit: consumeEventsLimit,
+      programId: mangoGroup.dexProgramId,
+    });
+
+    const transaction = new Transaction();
+    transaction.add(instr);
+
+    console.log(
+      'market',
+      i,
+      'sending consume events for',
+      events.length,
+      'events',
+    );
+    await client.sendTransaction(transaction, payer, []);
+  }
+  await sleep(interval);
+  */
+
+}, 1000);
+
+
+

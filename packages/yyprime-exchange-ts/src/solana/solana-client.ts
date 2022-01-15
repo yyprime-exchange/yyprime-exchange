@@ -1,4 +1,5 @@
 import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
   MintLayout,
   Token,
   TOKEN_PROGRAM_ID,
@@ -16,34 +17,23 @@ import {
   Transaction,
 } from '@solana/web3.js';
 
-import SOLANA_CLUSTERS from './clusters.json';
-
 export class SolanaClient {
-
-  cluster: string;
-  commitment: Commitment = 'confirmed';
+  commitment: Commitment = 'finalized';
   connection: Connection;
+  simulation;
 
-  constructor(cluster: string) {
-    this.cluster = cluster;
-
-    if (SOLANA_CLUSTERS[cluster].https) {
-      this.connection = new Connection(SOLANA_CLUSTERS[cluster].https);
-    } else if (SOLANA_CLUSTERS[cluster].http) {
-      this.connection = new Connection(SOLANA_CLUSTERS[cluster].http);
+  constructor(
+    simulation,
+  ) {
+    if (simulation.config.solana.https) {
+      this.connection = new Connection(simulation.config.solana.https);
+    } else if (simulation.config.solana.http) {
+      this.connection = new Connection(simulation.config.solana.http);
     } else {
-      throw new Error("Cluster url is not defined.");
+      throw new Error("Endpoint is not defined.");
     }
+    this.simulation = simulation;
   }
-
-  //TODO
-  /*
-connection.onAccountChange(
-  wallet.publicKey(),
-  ( updatedAccountInfo, context ) => console.log( 'Updated account info: ', updatedAccountInfo ),
-  'confirmed',
-);
-  */
 
   public async costToSend(sol: number, fromKeypair: Keypair, toPublicKey: PublicKey) {
     const recentBlockhash = await this.connection.getRecentBlockhash();
@@ -57,61 +47,71 @@ connection.onAccountChange(
     return transaction.signatures.length * recentBlockhash.feeCalculator.lamportsPerSignature;
   }
 
-  public async createMint(mintAuthority: Keypair, amount: number) {
-    const decimals = 9;
-    const payer: Signer = mintAuthority;
-    const mintToken: Token = await Token.createMint(
-      this.connection,
-      payer,
-      mintAuthority.publicKey,
-      null,
-      decimals,
-      TOKEN_PROGRAM_ID
+  public async createFaucet(payer: Keypair, mint: Keypair, decimals: number, faucet: Keypair, amount: number) {
+    let transaction = new Transaction().add(
+      SystemProgram.createAccount({
+        fromPubkey: payer.publicKey,
+        newAccountPubkey: mint.publicKey,
+        space: MintLayout.span,
+        lamports: await Token.getMinBalanceRentForExemptMint(this.connection),
+        programId: TOKEN_PROGRAM_ID,
+      }),
+      Token.createInitMintInstruction(
+        TOKEN_PROGRAM_ID,
+        mint.publicKey,
+        decimals,
+        faucet.publicKey, // mintAuthority
+        null,
+      )
+    );
+    await sendAndConfirmTransaction(this.connection, transaction, [payer, mint]);
+
+    const associatedTokenAddress = await Token.getAssociatedTokenAddress(
+      ASSOCIATED_TOKEN_PROGRAM_ID,
+      TOKEN_PROGRAM_ID,
+      mint.publicKey,
+      faucet.publicKey,
     );
 
-    //TODO
-    /*
-let tx = new Transaction().add(
-  // create mint account
-  SystemProgram.createAccount({
-    fromPubkey: feePayer.publicKey,
-    newAccountPubkey: mint.publicKey,
-    space: MintLayout.span,
-    lamports: await Token.getMinBalanceRentForExemptMint(connection),
-    programId: TOKEN_PROGRAM_ID,
-  }),
-  // init mint account
-  Token.createInitMintInstruction(
-    TOKEN_PROGRAM_ID, // always TOKEN_PROGRAM_ID
-    mint.publicKey, // mint pubkey
-    8, // decimals
-    alice.publicKey, // mint authority
-    alice.publicKey // freeze authority (if you don't need it, you can set `null`)
-  )
-);
-console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer, mint])}`);
-    */
+    transaction = new Transaction().add(
+      Token.createAssociatedTokenAccountInstruction(
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+        TOKEN_PROGRAM_ID,
+        mint.publicKey,
+        associatedTokenAddress,
+        faucet.publicKey,
+        payer.publicKey
+      )
+    );
+    await sendAndConfirmTransaction(this.connection, transaction, [payer]);
 
-    const tokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(mintAuthority.publicKey);
-    await mintToken.mintTo(tokenAccount.address, mintAuthority.publicKey, [], amount * LAMPORTS_PER_SOL);
-    return mintToken;
+    transaction = new Transaction().add(
+      Token.createMintToInstruction(
+        TOKEN_PROGRAM_ID,
+        mint.publicKey,
+        associatedTokenAddress,
+        faucet.publicKey,
+        [],
+        amount * this.pow10(decimals)
+      )
+    );
+    await sendAndConfirmTransaction(this.connection, transaction, [payer, faucet]);
   }
 
   public async getBalance(publicKey: PublicKey) {
-    return this.connection.getBalance(publicKey, this.commitment);
+    return await this.connection.getBalance(publicKey, this.commitment);
   }
 
-  public async getMintSupply(mintPublicKey: PublicKey) {
+  public async getMintSupply(mintPublicKey: PublicKey, decimals: number) {
     //console.log(JSON.stringify(await this.connection.getParsedAccountInfo(mintPublicKey)));
     const mintAccount = await this.connection.getAccountInfo(mintPublicKey);
     const mintInfo = MintLayout.decode(Buffer.from(mintAccount!.data));
     const supply = u64.fromBuffer(mintInfo.supply);
-    return supply.toNumber() / LAMPORTS_PER_SOL;
+    return supply.toNumber() / this.pow10(decimals);
   }
 
   public async getTokenAccountsByOwner(owner: PublicKey) {
-    const tokenAccounts = await this.connection.getParsedTokenAccountsByOwner(owner, { programId: TOKEN_PROGRAM_ID });
-    return tokenAccounts;
+    return await this.connection.getParsedTokenAccountsByOwner(owner, { programId: TOKEN_PROGRAM_ID });
   }
 
   public async getTokenBalance(mintToken: Token, owner: PublicKey) {
@@ -155,28 +155,12 @@ console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer, mint])}`)
     await sendAndConfirmTransaction(this.connection, transaction, [payer]);
   }
 
-  //TODO
-  /*
-// calculate ATA
-let ata = await Token.getAssociatedTokenAddress(
-  ASSOCIATED_TOKEN_PROGRAM_ID, // always ASSOCIATED_TOKEN_PROGRAM_ID
-  TOKEN_PROGRAM_ID, // always TOKEN_PROGRAM_ID
-  mintPubkey, // mint
-  alice.publicKey // owner
-);
-console.log(`ATA: ${ata.toBase58()}`);
-
-let tx = new Transaction().add(
-  Token.createAssociatedTokenAccountInstruction(
-    ASSOCIATED_TOKEN_PROGRAM_ID, // always ASSOCIATED_TOKEN_PROGRAM_ID
-    TOKEN_PROGRAM_ID, // always TOKEN_PROGRAM_ID
-    mintPubkey, // mint
-    ata, // ata
-    alice.publicKey, // owner of token account
-    feePayer.publicKey // fee payer
-  )
-);
-console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer])}`);
-  */
+  private pow10(decimals: number): number {
+    switch(decimals) {
+      case 6: return 1_000_000;
+      case 9: return 1_000_000_000;
+      default: throw new Error("Unsupported number of decimals.");
+    }
+  }
 
 }

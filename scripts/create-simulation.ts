@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import { SimulationBuilder } from '../packages/yyprime-exchange-ts/lib';
 
-const simulationBuilder: SimulationBuilder = new SimulationBuilder('mainnet');
+const simulationBuilder: SimulationBuilder = new SimulationBuilder('localnet');
 
 if (simulationBuilder.cluster === 'mainnet') {
   const [simulation_public] = simulationBuilder.build();
-  fs.writeFileSync('packages/frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
+  //fs.writeFileSync('packages/frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
 } else {
   simulationBuilder.token("BTC");
   simulationBuilder.token("ETH");
@@ -20,6 +20,6 @@ if (simulationBuilder.cluster === 'mainnet') {
   simulationBuilder.market_maker("SOL", 500, "USDC", 100_000, {});
 
   const [simulation_public, simulation_private] = simulationBuilder.build();
-  fs.writeFileSync('packages/frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
-  fs.writeFileSync('scripts/simulation.json', JSON.stringify(simulation_private));
+  //fs.writeFileSync('packages/frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
+  fs.writeFileSync('scripts/simulation.json', JSON.stringify(simulation_private, null, 2));
 }

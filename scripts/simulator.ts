@@ -4,7 +4,7 @@ import * as simulation from './simulation.json';
 
 const simulator: Simulator = new Simulator(simulation);
 
-simulator.start();
+simulator.initialize();
 
 setInterval(() => {
   simulator.process();

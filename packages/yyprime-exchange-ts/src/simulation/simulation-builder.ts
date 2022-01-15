@@ -82,11 +82,14 @@ export class SimulationBuilder {
       ];
     } else {
       const tokens_private = this.tokens.map(token => {
-        const keypair = Keypair.generate();
+        const mintKeypair = Keypair.generate();
+        const faucetKeypair = Keypair.generate();
         return {
           symbol: token.symbol,
-          mint: keypair.publicKey.toBase58(),
-          mintPrivateKey: keypair.secretKey,
+          mint: mintKeypair.publicKey.toBase58(),
+          mintPrivateKey: Buffer.from(mintKeypair.secretKey).toString('base64'),
+          faucet: faucetKeypair.publicKey.toBase58(),
+          faucetPrivateKey: Buffer.from(faucetKeypair.secretKey).toString('base64'),
           decimals: 6,
           price: priceKeys.get(token.symbol),
         };
@@ -119,7 +122,7 @@ export class SimulationBuilder {
         return {
           symbol: market.symbol,
           market: marketKeypair.publicKey.toBase58(),
-          marketPrivateKey: marketKeypair.secretKey,
+          marketPrivateKey: Buffer.from(marketKeypair.secretKey).toString('base64'),
           baseMint: tokenKeys.get(market.base),
           baseSymbol: market.base,
           baseDecimals: tokenDecimals.get(market.base),
@@ -129,13 +132,13 @@ export class SimulationBuilder {
           quoteDecimals: tokenDecimals.get(market.quote),
           quotePrice: priceKeys.get(market.quote),
           requestQueue: requestQueueKeypair.publicKey.toBase58(),
-          requestQueuePrivateKey: requestQueueKeypair.secretKey,
+          requestQueuePrivateKey: Buffer.from(requestQueueKeypair.secretKey).toString('base64'),
           eventQueue: eventQueueKeypair.publicKey.toBase58(),
-          eventQueuePrivateKey: eventQueueKeypair.secretKey,
+          eventQueuePrivateKey: Buffer.from(eventQueueKeypair.secretKey).toString('base64'),
           bids: bidsKeypair.publicKey.toBase58(),
-          bidsPrivateKey: bidsKeypair.secretKey,
+          bidsPrivateKey: Buffer.from(bidsKeypair.secretKey).toString('base64'),
           asks: asksKeypair.publicKey.toBase58(),
-          asksPrivateKey: asksKeypair.secretKey,
+          asksPrivateKey: Buffer.from(asksKeypair.secretKey).toString('base64'),
         };
       });
 

@@ -12,50 +12,74 @@ import {
   parseProductData,
 } from '@pythnetwork/client'
 
-export interface Price {
+export interface PythPrice {
   price: number | undefined;
   confidence: number | undefined;
-  priceKey: PublicKey
 }
 
-export interface Product {
-  symbol: string
-  baseSymbol: string
-  quoteSymbol: string
-  productKey: PublicKey
-  priceKey: PublicKey
+export interface PythToken {
+  symbol: string;
+  mint: string;
+  decimals: number;
+  price: string;
 }
 
 export class PythClient {
   cluster: string;
   commitment: Commitment = 'finalized';
   connection: Connection;
-  onPrice: (price: Price, product: Product) => void;
-  products: Map<string, Product>;
+  onPrice: (token: PythToken, price: PythPrice) => void;
+  tokens: Map<string, PythToken>;
   pythProgram: PublicKey;
+  simulation;
 
   constructor(
-    cluster: string,
-    program: string,
-    url: string,
-    onPrice: (price: Price, product: Product) => void,
+    simulation,
+    onPrice: (token: PythToken, price: PythPrice) => void,
   ) {
-    this.cluster = cluster;
-    this.connection = new Connection(url);
+    this.cluster = simulation.config.cluster;
+    this.connection = new Connection(simulation.config.pyth.url);
     this.onPrice = onPrice;
-    this.products = new Map<string, Product>();
-    this.pythProgram = new PublicKey(program);
+    this.tokens = new Map<string, PythToken>();
+    simulation.tokens.forEach((token) => {
+      this.tokens.set(token.price, token);
+    });
+    this.pythProgram = new PublicKey(simulation.config.pyth.program);
+    this.simulation = simulation;
   }
 
-  public async subscribe() {
+  public subscribe() {
+    this.connection.onProgramAccountChange(
+      this.pythProgram,
+      (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
+        const base = parseBaseData(keyedAccountInfo.accountInfo.data);
+        if (base != null) {
+          if (AccountType[base.type] == 'Price') {
+            const price = parsePriceData(keyedAccountInfo.accountInfo.data)
+            const priceKey = keyedAccountInfo.accountId;
+            const token = this.tokens.get(priceKey.toBase58());
+            if (token) {
+              this.onPrice(token, { price: price.price, confidence: price.confidence });
+            }
+          }
+        }
+      },
+      this.commitment,
+    );
+  }
+
+
+
+    /*
     (await this.connection.getProgramAccounts(this.pythProgram, this.commitment)).forEach(account => {
       const base = parseBaseData(account.account.data);
       if (base != null) {
         if (AccountType[base.type] == 'Product') {
           const product = account.pubkey;
           const productData = parseProductData(account.account.data)
-          if (productData.product.quote_currency === 'USD' && productData.product.asset_type === 'Crypto') {
-            this.products.set(productData.priceAccountKey.toBase58(), {
+          const priceKey = productData.priceAccountKey.toBase58();
+          if (this.simulation.tokens.find((token) => { return token.price === priceKey; })) {
+            this.products.set(priceKey, {
               symbol: productData.product.symbol,
               baseSymbol: productData.product.base,
               quoteSymbol: productData.product.quote_currency,
@@ -66,28 +90,10 @@ export class PythClient {
         }
       }
     });
-
-    this.connection.onProgramAccountChange(
-      this.pythProgram,
-      (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
-        const base = parseBaseData(keyedAccountInfo.accountInfo.data);
-        if (base != null) {
-          if (AccountType[base.type] == 'Price') {
-            const price = parsePriceData(keyedAccountInfo.accountInfo.data)
-            const priceKey = keyedAccountInfo.accountId;
-            const product = this.products.get(priceKey.toBase58());
-            if (product) {
-              this.onPrice({ price: price.price, confidence: price.confidence, priceKey: priceKey }, product);
-            }
-          }
-        }
-      },
-      this.commitment,
-    );
-  }
+    */
 
   /*
-  public async query() {
+  public static async query() {
     let products: {}[] = [];
 
     const programAccounts = await this.connection.getProgramAccounts(this.pythProgram, this.commitment);
