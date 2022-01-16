@@ -88,6 +88,10 @@ export class Crank {
         continue;
       }
 
+      //TODO Match Orders
+
+
+
       const events = decodeEventQueue(accountInfo.data);
       if (events.length === 0) {
         continue;
@@ -103,11 +107,11 @@ export class Crank {
         }
       }
 
-      /*
       const openOrdersAccounts = [...accounts]
         .map((s) => new PublicKey(s))
         .sort((a, b) => a.toBuffer().swap64().compare(b.toBuffer().swap64()));
 
+      /*
       let transaction = new Transaction().add(
         DexInstructions.consumeEvents({
           market: new PublicKey(market.market),
@@ -119,7 +123,8 @@ export class Crank {
           programId: new PublicKey(simulation.config.serum.program),
         })
       );
-      await this.connection.sendTransaction(transaction, this.payer, []);
+      transaction.feePayer = this.payer.publicKey;
+      await this.connection.sendTransaction(transaction, [payer]);
       */
     }
   }
