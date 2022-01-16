@@ -18,6 +18,7 @@ export class MarketMaker extends Bot {
     console.log("MARKET MAKER PROCESSING: " + this.name);
 
 
+    /*
       // get fresh data
       // get orderbooks, get perp markets, caches
       // TODO load pyth oracle itself for most accurate prices
@@ -217,6 +218,7 @@ export class MarketMaker extends Bot {
           `${marketName}-PERP adjustment success: ${txid.toString()}`,
         );
       }
+    */
 
   }
 

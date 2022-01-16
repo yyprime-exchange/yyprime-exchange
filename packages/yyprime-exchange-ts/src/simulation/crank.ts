@@ -20,7 +20,26 @@
    Market,
  } from '@project-serum/serum';
  import { Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+*/
 
+
+import * as simulation from './simulation.json';
+
+export class Crank {
+  simulation;
+  //serumClient: SerumClient;
+  //solanaClient: SolanaClient;
+
+  constructor(simulation) {
+    //this.serumClient = new SerumClient(simulation, this.onAsk, this.onBid);
+    this.simulation = simulation;
+    //this.solanaClient = new SolanaClient(simulation);
+
+  }
+
+  public initialize(): void {
+
+    /*
  // const interval = process.env.INTERVAL || 3500;
  const interval = 4000; // TODO - stop sharing env var with Keeper
  const maxUniqueAccounts = parseInt(process.env.MAX_UNIQUE_ACCOUNTS || '10');
@@ -97,17 +116,11 @@
    const eventQueuePks = spotMarkets.map(
      (market) => market['_decoded'].eventQueue,
    );
- */
+    */
 
+  }
 
-import * as simulation from './simulation.json';
-
-console.log(`Running crank on ${simulation.config.cluster}`);
-
-
-
-let timerId = setTimeout(function process() {
-
+  public turn(): void {
   /*
   const eventQueueAccts = await getMultipleAccounts(
     connection,
@@ -158,6 +171,25 @@ let timerId = setTimeout(function process() {
     await client.sendTransaction(transaction, payer, []);
   }
   */
+  }
 
-  timerId = setTimeout(process, 1000);
-}, 1000);
+}
+
+
+
+const crank: Crank = new Crank(simulation);
+
+(async () => {
+  await crank.initialize();
+})().then(() => {
+  console.log(`Running crank on ${simulation.config.cluster}`);
+
+  let timerId = setTimeout(function process() {
+    console.log(`Crank ${new Date().toLocaleTimeString()}`);
+
+    crank.turn();
+
+    timerId = setTimeout(process, 1000);
+  }, 1000);
+
+});

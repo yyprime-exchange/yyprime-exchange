@@ -30,6 +30,7 @@ export class Simulator {
       await this.serumClient.createMarkets(payer);
 
       // Create bots that will trade.
+
       // Fund bots.
 
     })().then(() => {

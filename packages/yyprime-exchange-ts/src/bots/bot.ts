@@ -74,6 +74,7 @@ export class Bot {
   }
 
 
+  /*
 async function onExit(
   client: YYPXClient,
   payer: Account,
@@ -106,6 +107,7 @@ async function onExit(
 
   process.exit();
 }
+  */
 
 
   /*
