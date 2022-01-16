@@ -12,6 +12,8 @@ Serum trading strategies to provide liquidity within EMA-defined bands
 
 1. The strategy would ideally reference Pyth Network for pricing
 
+1. Solana is likely the only blockchain robust enough to support orderbooks.  
+
 ## Development
 
 ### Installing
@@ -20,6 +22,11 @@ To get started first install the required build tools:
 
 ```
 npm install -g yarn
+```
+Then Solana:
+
+```
+sh -c "$(curl -sSfL https://release.solana.com/v1.9.4/install)"
 ```
 
 Then bootstrap the workspace in root:

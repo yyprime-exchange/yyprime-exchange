@@ -1,13 +1,13 @@
-//import {
-//  Account,
-//  Commitment,
-//  Connection,
-//  PublicKey,
-//  Transaction,
-//} from '@solana/web3.js';
-//import fs from 'fs';
-//import os from 'os';
-//import { BN } from 'bn.js';
+import {
+  Account,
+  Commitment,
+  Connection,
+  PublicKey,
+  Transaction,
+} from '@solana/web3.js';
+import fs from 'fs';
+import os from 'os';
+import BN  = require('bn.js');
 
 const interval = parseInt(process.env.INTERVAL || '10000');
 
@@ -19,10 +19,10 @@ const interval = parseInt(process.env.INTERVAL || '10000');
     onExit(
       client,
       payer,
-      mangoProgramId,
-      mangoGroup,
+      YYPXProgramId,
+      YYPXGroup,
       perpMarket,
-      mangoAccountPk,
+      YYPXAccountPk,
     );
   });
 */
@@ -73,25 +73,25 @@ export class Bot {
     console.log("BOT PROCESSING: " + this.name);
   }
 
-  /*
+
 async function onExit(
-  client: MangoClient,
+  client: YYPXClient,
   payer: Account,
-  mangoProgramId: PublicKey,
-  mangoGroup: MangoGroup,
+  YYPXProgramId: PublicKey,
+  YYPXGroup: YYPXGroup,
   perpMarket: PerpMarket,
-  mangoAccountPk: PublicKey,
+  YYPXAccountPk: PublicKey,
 ) {
   await sleep(control.interval);
-  const mangoAccount = await client.getMangoAccount(
-    mangoAccountPk,
-    mangoGroup.dexProgramId,
+  const YYPXAccount = await client.getYYPXAccount(
+    YYPXAccountPk,
+    YYPXGroup.dexProgramId,
   );
 
   const cancelAllInstr = makeCancelAllPerpOrdersInstruction(
-    mangoProgramId,
-    mangoGroup.publicKey,
-    mangoAccount.publicKey,
+    YYPXProgramId,
+    YYPXGroup.publicKey,
+    YYPXAccount.publicKey,
     payer.publicKey,
     perpMarket.publicKey,
     perpMarket.bids,
@@ -106,7 +106,7 @@ async function onExit(
 
   process.exit();
 }
-  */
+
 
   /*
 process.on('unhandledRejection', function (err, promise) {

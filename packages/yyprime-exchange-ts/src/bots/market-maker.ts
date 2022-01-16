@@ -17,30 +17,30 @@ export class MarketMaker extends Bot {
   process() {
     console.log("MARKET MAKER PROCESSING: " + this.name);
 
-    /*
+
       // get fresh data
       // get orderbooks, get perp markets, caches
       // TODO load pyth oracle itself for most accurate prices
-      const [bids, asks, mangoCache, mangoAccount]: [
+      const [bids, asks, YYPXCache, YYPXAccount]: [
         BookSide,
         BookSide,
-        MangoCache,
-        MangoAccount,
+        YYPXCache,
+        YYPXAccount,
       ] = await Promise.all([
         perpMarket.loadBids(connection),
         perpMarket.loadAsks(connection),
-        mangoGroup.loadCache(connection),
-        client.getMangoAccount(mangoAccountPk, mangoGroup.dexProgramId),
+        YYPXGroup.loadCache(connection),
+        client.getYYPXAccount(YYPXAccountPk, YYPXGroup.dexProgramId),
       ]);
 
       // TODO store the prices in an array to calculate volatility
 
       // Model logic
-      const fairValue = mangoGroup.getPrice(marketIndex, mangoCache).toNumber();
-      const equity = mangoAccount
-        .computeValue(mangoGroup, mangoCache)
+      const fairValue = YYPXGroup.getPrice(marketIndex, YYPXCache).toNumber();
+      const equity = YYPXAccount
+        .computeValue(YYPXGroup, YYPXCache)
         .toNumber();
-      const perpAccount = mangoAccount.perpAccounts[marketIndex];
+      const perpAccount = YYPXAccount.perpAccounts[marketIndex];
       // TODO look at event queue as well for unprocessed fills
       const basePos = perpAccount.getBasePositionUi(perpMarket);
 
@@ -72,7 +72,7 @@ export class MarketMaker extends Bot {
           : modelAskPrice;
 
       // TODO use order book to requote if size has changed
-      const openOrders = mangoAccount
+      const openOrders = YYPXAccount
         .getPerpOpenOrders()
         .filter((o) => o.marketIndex === marketIndex);
       let moveOrders = openOrders.length === 0 || openOrders.length > 2;
@@ -113,16 +113,16 @@ export class MarketMaker extends Bot {
       ) {
         console.log(`${marketName}-PERP taking best bid spammer`);
         const takerSell = makePlacePerpOrderInstruction(
-          mangoProgramId,
-          mangoGroup.publicKey,
-          mangoAccount.publicKey,
+          YYPXProgramId,
+          YYPXGroup.publicKey,
+          YYPXAccount.publicKey,
           payer.publicKey,
-          mangoCache.publicKey,
+          YYPXCache.publicKey,
           perpMarket.publicKey,
           perpMarket.bids,
           perpMarket.asks,
           perpMarket.eventQueue,
-          mangoAccount.getOpenOrdersKeysInBasket(),
+          YYPXAccount.getOpenOrdersKeysInBasket(),
           bestBid.priceLots,
           ONE_BN,
           new BN(Date.now()),
@@ -139,16 +139,16 @@ export class MarketMaker extends Bot {
       ) {
         console.log(`${marketName}-PERP taking best ask spammer`);
         const takerBuy = makePlacePerpOrderInstruction(
-          mangoProgramId,
-          mangoGroup.publicKey,
-          mangoAccount.publicKey,
+          YYPXProgramId,
+          YYPXGroup.publicKey,
+          YYPXAccount.publicKey,
           payer.publicKey,
-          mangoCache.publicKey,
+          YYPXCache.publicKey,
           perpMarket.publicKey,
           perpMarket.bids,
           perpMarket.asks,
           perpMarket.eventQueue,
-          mangoAccount.getOpenOrdersKeysInBasket(),
+          YYPXAccount.getOpenOrdersKeysInBasket(),
           bestAsk.priceLots,
           ONE_BN,
           new BN(Date.now()),
@@ -160,9 +160,9 @@ export class MarketMaker extends Bot {
       if (moveOrders) {
         // cancel all, requote
         const cancelAllInstr = makeCancelAllPerpOrdersInstruction(
-          mangoProgramId,
-          mangoGroup.publicKey,
-          mangoAccount.publicKey,
+          YYPXProgramId,
+          YYPXGroup.publicKey,
+          YYPXAccount.publicKey,
           payer.publicKey,
           perpMarket.publicKey,
           perpMarket.bids,
@@ -171,16 +171,16 @@ export class MarketMaker extends Bot {
         );
 
         const placeBidInstr = makePlacePerpOrderInstruction(
-          mangoProgramId,
-          mangoGroup.publicKey,
-          mangoAccount.publicKey,
+          YYPXProgramId,
+          YYPXGroup.publicKey,
+          YYPXAccount.publicKey,
           payer.publicKey,
-          mangoCache.publicKey,
+          YYPXCache.publicKey,
           perpMarket.publicKey,
           perpMarket.bids,
           perpMarket.asks,
           perpMarket.eventQueue,
-          mangoAccount.getOpenOrdersKeysInBasket(),
+          YYPXAccount.getOpenOrdersKeysInBasket(),
           bookAdjBid,
           nativeBidSize,
           new BN(Date.now()),
@@ -189,16 +189,16 @@ export class MarketMaker extends Bot {
         );
 
         const placeAskInstr = makePlacePerpOrderInstruction(
-          mangoProgramId,
-          mangoGroup.publicKey,
-          mangoAccount.publicKey,
+          YYPXProgramId,
+          YYPXGroup.publicKey,
+          YYPXAccount.publicKey,
           payer.publicKey,
-          mangoCache.publicKey,
+          YYPXCache.publicKey,
           perpMarket.publicKey,
           perpMarket.bids,
           perpMarket.asks,
           perpMarket.eventQueue,
-          mangoAccount.getOpenOrdersKeysInBasket(),
+          YYPXAccount.getOpenOrdersKeysInBasket(),
           bookAdjAsk,
           nativeAskSize,
           new BN(Date.now()),
@@ -217,7 +217,7 @@ export class MarketMaker extends Bot {
           `${marketName}-PERP adjustment success: ${txid.toString()}`,
         );
       }
-    */
+
   }
 
 
@@ -235,22 +235,22 @@ try:
     buy_quantity, sell_quantity = self.calculate_order_quantities(price, inventory)
 
     current_orders = self.market_operations.load_my_orders()
-    buy_orders = [order for order in current_orders if order.side == mango.Side.BUY]
+    buy_orders = [order for order in current_orders if order.side == YYPX.Side.BUY]
     if self.orders_require_action(buy_orders, bid, buy_quantity):
         self.logger.info("Cancelling BUY orders.")
         for order in buy_orders:
             self.market_operations.cancel_order(order)
-        buy_order: mango.Order = mango.Order.from_basic_info(
-            mango.Side.BUY, bid, buy_quantity, mango.OrderType.POST_ONLY)
+        buy_order: YYPX.Order = YYPX.Order.from_basic_info(
+            YYPX.Side.BUY, bid, buy_quantity, YYPX.OrderType.POST_ONLY)
         self.market_operations.place_order(buy_order)
 
-    sell_orders = [order for order in current_orders if order.side == mango.Side.SELL]
+    sell_orders = [order for order in current_orders if order.side == YYPX.Side.SELL]
     if self.orders_require_action(sell_orders, ask, sell_quantity):
         self.logger.info("Cancelling SELL orders.")
         for order in sell_orders:
             self.market_operations.cancel_order(order)
-        sell_order: mango.Order = mango.Order.from_basic_info(
-            mango.Side.SELL, ask, sell_quantity, mango.OrderType.POST_ONLY)
+        sell_order: YYPX.Order = YYPX.Order.from_basic_info(
+            YYPX.Side.SELL, ask, sell_quantity, YYPX.OrderType.POST_ONLY)
         self.market_operations.place_order(sell_order)
 
     self.update_health_on_successful_iteration()
@@ -267,21 +267,21 @@ time.sleep(self.pause.seconds)
 
 
   /*
-def pulse(self, context: mango.Context, model_state: ModelState):
+def pulse(self, context: YYPX.Context, model_state: ModelState):
     try:
-        payer = mango.CombinableInstructions.from_wallet(self.wallet)
+        payer = YYPX.CombinableInstructions.from_wallet(self.wallet)
 
         desired_orders = self.desired_orders_builder.build(context, model_state)
         existing_orders = self.order_tracker.existing_orders(model_state)
         reconciled = self.order_reconciler.reconcile(model_state, existing_orders, desired_orders)
 
-        cancellations = mango.CombinableInstructions.empty()
+        cancellations = YYPX.CombinableInstructions.empty()
         for to_cancel in reconciled.to_cancel:
             self.logger.info(f"Cancelling {self.market.symbol} {to_cancel}")
             cancel = self.market_instruction_builder.build_cancel_order_instructions(to_cancel)
             cancellations += cancel
 
-        place_orders = mango.CombinableInstructions.empty()
+        place_orders = YYPX.CombinableInstructions.empty()
         for to_place in reconciled.to_place:
             desired_client_id: int = context.random_client_id()
             to_place_with_client_id = to_place.with_client_id(desired_client_id)
@@ -308,8 +308,8 @@ def pulse(self, context: mango.Context, model_state: ModelState):
   /*
 {
   "group": "mainnet.1",
-  "mangoAccountName": "Market Makooor",
-  "mangoAccountPubkey": "optional pubkey string if your mango account doesn't have name",
+  "YYPXAccountName": "Market Makooor",
+  "YYPXAccountPubkey": "optional pubkey string if your YYPX account doesn't have name",
   "interval": 5000,
   "batch": 2,
   "assets": {
