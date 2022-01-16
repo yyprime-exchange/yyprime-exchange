@@ -43,19 +43,27 @@ export class Simulator {
   }
 
   private onAsk(book: SerumBook) {
-    //TODO
+    for (const bot of this.simulation.bots) {
+      //bot.onAsk(book);
+    }
   }
 
   private onBid(book: SerumBook) {
-    //TODO
+    for (const bot of this.simulation.bots) {
+      //bot.onBid(book);
+    }
   }
 
   private onPrice(token: PythToken, price: PythPrice) {
-    //TODO
+    for (const bot of this.simulation.bots) {
+      //bot.onPrice(token, price);
+    }
   }
 
   public onTime() {
-    //TODO
+    for (const bot of this.simulation.bots) {
+      //bot.onTime();
+    }
   }
 
 }
