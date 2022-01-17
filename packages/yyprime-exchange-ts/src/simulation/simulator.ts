@@ -1,6 +1,6 @@
-import { Keypair } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 
-import { Bot, Fader, Follower, Maker, Taker } from '../bots';
+import { Bot, FaderBot, FollowerBot, MakerBot, TakerBot } from '../bots';
 import { PythClient, PythPrice, PythToken } from '../pyth';
 import { SerumBook, SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
@@ -24,28 +24,32 @@ export class Simulator {
 
   public initialize(): Promise<void> {
     return (async () => {
-      const payer: Keypair = Keypair.generate();
-      await this.solanaClient.requestAirdrop(100, payer.publicKey);
+      const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(this.simulation.config.walletPrivateKey, 'base64'));
+      await this.solanaClient.requestAirdrop(100, wallet.publicKey);
 
-      await this.solanaClient.createFaucets(payer);
+      await this.solanaClient.createFaucets(wallet);
 
-      await this.serumClient.createMarkets(payer);
+      await this.serumClient.createMarkets(wallet);
 
       for (const bot of this.simulation.bots) {
-        const bot_payer: Keypair = Keypair.generate();
-        await this.solanaClient.requestAirdrop(100, bot_payer.publicKey);
+        const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
+        await this.solanaClient.requestAirdrop(100, bot_wallet.publicKey);
 
         switch (bot.type) {
-          case "maker": this.bots.push(new Maker(bot, bot_payer)); break;
-          case "fader": this.bots.push(new Fader(bot, bot_payer)); break;
-          case "follower": this.bots.push(new Follower(bot, bot_payer)); break;
-          case "taker": this.bots.push(new Taker(bot, bot_payer)); break;
+          case "maker": this.bots.push(new MakerBot(bot, bot_wallet)); break;
+          case "fader": this.bots.push(new FaderBot(bot, bot_wallet)); break;
+          case "follower": this.bots.push(new FollowerBot(bot, bot_wallet)); break;
+          case "taker": this.bots.push(new TakerBot(bot, bot_wallet)); break;
           default: throw new Error(`Invalid bot type: ${bot.type}`);
         }
       }
 
       for (let bot of this.bots) {
-        //TODO transfer tokens to the bot to trade.
+        await this.solanaClient.createTokenAccount(new PublicKey(bot.config.baseMint), bot.wallet.publicKey, bot.wallet);
+        await this.solanaClient.sendToken(new PublicKey(bot.config.baseMint), bot.config.baseBalance, bot.config.baseDecimals, Keypair.fromSecretKey(Buffer.from(bot.config.baseFaucetPrivateKey, 'base64')), bot.wallet.publicKey, bot.wallet);
+
+        await this.solanaClient.createTokenAccount(new PublicKey(bot.config.quoteMint), bot.wallet.publicKey, bot.wallet);
+        await this.solanaClient.sendToken(new PublicKey(bot.config.quoteMint), bot.config.quoteBalance, bot.config.quoteDecimals, Keypair.fromSecretKey(Buffer.from(bot.config.quoteFaucetPrivateKey, 'base64')), bot.wallet.publicKey, bot.wallet);
       }
 
     })().then(() => {

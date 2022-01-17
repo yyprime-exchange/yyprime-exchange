@@ -143,6 +143,7 @@ const crank: Crank = new Crank(simulation, payer);
 
   await crank.initialize();
 })().then(() => {
+
   console.log(`Running crank on ${simulation.config.cluster}`);
 
   let timerId = setTimeout(async function process() {

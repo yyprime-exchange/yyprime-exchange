@@ -65,8 +65,6 @@ export class SolanaClient {
   private async createMint(symbol: string, payer: Keypair, mint: Keypair, decimals: number, faucet: Keypair, amount: number) {
     console.log(`createMint(${symbol})`);
 
-    const tokenAddress = await this.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey);
-
     let transaction = new Transaction().add(
       SystemProgram.createAccount({
         fromPubkey: payer.publicKey,
@@ -85,17 +83,9 @@ export class SolanaClient {
     );
     await sendAndConfirmTransaction(this.connection, transaction, [payer, mint]);
 
-    transaction = new Transaction().add(
-      Token.createAssociatedTokenAccountInstruction(
-        ASSOCIATED_TOKEN_PROGRAM_ID,
-        TOKEN_PROGRAM_ID,
-        mint.publicKey,
-        tokenAddress,
-        faucet.publicKey,
-        payer.publicKey
-      )
-    );
-    await sendAndConfirmTransaction(this.connection, transaction, [payer]);
+    await this.createTokenAccount(mint.publicKey, faucet.publicKey, payer);
+
+    const tokenAddress = await this.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey);
 
     transaction = new Transaction().add(
       Token.createMintToInstruction(
@@ -108,6 +98,22 @@ export class SolanaClient {
       )
     );
     await sendAndConfirmTransaction(this.connection, transaction, [payer, faucet]);
+  }
+
+  public async createTokenAccount(mint: PublicKey, owner: PublicKey, payer: Keypair) {
+    const tokenAddress = await this.getAssociatedTokenAddress(mint, owner);
+
+    const transaction = new Transaction().add(
+      Token.createAssociatedTokenAccountInstruction(
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+        TOKEN_PROGRAM_ID,
+        mint,
+        tokenAddress,
+        owner,
+        payer.publicKey
+      )
+    );
+    await sendAndConfirmTransaction(this.connection, transaction, [payer]);
   }
 
   public async getAssociatedTokenAddress(mint: PublicKey, owner: PublicKey) {
@@ -131,14 +137,18 @@ export class SolanaClient {
     return supply.toNumber() / this.pow10(decimals);
   }
 
-  //public async getTokenAccountsByOwner(owner: PublicKey) {
-    //return await this.connection.getParsedTokenAccountsByOwner(owner, { programId: TOKEN_PROGRAM_ID });
-  //}
-
   public async getTokenBalance(mint: PublicKey, owner: PublicKey) {
     const tokenAddress = await this.getAssociatedTokenAddress(mint, owner);
     const balance = await this.connection.getTokenAccountBalance(tokenAddress, this.commitment);
     return balance.value.uiAmount;
+  }
+
+  private pow10(decimals: number): number {
+    switch(decimals) {
+      case 6: return 1_000_000;
+      case 9: return 1_000_000_000;
+      default: throw new Error("Unsupported number of decimals.");
+    }
   }
 
   public async requestAirdrop(sol: number, publicKey: PublicKey) {
@@ -153,35 +163,22 @@ export class SolanaClient {
       toPubkey: to,
       lamports: sol * LAMPORTS_PER_SOL
     }));
-    const payer = from;
-    await sendAndConfirmTransaction(this.connection, transaction, [payer]);
+    await sendAndConfirmTransaction(this.connection, transaction, [from]);
   }
 
-  public async sendToken(amount: number, mintToken: Token, from: Keypair, to: PublicKey) {
-    const decimals = 9;
-    const toTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(to); // TODO Get
-    const fromTokenAccount = await mintToken.getOrCreateAssociatedAccountInfo(from.publicKey); // TODO GetOrCreate
+  public async sendToken(mint: PublicKey, amount: number, decimals: number, from: Keypair, to: PublicKey, payer: Keypair) {
     const transaction = new Transaction()
     .add(Token.createTransferCheckedInstruction(
       TOKEN_PROGRAM_ID,
-      fromTokenAccount.address,
-      mintToken.publicKey,
-      toTokenAccount.address,
+      await this.getAssociatedTokenAddress(mint, from.publicKey),
+      mint,
+      await this.getAssociatedTokenAddress(mint, to),
       from.publicKey,
       [],
-      amount * LAMPORTS_PER_SOL,
+      amount * this.pow10(decimals),
       decimals
     ));
-    const payer = from;
-    await sendAndConfirmTransaction(this.connection, transaction, [payer]);
-  }
-
-  private pow10(decimals: number): number {
-    switch(decimals) {
-      case 6: return 1_000_000;
-      case 9: return 1_000_000_000;
-      default: throw new Error("Unsupported number of decimals.");
-    }
+    await sendAndConfirmTransaction(this.connection, transaction, [payer, from]);
   }
 
 }

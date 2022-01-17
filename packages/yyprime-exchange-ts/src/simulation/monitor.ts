@@ -1,9 +1,6 @@
 import assert from 'assert';
 import { Buffer } from 'buffer';
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { Keypair, PublicKey } from '@solana/web3.js';
-//import { PythPrice, PythToken, PythClient } from '../pyth';
-//import { SerumBook, SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
 
 import * as simulation from './simulation.json';
@@ -56,42 +53,31 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log('');
   }
 
-  /*
   for (const bot of simulation.bots) {
     console.log(`BOT: ${bot.name}`);
+
+    const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
+
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(wallet.publicKey))}`);
+    console.log(`  Balance = ${JSON.stringify(await solanaClient.getBalance(wallet.publicKey))}`);
+    console.log(`  BaseTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(new PublicKey(bot.baseMint), wallet.publicKey))}`);
+    console.log(`  QuoteTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(new PublicKey(bot.quoteMint), wallet.publicKey))}`);
     console.log('');
   }
-  */
 
 })().then(() => {
+
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
 
   /*
-  const pythClient: PythClient = new PythClient(
-    simulation,
-    (token: PythToken, price: PythPrice) => {
-      console.log(`[PRICE]`);
-      console.log(`product = ${token.symbol}`);
-      console.log(`price = ${price.price}`);
-      console.log(`confidence = ${price.confidence}`);
-      console.log('');
-    },
-  );
-  pythClient.subscribe();
-  */
+  const interval = 1000;
 
-  /*
-  const serumClient: SerumClient = new SerumClient(
-    simulation,
-    (book: SerumBook) => {
-      console.log("ASK " + book.symbol);
-    },
-    (book: SerumBook) => {
-      console.log("BID " + book.symbol);
-    },
-  );
-  serumClient.initialize();
-  serumClient.subscribe();
+  let timerId = setTimeout(async function process() {
+
+
+
+    timerId = setTimeout(process, interval);
+  }, interval);
   */
 
 });
