@@ -1,125 +1,42 @@
-import {
-  Account,
-  Commitment,
-  Connection,
-  PublicKey,
-  Transaction,
-} from '@solana/web3.js';
-import fs from 'fs';
-import os from 'os';
-import BN  = require('bn.js');
+import { Keypair } from '@solana/web3.js';
 
-const interval = parseInt(process.env.INTERVAL || '10000');
+import { PythPrice, PythToken } from '../pyth';
+import { SerumBook } from '../serum';
 
-//TODO a single controller for all bots.
-/*
-  process.on('SIGINT', function () {
-    console.log('Caught keyboard interrupt. Canceling orders');
-    control.isRunning = false;
-    onExit(
-      client,
-      payer,
-      YYPXProgramId,
-      YYPXGroup,
-      perpMarket,
-      YYPXAccountPk,
-    );
-  });
-*/
-
-/*
-  while (control.isRunning) {
-    try {
-    } catch (e) {
-      // sleep for some time and retry
-      console.log(e);
-    } finally {
-      console.log(`sleeping for ${interval / 1000}s`);
-      await sleep(interval);
-    }
-  }
-*/
-
-export class Bot {
+export abstract class Bot {
+  readonly base: string;
+  readonly baseBalance: number;
   readonly name: string;
-  readonly market: string;
+  readonly quote: string;
+  readonly quoteBalance: number;
+  readonly symbol: string;
+  readonly type: string;
+
+  readonly params: any;
+
+  readonly payer: Keypair;
 
   public control = {
     isRunning: true,
-    interval: interval,
   };
 
-  //public readonly cluster = process.env.CLUSTER || 'localnet';
+  constructor(botConfig: any, payer: Keypair) {
+    this.base = botConfig.base;
+    this.baseBalance = botConfig.baseBalance;
+    this.name = botConfig.name;
+    this.quote = botConfig.quote;
+    this.quoteBalance = botConfig.quoteBalance;
+    this.symbol = botConfig.symbol;
+    this.type = botConfig.type;
 
-  constructor(name: string, market: string) {
-    this.name = name;
-    this.market = market;
+    this.params = botConfig.params;
 
-    //TODO
-    /*
-    const payer = new Account(
-      JSON.parse(
-        fs.readFileSync(
-          process.env.KEYPAIR || os.homedir() + '/.config/solana/id.json',
-          'utf-8',
-        ),
-      ),
-    );
-    console.log(`Payer: ${payer.publicKey.toBase58()}`);
-    */
+    this.payer = payer;
   }
 
-  process() {
-    console.log("BOT PROCESSING: " + this.name);
-  }
-
-
-  /*
-async function onExit(
-  client: YYPXClient,
-  payer: Account,
-  YYPXProgramId: PublicKey,
-  YYPXGroup: YYPXGroup,
-  perpMarket: PerpMarket,
-  YYPXAccountPk: PublicKey,
-) {
-  await sleep(control.interval);
-  const YYPXAccount = await client.getYYPXAccount(
-    YYPXAccountPk,
-    YYPXGroup.dexProgramId,
-  );
-
-  const cancelAllInstr = makeCancelAllPerpOrdersInstruction(
-    YYPXProgramId,
-    YYPXGroup.publicKey,
-    YYPXAccount.publicKey,
-    payer.publicKey,
-    perpMarket.publicKey,
-    perpMarket.bids,
-    perpMarket.asks,
-    new BN(20),
-  );
-  const tx = new Transaction();
-  tx.add(cancelAllInstr);
-
-  const txid = await client.sendTransaction(tx, payer, []);
-  console.log(`cancel successful: ${txid.toString()}`);
-
-  process.exit();
-}
-  */
-
-
-  /*
-process.on('unhandledRejection', function (err, promise) {
-  console.error(
-    'Unhandled rejection (promise: ',
-    promise,
-    ', reason: ',
-    err,
-    ').',
-  );
-});
-  */
+  public abstract onAsk(book: SerumBook);
+  public abstract onBid(book: SerumBook);
+  public abstract onExit();
+  public abstract onPrice(token: PythToken, price: PythPrice);
 
 }
