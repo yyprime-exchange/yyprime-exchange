@@ -16,9 +16,9 @@ if (simulationBuilder.cluster === 'mainnet') {
   //simulationBuilder.market("ETH", "USDC");
   //simulationBuilder.market("SOL", "USDC");
 
-  simulationBuilder.market_maker("BTC_mm_0", "BTC", 2, "USDC", 100_000, {});
-  //simulationBuilder.market_maker("ETH", 250, "USDC", 100_000, {});
-  //simulationBuilder.market_maker("SOL", 500, "USDC", 100_000, {});
+  simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 2, "USDC", 100_000, {});
+  //simulationBuilder.bot("ETH", "maker", 250, "USDC", 100_000, {});
+  //simulationBuilder.bot("SOL", "maker", 500, "USDC", 100_000, {});
 
   const [simulation_public, simulation_private] = simulationBuilder.build();
   fs.writeFileSync('../frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));

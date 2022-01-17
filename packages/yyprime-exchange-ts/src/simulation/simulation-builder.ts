@@ -31,12 +31,8 @@ export class SimulationBuilder {
     this.markets.push({ symbol: `${base}/${quote}`, base: base, quote: quote });
   }
 
-  public market_maker(name: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
-    this.bots.push({ name: name, type: 'market_maker', symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
-  }
-
-  public random_taker(name: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
-    this.bots.push({ name: name, type: 'random_taker', symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
+  public bot(name: string, type: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
+    this.bots.push({ name: name, type: type, symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
   }
 
   public build() {

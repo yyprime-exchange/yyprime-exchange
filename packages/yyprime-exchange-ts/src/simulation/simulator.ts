@@ -1,6 +1,6 @@
 import { Keypair } from "@solana/web3.js";
 
-import { Bot, MarketMaker } from '../bots';
+import { Bot, Fader, Follower, Maker, Taker } from '../bots';
 import { PythClient, PythPrice, PythToken } from '../pyth';
 import { SerumBook, SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
@@ -36,7 +36,10 @@ export class Simulator {
         await this.solanaClient.requestAirdrop(100, bot_payer.publicKey);
 
         switch (bot.type) {
-          case "market_maker": this.bots.push(new MarketMaker(bot, bot_payer)); break;
+          case "maker": this.bots.push(new Maker(bot, bot_payer)); break;
+          case "fader": this.bots.push(new Fader(bot, bot_payer)); break;
+          case "follower": this.bots.push(new Follower(bot, bot_payer)); break;
+          case "taker": this.bots.push(new Taker(bot, bot_payer)); break;
           default: throw new Error(`Invalid bot type: ${bot.type}`);
         }
       }

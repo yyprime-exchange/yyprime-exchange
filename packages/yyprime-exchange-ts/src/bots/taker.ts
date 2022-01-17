@@ -4,11 +4,13 @@ import { Bot } from './bot';
 import { PythPrice, PythToken } from '../pyth';
 import { SerumBook } from '../serum';
 
-export class MarketMaker extends Bot {
+export class TakerBot extends Bot {
 
   constructor(botConfig: any, payer: Keypair) {
     super(botConfig, payer);
   }
+
+  //Randomly trades.
 
   public onAsk(book: SerumBook) {
     //console.log(JSON.stringify(book));

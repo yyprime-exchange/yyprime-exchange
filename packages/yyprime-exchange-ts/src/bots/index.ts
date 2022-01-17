@@ -1,3 +1,4 @@
 export * from "./bot"
-export * from "./market-maker"
-export * from "./random-taker"
+export * from "./follower"
+export * from "./maker"
+export * from "./taker"

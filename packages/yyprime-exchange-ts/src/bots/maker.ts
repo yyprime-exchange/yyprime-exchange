@@ -4,7 +4,7 @@ import { Bot } from './bot';
 import { PythPrice, PythToken } from '../pyth';
 import { SerumBook } from '../serum';
 
-export class RandomTaker extends Bot {
+export class MakerBot extends Bot {
 
   constructor(botConfig: any, payer: Keypair) {
     super(botConfig, payer);
