@@ -50,6 +50,8 @@ export class Simulator {
 
         await this.solanaClient.createTokenAccount(new PublicKey(bot.config.quoteMint), bot.wallet.publicKey, bot.wallet);
         await this.solanaClient.sendToken(new PublicKey(bot.config.quoteMint), bot.config.quoteBalance, bot.config.quoteDecimals, Keypair.fromSecretKey(Buffer.from(bot.config.quoteFaucetPrivateKey, 'base64')), bot.wallet.publicKey, bot.wallet);
+
+        //TODO initOpenOrders
       }
 
     })().then(() => {
