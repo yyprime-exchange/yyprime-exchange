@@ -48,7 +48,6 @@ export class MakerBot extends Bot {
 
 
 
-          /*
           const asks = [
             [6.041, 7.8],
             [6.051, 72.3],
@@ -69,6 +68,7 @@ export class MakerBot extends Bot {
             [5.961, 25.4],
           ];
 
+          /*
           for (let k = 0; k < asks.length; k += 1) {
             let ask = asks[k];
             const { transaction, signers } =
@@ -85,8 +85,10 @@ export class MakerBot extends Bot {
                 feeDiscountPubkey: null,
                 selfTradeBehavior: "abortTransaction",
               });
-            await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
+              transaction.feePayer = this.wallet.publicKey;
+              await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
           }
+          */
 
           for (let k = 0; k < bids.length; k += 1) {
             let bid = bids[k];
@@ -104,9 +106,9 @@ export class MakerBot extends Bot {
                 feeDiscountPubkey: null,
                 selfTradeBehavior: "abortTransaction",
               });
-            await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
-          }
-          */
+              transaction.feePayer = this.wallet.publicKey;
+              await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
+            }
         }
 
         //console.log(JSON.stringify(token));
