@@ -14,9 +14,11 @@ import * as simulation from './simulation.json';
 
 
   const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(simulation.config.walletPrivateKey, 'base64'));
+
+  //TODO I don't like this.
   await solanaClient.requestAirdrop(100, wallet.publicKey);
 
-  await solanaClient.createFaucets(wallet);
+  await solanaClient.createTokens(wallet);
 
   await serumClient.createMarkets(wallet);
 
@@ -24,11 +26,27 @@ import * as simulation from './simulation.json';
     const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
     await solanaClient.requestAirdrop(100, bot_wallet.publicKey);
 
-    await solanaClient.createTokenAccount(new PublicKey(bot.baseMint), bot_wallet.publicKey, bot_wallet);
-    await solanaClient.sendToken(new PublicKey(bot.baseMint), bot.baseBalance, bot.baseDecimals, Keypair.fromSecretKey(Buffer.from(bot.baseFaucetPrivateKey, 'base64')), bot_wallet.publicKey, bot_wallet);
+    //const baseTokenAccount = await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.baseMint), bot_wallet.publicKey);
+    const baseTokenAccount = await solanaClient.createTokenAccount(new PublicKey(bot.baseMint), bot_wallet.publicKey, bot_wallet);
+    await solanaClient.sendToken(
+      new PublicKey(bot.baseMint),
+      bot.baseBalance,
+      bot.baseDecimals,
+      wallet,
+      new PublicKey(bot.baseVault),
+      baseTokenAccount,
+    );
 
-    await solanaClient.createTokenAccount(new PublicKey(bot.quoteMint), bot_wallet.publicKey, bot_wallet);
-    await solanaClient.sendToken(new PublicKey(bot.quoteMint), bot.quoteBalance, bot.quoteDecimals, Keypair.fromSecretKey(Buffer.from(bot.quoteFaucetPrivateKey, 'base64')), bot_wallet.publicKey, bot_wallet);
+    //const quoteTokenAccount = await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.quoteMint), bot_wallet.publicKey);
+    const quoteTokenAccount = await solanaClient.createTokenAccount(new PublicKey(bot.quoteMint), bot_wallet.publicKey, bot_wallet);
+    await solanaClient.sendToken(
+      new PublicKey(bot.quoteMint),
+      bot.quoteBalance,
+      bot.quoteDecimals,
+      wallet,
+      new PublicKey(bot.quoteVault),
+      quoteTokenAccount,
+    );
 
     //TODO initOpenOrders
   }

@@ -91,14 +91,15 @@ export class SimulationBuilder {
 
       const tokens_private = this.tokens.map(token => {
         const mintKeypair = Keypair.generate();
-        const faucetKeypair = Keypair.generate();
+        const vaultKeypair = Keypair.generate();
         return {
           symbol: token.symbol,
           mint: mintKeypair.publicKey.toBase58(),
           mintPrivateKey: Buffer.from(mintKeypair.secretKey).toString('base64'),
-          faucet: faucetKeypair.publicKey.toBase58(),
-          faucetPrivateKey: Buffer.from(faucetKeypair.secretKey).toString('base64'),
+          vault: vaultKeypair.publicKey.toBase58(),
+          vaultPrivateKey: Buffer.from(vaultKeypair.secretKey).toString('base64'),
           decimals: 6,
+          mintSupply: 1_000_000,
           price: priceKeys.get(token.symbol),
         };
       });
@@ -179,15 +180,17 @@ export class SimulationBuilder {
           base: bot.base,
           baseBalance: bot.baseBalance,
           baseDecimals: tokensBySymbol.get(bot.base).decimals,
-          baseFaucet: tokensBySymbol.get(bot.base).faucet,
-          baseFaucetPrivateKey: tokensBySymbol.get(bot.base).faucetPrivateKey,
           baseMint: tokensBySymbol.get(bot.base).mint,
+          baseMintPrivateKey: tokensBySymbol.get(bot.base).mintPrivateKey,
+          baseVault: tokensBySymbol.get(bot.base).vault,
+          baseVaultPrivateKey: tokensBySymbol.get(bot.base).vaultPrivateKey,
           quote: bot.quote,
           quoteBalance: bot.quoteBalance,
           quoteDecimals: tokensBySymbol.get(bot.quote).decimals,
-          quoteFaucet: tokensBySymbol.get(bot.quote).faucet,
-          quoteFaucetPrivateKey: tokensBySymbol.get(bot.quote).faucetPrivateKey,
           quoteMint: tokensBySymbol.get(bot.quote).mint,
+          quoteMintPrivateKey: tokensBySymbol.get(bot.quote).mintPrivateKey,
+          quoteVault: tokensBySymbol.get(bot.quote).vault,
+          quoteVaultPrivateKey: tokensBySymbol.get(bot.quote).vaultPrivateKey,
           params: bot.params,
           wallet: walletKeypair.publicKey.toBase58(),
           walletPrivateKey: Buffer.from(walletKeypair.secretKey).toString('base64'),
@@ -207,7 +210,9 @@ export class SimulationBuilder {
         return {
           symbol: token.symbol,
           mint: token.mint,
+          vault: token.vault,
           decimals: token.decimals,
+          mintSupply: token.mintSupply,
           price: token.price,
         };
       });
@@ -240,12 +245,10 @@ export class SimulationBuilder {
           base: bot.base,
           baseBalance: bot.baseBalance,
           baseDecimals: bot.baseDecimals,
-          baseFaucet: bot.baseFaucet,
           baseMint: bot.baseMint,
           quote: bot.quote,
           quoteBalance: bot.quoteBalance,
           quoteDecimals: bot.quoteDecimals,
-          quoteFaucet: bot.quoteFaucet,
           quoteMint: bot.quoteMint,
           params: bot.params,
           wallet: bot.wallet,

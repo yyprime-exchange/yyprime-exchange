@@ -19,13 +19,11 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     const mint: Keypair = Keypair.fromSecretKey(Buffer.from(token.mintPrivateKey, 'base64'));
     assert(mint.publicKey.toBase58() == new PublicKey(token.mint).toBase58());
 
-    const faucet: Keypair = Keypair.fromSecretKey(Buffer.from(token.faucetPrivateKey, 'base64'));
+    const vault: Keypair = Keypair.fromSecretKey(Buffer.from(token.vaultPrivateKey, 'base64'));
 
+    console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(mint.publicKey))}`);
+    console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(vault.publicKey))}`);
     console.log(`  MintSupply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
-    console.log(`  FaucetTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(mint.publicKey, faucet.publicKey))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(mint.publicKey))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(faucet.publicKey))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(await solanaClient.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey)))}`);
     console.log('');
   }
 
@@ -57,12 +55,12 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
   for (const bot of simulation.bots) {
     console.log(`BOT: ${bot.name}`);
 
-    const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
+    const bot_wallet: Keypair = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
 
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(wallet.publicKey))}`);
-    console.log(`  Balance = ${JSON.stringify(await solanaClient.getBalance(wallet.publicKey))}`);
-    console.log(`  BaseTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(new PublicKey(bot.baseMint), wallet.publicKey))}`);
-    console.log(`  QuoteTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(new PublicKey(bot.quoteMint), wallet.publicKey))}`);
+    console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bot_wallet.publicKey))}`);
+    console.log(`  Balance = ${JSON.stringify(await solanaClient.getBalance(bot_wallet.publicKey))}`);
+    console.log(`  BaseTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.baseMint), bot_wallet.publicKey)))}`);
+    console.log(`  QuoteTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.quoteMint), bot_wallet.publicKey)))}`);
     console.log('');
   }
 

@@ -44,6 +44,11 @@ export interface SerumBook {
   bid: Orderbook | undefined;
 }
 
+interface BookEvent {
+  event: string;
+  book: SerumBook;
+}
+
 export class SerumClient {
   commitment: Commitment = 'finalized';
   connection: Connection;
@@ -51,7 +56,7 @@ export class SerumClient {
   simulation;
 
   books: Map<string, SerumBook>;
-  keyTypes: Map<string, string>;
+  bookEvents: Map<string, BookEvent>;
 
   constructor(
     simulation,
@@ -61,9 +66,7 @@ export class SerumClient {
     this.simulation = simulation;
 
     this.books = new Map<string, SerumBook>();
-
-    //TODO replace this with a book event wrapper.
-    this.keyTypes = new Map<string, string>();
+    this.bookEvents = new Map<string, BookEvent>();
 
     simulation.markets.forEach((market) => {
       let book: SerumBook = {
@@ -71,11 +74,11 @@ export class SerumClient {
       };
 
       this.books.set(market.market, book);
-      this.books.set(market.asks, book);
-      this.books.set(market.bids, book);
 
-      this.keyTypes.set(market.asks, "asks");
-      this.keyTypes.set(market.bids, "bids");
+      this.bookEvents.set(market.asks, { event: "asks", book: book });
+      this.bookEvents.set(market.bids, { event: "bids", book: book });
+      this.bookEvents.set(market.eventQueue, { event: "eventQueue", book: book });
+      this.bookEvents.set(market.requestQueue, { event: "requestQueue", book: book });
     });
   }
 
@@ -122,6 +125,17 @@ export class SerumClient {
     feeRateBps: number,
   ) {
     console.log(`createMarket(${symbol})`);
+
+    /*
+    connection: provider.connection,
+    wallet: provider.wallet,
+    baseMint: baseMint,
+    quoteMint: quoteMint,
+    baseLotSize: 100000,
+    quoteLotSize: 100,
+    dexProgramId: DEX_PID,
+    feeRateBps: 0,
+    */
 
     //TODO this should be in the simulation config.
     const quoteDustThreshold = new BN(100);
@@ -249,8 +263,7 @@ export class SerumClient {
   public async initialize() {
     await Promise.all(
       this.simulation.markets.map(async (market) => {
-        //console.log(`market.market = ${market.market}`);
-        this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), undefined, this.serumProgram);
+        this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), { commitment: "processed" }, this.serumProgram);
       })
     );
   }
@@ -258,17 +271,21 @@ export class SerumClient {
   public subscribe(
     onAsk: (book: SerumBook) => void,
     onBid: (book: SerumBook) => void,
+    onEvent: (book: SerumBook) => void,
+    onRequest: (book: SerumBook) => void,
   ) {
     this.connection.onProgramAccountChange(
       this.serumProgram,
       (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
         const key = keyedAccountInfo.accountId.toBase58();
-        let book = this.books.get(key);
-        if (book && book.serumMarket) {
-          const keyType = this.keyTypes.get(key);
-          switch (keyType) {
-            case "asks": book.ask = Orderbook.decode(book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(book); break;
-            case "bids": book.bid = Orderbook.decode(book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(book); break;
+        const bookEvent = this.bookEvents.get(key);
+        if (bookEvent && bookEvent.book.serumMarket) {
+          switch (bookEvent.event) {
+            case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(bookEvent.book); break;
+            case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onBid(bookEvent.book); break;
+            case "eventQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onEvent(bookEvent.book); break;
+            case "requestQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onRequest(bookEvent.book); break;
+            default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
         }
       },

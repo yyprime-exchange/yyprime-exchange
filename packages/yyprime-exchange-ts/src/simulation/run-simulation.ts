@@ -39,7 +39,12 @@ export class Simulator {
     }
 
     this.pythClient.subscribe((token: PythToken, price: PythPrice) => { this.onPrice(token, price); });
-    this.serumClient.subscribe((book: SerumBook) => { this.onAsk(book); }, (book: SerumBook) => { this.onBid(book); });
+    this.serumClient.subscribe(
+      (book: SerumBook) => { this.onAsk(book); },
+      (book: SerumBook) => { this.onBid(book); },
+      (book: SerumBook) => { this.onEvent(book); },
+      (book: SerumBook) => { this.onRequest(book); },
+    );
   }
 
   private onAsk(book: SerumBook) {
@@ -52,6 +57,12 @@ export class Simulator {
     for (let bot of this.bots) {
       bot.onBid(book);
     }
+  }
+
+  private onEvent(book: SerumBook) {
+  }
+
+  private onRequest(book: SerumBook) {
   }
 
   private onPrice(token: PythToken, price: PythPrice) {

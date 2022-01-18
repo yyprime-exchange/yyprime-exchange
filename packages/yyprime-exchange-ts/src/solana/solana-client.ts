@@ -1,4 +1,8 @@
+import BN from 'bn.js';
 import { Buffer } from 'buffer';
+import {
+  TokenInstructions,
+} from '@project-serum/serum';
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   MintLayout,
@@ -47,59 +51,6 @@ export class SolanaClient {
     return transaction.signatures.length * recentBlockhash.feeCalculator.lamportsPerSignature;
   }
 
-  public async createFaucets(payer: Keypair) {
-    for (const token of this.simulation.tokens) {
-      //if (token.symbol !== 'SOL') {
-        const mint: Keypair = Keypair.fromSecretKey(Buffer.from(token.mintPrivateKey, 'base64'));
-
-        const faucet: Keypair = Keypair.fromSecretKey(Buffer.from(token.faucetPrivateKey, 'base64'));
-        //TODO I don't like to do this here.
-        await this.requestAirdrop(1, faucet.publicKey);
-
-        const mintSupply = 1_000_000; //TODO this should be in the simulation config.
-        await this.createMint(token.symbol, payer, mint, token.decimals, faucet, mintSupply);
-      //}
-    }
-  }
-
-  private async createMint(symbol: string, payer: Keypair, mint: Keypair, decimals: number, faucet: Keypair, amount: number) {
-    console.log(`createMint(${symbol})`);
-
-    let transaction = new Transaction().add(
-      SystemProgram.createAccount({
-        fromPubkey: payer.publicKey,
-        newAccountPubkey: mint.publicKey,
-        space: MintLayout.span,
-        lamports: await this.connection.getMinimumBalanceForRentExemption(MintLayout.span),
-        programId: TOKEN_PROGRAM_ID,
-      }),
-      Token.createInitMintInstruction(
-        TOKEN_PROGRAM_ID,
-        mint.publicKey,
-        decimals,
-        faucet.publicKey, // mintAuthority
-        null,
-      )
-    );
-    await sendAndConfirmTransaction(this.connection, transaction, [payer, mint]);
-
-    await this.createTokenAccount(mint.publicKey, faucet.publicKey, payer);
-
-    const tokenAddress = await this.getAssociatedTokenAddress(mint.publicKey, faucet.publicKey);
-
-    transaction = new Transaction().add(
-      Token.createMintToInstruction(
-        TOKEN_PROGRAM_ID,
-        mint.publicKey,
-        tokenAddress,
-        faucet.publicKey, // mintAuthority
-        [],
-        amount * this.pow10(decimals)
-      )
-    );
-    await sendAndConfirmTransaction(this.connection, transaction, [payer, faucet]);
-  }
-
   public async createTokenAccount(mint: PublicKey, owner: PublicKey, payer: Keypair) {
     const tokenAddress = await this.getAssociatedTokenAddress(mint, owner);
 
@@ -114,6 +65,54 @@ export class SolanaClient {
       )
     );
     await sendAndConfirmTransaction(this.connection, transaction, [payer]);
+    return tokenAddress;
+  }
+
+  public async createTokens(owner: Keypair) {
+    await Promise.all(
+      this.simulation.tokens.map(async (token) => {
+        //if (token.symbol !== 'SOL') {
+          console.log(`createMint(${token.symbol})`);
+
+          const mint: Keypair = Keypair.fromSecretKey(Buffer.from(token.mintPrivateKey, 'base64'));
+          const vault: Keypair = Keypair.fromSecretKey(Buffer.from(token.vaultPrivateKey, 'base64'));
+
+          let transaction = new Transaction().add(
+            SystemProgram.createAccount({
+              fromPubkey: owner.publicKey,
+              newAccountPubkey: mint.publicKey,
+              space: 82,
+              lamports: await this.connection.getMinimumBalanceForRentExemption(82),
+              programId: TokenInstructions.TOKEN_PROGRAM_ID,
+            }),
+            TokenInstructions.initializeMint({
+              mint: mint.publicKey,
+              decimals: token.decimals,
+              mintAuthority: owner.publicKey,
+            }),
+            SystemProgram.createAccount({
+              fromPubkey: owner.publicKey,
+              newAccountPubkey: vault.publicKey,
+              space: 165,
+              lamports: await this.connection.getMinimumBalanceForRentExemption(165),
+              programId: TokenInstructions.TOKEN_PROGRAM_ID,
+            }),
+            TokenInstructions.initializeAccount({
+              account: vault.publicKey,
+              mint: mint.publicKey,
+              owner: owner.publicKey,
+            }),
+            TokenInstructions.mintTo({
+              mint: mint.publicKey,
+              destination: vault.publicKey,
+              amount: new BN(token.mintSupply * this.pow10(token.decimals)),
+              mintAuthority: owner.publicKey,
+            }),
+          );
+          await sendAndConfirmTransaction(this.connection, transaction, [owner, mint, vault]);
+        //}
+      })
+    );
   }
 
   public async getAssociatedTokenAddress(mint: PublicKey, owner: PublicKey) {
@@ -137,8 +136,7 @@ export class SolanaClient {
     return supply.toNumber() / this.pow10(decimals);
   }
 
-  public async getTokenBalance(mint: PublicKey, owner: PublicKey) {
-    const tokenAddress = await this.getAssociatedTokenAddress(mint, owner);
+  public async getTokenBalance(tokenAddress: PublicKey) {
     const balance = await this.connection.getTokenAccountBalance(tokenAddress, this.commitment);
     return balance.value.uiAmount;
   }
@@ -166,19 +164,20 @@ export class SolanaClient {
     await sendAndConfirmTransaction(this.connection, transaction, [from]);
   }
 
-  public async sendToken(mint: PublicKey, amount: number, decimals: number, from: Keypair, to: PublicKey, payer: Keypair) {
-    const transaction = new Transaction()
-    .add(Token.createTransferCheckedInstruction(
-      TOKEN_PROGRAM_ID,
-      await this.getAssociatedTokenAddress(mint, from.publicKey),
-      mint,
-      await this.getAssociatedTokenAddress(mint, to),
-      from.publicKey,
-      [],
-      amount * this.pow10(decimals),
-      decimals
-    ));
-    await sendAndConfirmTransaction(this.connection, transaction, [payer, from]);
+  public async sendToken(mint: PublicKey, amount: number, decimals: number, owner: Keypair, fromTokenAccount: PublicKey, toTokenAccount: PublicKey) {
+    const transaction = new Transaction().add(
+      Token.createTransferCheckedInstruction(
+        TOKEN_PROGRAM_ID,
+        fromTokenAccount,
+        mint,
+        toTokenAccount,
+        owner.publicKey,
+        [],
+        amount * this.pow10(decimals),
+        decimals
+      )
+    );
+    await sendAndConfirmTransaction(this.connection, transaction, [owner]);
   }
 
 }

@@ -16,7 +16,7 @@ if (simulationBuilder.cluster === 'mainnet') {
   //simulationBuilder.market("ETH", "USDC");
   //simulationBuilder.market("SOL", "USDC");
 
-  simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 2, "USDC", 100_000, {});
+  simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 1_000, "USDC", 1_000, { half_spread: 0.005 });
   //simulationBuilder.bot("ETH", "maker", 250, "USDC", 100_000, {});
   //simulationBuilder.bot("SOL", "maker", 500, "USDC", 100_000, {});
 

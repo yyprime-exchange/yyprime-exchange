@@ -1,4 +1,4 @@
-import { Market } from "@project-serum/serum";
+import { Market } from '@project-serum/serum';
 import { Account, Keypair, PublicKey, Transaction } from '@solana/web3.js';
 
 import { PythPrice, PythToken } from '../pyth';
@@ -66,48 +66,181 @@ export abstract class Bot {
   }
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
-    //let formattedMinOrderSize = market?.minOrderSize?.toFixed(getDecimalCount(market.minOrderSize)) || market?.minOrderSize;
-    //let formattedTickSize = market?.tickSize?.toFixed(getDecimalCount(market.tickSize)) || market?.tickSize;
+    const payer = await ((side === 'sell') ?
+      this.solanaClient.getAssociatedTokenAddress(new PublicKey(this.config.baseMint), this.wallet.publicKey) :
+      this.solanaClient.getAssociatedTokenAddress(new PublicKey(this.config.quoteMint), this.wallet.publicKey));
 
-    //const isIncrement = (num, step) => Math.abs((num / step) % 1) < 1e-5 || Math.abs(((num / step) % 1) - 1) < 1e-5;
-    //if (!isIncrement(size, market.minOrderSize)) {
-      //notify({
-        //message: `Size must be an increment of ${formattedMinOrderSize}`,
-        //type: 'error',
-      //});
-      //return;
-    //}
-    //if (size < market.minOrderSize) {
-      //notify({ message: 'Size too small', type: 'error' });
-      //return;
-    //}
-    //if (!isIncrement(price, market.tickSize)) {
-      //notify({
-        //message: `Price must be an increment of ${formattedTickSize}`,
-        //type: 'error',
-      //});
-      //return;
-    //}//
-    //if (price < market.tickSize) {
-      //notify({ message: 'Price under tick size', type: 'error' });
-      //return;
-    //}
+    const limitPrice = this.market.priceNumberToLots(price);
+    const maxBaseQuantity = this.market.baseSizeNumberToLots(size);
 
-    const payer = await ((side === 'sell') ? this.solanaClient.getAssociatedTokenAddress(this.config.baseMint, this.wallet.publicKey) : this.solanaClient.getAssociatedTokenAddress(this.config.quoteMint, this.wallet.publicKey));
+    console.log(`limitPrice = ${limitPrice}`);
+    console.log(`maxBaseQuantity = ${maxBaseQuantity}`);
+    console.log(``);
 
     /*
-    await this.market.placeOrder(this.serumClient.connection, {
-      owner: this.walletAccount,
-      payer,
+    // TODO implement srm vault fee discount
+    // const feeTier = getFeeTier(0, nativeToUi(mangoGroup.nativeSrm || 0, SRM_DECIMALS));
+    const feeTier = getFeeTier(0, nativeToUi(0, 0));
+    const rates = getFeeRates(feeTier);
+    const maxQuoteQuantity = new BN(
+      spotMarket['_decoded'].quoteLotSize.toNumber() * (1 + rates.taker),
+    ).mul(
+      spotMarket
+        .baseSizeNumberToLots(size)
+        .mul(spotMarket.priceNumberToLots(price)),
+    );
+
+    if (maxBaseQuantity.lte(ZERO_BN)) {
+      throw new Error('size too small');
+    }
+    if (limitPrice.lte(ZERO_BN)) {
+      throw new Error('invalid price');
+    }
+    const selfTradeBehavior = 'decrementTake';
+    clientId = clientId ?? new BN(Date.now());
+
+    const spotMarketIndex = mangoGroup.getSpotMarketIndex(spotMarket.publicKey);
+
+    if (!mangoGroup.rootBankAccounts.filter((a) => !!a).length) {
+      await mangoGroup.loadRootBanks(this.connection);
+    }
+
+    const baseRootBank = mangoGroup.rootBankAccounts[spotMarketIndex];
+    const baseNodeBank = baseRootBank?.nodeBankAccounts[0];
+    const quoteRootBank = mangoGroup.rootBankAccounts[QUOTE_INDEX];
+    const quoteNodeBank = quoteRootBank?.nodeBankAccounts[0];
+
+    if (!baseRootBank || !baseNodeBank || !quoteRootBank || !quoteNodeBank) {
+      throw new Error('Invalid or missing banks');
+    }
+
+    const transaction = new Transaction();
+    const additionalSigners: Account[] = [];
+    const openOrdersKeys: { pubkey: PublicKey; isWritable: boolean }[] = [];
+
+    // Only pass in open orders if in margin basket or current market index, and
+    // the only writable account should be OpenOrders for current market index
+    for (let i = 0; i < mangoAccount.spotOpenOrders.length; i++) {
+      let pubkey = zeroKey;
+      let isWritable = false;
+
+      if (i === spotMarketIndex) {
+        isWritable = true;
+
+        if (mangoAccount.spotOpenOrders[spotMarketIndex].equals(zeroKey)) {
+          // open orders missing for this market; create a new one now
+          const openOrdersSpace = OpenOrders.getLayout(
+            mangoGroup.dexProgramId,
+          ).span;
+
+          const openOrdersLamports =
+            await this.connection.getMinimumBalanceForRentExemption(
+              openOrdersSpace,
+              'processed',
+            );
+
+          const accInstr = await createAccountInstruction(
+            this.connection,
+            owner.publicKey,
+            openOrdersSpace,
+            mangoGroup.dexProgramId,
+            openOrdersLamports,
+          );
+
+          const initOpenOrders = makeInitSpotOpenOrdersInstruction(
+            this.programId,
+            mangoGroup.publicKey,
+            mangoAccount.publicKey,
+            owner.publicKey,
+            mangoGroup.dexProgramId,
+            accInstr.account.publicKey,
+            spotMarket.publicKey,
+            mangoGroup.signerKey,
+          );
+
+          const initTx = new Transaction();
+
+          initTx.add(accInstr.instruction);
+          initTx.add(initOpenOrders);
+
+          await this.sendTransaction(initTx, owner, [accInstr.account]);
+
+          pubkey = accInstr.account.publicKey;
+        } else {
+          pubkey = mangoAccount.spotOpenOrders[i];
+        }
+      } else if (mangoAccount.inMarginBasket[i]) {
+        pubkey = mangoAccount.spotOpenOrders[i];
+      }
+
+      openOrdersKeys.push({ pubkey, isWritable });
+    }
+
+    const dexSigner = await PublicKey.createProgramAddress(
+      [
+        spotMarket.publicKey.toBuffer(),
+        spotMarket['_decoded'].vaultSignerNonce.toArrayLike(Buffer, 'le', 8),
+      ],
+      spotMarket.programId,
+    );
+
+    const placeOrderInstruction = makePlaceSpotOrderInstruction(
+      this.programId,
+      mangoGroup.publicKey,
+      mangoAccount.publicKey,
+      owner.publicKey,
+      mangoCache,
+      spotMarket.programId,
+      spotMarket.publicKey,
+      spotMarket['_decoded'].bids,
+      spotMarket['_decoded'].asks,
+      spotMarket['_decoded'].requestQueue,
+      spotMarket['_decoded'].eventQueue,
+      spotMarket['_decoded'].baseVault,
+      spotMarket['_decoded'].quoteVault,
+      baseRootBank.publicKey,
+      baseNodeBank.publicKey,
+      baseNodeBank.vault,
+      quoteRootBank.publicKey,
+      quoteNodeBank.publicKey,
+      quoteNodeBank.vault,
+      mangoGroup.signerKey,
+      dexSigner,
+      mangoGroup.srmVault, // TODO: choose msrm vault if it has any deposits
+      openOrdersKeys,
       side,
-      price,
-      size,
+      limitPrice,
+      maxBaseQuantity,
+      maxQuoteQuantity,
+      selfTradeBehavior,
       orderType,
-      clientId: undefined,
-      openOrdersAddressKey: undefined,
-      openOrdersAccount: undefined,
-      feeDiscountPubkey: null,
-    });
+      clientId,
+    );
+    transaction.add(placeOrderInstruction);
+
+    if (spotMarketIndex > 0) {
+      console.log(
+        spotMarketIndex - 1,
+        mangoAccount.spotOpenOrders[spotMarketIndex - 1].toBase58(),
+        openOrdersKeys[spotMarketIndex - 1].pubkey.toBase58(),
+      );
+    }
+
+    const txid = await this.sendTransaction(
+      transaction,
+      owner,
+      additionalSigners,
+    );
+
+    // update MangoAccount to have new OpenOrders pubkey
+    mangoAccount.spotOpenOrders[spotMarketIndex] =
+      openOrdersKeys[spotMarketIndex].pubkey;
+    mangoAccount.inMarginBasket[spotMarketIndex] = true;
+    console.log(
+      spotMarketIndex,
+      mangoAccount.spotOpenOrders[spotMarketIndex].toBase58(),
+      openOrdersKeys[spotMarketIndex].pubkey.toBase58(),
+    );
     */
 
     const params = {
@@ -131,7 +264,9 @@ export abstract class Bot {
       params,
     );
     transaction.add(placeOrderTx);
+
     //transaction.add(this.market.makeMatchOrdersTransaction(5));
+
     //transaction.feePayer = this.wallet.publicKey;
     return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
   }
