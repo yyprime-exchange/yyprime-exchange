@@ -28,18 +28,15 @@ export class PythClient {
   cluster: string;
   commitment: Commitment = 'finalized';
   connection: Connection;
-  onPrice: (token: PythToken, price: PythPrice) => void;
   tokens: Map<string, PythToken>;
   pythProgram: PublicKey;
   simulation;
 
   constructor(
     simulation,
-    onPrice: (token: PythToken, price: PythPrice) => void,
   ) {
     this.cluster = simulation.config.cluster;
     this.connection = new Connection(simulation.config.pyth.url);
-    this.onPrice = onPrice;
     this.tokens = new Map<string, PythToken>();
     simulation.tokens.forEach((token) => {
       this.tokens.set(token.price, token);
@@ -48,7 +45,9 @@ export class PythClient {
     this.simulation = simulation;
   }
 
-  public subscribe() {
+  public subscribe(
+    onPrice: (token: PythToken, price: PythPrice) => void
+  ) {
     this.connection.onProgramAccountChange(
       this.pythProgram,
       (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
@@ -59,7 +58,7 @@ export class PythClient {
             const priceKey = keyedAccountInfo.accountId;
             const token = this.tokens.get(priceKey.toBase58());
             if (token) {
-              this.onPrice(token, { price: price.price, confidence: price.confidence });
+              onPrice(token, { price: price.price, confidence: price.confidence });
             }
           }
         }

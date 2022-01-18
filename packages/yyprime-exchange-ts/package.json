@@ -20,7 +20,8 @@
     "build-sim": "yarn build && npx ts-node src/simulation/build-simulation.ts",
     "crank": "yarn build && npx ts-node src/simulation/crank.ts",
     "mon": "yarn build && npx ts-node src/simulation/monitor.ts",
-    "sim": "yarn build && npx ts-node src/simulation/simulator.ts"
+    "run-sim": "yarn build && npx ts-node src/simulation/run-simulation.ts",
+    "start-sim": "yarn build && npx ts-node src/simulation/start-simulation.ts"
   },
   "files": [
     "lib"

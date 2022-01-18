@@ -53,17 +53,10 @@ export class SerumClient {
   books: Map<string, SerumBook>;
   keyTypes: Map<string, string>;
 
-  onAsk: (book: SerumBook) => void;
-  onBid: (book: SerumBook) => void;
-
   constructor(
     simulation,
-    onAsk: (book: SerumBook) => void,
-    onBid: (book: SerumBook) => void,
   ) {
     this.connection = new Connection(simulation.config.serum.url);
-    this.onAsk = onAsk;
-    this.onBid = onBid;
     this.serumProgram = new PublicKey(simulation.config.serum.program);
     this.simulation = simulation;
 
@@ -262,7 +255,10 @@ export class SerumClient {
     );
   }
 
-  public subscribe() {
+  public subscribe(
+    onAsk: (book: SerumBook) => void,
+    onBid: (book: SerumBook) => void,
+  ) {
     this.connection.onProgramAccountChange(
       this.serumProgram,
       (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
@@ -271,8 +267,8 @@ export class SerumClient {
         if (book && book.serumMarket) {
           const keyType = this.keyTypes.get(key);
           switch (keyType) {
-            case "asks": book.ask = Orderbook.decode(book.serumMarket, keyedAccountInfo.accountInfo.data); this.onAsk(book); break;
-            case "bids": book.bid = Orderbook.decode(book.serumMarket, keyedAccountInfo.accountInfo.data); this.onAsk(book); break;
+            case "asks": book.ask = Orderbook.decode(book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(book); break;
+            case "bids": book.bid = Orderbook.decode(book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(book); break;
           }
         }
       },
