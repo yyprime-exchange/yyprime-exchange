@@ -31,15 +31,18 @@ export class Simulator {
 
       await this.serumClient.createMarkets(wallet);
 
+      await this.serumClient.initialize();
+
       for (const bot of this.simulation.bots) {
+        const market = this.serumClient.getMarket(bot.symbol);
         const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
         await this.solanaClient.requestAirdrop(100, bot_wallet.publicKey);
 
         switch (bot.type) {
-          case "maker": this.bots.push(new MakerBot(bot, bot_wallet)); break;
-          case "fader": this.bots.push(new FaderBot(bot, bot_wallet)); break;
-          case "follower": this.bots.push(new FollowerBot(bot, bot_wallet)); break;
-          case "taker": this.bots.push(new TakerBot(bot, bot_wallet)); break;
+          case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
+          case "fader": this.bots.push(new FaderBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
+          case "follower": this.bots.push(new FollowerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
+          case "taker": this.bots.push(new TakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
           default: throw new Error(`Invalid bot type: ${bot.type}`);
         }
       }

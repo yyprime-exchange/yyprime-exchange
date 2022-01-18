@@ -1,13 +1,15 @@
 import { Keypair } from '@solana/web3.js';
+import { Market } from '@project-serum/serum';
 
 import { Bot } from './bot';
 import { PythPrice, PythToken } from '../pyth';
-import { SerumBook } from '../serum';
+import { SerumBook, SerumClient } from '../serum';
+import { SolanaClient } from '../solana';
 
 export class MakerBot extends Bot {
 
-  constructor(botConfig: any, payer: Keypair) {
-    super(botConfig, payer);
+  constructor(config: any, market: Market, serumClient: SerumClient, solanaClient: SolanaClient, wallet: Keypair) {
+    super(config, market, serumClient, solanaClient, wallet);
   }
 
   public onAsk(book: SerumBook) {

@@ -230,6 +230,10 @@ export class SerumClient {
     }
   }
 
+  public getMarket(market: string) {
+    return this.books.get(market)!.serumMarket!;
+  }
+
   private async getVaultOwnerAndNonce(publicKey: PublicKey) {
     const programId: PublicKey = this.serumProgram;
     const nonce = new BN(0);
@@ -247,7 +251,7 @@ export class SerumClient {
     throw new Error("Unable to find nonce");
   }
 
-  public initialize2(): Promise<void> {
+  public initialize(): Promise<void> {
     return (async () => {
       this.simulation.markets.forEach(async (market) => {
         this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), undefined, this.serumProgram);
