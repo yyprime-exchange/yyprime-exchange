@@ -29,12 +29,6 @@
       "decimals": 6
     },
     {
-      "price": "79wm3jjcPr6RaNQ4DGvP5KxG1mNd3gEBsg6FsNVFezK4",
-      "symbol": "MNGO",
-      "mint": "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-      "decimals": 6
-    },
-    {
       "price": "AnLf8tVYCM816gmBjiy8n53eXKKEDydT5piYjjQDPgTB",
       "symbol": "RAY",
       "mint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
@@ -129,22 +123,6 @@
       "eventQueue": "2XHxua6ZaPKpCGUNvSvTwc9teJBmexp8iMWCLu4mtzGb",
       "bids": "9HTDV2r7cQBUKL3fgcJZCUfmJsKA9qCP7nZAXyoyaQou",
       "asks": "EpnUJCMCQNZi45nCBoNs6Bugy67Kj3bCSTLYPfz6jkYH"
-    },
-    {
-      "basePrice": "79wm3jjcPr6RaNQ4DGvP5KxG1mNd3gEBsg6FsNVFezK4",
-      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
-      "symbol": "MNGO/USDC",
-      "market": "3d4rzwpy9iGdCZvgxcu7B1YocYffVLsQXPXkBZKt2zLc",
-      "baseMint": "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-      "baseSymbol": "MNGO",
-      "baseDecimals": 6,
-      "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "quoteSymbol": "USDC",
-      "quoteDecimals": 6,
-      "requestQueue": "EgafUKwVAmEj2czrt7HkWnZJLZSAK9BDN5aGQpLypAys",
-      "eventQueue": "H1VVmwbM96BiBJq46zubSBm6VBhfM2FUhLVUqKGh1ee9",
-      "bids": "3nAdH9wTEhPoW4e2s8K2cXfn4jZH8FBCkUqtzWpsZaGb",
-      "asks": "HxbWm3iabHEFeHG9LVGYycTwn7aJVYYHbpQyhZhAYnfn"
     },
     {
       "basePrice": "E4v1BBgoso9s64TQvmyownAVJbhbEPGyzA3qn4n46qj9",

@@ -126,17 +126,6 @@ export class SerumClient {
   ) {
     console.log(`createMarket(${symbol})`);
 
-    /*
-    connection: provider.connection,
-    wallet: provider.wallet,
-    baseMint: baseMint,
-    quoteMint: quoteMint,
-    baseLotSize: 100000,
-    quoteLotSize: 100,
-    dexProgramId: DEX_PID,
-    feeRateBps: 0,
-    */
-
     //TODO this should be in the simulation config.
     const quoteDustThreshold = new BN(100);
 
@@ -283,9 +272,9 @@ export class SerumClient {
           switch (bookEvent.event) {
             case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(bookEvent.book); break;
             case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onBid(bookEvent.book); break;
-            case "eventQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onEvent(bookEvent.book); break;
-            case "requestQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onRequest(bookEvent.book); break;
-            default: throw new Error(`Invalid key type: ${bookEvent.event}`);
+            //case "eventQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onEvent(bookEvent.book); break;
+            //case "requestQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onRequest(bookEvent.book); break;
+            //default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
         }
       },

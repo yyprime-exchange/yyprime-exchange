@@ -1,6 +1,17 @@
 import assert from 'assert';
 import { Buffer } from 'buffer';
+import {
+  decodeEventQueue,
+  decodeRequestQueue,
+  Orderbook,
+} from '@project-serum/serum';
+import {
+  decodeMintAccountData,
+  decodeTokenAccountData,
+} from '@project-serum/token';
 import { Keypair, PublicKey } from '@solana/web3.js';
+
+import { SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
 
 import * as simulation from './simulation.json';
@@ -8,11 +19,13 @@ import * as simulation from './simulation.json';
 console.log(`[SIMULATION]`);
 console.log('');
 
+const serumClient: SerumClient = new SerumClient(simulation);
 const solanaClient: SolanaClient = new SolanaClient(simulation);
 
 (async () => {
   //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(simulation.config.serum.program)))}`);
 
+  /*
   for (const token of simulation.tokens) {
     console.log(`TOKEN: ${token.symbol}`);
 
@@ -26,28 +39,39 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log(`  MintSupply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
     console.log('');
   }
+  */
+
+  await serumClient.initialize();
 
   for (const market of simulation.markets) {
     console.log(`MARKET: ${market.symbol}`);
 
-    const baseMint: PublicKey = new PublicKey(market.baseMint);
-    const baseVault: Keypair = Keypair.fromSecretKey(Buffer.from(market.baseVaultPrivateKey, 'base64'));
+    /*
+    console.log(`  ${JSON.stringify(serumClient.getMarket(market.market))}`);
 
-    const quoteMint: PublicKey = new PublicKey(market.quoteMint);
-    const quoteVault: Keypair = Keypair.fromSecretKey(Buffer.from(market.quoteVaultPrivateKey, 'base64'));
+    console.log(`  baseMint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.baseMint)))}`);
+    console.log(`  quoteMint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.quoteMint)))}`);
 
-    const requestQueue: PublicKey = new PublicKey(market.requestQueue);
-    const eventQueue: PublicKey = new PublicKey(market.eventQueue);
-    const bids: PublicKey = new PublicKey(market.bids);
-    const asks: PublicKey = new PublicKey(market.asks);
+    const requestQueueAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.requestQueue));
+    const requests = decodeRequestQueue(requestQueueAccount!.data);
+    for (const request of requests) {
+      console.log(`  ${JSON.stringify(request)}`);
+    }
 
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.market)))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(baseVault.publicKey))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(quoteVault.publicKey))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(requestQueue))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(eventQueue))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bids))}`);
-    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(asks))}`);
+    const eventQueueAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.eventQueue));
+    const events = decodeEventQueue(eventQueueAccount!.data);
+    for (const event of events) {
+      console.log(`  ${JSON.stringify(event)}`);
+    }
+    */
+
+    /*
+    const asksAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.asks));
+    console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), asksAccount!.data))}`);
+
+    const bidsAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.bids));
+    console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), bidsAccount!.data))}`);
+    */
 
     console.log('');
   }
