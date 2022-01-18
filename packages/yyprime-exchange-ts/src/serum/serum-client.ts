@@ -87,24 +87,26 @@ export class SerumClient {
   }
 
   public async createMarkets(payer: Keypair) {
-    this.simulation.markets.forEach(async (market) => {
-      this.createMarket(
-        market.symbol,
-        payer,
-        Keypair.fromSecretKey(Buffer.from(market.marketPrivateKey, 'base64')),
-        Keypair.fromSecretKey(Buffer.from(market.requestQueuePrivateKey, 'base64')),
-        Keypair.fromSecretKey(Buffer.from(market.eventQueuePrivateKey, 'base64')),
-        Keypair.fromSecretKey(Buffer.from(market.bidsPrivateKey, 'base64')),
-        Keypair.fromSecretKey(Buffer.from(market.asksPrivateKey, 'base64')),
-        Keypair.fromSecretKey(Buffer.from(market.baseVaultPrivateKey, 'base64')),
-        Keypair.fromSecretKey(Buffer.from(market.quoteVaultPrivateKey, 'base64')),
-        new PublicKey(market.baseMint),
-        market.baseLotSize,
-        new PublicKey(market.quoteMint),
-        market.quoteLotSize,
-        market.feeRateBps
-      );
-    });
+    await Promise.all(
+      this.simulation.markets.map(async (market) => {
+        await this.createMarket(
+          market.symbol,
+          payer,
+          Keypair.fromSecretKey(Buffer.from(market.marketPrivateKey, 'base64')),
+          Keypair.fromSecretKey(Buffer.from(market.requestQueuePrivateKey, 'base64')),
+          Keypair.fromSecretKey(Buffer.from(market.eventQueuePrivateKey, 'base64')),
+          Keypair.fromSecretKey(Buffer.from(market.bidsPrivateKey, 'base64')),
+          Keypair.fromSecretKey(Buffer.from(market.asksPrivateKey, 'base64')),
+          Keypair.fromSecretKey(Buffer.from(market.baseVaultPrivateKey, 'base64')),
+          Keypair.fromSecretKey(Buffer.from(market.quoteVaultPrivateKey, 'base64')),
+          new PublicKey(market.baseMint),
+          market.baseLotSize,
+          new PublicKey(market.quoteMint),
+          market.quoteLotSize,
+          market.feeRateBps
+        );
+      })
+    );
   }
 
   public async createMarket(
@@ -251,14 +253,13 @@ export class SerumClient {
     throw new Error("Unable to find nonce");
   }
 
-  public initialize(): Promise<void> {
-    return (async () => {
-      this.simulation.markets.forEach(async (market) => {
+  public async initialize() {
+    await Promise.all(
+      this.simulation.markets.map(async (market) => {
+        //console.log(`market.market = ${market.market}`);
         this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), undefined, this.serumProgram);
-      });
-    })().then(() => {
-      console.log(`Serum initialized.`);
-    });
+      })
+    );
   }
 
   public subscribe() {

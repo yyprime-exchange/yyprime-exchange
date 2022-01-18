@@ -43,6 +43,7 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     const bids: PublicKey = new PublicKey(market.bids);
     const asks: PublicKey = new PublicKey(market.asks);
 
+    //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.market)))}`);
     //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(baseVault.publicKey))}`);
     //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(quoteVault.publicKey))}`);
     //console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(requestQueue))}`);
