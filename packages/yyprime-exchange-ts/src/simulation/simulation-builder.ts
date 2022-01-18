@@ -161,7 +161,7 @@ export class SimulationBuilder {
 
       const marketsBySymbol: Map<string, any> = new Map();
       markets_private.forEach(market => {
-        marketsBySymbol.set(market.market, market);
+        marketsBySymbol.set(market.symbol, market);
       });
 
       const bots_private = this.bots.map(bot => {
