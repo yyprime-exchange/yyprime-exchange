@@ -34,7 +34,7 @@ export class Simulator {
       await this.serumClient.initialize();
 
       for (const bot of this.simulation.bots) {
-        const market = this.serumClient.getMarket(bot.symbol);
+        const market = this.serumClient.getMarket(bot.market);
         const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
         await this.solanaClient.requestAirdrop(100, bot_wallet.publicKey);
 

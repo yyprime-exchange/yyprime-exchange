@@ -30,10 +30,6 @@ export class MakerBot extends Bot {
     //console.log('');
   }
 
-  // CancelOrder
-  // CancelAllOrders
-  // PlaceOrder
-
   private generateOrders(): void {
     //bid, ask = self.calculate_order_prices(price)
     //buy_quantity, sell_quantity = self.calculate_order_quantities(price, inventory)

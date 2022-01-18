@@ -159,6 +159,11 @@ export class SimulationBuilder {
         };
       });
 
+      const marketsBySymbol: Map<string, any> = new Map();
+      markets_private.forEach(market => {
+        marketsBySymbol.set(market.market, market);
+      });
+
       const bots_private = this.bots.map(bot => {
         const walletKeypair: Keypair = Keypair.generate();
 
@@ -170,6 +175,7 @@ export class SimulationBuilder {
           name: bot.name,
           type: bot.type,
           symbol: bot.symbol,
+          market: marketsBySymbol.get(bot.symbol).market,
           base: bot.base,
           baseBalance: bot.baseBalance,
           baseDecimals: tokensBySymbol.get(bot.base).decimals,
@@ -230,6 +236,7 @@ export class SimulationBuilder {
           name: bot.name,
           type: bot.type,
           symbol: bot.symbol,
+          market: bot.market,
           base: bot.base,
           baseBalance: bot.baseBalance,
           baseDecimals: bot.baseDecimals,
