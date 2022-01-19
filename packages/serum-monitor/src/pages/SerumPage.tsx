@@ -17,6 +17,8 @@ import {
 } from '@ant-design/icons';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+import { PythPrice } from '../components/PythPrice';
+import usePyth from '../hooks/usePyth';
 
 const { Option, OptGroup } = Select;
 
@@ -32,6 +34,7 @@ const Wrapper = styled.div`
 
 export default function SerumPage() {
   const { marketAddress } = useParams();
+
   useEffect(() => {
     if (marketAddress) {
       localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
@@ -42,13 +45,18 @@ export default function SerumPage() {
     history.push(getSerumPageUrl(address));
   }
 
+  debugger
   return (
+    <>
     <MarketProvider
       marketAddress={marketAddress}
       setMarketAddress={setMarketAddress}
     >
+      <PythPrice/>
       <SerumPageInner />
     </MarketProvider>
+    </>
+
   );
 }
 

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import numeral from 'numeral'
 
 export function floorToDecimal(
   value: number,
@@ -8,6 +9,29 @@ export function floorToDecimal(
     ? Math.floor(value * 10 ** decimals) / 10 ** decimals
     : Math.floor(value);
 }
+
+export function chunks<T>(array: T[], size: number): T[][] {
+  return Array.apply<number, T[], T[][]>(
+    0,
+    new Array(Math.ceil(array.length / size))
+  ).map((_, index) => array.slice(index * size, (index + 1) * size))
+}
+
+
+export const sigFigs = (n: number) =>
+  n < 0.1
+    ? numeral(n).format('0.00000000').toUpperCase()
+    : n < 1
+    ? numeral(n).format('0.000000').toUpperCase()
+    : n < 10
+    ? numeral(n).format('0.00000').toUpperCase()
+    : n < 100
+    ? numeral(n).format('00.0000').toUpperCase()
+    : n < 1000
+    ? numeral(n).format('000.000').toUpperCase()
+    : numeral(n).format('0,0.00').toUpperCase()
+
+
 
 export function getDecimalCount(value): number {
   if (
