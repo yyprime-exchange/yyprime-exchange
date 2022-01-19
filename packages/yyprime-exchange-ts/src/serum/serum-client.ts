@@ -284,4 +284,13 @@ export class SerumClient {
     );
   }
 
+  public static async query(connection: Connection, serumProgram: PublicKey) {
+    const programAccounts = await connection.getProgramAccounts(serumProgram, { filters: [ { dataSize: Market.getLayout(serumProgram).span } ] });
+    return await Promise.all(
+      programAccounts.map(account => {
+        return Market.getLayout(serumProgram).decode(account.account.data);
+      }).filter(market => { return market !== undefined; })
+    );
+  }
+
 }

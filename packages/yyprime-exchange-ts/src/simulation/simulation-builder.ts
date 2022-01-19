@@ -1,6 +1,11 @@
 import assert from 'assert';
 import { Buffer } from 'buffer';
-import { Keypair } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+
+import { PythClient } from '../pyth';
+import { SerumClient } from '../serum';
+import { SolanaClient } from '../solana';
 
 import PYTH_PRODUCTS from '../pyth/products.json';
 import PYTH_PROGRAMS from '../pyth/programs.json';
@@ -35,7 +40,7 @@ export class SimulationBuilder {
     this.bots.push({ name: name, type: type, symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
   }
 
-  public build() {
+  public async build() {
     const priceKeys: Map<string, string> = new Map();
     PYTH_PRODUCTS.mainnet.forEach(product => {
       if (product.quoteSymbol === 'USD') {
@@ -54,6 +59,17 @@ export class SimulationBuilder {
         serum: SERUM_PROGRAMS[this.cluster],
         solana: SOLANA_CLUSTERS[this.cluster],
       };
+
+      const connection: Connection = new Connection(config.serum.url);
+
+      //const pythProducts = await PythClient.query(connection, new PublicKey(config.pyth.program));
+      //console.log(`x = ${JSON.stringify(pythProducts, null, 2)}`);
+
+      //const serumMarkets = await SerumClient.query(connection, new PublicKey(config.serum.program));
+      //console.log(JSON.stringify(serumMarkets, null, 2));
+
+      //const solanaTokens = await SolanaClient.query(connection, SOLANA_TOKENS.mainnet.map(token => { return new PublicKey(token.mint) }));
+      //console.log(JSON.stringify(solanaTokens, null, 2));
 
       const tokens = SOLANA_TOKENS.mainnet.map(token => {
         return {
