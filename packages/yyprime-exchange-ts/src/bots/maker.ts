@@ -41,11 +41,8 @@ export class MakerBot extends Bot {
 
 
           //TODO do these both at the same time.
-          //this.placeOrder('sell', ask_price, 1, 'limit'); // this.config.baseBalance
-          //this.placeOrder('buy', bid_price, 1, 'limit'); // this.config.quoteBalance
-
-
-
+          //this.placeOrder('sell', ask_price, ask_size, 'limit'); // this.config.baseBalance
+          //this.placeOrder('buy', bid_price, bid_size, 'limit'); // this.config.quoteBalance
 
 
           const asks = [
@@ -69,45 +66,11 @@ export class MakerBot extends Bot {
           ];
 
           for (let k = 0; k < asks.length; k += 1) {
-            let ask = asks[k];
-            const { transaction, signers } =
-              await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
-                owner: this.walletAccount,
-                payer: await this.solanaClient.getAssociatedTokenAddress(new PublicKey(this.config.baseMint), this.wallet.publicKey),
-                side: "sell",
-                price: ask[0],
-                size: ask[1],
-                orderType: "postOnly",
-                clientId: undefined,
-                openOrdersAddressKey: undefined,
-                openOrdersAccount: undefined,
-                feeDiscountPubkey: null,
-                selfTradeBehavior: "abortTransaction",
-              }
-            );
-            transaction.feePayer = this.wallet.publicKey;
-            await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
+            await this.placeOrder('sell', asks[k][0], asks[k][1], 'postOnly');
           }
 
           for (let k = 0; k < bids.length; k += 1) {
-            let bid = bids[k];
-            const { transaction, signers } =
-              await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
-                owner: this.walletAccount,
-                payer: await this.solanaClient.getAssociatedTokenAddress(new PublicKey(this.config.quoteMint), this.wallet.publicKey),
-                side: "buy",
-                price: bid[0],
-                size: bid[1],
-                orderType: "postOnly",
-                clientId: undefined,
-                openOrdersAddressKey: undefined,
-                openOrdersAccount: undefined,
-                feeDiscountPubkey: null,
-                selfTradeBehavior: "abortTransaction",
-              }
-            );
-            transaction.feePayer = this.wallet.publicKey;
-            await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
+            await this.placeOrder('buy', bids[k][0], bids[k][1], 'postOnly');
           }
         }
 

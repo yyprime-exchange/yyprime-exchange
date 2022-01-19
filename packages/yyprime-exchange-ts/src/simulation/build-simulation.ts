@@ -7,10 +7,10 @@ if (simulationBuilder.cluster === 'mainnet') {
   const [simulation_public] = simulationBuilder.build();
   fs.writeFileSync('../frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
 } else {
-  simulationBuilder.token("BTC");
-  //simulationBuilder.token("ETH");
-  //simulationBuilder.token("SOL");
-  simulationBuilder.token("USDC");
+  simulationBuilder.token("BTC", 1_000_000_000, 6);
+  //simulationBuilder.token("ETH", 1_000_000_000, 6);
+  //simulationBuilder.token("SOL", 1_000_000_000, 9);
+  simulationBuilder.token("USDC", 1_000_000_000, 6);
 
   simulationBuilder.market("BTC", "USDC");
   //simulationBuilder.market("ETH", "USDC");

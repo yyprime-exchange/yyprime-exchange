@@ -23,8 +23,8 @@ export class SimulationBuilder {
     console.log(`Building simulation on ${cluster}`);
   }
 
-  public token(token: string) {
-    this.tokens.push({ symbol: token });
+  public token(token: string, supply: number, decimals: number ) {
+    this.tokens.push({ symbol: token, supply: supply, decimals: decimals });
   }
 
   public market(base: string, quote: string) {
@@ -98,8 +98,8 @@ export class SimulationBuilder {
           mintPrivateKey: Buffer.from(mintKeypair.secretKey).toString('base64'),
           vault: vaultKeypair.publicKey.toBase58(),
           vaultPrivateKey: Buffer.from(vaultKeypair.secretKey).toString('base64'),
-          decimals: 6,
-          mintSupply: 1_000_000,
+          decimals: token.decimals,
+          mintSupply: token.supply,
           price: priceKeys.get(token.symbol),
         };
       });

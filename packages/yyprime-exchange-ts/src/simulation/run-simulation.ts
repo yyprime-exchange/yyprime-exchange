@@ -59,10 +59,10 @@ export class Simulator {
     }
   }
 
-  private onEvent(book: SerumBook) {
+  private onEvent(events) {
   }
 
-  private onRequest(book: SerumBook) {
+  private onRequest(requests) {
   }
 
   private onPrice(token: PythToken, price: PythPrice) {

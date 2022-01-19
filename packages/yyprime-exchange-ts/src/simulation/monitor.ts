@@ -11,7 +11,7 @@ import {
 } from '@project-serum/token';
 import { Keypair, PublicKey } from '@solana/web3.js';
 
-import { SerumClient } from '../serum';
+import { SerumBook, SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
 
 import * as simulation from './simulation.json';
@@ -51,7 +51,9 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
 
     console.log(`  baseMint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.baseMint)))}`);
     console.log(`  quoteMint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.quoteMint)))}`);
+    */
 
+    /*
     const requestQueueAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.requestQueue));
     const requests = decodeRequestQueue(requestQueueAccount!.data);
     for (const request of requests) {
@@ -63,9 +65,7 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     for (const event of events) {
       console.log(`  ${JSON.stringify(event)}`);
     }
-    */
 
-    /*
     const asksAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.asks));
     console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), asksAccount!.data))}`);
 
@@ -76,6 +76,7 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log('');
   }
 
+  /*
   for (const bot of simulation.bots) {
     console.log(`BOT: ${bot.name}`);
 
@@ -87,10 +88,24 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log(`  QuoteTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.quoteMint), bot_wallet.publicKey)))}`);
     console.log('');
   }
+  */
 
 })().then(() => {
 
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
+
+  function onEvent(events) {
+  }
+
+  function onRequest(requests) {
+  }
+
+  serumClient.subscribe(
+    null,
+    null,
+    (events) => { onEvent(events); },
+    (requests) => { onRequest(requests); },
+  );
 
   /*
   const interval = 1000;

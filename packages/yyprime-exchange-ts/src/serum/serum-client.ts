@@ -3,6 +3,8 @@ import {
   BN,
 } from "@project-serum/anchor";
 import {
+  decodeEventQueue,
+  decodeRequestQueue,
   DexInstructions,
   Market,
   Orderbook,
@@ -258,10 +260,10 @@ export class SerumClient {
   }
 
   public subscribe(
-    onAsk: (book: SerumBook) => void,
-    onBid: (book: SerumBook) => void,
-    onEvent: (book: SerumBook) => void,
-    onRequest: (book: SerumBook) => void,
+    onAsk: ((book: SerumBook) => void) | null,
+    onBid: ((book: SerumBook) => void) | null,
+    onEvent: ((events) => void) | null,
+    onRequest: ((requests) => void) | null,
   ) {
     this.connection.onProgramAccountChange(
       this.serumProgram,
@@ -270,11 +272,11 @@ export class SerumClient {
         const bookEvent = this.bookEvents.get(key);
         if (bookEvent && bookEvent.book.serumMarket) {
           switch (bookEvent.event) {
-            case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onAsk(bookEvent.book); break;
-            case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onBid(bookEvent.book); break;
-            //case "eventQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onEvent(bookEvent.book); break;
-            //case "requestQueue": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); onRequest(bookEvent.book); break;
-            //default: throw new Error(`Invalid key type: ${bookEvent.event}`);
+            case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onAsk) onAsk(bookEvent.book); break;
+            case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onBid) onBid(bookEvent.book); break;
+            case "eventQueue": if (onRequest) onRequest(decodeEventQueue(keyedAccountInfo.accountInfo.data)); break;
+            case "requestQueue": if (onRequest) onRequest(decodeRequestQueue(keyedAccountInfo.accountInfo.data)); break;
+            default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
         }
       },
