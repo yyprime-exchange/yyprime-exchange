@@ -22,8 +22,10 @@ const walletTokenAccounts: Map<string, PublicKey> = new Map();
 const serumClient: SerumClient = new SerumClient(simulation);
 const solanaClient: SolanaClient = new SolanaClient(simulation);
 
+const payer: Keypair = Keypair.generate();
+
 (async () => {
-  const airdropSignature = await serumClient.connection.requestAirdrop(wallet.publicKey, 100 * LAMPORTS_PER_SOL);
+  const airdropSignature = await serumClient.connection.requestAirdrop(payer.publicKey, 100 * LAMPORTS_PER_SOL);
   await serumClient.connection.confirmTransaction(airdropSignature);
 
   await Promise.all(
@@ -43,32 +45,34 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
   const maxUniqueAccounts: number = parseInt(process.env.MAX_UNIQUE_ACCOUNTS || '10');
 
   function onEvent(book: SerumBook, events) {
-    const accounts: Set<PublicKey> = new Set();
-    for (const event of events) {
-      accounts.add(event.openOrders.toBase58());
-      if (accounts.size >= maxUniqueAccounts) break;
+    if (events.length > 0) {
+      console.log(`onEvent()`);
+      const accounts: Set<PublicKey> = new Set();
+      for (const event of events) {
+        accounts.add(event.openOrders.toBase58());
+        if (accounts.size >= maxUniqueAccounts) break;
+      }
+      (async () => {
+        console.log(`consumeEvents(${accounts.size})`);
+        const openOrdersAccounts = [...accounts]
+          .map((s) => new PublicKey(s))
+          .sort((a, b) => a.toBuffer().swap64().compare(b.toBuffer().swap64()));
+        let transaction = new Transaction().add(
+          DexInstructions.consumeEvents({
+            market: new PublicKey(book.market),
+            eventQueue: new PublicKey(book.eventQueue),
+            coinFee: walletTokenAccounts.get(book.baseMint),
+            pcFee: walletTokenAccounts.get(book.quoteMint),
+            openOrdersAccounts,
+            limit: consumeEventsLimit,
+            programId: new PublicKey(simulation.config.serum.program),
+          })
+        );
+
+        transaction.feePayer = payer.publicKey;
+        await serumClient.connection.sendTransaction(transaction, [payer]);
+      })();
     }
-    (async () => {
-      const openOrdersAccounts = [...accounts]
-        .map((s) => new PublicKey(s))
-        .sort((a, b) => a.toBuffer().swap64().compare(b.toBuffer().swap64()));
-
-      console.log(`consumeEvents(${accounts.size})`);
-      let transaction = new Transaction().add(
-        DexInstructions.consumeEvents({
-          market: new PublicKey(book.market),
-          eventQueue: new PublicKey(book.eventQueue),
-          coinFee: walletTokenAccounts.get(book.baseMint),
-          pcFee: walletTokenAccounts.get(book.quoteMint),
-          openOrdersAccounts,
-          limit: consumeEventsLimit,
-          programId: new PublicKey(simulation.config.serum.program),
-        })
-      );
-
-      transaction.feePayer = wallet.publicKey;
-      await serumClient.connection.sendTransaction(transaction, [wallet]);
-    })();
   }
 
   function onRequest(requests) {
@@ -93,9 +97,7 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
           continue;
         }
         const events = decodeEventQueue(accountInfo.data);
-        if (events.length > 0) {
-          onEvent(book, events);
-        }
+        onEvent(book, events);
       }
     })();
   //  timerId = setTimeout(process, interval);
