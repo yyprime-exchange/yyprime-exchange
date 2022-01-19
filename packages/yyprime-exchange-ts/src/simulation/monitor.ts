@@ -11,7 +11,7 @@ import {
 } from '@project-serum/token';
 import { Keypair, PublicKey } from '@solana/web3.js';
 
-import { SerumClient } from '../serum';
+import { SerumBook, SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
 
 import * as simulation from './simulation.json';
@@ -93,6 +93,13 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
 })().then(() => {
 
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
+
+  serumClient.subscribe(
+    null,
+    null,
+    (events) => { onEvent(events); },
+    (requests) => { onRequest(requests); },
+  );
 
   /*
   const interval = 1000;
