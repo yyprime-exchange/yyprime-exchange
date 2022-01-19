@@ -42,8 +42,8 @@ export class Simulator {
     this.serumClient.subscribe(
       (book: SerumBook) => { this.onAsk(book); },
       (book: SerumBook) => { this.onBid(book); },
-      (book: SerumBook) => { this.onEvent(book); },
-      (book: SerumBook) => { this.onRequest(book); },
+      (book: SerumBook, events) => { this.onEvent(book, events); },
+      (requests) => { this.onRequest(requests); },
     );
   }
 
@@ -59,7 +59,7 @@ export class Simulator {
     }
   }
 
-  private onEvent(events) {
+  private onEvent(book: SerumBook, events) {
   }
 
   private onRequest(requests) {

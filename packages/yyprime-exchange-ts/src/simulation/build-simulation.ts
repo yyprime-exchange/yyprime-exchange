@@ -5,7 +5,7 @@ const simulationBuilder: SimulationBuilder = new SimulationBuilder('localnet');
 
 if (simulationBuilder.cluster === 'mainnet') {
   const [simulation_public] = simulationBuilder.build();
-  fs.writeFileSync('../frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
+  fs.writeFileSync('../serum-monitor/src/config/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
 } else {
   simulationBuilder.token("BTC", 1_000_000_000, 6);
   //simulationBuilder.token("ETH", 1_000_000_000, 6);
@@ -21,6 +21,6 @@ if (simulationBuilder.cluster === 'mainnet') {
   //simulationBuilder.bot("SOL", "maker", 500, "USDC", 100_000, {});
 
   const [simulation_public, simulation_private] = simulationBuilder.build();
-  fs.writeFileSync('../frontend/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
+  fs.writeFileSync('../serum-monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
   fs.writeFileSync('src/simulation/simulation.json', JSON.stringify(simulation_private, null, 2));
 }

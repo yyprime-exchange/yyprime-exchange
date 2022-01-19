@@ -65,13 +65,13 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     for (const event of events) {
       console.log(`  ${JSON.stringify(event)}`);
     }
+    */
 
     const asksAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.asks));
     console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), asksAccount!.data))}`);
 
     const bidsAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.bids));
     console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), bidsAccount!.data))}`);
-    */
 
     console.log('');
   }
@@ -94,28 +94,31 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
 
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
 
-  function onEvent(events) {
+  function onAsk(book: SerumBook) {
+    //console.log(`  ask ${JSON.stringify(book)}`);
+  }
+
+  function onBid(book: SerumBook) {
+    //console.log(`  bid ${JSON.stringify(book)}`);
+  }
+
+  function onEvent(book: SerumBook, events) {
+    for (const event of events) {
+      console.log(`  event ${JSON.stringify(event)}`);
+    }
   }
 
   function onRequest(requests) {
+    for (const request of requests) {
+      console.log(`  request ${JSON.stringify(request)}`);
+    }
   }
 
   serumClient.subscribe(
-    null,
-    null,
-    (events) => { onEvent(events); },
+    (book: SerumBook) => { onAsk(book); },
+    (book: SerumBook) => { onBid(book); },
+    (book: SerumBook, events) => { onEvent(book, events); },
     (requests) => { onRequest(requests); },
   );
-
-  /*
-  const interval = 1000;
-
-  let timerId = setTimeout(async function process() {
-
-
-
-    timerId = setTimeout(process, interval);
-  }, interval);
-  */
 
 });

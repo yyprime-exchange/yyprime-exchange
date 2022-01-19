@@ -66,6 +66,10 @@ export abstract class Bot {
   }
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
+//TODO
+//Price must be an increment of X
+//Tick price decided when the market was created. You can only move the price by multiple of this.
+
     const { transaction, signers } = await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
       owner: this.walletAccount,
       payer: (side == "sell") ?
@@ -100,5 +104,9 @@ export abstract class Bot {
     return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
     */
   }
+
+  //TODO send multiple orders.
+  //public async placeOrders(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
+  //}
 
 }

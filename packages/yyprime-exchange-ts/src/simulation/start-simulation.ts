@@ -49,6 +49,43 @@ import * as simulation from './simulation.json';
     );
 
     //TODO initOpenOrders
+    /*
+          const openOrdersSpace = OpenOrders.getLayout(
+            mangoGroup.dexProgramId,
+          ).span;
+
+          const openOrdersLamports =
+            await this.connection.getMinimumBalanceForRentExemption(
+              openOrdersSpace,
+              'processed',
+            );
+
+          const accInstr = await createAccountInstruction(
+            this.connection,
+            owner.publicKey,
+            openOrdersSpace,
+            mangoGroup.dexProgramId,
+            openOrdersLamports,
+          );
+
+          const initOpenOrders = makeInitSpotOpenOrdersInstruction(
+            this.programId,
+            mangoGroup.publicKey,
+            mangoAccount.publicKey,
+            owner.publicKey,
+            mangoGroup.dexProgramId,
+            accInstr.account.publicKey,
+            spotMarket.publicKey,
+            mangoGroup.signerKey,
+          );
+
+          const initTx = new Transaction();
+
+          initTx.add(accInstr.instruction);
+          initTx.add(initOpenOrders);
+
+          await this.sendTransaction(initTx, owner, [accInstr.account]);
+    */
   }
 })().then(() => {
   console.log(`Simulation started on ${simulation.config.cluster}`);
