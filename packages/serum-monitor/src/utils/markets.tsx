@@ -13,7 +13,7 @@ import {
   MarketInfo,
 } from './types';
 import BonfidaApi from './bonfidaConnector';
-
+import simulation from '../config/simulation-mainnet.json'
 // Used in debugging, should be false in production
 const _IGNORE_DEPRECATED = false;
 
@@ -25,9 +25,30 @@ export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
 }
 
+export function useYyprimeMarketList() {
+
+
+  const yyprimeCustomMarkets: MarketInfo[] = simulation.markets.map((market)=> {
+    
+    const transformedMarket = {
+    "address": new PublicKey(market.market),
+    "name": `${market.baseSymbol}/${market.quoteSymbol}`,
+    "programId": new PublicKey(market.market),
+    "quoteLabel": market.quoteSymbol,
+    "baseLabel": market.baseSymbol,
+    "deprecated": false,
+  } as MarketInfo
+    
+    return transformedMarket
+  })
+  
+ return yyprimeCustomMarkets
+}
+
 const MarketContext: React.Context<null | MarketContextValues> = React.createContext<null | MarketContextValues>(
   null,
 );
+
 
 const _VERY_SLOW_REFRESH_INTERVAL = 5000 * 1000;
 

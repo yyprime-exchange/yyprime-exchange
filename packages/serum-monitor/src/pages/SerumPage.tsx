@@ -8,6 +8,7 @@ import {
   MarketProvider,
   useMarket,
   useMarketsList,
+  useYyprimeMarketList
 } from '../utils/markets';
 import TradesTable from '../components/TradesTable';
 import LinkAddress from '../components/LinkAddress';
@@ -17,6 +18,8 @@ import {
 } from '@ant-design/icons';
 import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+import { PythPrice } from '../components/PythPrice';
+import usePyth from '../hooks/usePyth';
 
 const { Option, OptGroup } = Select;
 
@@ -32,6 +35,8 @@ const Wrapper = styled.div`
 
 export default function SerumPage() {
   const { marketAddress } = useParams();
+  const {} = usePyth()
+
   useEffect(() => {
     if (marketAddress) {
       localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
@@ -58,8 +63,11 @@ function SerumPageInner() {
     marketName,
     customMarkets,
     setMarketAddress,
+    baseCurrency
   } = useMarket();
-  const markets = useMarketsList();
+  // const markets = useMarketsList();
+  const markets = useYyprimeMarketList();
+
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -95,18 +103,17 @@ function SerumPageInner() {
     onSize: useCallback(
       (size) => changeOrderRef.current && changeOrderRef.current({ size }),
       [],
-    ),
-  };
-  const component = (() => {
-    if (width < 1000) {
-      return <RenderSmaller {...componentProps} />;
-    } else if (width < 1450) {
-      return <RenderSmall {...componentProps} />;
-    } else {
-      return <RenderNormal {...componentProps} />;
-    }
-  })();
-
+    )  };
+  // const component = (() => {
+  //   if (width < 1000) {
+  //     return <RenderSmaller {...componentProps} />;
+  //   } else if (width < 1450) {
+  //     return <RenderSmall {...componentProps} />;
+  //   } else {
+  //     return <RenderNormal {...componentProps} />;
+  //   }
+  // })();
+  
   return (
     <>
       <Wrapper>
@@ -120,6 +127,7 @@ function SerumPageInner() {
               markets={markets}
               placeholder={'Select market'}
               customMarkets={customMarkets}
+              baseCurrency={baseCurrency}
             />
           </Col>
           {market ? (
@@ -135,7 +143,7 @@ function SerumPageInner() {
             </Col>
           ) : null}
         </Row>
-        {component}
+        {baseCurrency && <RenderSmaller {...componentProps} />}
       </Wrapper>
     </>
   );
@@ -145,6 +153,7 @@ function MarketSelector({
   markets,
   placeholder,
   customMarkets,
+  baseCurrency
 }) {
   const { market, setMarketAddress } = useMarket();
 
@@ -242,7 +251,7 @@ function MarketSelector({
   );
 }
 
-const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
+const RenderNormal = ({ onChangeOrderRef, onPrice, onSize, baseCurrency }) => {
   return (
     <Row
       style={{
@@ -251,6 +260,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
       }}
     >
       <Col flex={'360px'} style={{ height: '100%' }}>
+         <PythPrice baseCurrency={baseCurrency}/>
         <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
         <TradesTable smallScreen={false} />
       </Col>
@@ -258,7 +268,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   );
 };
 
-const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
+const RenderSmall = ({ onChangeOrderRef, onPrice, onSize, baseCurrency }) => {
   return (
     <>
       <Row
@@ -267,6 +277,8 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
         }}
       >
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
+        <PythPrice baseCurrency={baseCurrency}/>
+
           <Orderbook
             smallScreen={true}
             depth={13}
@@ -283,6 +295,9 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
 };
 
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
+  const {
+    baseCurrency
+  } = useMarket();
   return (
     <>
       <Row
@@ -291,6 +306,8 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
         }}
       >
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
+        {/* <PythPrice props = {baseCurrency}/> */}
+
           <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
         </Col>
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
