@@ -94,6 +94,12 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
 
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
 
+  function onEvent(events) {
+  }
+
+  function onRequest(requests) {
+  }
+
   serumClient.subscribe(
     null,
     null,
