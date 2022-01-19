@@ -12,41 +12,64 @@
     "solana": {
       "http": "http://localhost:8899",
       "ws": "ws://localhost:8900"
-    }
+    },
+    "wallet": "GTPzPgW8Dka4L8CAhpEELExkhfRnXv4DcTfPEsJDBMvU"
   },
   "tokens": [
     {
       "symbol": "BTC",
-      "mint": "2xi82qV8xAuWWxNoJCZa1LT3sHhBU3qFnYy9SQJKM5c7",
+      "mint": "HSkSgpttFqVMP8qS6FnogLhUjRkULuoGXMjhEYVNWmM3",
+      "vault": "GftWsDsHiheEjxTM7fcJg4mSk9xXnMxcUb2wm3VDRbuy",
       "decimals": 6,
+      "mintSupply": 1000000000,
       "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
     },
     {
       "symbol": "USDC",
-      "mint": "prbPoJgqMHwSbaNifMDGrLB5znxrSDmTbw9YbTrLtZX",
+      "mint": "8DHe6bTMHE2JfYAzfgd4767zm56fpF1VLWAEHxe4dNDJ",
+      "vault": "DAs4M2tBsPypWFhVrwXnNBX7fDaorYqqodaKLx1qDtz2",
       "decimals": 6,
+      "mintSupply": 1000000000,
       "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     }
   ],
   "markets": [
     {
       "symbol": "BTC/USDC",
-      "market": "6CEdmvTnAHadrLJ6eWn7dKrey3pCco5gNGXY4nuFC74W",
-      "baseMint": "2xi82qV8xAuWWxNoJCZa1LT3sHhBU3qFnYy9SQJKM5c7",
+      "market": "5Gs8hMuZHLstYBeREhJSqgExacyM3bXW44ne2GUnMUPn",
+      "baseMint": "HSkSgpttFqVMP8qS6FnogLhUjRkULuoGXMjhEYVNWmM3",
       "baseSymbol": "BTC",
       "baseDecimals": 6,
       "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
-      "quoteMint": "prbPoJgqMHwSbaNifMDGrLB5znxrSDmTbw9YbTrLtZX",
+      "quoteMint": "8DHe6bTMHE2JfYAzfgd4767zm56fpF1VLWAEHxe4dNDJ",
       "quoteSymbol": "USDC",
       "quoteDecimals": 6,
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
-      "requestQueue": "2rEVRhdegud2DDYbUphyTLt49A1EWCVVo8zfPk59L5hU",
-      "eventQueue": "GGTriJQ8QPbTRgbZHJ3Eu6ar3DPfhbBecRPD36v5Unqn",
-      "bids": "HMSoa4Yv8TZY79zgfd4xx94Y43oPEYvBcwXRTNxCjnZQ",
-      "asks": "4sr5M4m1WVQgPe9e6pSE91EFViuf12woDHomiZgnNYXS"
+      "requestQueue": "27jKaGStDZkQJbP7kLECjj1wmVUhLYFHWw7foRRkSBvf",
+      "eventQueue": "DZNSN9wRftEURimZ37pLQPVGhBBpi95TcDYJykNWwysF",
+      "bids": "41AtvWLQGZ8TEtB2VPDGzHdNqaWo5j1Paap7w3HES13N",
+      "asks": "2gHE2NoA1qFZ66FaFvDXk2JMGBL9ET6Sz1KhMvPTgRd6"
     }
   ],
   "bots": [
-    {}
+    {
+      "name": "BTC_mm_0",
+      "type": "maker",
+      "symbol": "BTC/USDC",
+      "market": "5Gs8hMuZHLstYBeREhJSqgExacyM3bXW44ne2GUnMUPn",
+      "base": "BTC",
+      "baseBalance": 10000,
+      "baseDecimals": 6,
+      "baseMint": "HSkSgpttFqVMP8qS6FnogLhUjRkULuoGXMjhEYVNWmM3",
+      "quote": "USDC",
+      "quoteBalance": 10000,
+      "quoteDecimals": 6,
+      "quoteMint": "8DHe6bTMHE2JfYAzfgd4767zm56fpF1VLWAEHxe4dNDJ",
+      "params": {
+        "half_spread": 0.005,
+        "levels": 10
+      },
+      "wallet": "6q2Hc1S5dNtYce3g5auAa4GHYcRCNjZ1Jva99ixr9hTf"
+    }
   ]
 }
