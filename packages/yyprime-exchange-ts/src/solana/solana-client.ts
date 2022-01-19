@@ -53,7 +53,6 @@ export class SolanaClient {
 
   public async createTokenAccount(mint: PublicKey, owner: PublicKey, payer: Keypair) {
     const tokenAddress = await this.getAssociatedTokenAddress(mint, owner);
-
     const transaction = new Transaction().add(
       Token.createAssociatedTokenAccountInstruction(
         ASSOCIATED_TOKEN_PROGRAM_ID,

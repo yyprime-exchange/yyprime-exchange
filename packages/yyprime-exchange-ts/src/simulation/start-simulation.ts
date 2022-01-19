@@ -1,4 +1,14 @@
-import { Keypair, PublicKey } from "@solana/web3.js";
+import {
+  DexInstructions,
+  OpenOrders,
+} from "@project-serum/serum";
+import {
+  Keypair,
+  PublicKey,
+  sendAndConfirmTransaction,
+  SystemProgram,
+  Transaction
+} from "@solana/web3.js";
 
 import { Bot, FaderBot, FollowerBot, MakerBot, TakerBot } from '../bots';
 import { PythClient, PythPrice, PythToken } from '../pyth';
@@ -15,8 +25,7 @@ import * as simulation from './simulation.json';
 
   const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(simulation.config.walletPrivateKey, 'base64'));
 
-  //TODO I don't like this.
-  await solanaClient.requestAirdrop(100, wallet.publicKey);
+  await solanaClient.requestAirdrop(simulation.config.walletBalance, wallet.publicKey);
 
   await solanaClient.createTokens(wallet);
 
@@ -48,44 +57,30 @@ import * as simulation from './simulation.json';
       quoteTokenAccount,
     );
 
-    //TODO initOpenOrders
+    const openOrders: Keypair = Keypair.fromSecretKey(Buffer.from(bot.openOrdersPrivateKey, 'base64'));
+
     /*
-          const openOrdersSpace = OpenOrders.getLayout(
-            mangoGroup.dexProgramId,
-          ).span;
-
-          const openOrdersLamports =
-            await this.connection.getMinimumBalanceForRentExemption(
-              openOrdersSpace,
-              'processed',
-            );
-
-          const accInstr = await createAccountInstruction(
-            this.connection,
-            owner.publicKey,
-            openOrdersSpace,
-            mangoGroup.dexProgramId,
-            openOrdersLamports,
-          );
-
-          const initOpenOrders = makeInitSpotOpenOrdersInstruction(
-            this.programId,
-            mangoGroup.publicKey,
-            mangoAccount.publicKey,
-            owner.publicKey,
-            mangoGroup.dexProgramId,
-            accInstr.account.publicKey,
-            spotMarket.publicKey,
-            mangoGroup.signerKey,
-          );
-
-          const initTx = new Transaction();
-
-          initTx.add(accInstr.instruction);
-          initTx.add(initOpenOrders);
-
-          await this.sendTransaction(initTx, owner, [accInstr.account]);
+    const transaction = new Transaction().add(
+      await OpenOrders.makeCreateAccountTransaction(
+        serumClient.connection,
+        new PublicKey(bot.market),
+        bot_wallet.publicKey,
+        openOrders.publicKey,
+        new PublicKey(simulation.config.serum.program))
+    );
+    await sendAndConfirmTransaction(serumClient.connection, transaction, [bot_wallet, openOrders]);
     */
+
+    const transaction = new Transaction().add(
+      SystemProgram.createAccount({
+        fromPubkey: bot_wallet.publicKey,
+        newAccountPubkey: openOrders.publicKey,
+        lamports: await serumClient.connection.getMinimumBalanceForRentExemption(OpenOrders.getLayout(new PublicKey(simulation.config.serum.program)).span),
+        space: OpenOrders.getLayout(new PublicKey(simulation.config.serum.program)).span,
+        programId: new PublicKey(simulation.config.serum.program),
+      }),
+    );
+    await sendAndConfirmTransaction(serumClient.connection, transaction, [bot_wallet, openOrders]);
   }
 })().then(() => {
   console.log(`Simulation started on ${simulation.config.cluster}`);

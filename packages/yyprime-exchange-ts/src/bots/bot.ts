@@ -80,7 +80,7 @@ export abstract class Bot {
       size: size,
       orderType: orderType,
       clientId: undefined,
-      openOrdersAddressKey: undefined,
+      openOrdersAddressKey: undefined, //new PublicKey(bot.openOrders),
       openOrdersAccount: undefined,
       feeDiscountPubkey: null,
       selfTradeBehavior: "abortTransaction",

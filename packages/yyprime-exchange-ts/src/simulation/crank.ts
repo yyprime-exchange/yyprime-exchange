@@ -77,8 +77,7 @@ const payer: Keypair = Keypair.generate();
 
   function onRequest(requests) {
     for (const request of requests) {
-      //TODO Match Orders
-      //console.log(`  request ${JSON.stringify(request)}`);
+      console.log(`  request ${JSON.stringify(request)}`);
     }
   }
 

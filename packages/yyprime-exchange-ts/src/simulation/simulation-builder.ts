@@ -87,6 +87,7 @@ export class SimulationBuilder {
         solana: SOLANA_CLUSTERS[this.cluster],
         wallet: simulationWalletKeypair.publicKey.toBase58(),
         walletPrivateKey: Buffer.from(simulationWalletKeypair.secretKey).toString('base64'),
+        walletBalance: 100,
       };
 
       const tokens_private = this.tokens.map(token => {
@@ -167,6 +168,7 @@ export class SimulationBuilder {
 
       const bots_private = this.bots.map(bot => {
         const walletKeypair: Keypair = Keypair.generate();
+        const openOrdersKeypair: Keypair = Keypair.generate();
 
         //TODO TickSize
 
@@ -194,6 +196,8 @@ export class SimulationBuilder {
           params: bot.params,
           wallet: walletKeypair.publicKey.toBase58(),
           walletPrivateKey: Buffer.from(walletKeypair.secretKey).toString('base64'),
+          openOrders: openOrdersKeypair.publicKey.toBase58(),
+          openOrdersPrivateKey: Buffer.from(openOrdersKeypair.secretKey).toString('base64'),
         };
       });
 
