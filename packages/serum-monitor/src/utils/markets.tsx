@@ -14,6 +14,7 @@ import {
 } from './types';
 import BonfidaApi from './bonfidaConnector';
 import simulation from '../config/simulation-mainnet.json'
+import usePyth from '../hooks/usePyth';
 // Used in debugging, should be false in production
 const _IGNORE_DEPRECATED = false;
 
@@ -29,7 +30,6 @@ export function useYyprimeMarketList() {
 
 
   const yyprimeCustomMarkets: MarketInfo[] = simulation.markets.map((market)=> {
-    
     const transformedMarket = {
     "address": new PublicKey(market.market),
     "name": `${market.baseSymbol}/${market.quoteSymbol}`,

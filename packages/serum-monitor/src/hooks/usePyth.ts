@@ -9,6 +9,7 @@ import { getMultipleAccounts } from '../contexts/accounts'
 import { useConnection } from '../contexts/connection'
 import simulation from '../config/simulation-mainnet.json'
 import { PythContext } from '../contexts/pyth'
+import { RcFile } from 'antd/lib/upload'
 const oraclePublicKey = 'BmA9Z6FjioHJPpjT39QazZyhDRUdZy2ezwx4GiDdE2u2'
 
 const handlePriceInfo = (
@@ -30,14 +31,12 @@ export interface ISymbolMap {
   [index: string]: object
 }
 
-const usePyth = (symbolFilter?: Array<String>) => {
-  // const connection = new Connection('https://solana-api.projectserum.com/', 'recent')
+const usePyth: any = ({dispatch}) => {
   const connection = useConnection()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
-  const [numProducts, setNumProducts] = useState(0)
   const [symbolMap, setSymbolMap] = useState<ISymbolMap>({})
-  const [_, dispatch] = useContext(PythContext)
+
   useEffect(() => {
     let cancelled = false
     const subscription_ids: number[] = []
@@ -49,14 +48,12 @@ const usePyth = (symbolFilter?: Array<String>) => {
           tokenPriceOracleData.map((p) => p.price),
           'confirmed'
         )
-        console.log(priceInfos, "info")
         if (cancelled) return
         for (let i = 0; i < tokenPriceOracleData.length; i++) {
           const productData = tokenPriceOracleData[i]
           const symbol = productData.symbol
           const priceAccountKey = new PublicKey(productData.price)
           const priceInfo = priceInfos.array[i]
-          console.log('priceInfo')
           handlePriceInfo(
             symbol,
             productData,
@@ -99,8 +96,8 @@ const usePyth = (symbolFilter?: Array<String>) => {
         })
       }
     }
-  }, [connection, dispatch, symbolFilter])
-  return { isLoading, error, numProducts, symbolMap }
+  }, [connection, dispatch])
+  return { isLoading, error, symbolMap }
 }
 
 export default usePyth

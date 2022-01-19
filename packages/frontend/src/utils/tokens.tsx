@@ -3,7 +3,7 @@ import { AccountInfo, Connection, PublicKey } from '@solana/web3.js'
 import { WRAPPED_SOL_MINT } from '@project-serum/serum/lib/token-instructions'
 import { TokenAccount } from './types'
 import { TOKEN_MINTS } from '@project-serum/serum'
-import { useAllMarkets, useCustomMarkets, useTokenAccounts } from './markets'
+import { useAllMarkets, useCustomMarkets } from './markets'
 import { getMultipleSolanaAccounts } from './send'
 import { useConnection } from './connection'
 import { useAsyncData } from './fetch-loop'
@@ -130,54 +130,54 @@ export function useMintToTickers(): { [mint: string]: string } {
 
 const _VERY_SLOW_REFRESH_INTERVAL = 5000 * 1000
 
-// todo: move this to using mints stored in static market infos once custom markets support that.
-export function useMintInfos(): [
-  (
-    | {
-        [mintAddress: string]: {
-          decimals: number
-          initialized: boolean
-        } | null
-      }
-    | null
-    | undefined
-  ),
-  boolean
-] {
-  const connection = useConnection()
-  const [tokenAccounts] = useTokenAccounts()
-  const [allMarkets] = useAllMarkets()
+// // todo: move this to using mints stored in static market infos once custom markets support that.
+// export function useMintInfos(): [
+//   (
+//     | {
+//         [mintAddress: string]: {
+//           decimals: number
+//           initialized: boolean
+//         } | null
+//       }
+//     | null
+//     | undefined
+//   ),
+//   boolean
+// ] {
+//   const connection = useConnection()
+//   const [tokenAccounts] = useTokenAccounts()
+//   const [allMarkets] = useAllMarkets()
 
-  const allMints = (tokenAccounts || [])
-    .map((account) => account.effectiveMint)
-    .concat(
-      (allMarkets || []).map((marketInfo) => marketInfo.market.baseMintAddress)
-    )
-    .concat(
-      (allMarkets || []).map((marketInfo) => marketInfo.market.quoteMintAddress)
-    )
-  const uniqueMints = [...new Set(allMints.map((mint) => mint.toBase58()))].map(
-    (stringMint) => new PublicKey(stringMint)
-  )
+//   const allMints = (tokenAccounts || [])
+//     .map((account) => account.effectiveMint)
+//     .concat(
+//       (allMarkets || []).map((marketInfo) => marketInfo.market.baseMintAddress)
+//     )
+//     .concat(
+//       (allMarkets || []).map((marketInfo) => marketInfo.market.quoteMintAddress)
+//     )
+//   const uniqueMints = [...new Set(allMints.map((mint) => mint.toBase58()))].map(
+//     (stringMint) => new PublicKey(stringMint)
+//   )
 
-  const getAllMintInfo = async () => {
-    const mintInfos = await getMultipleSolanaAccounts(connection, uniqueMints)
-    return Object.fromEntries(
-      Object.entries(mintInfos.value).map(([key, accountInfo]) => [
-        key,
-        accountInfo && parseTokenMintData(accountInfo.data),
-      ])
-    )
-  }
+//   const getAllMintInfo = async () => {
+//     const mintInfos = await getMultipleSolanaAccounts(connection, uniqueMints)
+//     return Object.fromEntries(
+//       Object.entries(mintInfos.value).map(([key, accountInfo]) => [
+//         key,
+//         accountInfo && parseTokenMintData(accountInfo.data),
+//       ])
+//     )
+//   }
 
-  return useAsyncData(
-    getAllMintInfo,
-    tuple(
-      'getAllMintInfo',
-      connection,
-      (tokenAccounts || []).length,
-      (allMarkets || []).length
-    ),
-    { refreshInterval: _VERY_SLOW_REFRESH_INTERVAL }
-  )
-}
+//   return useAsyncData(
+//     getAllMintInfo,
+//     tuple(
+//       'getAllMintInfo',
+//       connection,
+//       (tokenAccounts || []).length,
+//       (allMarkets || []).length
+//     ),
+//     { refreshInterval: _VERY_SLOW_REFRESH_INTERVAL }
+//   )
+// }
