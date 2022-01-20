@@ -205,24 +205,15 @@ export class SimulationBuilder {
 
       const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
 
-      const bookOrders = markets_private.map(async (market) => {
+      const bookOrders = await Promise.all(markets_private.map(async (market) => {
         let asks: { priceLots: number; sizeLots: number; }[] = [];
         let bids: { priceLots: number; sizeLots: number; }[] = [];
 
         const mainnetMarket = simulationMainnet.markets.find(mainnetMarket => { return mainnetMarket.symbol === market.symbol; });
 
         if (mainnetMarket) {
-          const asksAccount = await connection.getAccountInfo(new PublicKey(mainnetMarket.asks));
-          {
-            const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(asksAccount!.data);
-            asks = this.getPriceLevels(accountFlags.bids, slab);
-          }
-
-          const bidsAccount = await connection.getAccountInfo(new PublicKey(mainnetMarket.bids));
-          {
-            const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(bidsAccount!.data);
-            bids = this.getPriceLevels(accountFlags.bids, slab);
-          }
+          asks = this.getPriceLevels((await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
+          bids = this.getPriceLevels((await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
         }
 
         return {
@@ -230,7 +221,7 @@ export class SimulationBuilder {
           asks: asks,
           bids: bids,
         };
-      });
+      }));
 
       const bots_private = this.bots.map(bot => {
         const walletKeypair: Keypair = Keypair.generate();
@@ -344,8 +335,9 @@ export class SimulationBuilder {
     return key.ushrn(64);
   }
 
-  private getPriceLevels(isBids, slab) {
-    const descending = isBids;
+  private getPriceLevels(data) {
+    const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(data);
+    const descending = accountFlags.bids;
     const levels: [BN, BN][] = []; // (price, size)
     for (const { key, quantity } of slab.items(descending)) {
       const price = this.getPriceFromKey(key);
