@@ -20,7 +20,15 @@ const handlePriceInfo = (
 ) => {
   if (!accountInfo || !accountInfo.data) return
   const price = parsePriceData(accountInfo.data)
+  if (!price.price) return
+  // const pricePoint: number[] = price.price]
+  // console.log(pricePoint)
+  dispatch({
+    type: 'setHistorialPriceData',
+    pricePoint: price.price,
+  })
   console.log(price.price)
+
   dispatch({
     type: 'setProductInfo',
     productInfo: { symbol: symbol, price: price.price, confidence: price.confidence },
@@ -36,12 +44,18 @@ interface subscription {
   id: number
 }
 
+// interface PythPricePoint {
+//   x: BigInt
+//   y: number
+// }
+
 interface PricingContext {
   productInfoMap: any
   lastSubscription: subscription
+  historicalPrice: number[]
 }
 
-const initialState: PricingContext = { productInfoMap: {}, lastSubscription: {symbol: "", id: 0}}
+const initialState: PricingContext = { productInfoMap: {}, lastSubscription: {symbol: "", id: 0}, historicalPrice: []}
 export const PythContext: any = React.createContext(initialState)
 
 const reducer = (state: any, action: any) => {
@@ -52,8 +66,12 @@ const reducer = (state: any, action: any) => {
     }
     case 'setLastSub': {
       return { ...state, lastSubscription: action.lastSubscription }
-
     }
+    case 'setHistorialPriceData':
+      return { ...state, historicalPrice: [...state.historicalPrice, action.pricePoint] }
+    case 'clearHistorialPriceData':
+        return { ...state, historicalPrice: [] }
+      
     default:
       return state
   }
@@ -77,7 +95,7 @@ export const PythProvider = (props: any) => {
   const subscribe = async (symbol, PythPriceOracleAddress) => {
     console.log(`Address: ${symbol}`)
     console.log(`PythPriceOracleAddress: ${PythPriceOracleAddress}`)
-
+    dispatch({type: "clearHistorialPriceData"})
     if (priceState.lastSubscription.symbol 
         && priceState.lastSubscription.symbol !== symbol) {
       console.log('unsubscribing from last subscription')
