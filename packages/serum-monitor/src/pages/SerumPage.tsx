@@ -9,7 +9,7 @@ import {
   useMarket,
   useMarketsList,
 } from '../utils/markets';
-import TradesTable from '../components/TradesTable';
+// import TradesTable from '../components/TradesTable';
 import LinkAddress from '../components/LinkAddress';
 import {
   DeleteOutlined,
@@ -19,6 +19,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { PythPrice } from '../components/PythPrice';
 import usePyth from '../hooks/usePyth';
+import GaugeChart from 'react-gauge-chart'
+import { PriceChart } from '../components/Chart'
 
 const { Option, OptGroup } = Select;
 
@@ -52,7 +54,6 @@ export default function SerumPage() {
       marketAddress={marketAddress}
       setMarketAddress={setMarketAddress}
     >
-      <PythPrice/>
       <SerumPageInner />
     </MarketProvider>
     </>
@@ -130,6 +131,9 @@ function SerumPageInner() {
               customMarkets={customMarkets}
             />
           </Col>
+          <Col>
+       
+          </Col>
           {market ? (
             <Col>
               <Popover
@@ -143,7 +147,12 @@ function SerumPageInner() {
             </Col>
           ) : null}
         </Row>
+        
         {component}
+        {/* <div style = {{display:"flex", justifyContent:"center"}}>
+          <PriceChart/>
+        </div> */}
+
       </Wrapper>
     </>
   );
@@ -259,8 +268,9 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
       }}
     >
       <Col flex={'360px'} style={{ height: '100%' }}>
+        <PythPrice/>
         <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
-        <TradesTable smallScreen={false} />
+        {/* <TradesTable smallScreen={false} /> */}
       </Col>
     </Row>
   );
@@ -275,6 +285,9 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
         }}
       >
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
+        <PythPrice/>
+        </Col>
+        <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
           <Orderbook
             smallScreen={true}
             depth={13}
@@ -283,7 +296,7 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
           />
         </Col>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <TradesTable smallScreen={true} />
+          {/* <TradesTable smallScreen={true} /> */}
         </Col>
       </Row>
     </>
@@ -299,11 +312,14 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
         }}
       >
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
-          <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
+        <PythPrice/>
         </Col>
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
-          <TradesTable smallScreen={true} />
+          <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
         </Col>
+        {/* <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
+          <TradesTable smallScreen={true} />
+        </Col> */}
       </Row>
     </>
   );
