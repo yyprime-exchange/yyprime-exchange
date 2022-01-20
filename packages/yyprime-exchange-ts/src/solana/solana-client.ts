@@ -179,10 +179,10 @@ export class SolanaClient {
     await sendAndConfirmTransaction(this.connection, transaction, [owner]);
   }
 
-  public static async query(connection: Connection, tokens: PublicKey[]) {
+  public static async query(connection: Connection, tokens) {
     return await Promise.all(
       tokens.map(async (token) => {
-        return await connection.getParsedAccountInfo(token);
+        return { symbol: token.symbol, mint: token.mint, data: (await connection.getParsedAccountInfo(token.mint)).value };
       })
     );
   }

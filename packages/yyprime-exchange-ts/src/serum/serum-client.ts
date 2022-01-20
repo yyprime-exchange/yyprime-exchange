@@ -30,11 +30,11 @@ export interface SerumBook {
   market: string;
   baseMint: string;
   baseSymbol: string;
-  baseDecimals: number;
+  //baseDecimals: number;
   basePrice: string;
   quoteMint: string;
   quoteSymbol: string;
-  quoteDecimals: number;
+  //quoteDecimals: number;
   quotePrice: string;
   requestQueue: string;
   eventQueue: string;
