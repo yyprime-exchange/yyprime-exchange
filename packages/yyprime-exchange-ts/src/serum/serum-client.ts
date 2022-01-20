@@ -30,11 +30,11 @@ export interface SerumBook {
   market: string;
   baseMint: string;
   baseSymbol: string;
-  baseDecimals: number;
+  //baseDecimals: number;
   basePrice: string;
   quoteMint: string;
   quoteSymbol: string;
-  quoteDecimals: number;
+  //quoteDecimals: number;
   quotePrice: string;
   requestQueue: string;
   eventQueue: string;
@@ -254,7 +254,7 @@ export class SerumClient {
   public async initialize() {
     await Promise.all(
       this.simulation.markets.map(async (market) => {
-        this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), { commitment: "processed" }, this.serumProgram);
+        this.books.get(market.market)!.serumMarket = await Market.load(this.connection, new PublicKey(market.market), { skipPreflight: true, commitment: "processed" as Commitment }, this.serumProgram);
       })
     );
   }
@@ -262,7 +262,7 @@ export class SerumClient {
   public subscribe(
     onAsk: ((book: SerumBook) => void) | null,
     onBid: ((book: SerumBook) => void) | null,
-    onEvent: ((events) => void) | null,
+    onEvent: ((book: SerumBook, events) => void) | null,
     onRequest: ((requests) => void) | null,
   ) {
     this.connection.onProgramAccountChange(
@@ -274,13 +274,22 @@ export class SerumClient {
           switch (bookEvent.event) {
             case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onAsk) onAsk(bookEvent.book); break;
             case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onBid) onBid(bookEvent.book); break;
-            case "eventQueue": if (onRequest) onRequest(decodeEventQueue(keyedAccountInfo.accountInfo.data)); break;
+            case "eventQueue": if (onEvent) onEvent(bookEvent.book, decodeEventQueue(keyedAccountInfo.accountInfo.data)); break;
             case "requestQueue": if (onRequest) onRequest(decodeRequestQueue(keyedAccountInfo.accountInfo.data)); break;
             default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
         }
       },
       this.commitment,
+    );
+  }
+
+  public static async query(connection: Connection, serumProgram: PublicKey) {
+    const programAccounts = await connection.getProgramAccounts(serumProgram, { filters: [ { dataSize: Market.getLayout(serumProgram).span } ] });
+    return await Promise.all(
+      programAccounts.map(account => {
+        return Market.getLayout(serumProgram).decode(account.account.data);
+      }).filter(market => { return market !== undefined; })
     );
   }
 
