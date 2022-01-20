@@ -1,5 +1,4 @@
 import {
-  DexInstructions,
   OpenOrders,
 } from "@project-serum/serum";
 import {
@@ -10,9 +9,8 @@ import {
   Transaction
 } from "@solana/web3.js";
 
-import { Bot, FaderBot, FollowerBot, MakerBot, TakerBot } from '../bots';
-import { PythClient, PythPrice, PythToken } from '../pyth';
-import { SerumBook, SerumClient } from '../serum';
+import { PythClient } from '../pyth';
+import { SerumClient } from '../serum';
 import { SolanaClient } from '../solana';
 
 import * as simulation from './simulation.json';
@@ -21,7 +19,6 @@ import * as simulation from './simulation.json';
   const pythClient: PythClient = new PythClient(simulation);
   const serumClient: SerumClient = new SerumClient(simulation);
   const solanaClient: SolanaClient = new SolanaClient(simulation);
-
 
   const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(simulation.config.walletPrivateKey, 'base64'));
 
@@ -59,17 +56,15 @@ import * as simulation from './simulation.json';
 
     const openOrders: Keypair = Keypair.fromSecretKey(Buffer.from(bot.openOrdersPrivateKey, 'base64'));
 
-    /*
-    const transaction = new Transaction().add(
-      await OpenOrders.makeCreateAccountTransaction(
-        serumClient.connection,
-        new PublicKey(bot.market),
-        bot_wallet.publicKey,
-        openOrders.publicKey,
-        new PublicKey(simulation.config.serum.program))
-    );
-    await sendAndConfirmTransaction(serumClient.connection, transaction, [bot_wallet, openOrders]);
-    */
+    //const transaction = new Transaction().add(
+      //await OpenOrders.makeCreateAccountTransaction(
+        //serumClient.connection,
+        //new PublicKey(bot.market),
+        //bot_wallet.publicKey,
+        //openOrders.publicKey,
+        //new PublicKey(simulation.config.serum.program))
+    //);
+    //await sendAndConfirmTransaction(serumClient.connection, transaction, [bot_wallet, openOrders]);
 
     const transaction = new Transaction().add(
       SystemProgram.createAccount({

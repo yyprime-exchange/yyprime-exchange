@@ -67,9 +67,30 @@ export abstract class Bot {
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
 
+
 //TODO
 //Price must be an increment of X
 //Tick price decided when the market was created. You can only move the price by multiple of this.
+
+/*
+  const baseUnit = Math.pow(10, baseTokenInfo.decimals);
+  const quoteUnit = Math.pow(10, quoteTokenInfo.decimals);
+
+  const nativePrice = new BN(price * quoteUnit)
+    .mul(perpMarket.baseLotSize)
+    .div(perpMarket.quoteLotSize.mul(new BN(baseUnit)));
+  const nativeQuantity = new BN(quantity * baseUnit).div(
+    perpMarket.baseLotSize,
+  );
+*/
+
+/*
+  limitPrice: this.priceNumberToLots(price),
+  maxBaseQuantity: this.baseSizeNumberToLots(size),
+  maxQuoteQuantity: new BN(this._decoded.quoteLotSize.toNumber()).mul(
+    this.baseSizeNumberToLots(size).mul(this.priceNumberToLots(price)),
+  ),
+*/
 
     const { transaction, signers } = await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
       owner: this.walletAccount,

@@ -65,13 +65,13 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     for (const event of events) {
       console.log(`  ${JSON.stringify(event)}`);
     }
-    */
 
     const asksAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.asks));
     console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), asksAccount!.data))}`);
 
     const bidsAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.bids));
     console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), bidsAccount!.data))}`);
+    */
 
     console.log('');
   }

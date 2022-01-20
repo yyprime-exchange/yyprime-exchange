@@ -101,6 +101,7 @@ export class SerumClient {
           market.baseLotSize,
           new PublicKey(market.quoteMint),
           market.quoteLotSize,
+          market.quoteDustThreshold,
           market.feeRateBps
         );
       })
@@ -124,12 +125,10 @@ export class SerumClient {
     baseLotSize: number,
     quoteMint: PublicKey,
     quoteLotSize: number,
+    quoteDustThreshold: number,
     feeRateBps: number,
   ) {
     console.log(`createMarket(${symbol})`);
-
-    //TODO this should be in the simulation config.
-    const quoteDustThreshold = new BN(100);
 
     const [vaultOwner, vaultSignerNonce] = await this.getVaultOwnerAndNonce(market.publicKey);
 
@@ -212,7 +211,7 @@ export class SerumClient {
         quoteLotSize: new BN(quoteLotSize),
         feeRateBps,
         vaultSignerNonce,
-        quoteDustThreshold,
+        quoteDustThreshold: new BN(quoteDustThreshold),
         programId: this.serumProgram,
         //authority: marketAuthority,
         //pruneAuthority: pruneAuthority,
