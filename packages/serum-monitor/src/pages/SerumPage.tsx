@@ -19,7 +19,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { PythPrice } from '../components/PythPrice';
 import usePyth from '../hooks/usePyth';
-import GaugeChart from 'react-gauge-chart'
+//import GaugeChart from 'react-gauge-chart'
 import { PriceChart } from '../components/Chart'
 
 const { Option, OptGroup } = Select;
