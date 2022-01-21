@@ -52,8 +52,9 @@ export const PriceChart = () => {
   const [dataList, setDataList] = React.useState(defaultDataList);
 
   React.useEffect(() => {
-    if(!productInfoState.historicalPythPrice || productInfoState.historicalSerumPrice) return
+    // if(!productInfoState.historicalPythPrice || productInfoState.historicalSerumPrice) return
     const data = [{name: "Pyth Price", data: productInfoState.historicalPythPrice}, {name: "Serum Price", data: productInfoState.historicalSerumPrice}]
+    console.log(data, "sdata")
     setDataList(data)
     // const addDataRandomly = (data) => {
     //   if (Math.random() < 1 - ADDING_DATA_RATIO) {
