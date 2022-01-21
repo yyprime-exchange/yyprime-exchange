@@ -13,8 +13,9 @@ export const RealTimeChart = ({range,dataList}) => {
         dynamicAnimation: {
           speed: 500,
         },
-      },
+      }
     },
+    colors: ["#41C77A", "#F23B69"],
     tooltip: {
       x: {
         format: "yyyy/MM/dd HH:mm:ss.f",
