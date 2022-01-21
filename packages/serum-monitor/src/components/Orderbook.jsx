@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { useMarket, useOrderbook, useMarkPrice } from '../utils/markets';
 import { isEqual, getDecimalCount } from '../utils/utils';
@@ -7,7 +7,7 @@ import { useInterval } from '../utils/useInterval';
 import FloatingElement from './layout/FloatingElement';
 import usePrevious from '../utils/usePrevious';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-
+import { PythContext } from '../contexts/pyth';
 const Title = styled.div`
   color: rgba(255, 255, 255, 1);
 `;
@@ -47,6 +47,7 @@ const Price = styled.div`
 export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
   const markPrice = useMarkPrice();
   const [orderbook] = useOrderbook();
+  const [productInfoState, dispatch, subscribe] = useContext(PythContext);
   const { baseCurrency, quoteCurrency } = useMarket();
 
   const currentOrderbookData = useRef(null);
@@ -62,6 +63,7 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
     ) {
       let bids = orderbook?.bids || [];
       let asks = orderbook?.asks || [];
+      dispatch({"type": "setCurrentMarkPrice", "currentMarkPrice": markPrice})
 
       let sum = (total, [, size], index) =>
         index < depth ? total + size : total;
@@ -203,7 +205,6 @@ const MarkPriceComponent = React.memo(
   ({ markPrice }) => {
     const { market } = useMarket();
     const previousMarkPrice = usePrevious(markPrice);
-
     let markPriceColor =
       markPrice > previousMarkPrice
         ? '#41C77A'

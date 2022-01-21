@@ -41,51 +41,52 @@ const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
 const ADDING_DATA_RATIO = 0.8;
 
 export const PriceChart = () => {
-  const nameList = ["Pyth Price"];
+  const nameList = ["Pyth Price", "Serum Price"];
   const defaultDataList = nameList.map((name) => ({
     name: name,
-    data: [41688.18, 41729.204, 41729.211, 41719.767, 41713.179000000004, 41719.784, 41719.186, 41719.379, 41719.336, 41718.902],
+    data: [],
   }));
+
   const [productInfoState, _, subscribe] = useContext(PythContext);
 
   const [dataList, setDataList] = React.useState(defaultDataList);
 
   React.useEffect(() => {
-    if(!productInfoState.historicalPrice) return
-    console.log(productInfoState.historicalPrice)
-    setDataList(productInfoState.historicalPrice)
-    const addDataRandomly = (data) => {
-      if (Math.random() < 1 - ADDING_DATA_RATIO) {
-        return data;
-      }
-      return [
-        ...data,
-        {
-          x: new Date(),
-          y: data.length * Math.random(),
-        },
-      ];
-    };
-    const interval = setInterval(() => {
-      setDataList(
-        dataList.map((val) => {
-          return {
-            name: val.name,
-            data: addDataRandomly(val.data),
-          };
-        })
-      );
-    }, ADDING_DATA_INTERVAL_IN_MILLISECONDS);
+    if(!productInfoState.historicalPythPrice || productInfoState.historicalSerumPrice) return
+    const data = [{name: "Pyth Price", data: productInfoState.historicalPythPrice}, {name: "Serum Price", data: productInfoState.historicalSerumPrice}]
+    setDataList(data)
+    // const addDataRandomly = (data) => {
+    //   if (Math.random() < 1 - ADDING_DATA_RATIO) {
+    //     return data;
+    //   }
+    //   return [
+    //     ...data,
+    //     {
+    //       x: new Date(),
+    //       y: data.length * Math.random(),
+    //     },
+    //   ];
+    // };
+    // const interval = setInterval(() => {
+    //   setDataList(
+    //     dataList.map((val) => {
+    //       return {
+    //         name: val.name,
+    //         data: addDataRandomly(val.data),
+    //       };
+    //     })
+    //   );
+    // }, ADDING_DATA_INTERVAL_IN_MILLISECONDS);
 
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
 
-  }, [productInfoState.historicalPrice]);
+  }, [productInfoState.historicalPythPrice, productInfoState.historicalSerumPrice]);
 
   return (
     <div>
       <RealTimeChart
         dataList={dataList}
-        range={100}
+        range={10}
       />
 
     </div>

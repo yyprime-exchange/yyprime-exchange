@@ -7,7 +7,6 @@ import Background from './components/Background'
 // import { SnackbarProvider } from 'notistack'
 // import { WalletKitProvider } from "@gokiprotocol/walletkit";
 import { clusterApiUrl } from '@solana/web3.js'
-import PythProvider from './contexts/pyth'
 import TradePage from './views/TradePage'
 import { Routes } from './routes'
 import { ConnectionProvider } from './utils/connection'
@@ -43,14 +42,12 @@ function App() {
     // >
 
     <ConnectionProvider>
-      <PythProvider>
         {/* <SnackbarProvider maxSnack={5} autoHideDuration={400}> */}
           <Router>
             {/* <Route exact path='/' component={Simulator}/> */}
             <Routes />
           </Router>
         {/* </SnackbarProvider> */}
-      </PythProvider>
     </ConnectionProvider>
 
     // </WalletKitProvider>

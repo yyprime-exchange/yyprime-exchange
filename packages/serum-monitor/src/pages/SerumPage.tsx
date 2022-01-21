@@ -8,6 +8,7 @@ import {
   MarketProvider,
   useMarket,
   useMarketsList,
+  useMarkPrice
 } from '../utils/markets';
 // import TradesTable from '../components/TradesTable';
 import LinkAddress from '../components/LinkAddress';
@@ -21,6 +22,8 @@ import { PythPrice } from '../components/PythPrice';
 import usePyth from '../hooks/usePyth';
 import GaugeChart from 'react-gauge-chart'
 import { PriceChart } from '../components/Chart'
+import PythProvider from '../contexts/pyth'
+
 
 const { Option, OptGroup } = Select;
 
@@ -54,7 +57,9 @@ export default function SerumPage() {
       marketAddress={marketAddress}
       setMarketAddress={setMarketAddress}
     >
-      <SerumPageInner />
+      <PythProvider>
+        <SerumPageInner />
+      </PythProvider>
     </MarketProvider>
     </>
 
@@ -73,7 +78,8 @@ function SerumPageInner() {
     height: window.innerHeight,
     width: window.innerWidth,
   });
-
+  // const markPrice = useMarkPrice()
+  // console.log(markPrice, "mark price")
   useEffect(() => {
     document.title = marketName ? `${marketName} — Serum` : 'Serum';
   }, [marketName]);
@@ -149,9 +155,9 @@ function SerumPageInner() {
         </Row>
         
         {component}
-        {/* <div style = {{display:"flex", justifyContent:"center"}}>
+        <div style = {{display:"flex", justifyContent:"center"}}>
           <PriceChart/>
-        </div> */}
+        </div>
 
       </Wrapper>
     </>
@@ -285,6 +291,7 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
         }}
       >
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
+          
         <PythPrice/>
         </Col>
         <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
