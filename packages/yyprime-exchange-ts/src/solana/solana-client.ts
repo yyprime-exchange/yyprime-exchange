@@ -53,7 +53,6 @@ export class SolanaClient {
 
   public async createTokenAccount(mint: PublicKey, owner: PublicKey, payer: Keypair) {
     const tokenAddress = await this.getAssociatedTokenAddress(mint, owner);
-
     const transaction = new Transaction().add(
       Token.createAssociatedTokenAccountInstruction(
         ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -178,6 +177,14 @@ export class SolanaClient {
       )
     );
     await sendAndConfirmTransaction(this.connection, transaction, [owner]);
+  }
+
+  public static async query(connection: Connection, tokens) {
+    return await Promise.all(
+      tokens.map(async (token) => {
+        return { symbol: token.symbol, mint: token.mint, data: (await connection.getParsedAccountInfo(token.mint)).value };
+      })
+    );
   }
 
 }

@@ -1,6 +1,12 @@
 import assert from 'assert';
 import { Buffer } from 'buffer';
-import { Keypair } from "@solana/web3.js";
+import { BN } from "@project-serum/anchor";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+
+import { PythClient } from '../pyth';
+import { SerumClient } from '../serum';
+import { SolanaClient } from '../solana';
 
 import PYTH_PRODUCTS from '../pyth/products.json';
 import PYTH_PROGRAMS from '../pyth/programs.json';
@@ -35,7 +41,7 @@ export class SimulationBuilder {
     this.bots.push({ name: name, type: type, symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
   }
 
-  public build() {
+  public async build() {
     const priceKeys: Map<string, string> = new Map();
     PYTH_PRODUCTS.mainnet.forEach(product => {
       if (product.quoteSymbol === 'USD') {
@@ -55,20 +61,53 @@ export class SimulationBuilder {
         solana: SOLANA_CLUSTERS[this.cluster],
       };
 
-      const tokens = SOLANA_TOKENS.mainnet.map(token => {
+      const connection: Connection = new Connection(config.serum.url);
+
+      //const pythProducts = await PythClient.query(connection, new PublicKey(config.pyth.program));
+      const serumMarkets = await SerumClient.query(connection, new PublicKey(config.serum.program));
+      const solanaTokens = await SolanaClient.query(connection, SOLANA_TOKENS.mainnet.map(token => { return { symbol: token.symbol, mint: new PublicKey(token.mint) } }));
+
+      const mintSymbols: Map<string, string> = new Map();
+
+      const tokens = solanaTokens.map(token => {
+        mintSymbols.set(token.mint.toBase58(), token.symbol);
+
         return {
+          symbol: token.symbol,
+          mint: token.mint.toBase58(),
+          decimals: token.data.data.parsed.info.decimals,
+          mintSupply: token.data.data.parsed.info.supply,
           price: priceKeys.get(token.symbol),
-          ...token
         };
       });
 
-      const markets = SERUM_MARKETS.mainnet.map(market => {
-        return {
-          basePrice: priceKeys.get(market.baseSymbol),
-          quotePrice: priceKeys.get(market.quoteSymbol),
-          ...market
-        };
-      });
+      const markets = serumMarkets
+        .filter(market => { return mintSymbols.get(market.quoteMint.toBase58()) === 'USDC' && mintSymbols.has(market.baseMint.toBase58()) && mintSymbols.has(market.quoteMint.toBase58()); })
+        .map(market => {
+          return {
+            symbol: `${mintSymbols.get(market.baseMint.toBase58())}/${mintSymbols.get(market.quoteMint.toBase58())}`,
+            market: market.ownAddress.toBase58(),
+            baseMint: market.baseMint.toBase58(),
+            baseVault: market.baseVault.toBase58(),
+            baseSymbol: `${mintSymbols.get(market.baseMint.toBase58())}`,
+            basePrice: priceKeys.get(`${mintSymbols.get(market.baseMint.toBase58())}`),
+            quoteMint: market.quoteMint.toBase58(),
+            quoteVault: market.quoteVault.toBase58(),
+            quoteSymbol: `${mintSymbols.get(market.quoteMint.toBase58())}`,
+            quotePrice: priceKeys.get(`${mintSymbols.get(market.quoteMint.toBase58())}`),
+            requestQueue: market.requestQueue.toBase58(),
+            eventQueue: market.eventQueue.toBase58(),
+            bids: market.bids.toBase58(),
+            asks: market.asks.toBase58(),
+            vaultSignerNonce: new BN(market.vaultSignerNonce).toNumber(),
+            quoteDustThreshold: new BN(market.quoteDustThreshold).toNumber(),
+            baseLotSize: new BN(market.baseLotSize).toNumber(),
+            quoteLotSize: new BN(market.quoteLotSize).toNumber(),
+            feeRateBps: new BN(market.feeRateBps).toNumber(),
+            referrerRebatesAccrued: new BN(market.referrerRebatesAccrued).toNumber()
+          };
+        })
+        .sort((a, b) => { return a.symbol > b.symbol ? 1 : -1; });
 
       return [
         {
@@ -87,6 +126,7 @@ export class SimulationBuilder {
         solana: SOLANA_CLUSTERS[this.cluster],
         wallet: simulationWalletKeypair.publicKey.toBase58(),
         walletPrivateKey: Buffer.from(simulationWalletKeypair.secretKey).toString('base64'),
+        walletBalance: 100,
       };
 
       const tokens_private = this.tokens.map(token => {
@@ -167,6 +207,7 @@ export class SimulationBuilder {
 
       const bots_private = this.bots.map(bot => {
         const walletKeypair: Keypair = Keypair.generate();
+        const openOrdersKeypair: Keypair = Keypair.generate();
 
         //TODO TickSize
 
@@ -194,6 +235,8 @@ export class SimulationBuilder {
           params: bot.params,
           wallet: walletKeypair.publicKey.toBase58(),
           walletPrivateKey: Buffer.from(walletKeypair.secretKey).toString('base64'),
+          openOrders: openOrdersKeypair.publicKey.toBase58(),
+          openOrdersPrivateKey: Buffer.from(openOrdersKeypair.secretKey).toString('base64'),
         };
       });
 
