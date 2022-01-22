@@ -1,3 +1,4 @@
+import BN from 'bn.js';
 import { Col, Row } from 'antd';
 import React, { useRef, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -37,7 +38,7 @@ const Price = styled.div`
   color: white;
 `;
 
-export default function SerumOrderbook({ depth = 8 }) {
+export default function SerumOrderbook({ depth = 7 }) {
 
   const { baseSymbol, quoteSymbol } = useSerum();
 
@@ -118,6 +119,7 @@ export default function SerumOrderbook({ depth = 8 }) {
           sizePercent={sizePercent}
         />
       ))}
+      <Row>&nbsp;</Row>
       {orderbookData?.bids.map(({ price, size, sizePercent }) => (
         <OrderbookRow
           key={price + ''}
@@ -131,12 +133,48 @@ export default function SerumOrderbook({ depth = 8 }) {
   );
 }
 
+//TODO DUP
+function priceLotsToNumber(price, baseLotSize, baseSplTokenDecimals, quoteLotSize, quoteSplTokenDecimals) {
+  return divideBnToNumber(
+    price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)),
+    baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)),
+  );
+}
+
+//TODO DUP
+function baseSizeLotsToNumber(size, baseLotSize, baseSplTokenDecimals) {
+  return divideBnToNumber(
+    size.mul(baseLotSize),
+    baseSplTokenMultiplier(baseSplTokenDecimals),
+  );
+}
+
+//TODO DUP
+function divideBnToNumber(numerator, denominator) {
+  const quotient = numerator.div(denominator).toNumber();
+  const rem = numerator.umod(denominator);
+  const gcd = rem.gcd(denominator);
+  return quotient + rem.div(gcd).toNumber() / denominator.div(gcd).toNumber();
+}
+
+//TODO DUP
+function baseSplTokenMultiplier(baseSplTokenDecimals) {
+  return new BN(10).pow(new BN(baseSplTokenDecimals));
+}
+
+//TODO DUP
+function quoteSplTokenMultiplier(quoteSplTokenDecimals) {
+  return new BN(10).pow(new BN(quoteSplTokenDecimals));
+}
+
 const OrderbookRow = React.memo(
   ({ side, price, size, sizePercent }) => {
     const element = useRef();
 
-    //TODO
-    //const { minOrderSize, tickSize } = useSerum();
+    const { baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } = useSerum();
+
+    const minOrderSize = baseSizeLotsToNumber(new BN(1), new BN(baseLotSize), baseDecimals);
+    const tickSize = priceLotsToNumber(new BN(1), new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals);
 
     useEffect(() => {
       // eslint-disable-next-line
@@ -151,17 +189,8 @@ const OrderbookRow = React.memo(
       return () => clearTimeout(id);
     }, [price, size]);
 
-    let formattedSize = size;
-      //TODO
-      //minOrderSize && !isNaN(size)
-        //? Number(size).toFixed(getDecimalCount(minOrderSize) + 1)
-        //: size;
-
-    let formattedPrice = price;
-      //TODO
-      //tickSize && !isNaN(price)
-        //? Number(price).toFixed(getDecimalCount(tickSize) + 1)
-        //: price;
+    let formattedSize = minOrderSize && !isNaN(size) ? Number(size).toFixed(getDecimalCount(minOrderSize) + 1) : size;
+    let formattedPrice = tickSize && !isNaN(price) ? Number(price).toFixed(getDecimalCount(tickSize) + 1) : price;
 
     return (
       <Row ref={element} style={{ marginBottom: 1 }}>

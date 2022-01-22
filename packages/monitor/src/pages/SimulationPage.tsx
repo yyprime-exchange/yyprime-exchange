@@ -62,12 +62,12 @@ function MarketPageInner() {
             <Wrapper>
               <Row>
                 <Col>
-                  <SerumRequests />
+                  <SerumEvents />
                 </Col>
               </Row>
               <Row>
                 <Col style={{ height: '100%' }}>
-                  <SerumEvents />
+                  <SerumRequests />
                 </Col>
               </Row>
             </Wrapper>

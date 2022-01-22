@@ -15,8 +15,7 @@ export default function PythPrice() {
   return (
     <FloatingElement style={{ width: '300px', height: '120px' }} >
       <Title>Pyth Price</Title>
-      <Row
-      >
+      <Row>
         <Col span={12} style={{ textAlign: 'left'}}>Price</Col>
         <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.price}</Col>
       </Row>
