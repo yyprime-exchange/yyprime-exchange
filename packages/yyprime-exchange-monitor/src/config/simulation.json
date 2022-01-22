@@ -1,0 +1,74 @@
+{
+  "config": {
+    "cluster": "localnet",
+    "pyth": {
+      "program": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+      "url": "https://api.mainnet-beta.solana.com/"
+    },
+    "serum": {
+      "program": "2SXFv8tTmavm8uSAg3ft1JjttzJvgwXZiUPa9xuUbqH2",
+      "url": "http://127.0.0.1:8899/"
+    },
+    "solana": {
+      "http": "http://localhost:8899",
+      "ws": "ws://localhost:8900"
+    },
+    "wallet": "2zLGDU9JkSa6Lm4EThjyafsVxfvzwYqVq3J8TgA1qqMQ"
+  },
+  "tokens": [
+    {
+      "symbol": "BTC",
+      "mint": "HgEuru6AnyUV1sKqixP5SedigEq1fpAQv4bACUq9URSM",
+      "vault": "GwPe4oB3LLKnU1nnaCcyvghaoTAeLEeAuykokfL6pUkb",
+      "decimals": 6,
+      "mintSupply": 1000000000,
+      "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
+    },
+    {
+      "symbol": "USDC",
+      "mint": "22KPEvpWLz2dRW8UiXoJ9V7Hxb8c2QiB8ik3cEzQF2xn",
+      "vault": "5SKNYQ28zvynDhzyA9qXEAuYmBDELX3hyZBTnbzdhPuq",
+      "decimals": 6,
+      "mintSupply": 1000000000,
+      "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
+    }
+  ],
+  "markets": [
+    {
+      "symbol": "BTC/USDC",
+      "market": "4qFgf1192uPBodxA1u6RquEhqeM6LA9wENW3a4NCvpkE",
+      "baseMint": "HgEuru6AnyUV1sKqixP5SedigEq1fpAQv4bACUq9URSM",
+      "baseSymbol": "BTC",
+      "baseDecimals": 6,
+      "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
+      "quoteMint": "22KPEvpWLz2dRW8UiXoJ9V7Hxb8c2QiB8ik3cEzQF2xn",
+      "quoteSymbol": "USDC",
+      "quoteDecimals": 6,
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "3KgpPG4uwCj52rQgcnL4uFZTL6HEXhqWEtR5W1Hb4pN2",
+      "eventQueue": "Bkdy7w69nKvcehMDEmnJHWFU6MAkVd5YTp7XEEWBtesy",
+      "bids": "6VDUZmwy3cGBZJYWTd5Mze7pJFeLfVbFcHhV9YsqCtxa",
+      "asks": "GNjSKLSjjK3CgyPmeNhLyGAoHZ2PqDML26WkRVeo8d1u"
+    }
+  ],
+  "bots": [
+    {
+      "name": "BTC_mm_0",
+      "type": "maker",
+      "symbol": "BTC/USDC",
+      "market": "4qFgf1192uPBodxA1u6RquEhqeM6LA9wENW3a4NCvpkE",
+      "base": "BTC",
+      "baseBalance": 10000,
+      "baseDecimals": 6,
+      "baseMint": "HgEuru6AnyUV1sKqixP5SedigEq1fpAQv4bACUq9URSM",
+      "quote": "USDC",
+      "quoteBalance": 10000,
+      "quoteDecimals": 6,
+      "quoteMint": "22KPEvpWLz2dRW8UiXoJ9V7Hxb8c2QiB8ik3cEzQF2xn",
+      "params": {
+        "half_spread": 0.005
+      },
+      "wallet": "u6hJWDKHsHYjQ7E78Livf1NFKRor7LHsrTCyhx7e7u8"
+    }
+  ]
+}
