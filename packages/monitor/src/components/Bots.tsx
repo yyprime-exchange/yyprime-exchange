@@ -11,7 +11,7 @@ const Title = styled.div`
 
 export default function Bots() {
   return (
-    <FloatingElement style={{ width: '500px', height: '610px' }} >
+    <FloatingElement style={{ width: '600px', height: '610px' }} >
       <Title>Bots</Title>
 
 

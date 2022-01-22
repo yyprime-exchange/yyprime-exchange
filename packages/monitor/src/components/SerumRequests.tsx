@@ -11,7 +11,7 @@ const Title = styled.div`
 
 export default function SerumRequests() {
   return (
-    <FloatingElement style={{ width: '500px', height: '300px' }} >
+    <FloatingElement style={{ width: '400px', height: '300px' }} >
       <Title>Serum Requests</Title>
 
 
