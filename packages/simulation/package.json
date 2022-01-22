@@ -34,7 +34,7 @@
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.28.0",
     "@tsconfig/recommended": "^1.0.1",
-    "@yyprime/yyprime-exchange-ts": "file:../yyprime-exchange-ts",
+    "@yyprime/yyprime-exchange-ts": "file:../ts",
     "assert": "^2.0.0",
     "ts-node": "^10.4.0"
   },
