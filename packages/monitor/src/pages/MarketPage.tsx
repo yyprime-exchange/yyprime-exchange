@@ -75,7 +75,7 @@ function MarketPageInner() {
           <Col>
             <Wrapper>
               <Row>
-              <Col style={{ height: '100%' }}>
+                <Col style={{ height: '100%' }}>
                   <Bots />
                 </Col>
               </Row>
