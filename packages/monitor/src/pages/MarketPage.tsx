@@ -28,13 +28,8 @@ export default function MarketPage() {
   return (
     <>
       <ConnectionProvider>
-        <SerumProvider
-          baseSymbol={baseSymbol}
-          quoteSymbol={quoteSymbol}
-        >
-          <PythProvider
-            baseSymbol={baseSymbol}
-          >
+        <SerumProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
+          <PythProvider baseSymbol={baseSymbol} >
             <MarketPageInner />
           </PythProvider>
         </SerumProvider>
@@ -62,6 +57,11 @@ function MarketPageInner() {
               </Row>
             </Wrapper>
           </Col>
+        </Row>
+      </Wrapper>
+    </>
+  );
+  /*
           <Col>
             <Wrapper>
               <Row>
@@ -76,8 +76,5 @@ function MarketPageInner() {
               </Row>
             </Wrapper>
           </Col>
-        </Row>
-      </Wrapper>
-    </>
-  );
+  */
 }
