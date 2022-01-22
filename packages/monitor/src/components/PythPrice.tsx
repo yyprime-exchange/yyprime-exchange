@@ -17,11 +17,11 @@ export default function PythPrice() {
       <Title>Pyth Price</Title>
       <Row>
         <Col span={12} style={{ textAlign: 'left'}}>Price</Col>
-        <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.price}</Col>
+        <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.price?.toFixed(2)}</Col>
       </Row>
       <Row>
         <Col span={12} style={{ textAlign: 'left'}}>Confidence</Col>
-        <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.confidence}</Col>
+        <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.confidence?.toFixed(4)}</Col>
       </Row>
     </FloatingElement>
   );
