@@ -259,8 +259,8 @@
   dependencies:
     "@types/node" "*"
 
-"@yyprime/yyprime-exchange-ts@file:../yyprime-exchange-ts":
-  version "1.0.0"
+"@yyprime/yyprime-exchange-ts@file:../ts":
+  version "1.0.1"
   dependencies:
     "@project-serum/anchor" "^0.16.1"
     "@project-serum/common" "^0.0.1-beta.3"

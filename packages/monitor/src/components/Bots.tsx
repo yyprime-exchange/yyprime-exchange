@@ -10,6 +10,7 @@ const Title = styled.div`
 `;
 
 export default function Bots() {
+  //TODO show user accounts.
   return (
     <FloatingElement style={{ width: '600px', height: '300px' }} >
       <Title>Bots</Title>

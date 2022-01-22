@@ -11,8 +11,8 @@ import {
 } from '@project-serum/token';
 import { Keypair, PublicKey } from '@solana/web3.js';
 
-//import { SerumBook, SerumClient } from '../serum';
-//import { SolanaClient } from '../solana';
+import { SerumBook, SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
+import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
 
 import * as simulation from './simulation.json';
 

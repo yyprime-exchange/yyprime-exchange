@@ -101,8 +101,8 @@ function priceLevels(orderbook, depth: number, baseLotSize: number, baseDecimals
     }
   }
   return levels.map(([priceLots, sizeLots]) => [
-    priceLotsToNumber(priceLots, new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals),
-    baseSizeLotsToNumber(sizeLots, new BN(baseLotSize), baseDecimals),
+    priceLots.toNumber(), //priceLotsToNumber(priceLots, new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals),
+    sizeLots.toNumber(), //baseSizeLotsToNumber(sizeLots, new BN(baseLotSize), baseDecimals),
     priceLots,
     sizeLots,
   ]);

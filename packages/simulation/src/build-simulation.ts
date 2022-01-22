@@ -5,15 +5,15 @@ import { ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
 import * as fs from 'fs';
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 
-//import { PythClient } from '../pyth';
-//import { SerumClient } from '../serum';
-//import { SolanaClient } from '../solana';
+import { PythClient } from '@yyprime/yyprime-exchange-ts/src/pyth';
+import { SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
+import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
 
-//import PYTH_PRODUCTS from '../pyth/products.json';
-//import PYTH_PROGRAMS from '../pyth/programs.json';
-//import SERUM_PROGRAMS from '../serum/programs.json';
-//import SOLANA_CLUSTERS from '../solana/clusters.json';
-//import SOLANA_TOKENS from '../solana/tokens.json';
+import PYTH_PRODUCTS from '@yyprime/yyprime-exchange-ts/src/pyth/products.json';
+import PYTH_PROGRAMS from '@yyprime/yyprime-exchange-ts/src/pyth/programs.json';
+import SERUM_PROGRAMS from '@yyprime/yyprime-exchange-ts/src/serum/programs.json';
+import SOLANA_CLUSTERS from '@yyprime/yyprime-exchange-ts/src/solana/clusters.json';
+import SOLANA_TOKENS from '@yyprime/yyprime-exchange-ts/src/solana/tokens.json';
 
 import * as simulationMainnet from './simulation-mainnet_MANUAL.json';
 
