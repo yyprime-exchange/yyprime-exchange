@@ -1,6 +1,6 @@
 {
   "name": "@yyprime/yyprime-exchange-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Library for creating and testing Serum markets.",
   "repository": "git@github.com:yyprime-exchange/yyprime-exchange.git",
   "author": "yyprime exchange <yyprime.exchange@gmail.com>",
