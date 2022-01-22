@@ -9,10 +9,10 @@ const Title = styled.div`
   padding: 0 0 20px 0;
 `;
 
-export default function Bots() {
+export default function PriceChart() {
   return (
     <FloatingElement style={{ width: '600px', height: '300px' }} >
-      <Title>Bots</Title>
+      <Title>Price Chart</Title>
 
 
     </FloatingElement>

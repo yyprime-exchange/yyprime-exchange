@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Bots from '../components/Bots';
+import PriceChart from '../components/PriceChart';
 import PythPrice from '../components/PythPrice';
 import SerumEvents from '../components/SerumEvents'
 import SerumRequests from '../components/SerumRequests'
@@ -74,6 +75,11 @@ function MarketPageInner() {
           </Col>
           <Col>
             <Wrapper>
+              <Row>
+                <Col>
+                  <PriceChart />
+                </Col>
+              </Row>
               <Row>
                 <Col style={{ height: '100%' }}>
                   <Bots />
