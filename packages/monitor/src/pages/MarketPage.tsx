@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import PriceChart from '../components/PriceChart'
+import Bots from '../components/Bots';
 import PythPrice from '../components/PythPrice';
 import SerumEvents from '../components/SerumEvents'
+import SerumRequests from '../components/SerumRequests'
 import SerumOrderbook from '../components/SerumOrderbook';
 import { ConnectionProvider } from '../utils/connection';
 import { PythProvider } from '../utils/pyth'
@@ -57,16 +58,11 @@ function MarketPageInner() {
               </Row>
             </Wrapper>
           </Col>
-        </Row>
-      </Wrapper>
-    </>
-  );
-  /*
           <Col>
             <Wrapper>
               <Row>
                 <Col>
-                  <PriceChart />
+                  <SerumRequests />
                 </Col>
               </Row>
               <Row>
@@ -76,5 +72,17 @@ function MarketPageInner() {
               </Row>
             </Wrapper>
           </Col>
-  */
+          <Col>
+            <Wrapper>
+              <Row>
+              <Col style={{ height: '100%' }}>
+                  <Bots />
+                </Col>
+              </Row>
+            </Wrapper>
+          </Col>
+        </Row>
+      </Wrapper>
+    </>
+  );
 }

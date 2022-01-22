@@ -9,10 +9,10 @@ const Title = styled.div`
   padding: 0 0 20px 0;
 `;
 
-export default function PriceChart() {
+export default function SerumRequests() {
   return (
     <FloatingElement style={{ width: '500px', height: '300px' }} >
-      <Title>Price</Title>
+      <Title>Serum Requests</Title>
 
 
     </FloatingElement>
