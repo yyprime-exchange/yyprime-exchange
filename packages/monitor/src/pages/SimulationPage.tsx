@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function MarketPage() {
+export default function SimulationPage() {
   const { baseSymbol, quoteSymbol } = useParams();
   useEffect(() => { if (baseSymbol) { localStorage.setItem('baseSymbol', JSON.stringify(baseSymbol)); } }, [baseSymbol]);
   useEffect(() => { if (quoteSymbol) { localStorage.setItem('quoteSymbol', JSON.stringify(quoteSymbol)); } }, [quoteSymbol]);

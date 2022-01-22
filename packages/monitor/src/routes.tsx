@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import BasicLayout from './components/BasicLayout';
-import MarketPage from './pages/MarketPage';
+import SimulationPage from './pages/SimulationPage';
 
 export function Routes() {
   return (
@@ -14,7 +14,7 @@ export function Routes() {
               <Redirect to={"/market/sol/usdc"} />
             </Route>
             <Route exact path="/market/:baseSymbol/:quoteSymbol">
-              <MarketPage />
+              <SimulationPage />
             </Route>
           </Switch>
         </BasicLayout>
