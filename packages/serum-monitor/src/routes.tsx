@@ -1,8 +1,8 @@
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+
 import BasicLayout from './components/BasicLayout';
-import SerumPage from './pages/SerumPage';
-import { getSerumPageUrl } from './utils/markets';
+import MarketPage from './pages/MarketPage';
 
 export function Routes() {
   return (
@@ -11,10 +11,10 @@ export function Routes() {
         <BasicLayout>
           <Switch>
             <Route exact path="/">
-              <Redirect to={getSerumPageUrl()} />
+              <Redirect to={"/market/sol/usdc"} />
             </Route>
-            <Route exact path="/market/:marketAddress">
-              <SerumPage />
+            <Route exact path="/market/:baseSymbol/:quoteSymbol">
+              <MarketPage />
             </Route>
           </Switch>
         </BasicLayout>

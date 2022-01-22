@@ -1,63 +1,29 @@
-import React, { useContext, useEffect } from "react";
-import { useMarket, useOrderbook, useMarkPrice } from "../utils/markets";
-import usePyth from "../hooks/usePyth";
+import { Col, Row } from 'antd';
+import React from "react";
+import styled from 'styled-components';
 
-import { PythContext } from "../contexts/pyth";
-import { sigFigs } from "../utils/utils";
-import simulation from "../config/simulation-mainnet.json";
+import { usePythPrice } from "../utils/pyth";
 import FloatingElement from "./layout/FloatingElement";
-import { Col, Row } from "antd";
 
+const Title = styled.div`
+  color: rgba(255, 255, 255, 1);
+  padding: 0 0 20px 0;
+`;
 
-export const PythPrice = () => {
-  const { baseCurrency } = useMarket();
-  const [productInfoState, _, subscribe] = useContext(PythContext);
-
-  useEffect(() => {
-    if (!Object(productInfoState.productInfoMap).hasOwnProperty(baseCurrency)) {
-      const priceOracleAddress =
-        simulation.tokens.find((prod) => prod.symbol === baseCurrency)?.price ??
-        "";
-      if (priceOracleAddress) {
-        subscribe(baseCurrency, priceOracleAddress);
-      }
-    }
-  }, [baseCurrency]);
-
+export default function PythPrice() {
+  const pythPrice = usePythPrice();
   return (
-    <>
-    <FloatingElement>
-    <div>
-      <h2 style={{textAlign:"center"}}>
-      Live Pyth Price
-      </h2>
-    </div>
-    {!baseCurrency ||
-        (!Object(productInfoState.productInfoMap).hasOwnProperty(
-          baseCurrency
-        ) ? (
-          <h2>No Market</h2>
-        ) : (
-          <div>
-                 
-        <Col span={12} style={{ textAlign: 'left'}}>
-          Price ({productInfoState.productInfoMap[baseCurrency]["price"]})
-        </Col>
-        <Col span={12} style={{ textAlign: 'left' }}>
-          Confidence: ({productInfoState.productInfoMap[baseCurrency]["confidence"]})
-        </Col>
-            {/* {<h2>{productInfoState.productInfoMap[baseCurrency]["price"]}</h2>}
-            <h2>
-              {productInfoState.productInfoMap[baseCurrency]["confidence"]}
-            </h2> */}
-          </div>
-        ))}
+    <FloatingElement style={{ width: '300px', height: '120px' }} >
+      <Title>Pyth Price</Title>
+      <Row
+      >
+        <Col span={12} style={{ textAlign: 'left'}}>Price</Col>
+        <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.price}</Col>
+      </Row>
+      <Row>
+        <Col span={12} style={{ textAlign: 'left'}}>Confidence</Col>
+        <Col span={12} style={{ textAlign: 'right' }}>{pythPrice.confidence}</Col>
+      </Row>
     </FloatingElement>
-     
-    </>
   );
 };
-function styled(Row: any) {
-  throw new Error("Function not implemented.");
-}
-

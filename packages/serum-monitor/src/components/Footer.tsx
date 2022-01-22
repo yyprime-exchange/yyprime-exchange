@@ -35,7 +35,6 @@ export const CustomFooter = () => {
             })}
           </>
         )}
-        <Col flex="auto">{/*  <DexProgramSelector />*/}</Col>
       </Row>
     </Footer>
   );
