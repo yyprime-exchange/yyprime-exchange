@@ -1,9 +1,9 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
 
-import { Bot, MakerBot, TakerBot } from '@yyprime/yyprime-exchange-ts/src/bots';
-import { PythClient, PythPrice, PythToken } from '@yyprime/yyprime-exchange-ts/src/pyth';
-import { SerumBook, SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
+import { Bot, MakerBot, TakerBot } from '@yyprime/yyprime-exchange-ts';
+import { PythClient, PythPrice, PythToken } from '@yyprime/yyprime-exchange-ts';
+import { SerumBook, SerumClient } from '@yyprime/yyprime-exchange-ts';
+import { SolanaClient } from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 

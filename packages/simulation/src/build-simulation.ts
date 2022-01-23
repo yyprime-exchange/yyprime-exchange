@@ -5,15 +5,15 @@ import { ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
 import * as fs from 'fs';
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 
-import { PythClient } from '@yyprime/yyprime-exchange-ts/src/pyth';
-import { SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
+import { PythClient } from '@yyprime/yyprime-exchange-ts';
+import { SerumClient } from '@yyprime/yyprime-exchange-ts';
+import { SolanaClient } from '@yyprime/yyprime-exchange-ts';
 
-import PYTH_PRODUCTS from '@yyprime/yyprime-exchange-ts/src/pyth/products.json';
-import PYTH_PROGRAMS from '@yyprime/yyprime-exchange-ts/src/pyth/programs.json';
-import SERUM_PROGRAMS from '@yyprime/yyprime-exchange-ts/src/serum/programs.json';
-import SOLANA_CLUSTERS from '@yyprime/yyprime-exchange-ts/src/solana/clusters.json';
-import SOLANA_TOKENS from '@yyprime/yyprime-exchange-ts/src/solana/tokens.json';
+import { PYTH_PRODUCTS } from '@yyprime/yyprime-exchange-ts';
+import { PYTH_PROGRAMS } from '@yyprime/yyprime-exchange-ts';
+import { SERUM_PROGRAMS } from '@yyprime/yyprime-exchange-ts';
+import { SOLANA_CLUSTERS } from '@yyprime/yyprime-exchange-ts';
+import { SOLANA_TOKENS } from '@yyprime/yyprime-exchange-ts';
 
 import * as simulationMainnet from './simulation-mainnet_MANUAL.json';
 
@@ -366,7 +366,7 @@ export class SimulationBuilder {
   if (simulationBuilder.cluster === 'mainnet') {
     const [simulation_public] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
-    fs.writeFileSync('src/simulation/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
+    fs.writeFileSync('src/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
   } else {
     simulationBuilder.token("BTC", 1_000_000_000, 6);
     //simulationBuilder.token("ETH", 1_000_000_000, 6);
@@ -409,7 +409,7 @@ export class SimulationBuilder {
 
     const [simulation_public, simulation_private, simulation_orders] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
-    fs.writeFileSync('src/simulation/simulation.json', JSON.stringify(simulation_private, null, 2));
-    fs.writeFileSync('src/simulation/simulation-orders.json', JSON.stringify(simulation_orders, null, 2));
+    fs.writeFileSync('src/simulation.json', JSON.stringify(simulation_private, null, 2));
+    fs.writeFileSync('src/simulation-orders.json', JSON.stringify(simulation_orders, null, 2));
   }
 })();

@@ -3,380 +3,384 @@
     "symbol": "BTC/USDC",
     "asks": [
       {
-        "priceLots": 426517,
-        "sizeLots": 53768
+        "priceLots": 353543,
+        "sizeLots": 969
       },
       {
-        "priceLots": 426837,
-        "sizeLots": 86897
+        "priceLots": 353684,
+        "sizeLots": 4845
       },
       {
-        "priceLots": 426870,
-        "sizeLots": 80289
+        "priceLots": 354265,
+        "sizeLots": 26
       },
       {
-        "priceLots": 426929,
-        "sizeLots": 18398
+        "priceLots": 354352,
+        "sizeLots": 125000
       },
       {
-        "priceLots": 427281,
-        "sizeLots": 78761
+        "priceLots": 354748,
+        "sizeLots": 14538
       },
       {
-        "priceLots": 427303,
-        "sizeLots": 58263
-      },
-      {
-        "priceLots": 427307,
-        "sizeLots": 26431
-      },
-      {
-        "priceLots": 427415,
-        "sizeLots": 110035
-      },
-      {
-        "priceLots": 427499,
-        "sizeLots": 81260
-      },
-      {
-        "priceLots": 427596,
-        "sizeLots": 20477
-      },
-      {
-        "priceLots": 427657,
-        "sizeLots": 60782
-      },
-      {
-        "priceLots": 427696,
-        "sizeLots": 22
-      },
-      {
-        "priceLots": 427952,
-        "sizeLots": 21907
-      },
-      {
-        "priceLots": 428142,
-        "sizeLots": 30023
-      },
-      {
-        "priceLots": 428242,
+        "priceLots": 354984,
         "sizeLots": 80000
       },
       {
-        "priceLots": 428308,
-        "sizeLots": 22546
+        "priceLots": 355058,
+        "sizeLots": 76371
       },
       {
-        "priceLots": 428350,
-        "sizeLots": 26717
+        "priceLots": 355558,
+        "sizeLots": 70812
       },
       {
-        "priceLots": 428472,
-        "sizeLots": 24584
+        "priceLots": 355778,
+        "sizeLots": 200
       },
       {
-        "priceLots": 428563,
-        "sizeLots": 24149
+        "priceLots": 355850,
+        "sizeLots": 27637
       },
       {
-        "priceLots": 428583,
-        "sizeLots": 38809
+        "priceLots": 355907,
+        "sizeLots": 38532
       },
       {
-        "priceLots": 428598,
-        "sizeLots": 82245
-      },
-      {
-        "priceLots": 428860,
-        "sizeLots": 879
-      },
-      {
-        "priceLots": 428979,
-        "sizeLots": 27713
-      },
-      {
-        "priceLots": 429032,
-        "sizeLots": 4395
-      },
-      {
-        "priceLots": 429147,
+        "priceLots": 355914,
         "sizeLots": 110000
       },
       {
-        "priceLots": 429392,
-        "sizeLots": 61500
+        "priceLots": 355922,
+        "sizeLots": 48386
       },
       {
-        "priceLots": 429524,
-        "sizeLots": 174
+        "priceLots": 356185,
+        "sizeLots": 45984
       },
       {
-        "priceLots": 429947,
-        "sizeLots": 38282
+        "priceLots": 356254,
+        "sizeLots": 67490
       },
       {
-        "priceLots": 430075,
-        "sizeLots": 42583
+        "priceLots": 356431,
+        "sizeLots": 66220
       },
       {
-        "priceLots": 430098,
+        "priceLots": 356433,
+        "sizeLots": 68339
+      },
+      {
+        "priceLots": 356602,
+        "sizeLots": 52250
+      },
+      {
+        "priceLots": 357041,
+        "sizeLots": 48463
+      },
+      {
+        "priceLots": 357147,
         "sizeLots": 110000
       },
       {
-        "priceLots": 430293,
-        "sizeLots": 19280
+        "priceLots": 357197,
+        "sizeLots": 69026
       },
       {
-        "priceLots": 430323,
-        "sizeLots": 13188
+        "priceLots": 357292,
+        "sizeLots": 25
       },
       {
-        "priceLots": 430557,
-        "sizeLots": 49281
+        "priceLots": 358806,
+        "sizeLots": 199
       },
       {
-        "priceLots": 430582,
-        "sizeLots": 50261
+        "priceLots": 359750,
+        "sizeLots": 281
       },
       {
-        "priceLots": 431042,
-        "sizeLots": 62946
+        "priceLots": 361000,
+        "sizeLots": 2000
       },
       {
-        "priceLots": 431351,
+        "priceLots": 361310,
+        "sizeLots": 600
+      },
+      {
+        "priceLots": 361636,
+        "sizeLots": 8
+      },
+      {
+        "priceLots": 361781,
+        "sizeLots": 270000
+      },
+      {
+        "priceLots": 361833,
+        "sizeLots": 243
+      },
+      {
+        "priceLots": 362070,
+        "sizeLots": 7
+      },
+      {
+        "priceLots": 366374,
+        "sizeLots": 411
+      },
+      {
+        "priceLots": 367850,
         "sizeLots": 20
       },
       {
-        "priceLots": 431588,
-        "sizeLots": 38057
+        "priceLots": 377850,
+        "sizeLots": 20
       },
       {
-        "priceLots": 432000,
-        "sizeLots": 110000
+        "priceLots": 382078,
+        "sizeLots": 3046
       },
       {
-        "priceLots": 433104,
-        "sizeLots": 43960
+        "priceLots": 383340,
+        "sizeLots": 2784
       },
       {
-        "priceLots": 433179,
-        "sizeLots": 173
+        "priceLots": 383887,
+        "sizeLots": 3426
       },
       {
-        "priceLots": 436834,
-        "sizeLots": 209
+        "priceLots": 385314,
+        "sizeLots": 3782
       },
       {
-        "priceLots": 442316,
-        "sizeLots": 354
+        "priceLots": 386952,
+        "sizeLots": 2664
       },
       {
-        "priceLots": 454000,
-        "sizeLots": 3000
+        "priceLots": 387787,
+        "sizeLots": 2486
       },
       {
-        "priceLots": 454440,
-        "sizeLots": 30
+        "priceLots": 387869,
+        "sizeLots": 2634
+      },
+      {
+        "priceLots": 388475,
+        "sizeLots": 2732
+      },
+      {
+        "priceLots": 390450,
+        "sizeLots": 6033
+      },
+      {
+        "priceLots": 390839,
+        "sizeLots": 2995
+      },
+      {
+        "priceLots": 396697,
+        "sizeLots": 4111
+      },
+      {
+        "priceLots": 396751,
+        "sizeLots": 4748
+      },
+      {
+        "priceLots": 400275,
+        "sizeLots": 6999
+      },
+      {
+        "priceLots": 403935,
+        "sizeLots": 7300
+      },
+      {
+        "priceLots": 407433,
+        "sizeLots": 9302
+      },
+      {
+        "priceLots": 407514,
+        "sizeLots": 6798
+      },
+      {
+        "priceLots": 418228,
+        "sizeLots": 11724
+      },
+      {
+        "priceLots": 421627,
+        "sizeLots": 12274
+      },
+      {
+        "priceLots": 424990,
+        "sizeLots": 11538
+      },
+      {
+        "priceLots": 425254,
+        "sizeLots": 9760
+      },
+      {
+        "priceLots": 425300,
+        "sizeLots": 4000
+      },
+      {
+        "priceLots": 431964,
+        "sizeLots": 6767
+      },
+      {
+        "priceLots": 432601,
+        "sizeLots": 6234
+      },
+      {
+        "priceLots": 432624,
+        "sizeLots": 5760
+      },
+      {
+        "priceLots": 432709,
+        "sizeLots": 6082
+      },
+      {
+        "priceLots": 446894,
+        "sizeLots": 13412
+      },
+      {
+        "priceLots": 447072,
+        "sizeLots": 13926
+      },
+      {
+        "priceLots": 449569,
+        "sizeLots": 13636
+      },
+      {
+        "priceLots": 453140,
+        "sizeLots": 11569
       },
       {
         "priceLots": 459020,
         "sizeLots": 11
       },
       {
-        "priceLots": 460305,
-        "sizeLots": 4144
+        "priceLots": 467453,
+        "sizeLots": 7314
       },
       {
-        "priceLots": 461635,
-        "sizeLots": 4089
+        "priceLots": 467693,
+        "sizeLots": 6991
       },
       {
-        "priceLots": 461759,
-        "sizeLots": 4576
+        "priceLots": 467716,
+        "sizeLots": 8661
       },
       {
-        "priceLots": 462047,
-        "sizeLots": 4311
+        "priceLots": 468190,
+        "sizeLots": 9159
       },
       {
-        "priceLots": 462764,
-        "sizeLots": 4354
+        "priceLots": 468463,
+        "sizeLots": 8654
       },
       {
-        "priceLots": 463330,
-        "sizeLots": 30
+        "priceLots": 468639,
+        "sizeLots": 7401
       },
       {
-        "priceLots": 463916,
-        "sizeLots": 5168
+        "priceLots": 468666,
+        "sizeLots": 6909
       },
       {
-        "priceLots": 466200,
-        "sizeLots": 3582
-      },
-      {
-        "priceLots": 466660,
-        "sizeLots": 5215
-      },
-      {
-        "priceLots": 470126,
-        "sizeLots": 7969
-      },
-      {
-        "priceLots": 472355,
-        "sizeLots": 5872
-      },
-      {
-        "priceLots": 474032,
-        "sizeLots": 5733
-      },
-      {
-        "priceLots": 476590,
-        "sizeLots": 7957
-      },
-      {
-        "priceLots": 480000,
-        "sizeLots": 30
-      },
-      {
-        "priceLots": 480686,
-        "sizeLots": 8623
-      },
-      {
-        "priceLots": 483690,
-        "sizeLots": 30
-      },
-      {
-        "priceLots": 485120,
-        "sizeLots": 11579
+        "priceLots": 485415,
+        "sizeLots": 14621
       },
       {
         "priceLots": 486020,
         "sizeLots": 13
       },
       {
-        "priceLots": 486660,
-        "sizeLots": 30
+        "priceLots": 486231,
+        "sizeLots": 16029
       },
       {
-        "priceLots": 488880,
-        "sizeLots": 30
-      },
-      {
-        "priceLots": 489211,
-        "sizeLots": 40
-      },
-      {
-        "priceLots": 489215,
-        "sizeLots": 13039
-      },
-      {
-        "priceLots": 493690,
-        "sizeLots": 30
-      },
-      {
-        "priceLots": 494355,
-        "sizeLots": 9352
-      },
-      {
-        "priceLots": 498004,
-        "sizeLots": 10319
+        "priceLots": 486461,
+        "sizeLots": 14504
       },
       {
         "priceLots": 501970,
         "sizeLots": 1
       },
       {
-        "priceLots": 502220,
-        "sizeLots": 30
+        "priceLots": 502438,
+        "sizeLots": 7907
       },
       {
-        "priceLots": 506672,
-        "sizeLots": 13171
+        "priceLots": 503308,
+        "sizeLots": 8150
       },
       {
-        "priceLots": 507386,
-        "sizeLots": 16277
+        "priceLots": 503541,
+        "sizeLots": 9265
       },
       {
-        "priceLots": 507690,
-        "sizeLots": 30
+        "priceLots": 503560,
+        "sizeLots": 9509
       },
       {
-        "priceLots": 511110,
-        "sizeLots": 30
+        "priceLots": 504116,
+        "sizeLots": 10264
       },
       {
-        "priceLots": 516461,
-        "sizeLots": 7837
+        "priceLots": 504491,
+        "sizeLots": 9048
       },
       {
-        "priceLots": 516810,
-        "sizeLots": 7385
+        "priceLots": 508099,
+        "sizeLots": 15440
       },
       {
         "priceLots": 520000,
         "sizeLots": 5000
       },
       {
-        "priceLots": 521285,
-        "sizeLots": 11691
-      },
-      {
-        "priceLots": 522220,
-        "sizeLots": 30
-      },
-      {
-        "priceLots": 525796,
-        "sizeLots": 17488
+        "priceLots": 529164,
+        "sizeLots": 24728
       },
       {
         "priceLots": 529870,
         "sizeLots": 1
       },
       {
-        "priceLots": 532486,
-        "sizeLots": 19175
+        "priceLots": 537035,
+        "sizeLots": 12575
       },
       {
-        "priceLots": 537225,
-        "sizeLots": 21567
+        "priceLots": 537264,
+        "sizeLots": 10356
       },
       {
-        "priceLots": 541428,
-        "sizeLots": 21134
+        "priceLots": 538670,
+        "sizeLots": 10903
       },
       {
-        "priceLots": 541789,
-        "sizeLots": 14733
+        "priceLots": 539091,
+        "sizeLots": 13132
       },
       {
-        "priceLots": 544440,
-        "sizeLots": 23
+        "priceLots": 539407,
+        "sizeLots": 11762
       },
       {
-        "priceLots": 546088,
-        "sizeLots": 20858
+        "priceLots": 539568,
+        "sizeLots": 11607
       },
       {
-        "priceLots": 550388,
-        "sizeLots": 16743
+        "priceLots": 539874,
+        "sizeLots": 13520
       },
       {
-        "priceLots": 554000,
+        "priceLots": 539939,
+        "sizeLots": 9098
+      },
+      {
+        "priceLots": 540000,
         "sizeLots": 15019
       },
       {
-        "priceLots": 555550,
-        "sizeLots": 20
-      },
-      {
-        "priceLots": 558982,
-        "sizeLots": 12397
-      },
-      {
-        "priceLots": 559126,
-        "sizeLots": 11244
+        "priceLots": 540317,
+        "sizeLots": 9501
       },
       {
         "priceLots": 559870,
@@ -391,52 +395,24 @@
         "sizeLots": 30
       },
       {
-        "priceLots": 589079,
-        "sizeLots": 18761
-      },
-      {
         "priceLots": 591370,
         "sizeLots": 1
       },
       {
-        "priceLots": 597641,
-        "sizeLots": 27366
-      },
-      {
         "priceLots": 600000,
-        "sizeLots": 176
-      },
-      {
-        "priceLots": 601943,
-        "sizeLots": 14525
-      },
-      {
-        "priceLots": 610557,
-        "sizeLots": 21603
+        "sizeLots": 175
       },
       {
         "priceLots": 624470,
         "sizeLots": 1
       },
       {
-        "priceLots": 644111,
-        "sizeLots": 12752
-      },
-      {
         "priceLots": 650000,
-        "sizeLots": 402
+        "sizeLots": 2
       },
       {
         "priceLots": 659570,
         "sizeLots": 1
-      },
-      {
-        "priceLots": 662098,
-        "sizeLots": 33018
-      },
-      {
-        "priceLots": 666405,
-        "sizeLots": 27071
       },
       {
         "priceLots": 699870,
@@ -471,274 +447,150 @@
         "sizeLots": 11
       },
       {
-        "priceLots": 1279250,
-        "sizeLots": 29296
+        "priceLots": 1059614,
+        "sizeLots": 33944
       },
       {
         "priceLots": 1790000,
         "sizeLots": 250
       },
       {
-        "priceLots": 152577998,
-        "sizeLots": 8264533
+        "priceLots": 125781954,
+        "sizeLots": 9111075
       }
     ],
     "bids": [
       {
-        "priceLots": 425566,
-        "sizeLots": 160490
+        "priceLots": 353189,
+        "sizeLots": 969
       },
       {
-        "priceLots": 425506,
-        "sizeLots": 150666
+        "priceLots": 353048,
+        "sizeLots": 4850
       },
       {
-        "priceLots": 425432,
+        "priceLots": 352964,
+        "sizeLots": 125000
+      },
+      {
+        "priceLots": 352927,
+        "sizeLots": 122016
+      },
+      {
+        "priceLots": 352588,
         "sizeLots": 80000
       },
       {
-        "priceLots": 425372,
-        "sizeLots": 145238
+        "priceLots": 352254,
+        "sizeLots": 240722
       },
       {
-        "priceLots": 425192,
-        "sizeLots": 100003
+        "priceLots": 352144,
+        "sizeLots": 27
       },
       {
-        "priceLots": 424929,
-        "sizeLots": 114106
+        "priceLots": 351998,
+        "sizeLots": 309524
       },
       {
-        "priceLots": 424776,
-        "sizeLots": 108642
+        "priceLots": 351989,
+        "sizeLots": 14595
       },
       {
-        "priceLots": 424770,
-        "sizeLots": 122986
-      },
-      {
-        "priceLots": 424369,
+        "priceLots": 351907,
         "sizeLots": 110000
       },
       {
-        "priceLots": 424277,
-        "sizeLots": 162302
+        "priceLots": 351748,
+        "sizeLots": 130834
       },
       {
-        "priceLots": 424234,
-        "sizeLots": 44417
+        "priceLots": 351337,
+        "sizeLots": 249410
       },
       {
-        "priceLots": 424165,
-        "sizeLots": 151441
+        "priceLots": 351063,
+        "sizeLots": 246481
       },
       {
-        "priceLots": 424151,
-        "sizeLots": 126920
+        "priceLots": 350935,
+        "sizeLots": 235914
       },
       {
-        "priceLots": 423907,
-        "sizeLots": 153828
+        "priceLots": 350855,
+        "sizeLots": 202281
       },
       {
-        "priceLots": 423801,
-        "sizeLots": 143877
-      },
-      {
-        "priceLots": 423519,
-        "sizeLots": 165462
-      },
-      {
-        "priceLots": 423309,
-        "sizeLots": 175
-      },
-      {
-        "priceLots": 422911,
+        "priceLots": 350651,
         "sizeLots": 110000
       },
       {
-        "priceLots": 421482,
-        "sizeLots": 25
+        "priceLots": 350631,
+        "sizeLots": 202
       },
       {
-        "priceLots": 421164,
-        "sizeLots": 110000
+        "priceLots": 350580,
+        "sizeLots": 145905
       },
       {
-        "priceLots": 420110,
-        "sizeLots": 60
+        "priceLots": 350398,
+        "sizeLots": 193235
       },
       {
-        "priceLots": 419654,
-        "sizeLots": 176
+        "priceLots": 349729,
+        "sizeLots": 48967
       },
       {
-        "priceLots": 417770,
-        "sizeLots": 24
+        "priceLots": 349571,
+        "sizeLots": 124154
       },
       {
-        "priceLots": 417657,
-        "sizeLots": 270000
-      },
-      {
-        "priceLots": 415999,
-        "sizeLots": 230
-      },
-      {
-        "priceLots": 415760,
-        "sizeLots": 241
-      },
-      {
-        "priceLots": 414830,
-        "sizeLots": 241
-      },
-      {
-        "priceLots": 412691,
-        "sizeLots": 250
-      },
-      {
-        "priceLots": 412640,
-        "sizeLots": 242
-      },
-      {
-        "priceLots": 412220,
-        "sizeLots": 24
-      },
-      {
-        "priceLots": 412100,
-        "sizeLots": 364
-      },
-      {
-        "priceLots": 410517,
-        "sizeLots": 389
-      },
-      {
-        "priceLots": 410210,
-        "sizeLots": 58
-      },
-      {
-        "priceLots": 410000,
-        "sizeLots": 243
-      },
-      {
-        "priceLots": 408000,
-        "sizeLots": 350
-      },
-      {
-        "priceLots": 405550,
-        "sizeLots": 25
-      },
-      {
-        "priceLots": 399950,
+        "priceLots": 349117,
         "sizeLots": 30
       },
       {
-        "priceLots": 398500,
-        "sizeLots": 1
+        "priceLots": 348810,
+        "sizeLots": 287
       },
       {
-        "priceLots": 396000,
-        "sizeLots": 375
+        "priceLots": 347603,
+        "sizeLots": 202
       },
       {
-        "priceLots": 393690,
-        "sizeLots": 30
+        "priceLots": 346177,
+        "sizeLots": 117278
       },
       {
-        "priceLots": 393011,
-        "sizeLots": 64
+        "priceLots": 344576,
+        "sizeLots": 269
       },
       {
-        "priceLots": 392460,
-        "sizeLots": 100
+        "priceLots": 343000,
+        "sizeLots": 26
       },
       {
-        "priceLots": 391000,
-        "sizeLots": 60
-      },
-      {
-        "priceLots": 390000,
-        "sizeLots": 2514
-      },
-      {
-        "priceLots": 388880,
-        "sizeLots": 51
-      },
-      {
-        "priceLots": 388680,
-        "sizeLots": 650
-      },
-      {
-        "priceLots": 388468,
-        "sizeLots": 18810
-      },
-      {
-        "priceLots": 388453,
-        "sizeLots": 22322
-      },
-      {
-        "priceLots": 387932,
-        "sizeLots": 22244
-      },
-      {
-        "priceLots": 387867,
-        "sizeLots": 18838
-      },
-      {
-        "priceLots": 387842,
-        "sizeLots": 21615
-      },
-      {
-        "priceLots": 387807,
-        "sizeLots": 18862
-      },
-      {
-        "priceLots": 387421,
-        "sizeLots": 26266
-      },
-      {
-        "priceLots": 387068,
-        "sizeLots": 22150
-      },
-      {
-        "priceLots": 381010,
-        "sizeLots": 257
-      },
-      {
-        "priceLots": 380010,
-        "sizeLots": 1000
-      },
-      {
-        "priceLots": 380000,
-        "sizeLots": 863
-      },
-      {
-        "priceLots": 379201,
-        "sizeLots": 1500
-      },
-      {
-        "priceLots": 375000,
-        "sizeLots": 133
-      },
-      {
-        "priceLots": 370000,
-        "sizeLots": 70
-      },
-      {
-        "priceLots": 365380,
-        "sizeLots": 173
-      },
-      {
-        "priceLots": 361000,
-        "sizeLots": 560
-      },
-      {
-        "priceLots": 360000,
-        "sizeLots": 500
+        "priceLots": 340034,
+        "sizeLots": 448
       },
       {
         "priceLots": 340000,
-        "sizeLots": 247
+        "sizeLots": 147
+      },
+      {
+        "priceLots": 333500,
+        "sizeLots": 12
+      },
+      {
+        "priceLots": 333330,
+        "sizeLots": 30
+      },
+      {
+        "priceLots": 329730,
+        "sizeLots": 93
+      },
+      {
+        "priceLots": 328910,
+        "sizeLots": 10
       },
       {
         "priceLots": 327000,
@@ -749,16 +601,252 @@
         "sizeLots": 2753
       },
       {
+        "priceLots": 324650,
+        "sizeLots": 164
+      },
+      {
+        "priceLots": 323000,
+        "sizeLots": 1000
+      },
+      {
+        "priceLots": 322656,
+        "sizeLots": 309
+      },
+      {
+        "priceLots": 322220,
+        "sizeLots": 31
+      },
+      {
+        "priceLots": 320542,
+        "sizeLots": 17898
+      },
+      {
+        "priceLots": 320360,
+        "sizeLots": 20129
+      },
+      {
+        "priceLots": 320271,
+        "sizeLots": 19156
+      },
+      {
+        "priceLots": 320026,
+        "sizeLots": 23476
+      },
+      {
+        "priceLots": 320000,
+        "sizeLots": 65
+      },
+      {
+        "priceLots": 319884,
+        "sizeLots": 21747
+      },
+      {
+        "priceLots": 319883,
+        "sizeLots": 22112
+      },
+      {
+        "priceLots": 319749,
+        "sizeLots": 18098
+      },
+      {
+        "priceLots": 319659,
+        "sizeLots": 18554
+      },
+      {
+        "priceLots": 319653,
+        "sizeLots": 21890
+      },
+      {
+        "priceLots": 319624,
+        "sizeLots": 22336
+      },
+      {
+        "priceLots": 319559,
+        "sizeLots": 22376
+      },
+      {
+        "priceLots": 319523,
+        "sizeLots": 19702
+      },
+      {
+        "priceLots": 319477,
+        "sizeLots": 19717
+      },
+      {
+        "priceLots": 319427,
+        "sizeLots": 16052
+      },
+      {
+        "priceLots": 319396,
+        "sizeLots": 19443
+      },
+      {
+        "priceLots": 319371,
+        "sizeLots": 22835
+      },
+      {
+        "priceLots": 319340,
+        "sizeLots": 15457
+      },
+      {
+        "priceLots": 319308,
+        "sizeLots": 22465
+      },
+      {
+        "priceLots": 319265,
+        "sizeLots": 22923
+      },
+      {
+        "priceLots": 319250,
+        "sizeLots": 24085
+      },
+      {
+        "priceLots": 319235,
+        "sizeLots": 14944
+      },
+      {
+        "priceLots": 319077,
+        "sizeLots": 22605
+      },
+      {
+        "priceLots": 318989,
+        "sizeLots": 16001
+      },
+      {
+        "priceLots": 318958,
+        "sizeLots": 20788
+      },
+      {
+        "priceLots": 318920,
+        "sizeLots": 20713
+      },
+      {
+        "priceLots": 318902,
+        "sizeLots": 16672
+      },
+      {
+        "priceLots": 318886,
+        "sizeLots": 23250
+      },
+      {
+        "priceLots": 318878,
+        "sizeLots": 19058
+      },
+      {
+        "priceLots": 318793,
+        "sizeLots": 21669
+      },
+      {
+        "priceLots": 318776,
+        "sizeLots": 18498
+      },
+      {
+        "priceLots": 318671,
+        "sizeLots": 23312
+      },
+      {
+        "priceLots": 318646,
+        "sizeLots": 18727
+      },
+      {
+        "priceLots": 318619,
+        "sizeLots": 18429
+      },
+      {
+        "priceLots": 318601,
+        "sizeLots": 15153
+      },
+      {
+        "priceLots": 318597,
+        "sizeLots": 15791
+      },
+      {
+        "priceLots": 318359,
+        "sizeLots": 20061
+      },
+      {
+        "priceLots": 318154,
+        "sizeLots": 15423
+      },
+      {
+        "priceLots": 318150,
+        "sizeLots": 20
+      },
+      {
+        "priceLots": 316500,
+        "sizeLots": 19
+      },
+      {
+        "priceLots": 315000,
+        "sizeLots": 100
+      },
+      {
+        "priceLots": 312001,
+        "sizeLots": 500
+      },
+      {
+        "priceLots": 311310,
+        "sizeLots": 50
+      },
+      {
+        "priceLots": 311110,
+        "sizeLots": 32
+      },
+      {
+        "priceLots": 310315,
+        "sizeLots": 1016
+      },
+      {
+        "priceLots": 307500,
+        "sizeLots": 100
+      },
+      {
+        "priceLots": 306000,
+        "sizeLots": 653
+      },
+      {
         "priceLots": 305000,
         "sizeLots": 163
       },
       {
+        "priceLots": 302656,
+        "sizeLots": 341
+      },
+      {
+        "priceLots": 300500,
+        "sizeLots": 10000
+      },
+      {
         "priceLots": 300000,
-        "sizeLots": 515
+        "sizeLots": 587
+      },
+      {
+        "priceLots": 292380,
+        "sizeLots": 22963
+      },
+      {
+        "priceLots": 292378,
+        "sizeLots": 30827
+      },
+      {
+        "priceLots": 290010,
+        "sizeLots": 20
       },
       {
         "priceLots": 289500,
         "sizeLots": 2
+      },
+      {
+        "priceLots": 283251,
+        "sizeLots": 2000
+      },
+      {
+        "priceLots": 280080,
+        "sizeLots": 20
+      },
+      {
+        "priceLots": 280000,
+        "sizeLots": 2000
       },
       {
         "priceLots": 270071,
@@ -767,6 +855,14 @@
       {
         "priceLots": 270000,
         "sizeLots": 80000
+      },
+      {
+        "priceLots": 269919,
+        "sizeLots": 26662
+      },
+      {
+        "priceLots": 269833,
+        "sizeLots": 40492
       },
       {
         "priceLots": 268500,
@@ -793,8 +889,12 @@
         "sizeLots": 158333
       },
       {
-        "priceLots": 230000,
-        "sizeLots": 45023
+        "priceLots": 210000,
+        "sizeLots": 10000
+      },
+      {
+        "priceLots": 205000,
+        "sizeLots": 10000
       },
       {
         "priceLots": 201000,
@@ -805,10 +905,6 @@
         "sizeLots": 10000
       },
       {
-        "priceLots": 191910,
-        "sizeLots": 2500
-      },
-      {
         "priceLots": 189500,
         "sizeLots": 4
       },
@@ -817,40 +913,28 @@
         "sizeLots": 2500
       },
       {
-        "priceLots": 151510,
-        "sizeLots": 2500
-      },
-      {
-        "priceLots": 142138,
-        "sizeLots": 87503
+        "priceLots": 117734,
+        "sizeLots": 101397
       },
       {
         "priceLots": 111110,
-        "sizeLots": 7500
+        "sizeLots": 5000
       },
       {
         "priceLots": 99500,
         "sizeLots": 5
       },
       {
-        "priceLots": 55550,
-        "sizeLots": 5000
-      },
-      {
         "priceLots": 7780,
         "sizeLots": 172
-      },
-      {
-        "priceLots": 5000,
-        "sizeLots": 20
       },
       {
         "priceLots": 1210,
         "sizeLots": 42472
       },
       {
-        "priceLots": 1204,
-        "sizeLots": 2941787729
+        "priceLots": 992,
+        "sizeLots": 3243117270
       },
       {
         "priceLots": 546,

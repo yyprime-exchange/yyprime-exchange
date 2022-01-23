@@ -9,9 +9,9 @@ import {
   Transaction
 } from "@solana/web3.js";
 
-import { PythClient } from '@yyprime/yyprime-exchange-ts/src/pyth';
-import { SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
+import { PythClient } from '@yyprime/yyprime-exchange-ts';
+import { SerumClient } from '@yyprime/yyprime-exchange-ts';
+import { SolanaClient } from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 

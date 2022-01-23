@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@yyprime/yyprime-exchange-ts": ["../ts/src/"]
+    }
+  }
+}

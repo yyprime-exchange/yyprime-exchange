@@ -1,8 +1,8 @@
 {
   "name": "@yyprime/yyprime-exchange-simulation",
   "version": "1.0.0",
-  "description": "Library for creating and testing Serum markets.",
-  "repository": "git@github.com:yyprime-exchange/yyprime-exchange.git",
+  "description": "Library for creating Serum test simulations.",
+  "repository": "https://github.com/yyprime-exchange/yyprime-exchange",
   "author": "yyprime exchange <yyprime.exchange@gmail.com>",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
@@ -12,11 +12,11 @@
     "clean": "rm -rf lib",
     "build": "yarn clean && tsc",
     "test": "mocha -r ts-node/register test/**/*.test.ts --timeout 0",
-    "build-sim": "yarn build && npx ts-node src/simulation/build-simulation.ts",
-    "init-sim": "yarn build && npx ts-node src/simulation/init-simulation.ts",
-    "crank": "yarn build && npx ts-node src/simulation/crank.ts",
-    "mon": "yarn build && npx ts-node src/simulation/monitor.ts",
-    "sim": "yarn build && npx ts-node src/simulation/simulator.ts"
+    "build-sim": "yarn build && npx ts-node src/build-simulation.ts",
+    "init-sim": "yarn build && npx ts-node src/init-simulation.ts",
+    "crank": "yarn build && npx ts-node src/crank.ts",
+    "mon": "yarn build && npx ts-node src/monitor.ts",
+    "sim": "yarn build && npx ts-node src/simulator.ts"
   },
   "files": [
     "lib"
@@ -33,14 +33,11 @@
     "@pythnetwork/client": "^2.5.1",
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.28.0",
-    "@tsconfig/recommended": "^1.0.1",
-    "@yyprime/yyprime-exchange-ts": "file:../ts",
-    "assert": "^2.0.0",
-    "ts-node": "^10.4.0"
+    "@yyprime/yyprime-exchange-ts": "file:../ts/lib",
+    "assert": "^2.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.0",
-    "chai": "^4.3.4",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   },
   "browserslist": [
