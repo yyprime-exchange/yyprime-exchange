@@ -12,6 +12,7 @@ import SerumOrderbook from '../components/SerumOrderbook';
 import { ConnectionProvider } from '../utils/connection';
 import { PythProvider } from '../utils/pyth'
 import { SerumProvider } from '../utils/serum';
+import { SolanaProvider } from '../utils/solana';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -32,7 +33,9 @@ export default function SimulationPage() {
       <ConnectionProvider>
         <SerumProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
           <PythProvider baseSymbol={baseSymbol} >
-            <MarketPageInner />
+            <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
+              <SimulationPageInner />
+            </SolanaProvider>
           </PythProvider>
         </SerumProvider>
       </ConnectionProvider>
@@ -40,7 +43,7 @@ export default function SimulationPage() {
   );
 }
 
-function MarketPageInner() {
+function SimulationPageInner() {
   return (
     <>
       <Wrapper>

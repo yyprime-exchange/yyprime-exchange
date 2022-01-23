@@ -120,5 +120,25 @@
       "bids": "14ivtgssEBoBjuZJtSAPKYgpUK7DmnSwuPMqJoVTSgKJ",
       "asks": "CEQdAFKdycHugujQg9k2wbmxjcpdYZyVLfV9WerTnafJ"
     }
+  ],
+  "bots": [
+    {
+      "name": "BTC_mm_0",
+      "type": "maker",
+      "symbol": "BTC/USDC",
+      "market": "A8YFbxQYFVqKZaoYJLLUVcQiWP7G2MeEgW5wsAQgMvFw",
+      "base": "BTC",
+      "baseBalance": 10000,
+      "baseDecimals": 6,
+      "baseMint": "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
+      "quote": "USDC",
+      "quoteBalance": 10000,
+      "quoteDecimals": 6,
+      "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "params": {
+        "half_spread": 0.005
+      },
+      "wallet": "u6hJWDKHsHYjQ7E78Livf1NFKRor7LHsrTCyhx7e7u8"
+    }
   ]
 }

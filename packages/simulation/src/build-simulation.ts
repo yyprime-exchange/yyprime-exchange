@@ -365,7 +365,7 @@ export class SimulationBuilder {
 
   if (simulationBuilder.cluster === 'mainnet') {
     const [simulation_public] = await simulationBuilder.build();
-    fs.writeFileSync('../serum-monitor/src/config/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
+    fs.writeFileSync('../monitor/src/config/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
     fs.writeFileSync('src/simulation/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
   } else {
     simulationBuilder.token("BTC", 1_000_000_000, 6);
@@ -408,7 +408,7 @@ export class SimulationBuilder {
     //simulationBuilder.bot("SOL", "maker", 500, "USDC", 100_000, {});
 
     const [simulation_public, simulation_private, simulation_orders] = await simulationBuilder.build();
-    fs.writeFileSync('../serum-monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
+    fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
     fs.writeFileSync('src/simulation/simulation.json', JSON.stringify(simulation_private, null, 2));
     fs.writeFileSync('src/simulation/simulation-orders.json', JSON.stringify(simulation_orders, null, 2));
   }
