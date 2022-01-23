@@ -1,21 +1,21 @@
 {
   "devnet": {
-    "http": "http://api.devnet.solana.com",
-    "https": "https://api.devnet.solana.com",
-    "wss": "wss://api.devnet.solana.com"
+    "http": "http://api.devnet.solana.com/",
+    "https": "https://api.devnet.solana.com/",
+    "wss": "wss://api.devnet.solana.com/"
   },
   "localnet": {
-    "http": "http://localhost:8899",
-    "ws": "ws://localhost:8900"
+    "http": "http://127.0.0.1:8899/",
+    "ws": "ws://127.0.0.1:8900/"
   },
   "mainnet": {
-    "http": "http://api.mainnet-beta.solana.com",
-    "https": "https://api.mainnet-beta.solana.com",
-    "wss": "wss://api.mainnet-beta.solana.com"
+    "http": "http://api.mainnet-beta.solana.com/",
+    "https": "https://api.mainnet-beta.solana.com/",
+    "wss": "wss://api.mainnet-beta.solana.com/"
   },
   "testnet": {
-    "http": "http://api.testnet.solana.com",
-    "https": "https://api.testnet.solana.com",
-    "wss": "wss://api.testnet.solana.com"
+    "http": "http://api.testnet.solana.com/",
+    "https": "https://api.testnet.solana.com/",
+    "wss": "wss://api.testnet.solana.com/"
   }
 }

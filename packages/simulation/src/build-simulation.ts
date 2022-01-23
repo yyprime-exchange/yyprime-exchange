@@ -264,6 +264,7 @@ export class SimulationBuilder {
 
 
 
+      //const connection: Connection = new Connection('https://mango.rpcpool.com/946ef7337da3f5b8d3e4a34e7f88');
       const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
 
       const bookOrders = await Promise.all(markets_private.map(async (market) => {
@@ -274,7 +275,7 @@ export class SimulationBuilder {
         const mainnetBaseToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.baseSymbol; });
         const mainnetQuoteToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.quoteSymbol; });
 
-        if (mainnetMarket) {
+        if (mainnetMarket && mainnetBaseToken && mainnetQuoteToken) {
           asks = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
           bids = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
         }
@@ -314,6 +315,7 @@ export class SimulationBuilder {
           params: bot.params,
           wallet: walletKeypair.publicKey.toBase58(),
           walletPrivateKey: Buffer.from(walletKeypair.secretKey).toString('base64'),
+          walletBalance: 100,
           openOrders: openOrdersKeypair.publicKey.toBase58(),
           openOrdersPrivateKey: Buffer.from(openOrdersKeypair.secretKey).toString('base64'),
         };
@@ -415,7 +417,6 @@ function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
     fs.writeFileSync('../monitor/src/config/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
     fs.writeFileSync('src/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
   } else {
-
     simulationBuilder.token("BTC");
     simulationBuilder.token("ETH");
     simulationBuilder.token("SOL");
@@ -427,7 +428,7 @@ function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
 
     simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 10_000, "USDC", 10_000, { half_spread: 0.005 });
     simulationBuilder.bot("ETH_mm_0", "maker", "ETH", 10_000, "USDC", 10_000, { half_spread: 0.005 });
-    simulationBuilder.bot("SOL_mm_0", "maker", "SOL", 10_000, "USDC", 10_000, { half_spread: 0.005 });
+    //simulationBuilder.bot("SOL_mm_0", "maker", "SOL", 10_000, "USDC", 10_000, { half_spread: 0.005 });
 
     const [simulation_public, simulation_private, simulation_orders] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));

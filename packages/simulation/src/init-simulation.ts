@@ -31,7 +31,7 @@ import * as simulation from './simulation.json';
 
   for (const bot of simulation.bots) {
     const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
-    await solanaClient.requestAirdrop(100, bot_wallet.publicKey);
+    await solanaClient.requestAirdrop(bot.walletBalance, bot_wallet.publicKey);
 
     //const baseTokenAccount = await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.baseMint), bot_wallet.publicKey);
     const baseTokenAccount = await solanaClient.createTokenAccount(new PublicKey(bot.baseMint), bot_wallet.publicKey, bot_wallet);
@@ -78,6 +78,7 @@ import * as simulation from './simulation.json';
     );
     await sendAndConfirmTransaction(serumClient.connection, transaction, [bot_wallet, openOrders]);
   }
+
 })().then(() => {
   console.log(`Simulation started on ${simulation.config.cluster}`);
 });

@@ -7,7 +7,7 @@
     },
     "serum": {
       "program": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
-      "url": "https://solana-api.projectserum.com"
+      "url": "https://mango.rpcpool.com/946ef7337da3f5b8d3e4a34e7f88"
     },
     "solana": {
       "http": "http://api.mainnet-beta.solana.com",
@@ -94,7 +94,7 @@
       "baseLotSize": 100,
       "quoteLotSize": 10,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 13584795404
+      "referrerRebatesAccrued": 13584110739
     },
     {
       "symbol": "ETH/USDC",
@@ -116,7 +116,7 @@
       "baseLotSize": 1000,
       "quoteLotSize": 10,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 15666849875
+      "referrerRebatesAccrued": 15669234669
     },
     {
       "symbol": "MNGO/USDC",
@@ -160,7 +160,7 @@
       "baseLotSize": 100000,
       "quoteLotSize": 100,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 17460529981
+      "referrerRebatesAccrued": 17463635105
     },
     {
       "symbol": "SOL/USDC",
@@ -182,7 +182,7 @@
       "baseLotSize": 100000000,
       "quoteLotSize": 100,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 70665846962
+      "referrerRebatesAccrued": 70605937454
     },
     {
       "symbol": "SRM/USDC",
@@ -204,27 +204,7 @@
       "baseLotSize": 100000,
       "quoteLotSize": 100,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 9424215705
-    }
-  ],
-  "bots": [
-    {
-      "name": "BTC_mm_0",
-      "type": "maker",
-      "symbol": "BTC/USDC",
-      "market": "A8YFbxQYFVqKZaoYJLLUVcQiWP7G2MeEgW5wsAQgMvFw",
-      "base": "BTC",
-      "baseBalance": 10000,
-      "baseDecimals": 6,
-      "baseMint": "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
-      "quote": "USDC",
-      "quoteBalance": 10000,
-      "quoteDecimals": 6,
-      "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "params": {
-        "half_spread": 0.005
-      },
-      "wallet": "u6hJWDKHsHYjQ7E78Livf1NFKRor7LHsrTCyhx7e7u8"
+      "referrerRebatesAccrued": 9423342279
     }
   ]
 }
