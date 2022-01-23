@@ -8,10 +8,11 @@ import {
   SystemProgram,
   Transaction
 } from "@solana/web3.js";
-
-import { PythClient } from '@yyprime/yyprime-exchange-ts';
-import { SerumClient } from '@yyprime/yyprime-exchange-ts';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts';
+import {
+  PythClient,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 

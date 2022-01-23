@@ -4,24 +4,24 @@ import { BN } from "@project-serum/anchor";
 import { ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
 import * as fs from 'fs';
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import {
+  PYTH_PRODUCTS,
+  //PythClient,
+  PYTH_PROGRAMS,
+  SERUM_PROGRAMS,
+  SerumClient,
+  SOLANA_CLUSTERS,
+  SOLANA_TOKENS,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
-import { PythClient } from '@yyprime/yyprime-exchange-ts';
-import { SerumClient } from '@yyprime/yyprime-exchange-ts';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts';
-
-import { PYTH_PRODUCTS } from '@yyprime/yyprime-exchange-ts';
-import { PYTH_PROGRAMS } from '@yyprime/yyprime-exchange-ts';
-import { SERUM_PROGRAMS } from '@yyprime/yyprime-exchange-ts';
-import { SOLANA_CLUSTERS } from '@yyprime/yyprime-exchange-ts';
-import { SOLANA_TOKENS } from '@yyprime/yyprime-exchange-ts';
-
-import * as simulationMainnet from './simulation-mainnet_MANUAL.json';
+import * as simulationMainnet from './simulation-mainnet.json';
 
 export class SimulationBuilder {
-  private bots;
+  private bots: any[];
   public cluster: string;
-  private markets;
-  private tokens;
+  private markets: string[];
+  private tokens: string[];
 
   constructor(cluster: string) {
     this.bots = [];
@@ -31,12 +31,12 @@ export class SimulationBuilder {
     console.log(`Building simulation on ${cluster}`);
   }
 
-  public token(token: string, supply: number, decimals: number ) {
-    this.tokens.push({ symbol: token, supply: supply, decimals: decimals });
+  public token(symbol: string) {
+    this.tokens.push(symbol);
   }
 
-  public market(params) {
-    this.markets.push({ symbol: `${params.baseSymbol}/${params.quoteSymbol}`, ...params });
+  public market(symbol: string) {
+    this.markets.push(symbol);
   }
 
   public bot(name: string, type: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
@@ -73,18 +73,35 @@ export class SimulationBuilder {
 
       const tokens = solanaTokens.map(token => {
         mintSymbols.set(token.mint.toBase58(), token.symbol);
-
         return {
           symbol: token.symbol,
           mint: token.mint.toBase58(),
           decimals: token.data.data.parsed.info.decimals,
-          mintSupply: token.data.data.parsed.info.supply,
+          supply: token.data.data.parsed.info.supply,
           price: priceKeys.get(token.symbol),
         };
       });
 
+      // Remove deprecated markets. Assume that the markets with the highest accrued rebates are the active ones.
+      const maxReferrerRebatesAccruedByMarket = new Map();
+      serumMarkets.forEach(market => {
+        const symbol = `${mintSymbols.get(market.baseMint.toBase58())}/${mintSymbols.get(market.quoteMint.toBase58())}`;
+        if (!maxReferrerRebatesAccruedByMarket.has(symbol) || market.referrerRebatesAccrued > maxReferrerRebatesAccruedByMarket.get(symbol).referrerRebatesAccrued) {
+          maxReferrerRebatesAccruedByMarket.set(symbol, market);
+        }
+      });
+
       const markets = serumMarkets
-        .filter(market => { return mintSymbols.get(market.quoteMint.toBase58()) === 'USDC' && mintSymbols.has(market.baseMint.toBase58()) && mintSymbols.has(market.quoteMint.toBase58()); })
+        .filter(market => {
+          const symbol = `${mintSymbols.get(market.baseMint.toBase58())}/${mintSymbols.get(market.quoteMint.toBase58())}`;
+          return (
+            maxReferrerRebatesAccruedByMarket.get(symbol).ownAddress === market.ownAddress &&
+            mintSymbols.get(market.baseMint.toBase58()) !== 'USDC' &&
+            mintSymbols.get(market.baseMint.toBase58()) !== 'USDT' &&
+            mintSymbols.get(market.quoteMint.toBase58()) === 'USDC' &&
+            mintSymbols.has(market.baseMint.toBase58()) &&
+            mintSymbols.has(market.quoteMint.toBase58()));
+        })
         .map(market => {
           return {
             symbol: `${mintSymbols.get(market.baseMint.toBase58())}/${mintSymbols.get(market.quoteMint.toBase58())}`,
@@ -131,18 +148,29 @@ export class SimulationBuilder {
         walletBalance: 100,
       };
 
-      const tokens_private = this.tokens.map(token => {
+      const config_public = {
+        cluster: config_private.cluster,
+        pyth: config_private.pyth,
+        serum: config_private.serum,
+        solana: config_private.solana,
+        wallet: config_private.wallet,
+      };
+
+
+
+      const tokens_private = this.tokens.map(symbol => {
+        const mainnetToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === symbol; });
         const mintKeypair = Keypair.generate();
         const vaultKeypair = Keypair.generate();
         return {
-          symbol: token.symbol,
+          symbol: symbol,
           mint: mintKeypair.publicKey.toBase58(),
           mintPrivateKey: Buffer.from(mintKeypair.secretKey).toString('base64'),
           vault: vaultKeypair.publicKey.toBase58(),
           vaultPrivateKey: Buffer.from(vaultKeypair.secretKey).toString('base64'),
-          decimals: token.decimals,
-          mintSupply: token.supply,
-          price: priceKeys.get(token.symbol),
+          decimals: mainnetToken!.decimals,
+          supply: mainnetToken!.supply,
+          price: priceKeys.get(symbol),
         };
       });
       //tokens_private.push({
@@ -159,7 +187,21 @@ export class SimulationBuilder {
         tokensBySymbol.set(token.symbol, token);
       });
 
-      const markets_private = this.markets.map(market => {
+      const tokens_public = tokens_private.map(token => {
+        return {
+          symbol: token.symbol,
+          mint: token.mint,
+          vault: token.vault,
+          decimals: token.decimals,
+          supply: token.supply,
+          price: token.price,
+        };
+      });
+
+
+
+      const markets_private = this.markets.map(symbol => {
+        const mainnetMarket = simulationMainnet.markets.find(mainnetMarket => { return mainnetMarket.symbol === symbol; });
         const marketKeypair: Keypair = Keypair.generate();
         const baseVaultKeypair: Keypair = Keypair.generate();
         const quoteVaultKeypair: Keypair = Keypair.generate();
@@ -169,19 +211,19 @@ export class SimulationBuilder {
         const asksKeypair: Keypair = Keypair.generate();
 
         return {
-          symbol: market.symbol,
+          symbol: symbol,
           market: marketKeypair.publicKey.toBase58(),
           marketPrivateKey: Buffer.from(marketKeypair.secretKey).toString('base64'),
-          baseMint: tokensBySymbol.get(market.baseSymbol).mint,
+          baseMint: tokensBySymbol.get(mainnetMarket!.baseSymbol).mint,
           baseVault: baseVaultKeypair.publicKey.toBase58(),
           baseVaultPrivateKey: Buffer.from(baseVaultKeypair.secretKey).toString('base64'),
-          baseSymbol: market.baseSymbol,
-          basePrice: priceKeys.get(market.baseSymbol),
-          quoteMint: tokensBySymbol.get(market.quoteSymbol).mint,
+          baseSymbol: mainnetMarket!.baseSymbol,
+          basePrice: priceKeys.get(mainnetMarket!.baseSymbol),
+          quoteMint: tokensBySymbol.get(mainnetMarket!.quoteSymbol).mint,
           quoteVault: quoteVaultKeypair.publicKey.toBase58(),
           quoteVaultPrivateKey: Buffer.from(quoteVaultKeypair.secretKey).toString('base64'),
-          quoteSymbol: market.quoteSymbol,
-          quotePrice: priceKeys.get(market.quoteSymbol),
+          quoteSymbol: mainnetMarket!.quoteSymbol,
+          quotePrice: priceKeys.get(mainnetMarket!.quoteSymbol),
           requestQueue: requestQueueKeypair.publicKey.toBase58(),
           requestQueuePrivateKey: Buffer.from(requestQueueKeypair.secretKey).toString('base64'),
           eventQueue: eventQueueKeypair.publicKey.toBase58(),
@@ -190,11 +232,11 @@ export class SimulationBuilder {
           bidsPrivateKey: Buffer.from(bidsKeypair.secretKey).toString('base64'),
           asks: asksKeypair.publicKey.toBase58(),
           asksPrivateKey: Buffer.from(asksKeypair.secretKey).toString('base64'),
-          //TODO vaultSignerNonce: market.vaultSignerNonce,
-          quoteDustThreshold: market.quoteDustThreshold,
-          baseLotSize: market.baseLotSize,
-          quoteLotSize: market.quoteLotSize,
-          feeRateBps: market.feeRateBps,
+          //vaultSignerNonce: mainnetMarket!.vaultSignerNonce,
+          quoteDustThreshold: mainnetMarket!.quoteDustThreshold,
+          baseLotSize: mainnetMarket!.baseLotSize,
+          quoteLotSize: mainnetMarket!.quoteLotSize,
+          feeRateBps: mainnetMarket!.feeRateBps,
         };
       });
 
@@ -203,17 +245,38 @@ export class SimulationBuilder {
         marketsBySymbol.set(market.symbol, market);
       });
 
+      const markets_public = markets_private.map(market => {
+        return {
+          symbol: market.symbol,
+          market: market.market,
+          baseMint: market.baseMint,
+          baseSymbol: market.baseSymbol,
+          basePrice: market.basePrice,
+          quoteMint: market.quoteMint,
+          quoteSymbol: market.quoteSymbol,
+          quotePrice: market.quotePrice,
+          requestQueue: market.requestQueue,
+          eventQueue: market.eventQueue,
+          bids: market.bids,
+          asks: market.asks,
+        };
+      });
+
+
+
       const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
 
       const bookOrders = await Promise.all(markets_private.map(async (market) => {
-        let asks: { priceLots: number; sizeLots: number; }[] = [];
-        let bids: { priceLots: number; sizeLots: number; }[] = [];
+        let asks: [number, number, BN, BN][] = [];
+        let bids: [number, number, BN, BN][] = [];
 
         const mainnetMarket = simulationMainnet.markets.find(mainnetMarket => { return mainnetMarket.symbol === market.symbol; });
+        const mainnetBaseToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.baseSymbol; });
+        const mainnetQuoteToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.quoteSymbol; });
 
         if (mainnetMarket) {
-          asks = this.getPriceLevels((await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
-          bids = this.getPriceLevels((await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
+          asks = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
+          bids = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
         }
 
         return {
@@ -222,6 +285,8 @@ export class SimulationBuilder {
           bids: bids,
         };
       }));
+
+
 
       const bots_private = this.bots.map(bot => {
         const walletKeypair: Keypair = Keypair.generate();
@@ -254,45 +319,6 @@ export class SimulationBuilder {
         };
       });
 
-
-      const config_public = {
-        cluster: config_private.cluster,
-        pyth: config_private.pyth,
-        serum: config_private.serum,
-        solana: config_private.solana,
-        wallet: config_private.wallet,
-      };
-
-      const tokens_public = tokens_private.map(token => {
-        return {
-          symbol: token.symbol,
-          mint: token.mint,
-          vault: token.vault,
-          decimals: token.decimals,
-          mintSupply: token.mintSupply,
-          price: token.price,
-        };
-      });
-
-      const markets_public = markets_private.map(market => {
-        return {
-          symbol: market.symbol,
-          market: market.market,
-          baseMint: market.baseMint,
-          baseSymbol: market.baseSymbol,
-          baseDecimals: market.baseDecimals,
-          basePrice: market.basePrice,
-          quoteMint: market.quoteMint,
-          quoteSymbol: market.quoteSymbol,
-          quoteDecimals: market.quoteDecimals,
-          quotePrice: market.quotePrice,
-          requestQueue: market.requestQueue,
-          eventQueue: market.eventQueue,
-          bids: market.bids,
-          asks: market.asks,
-        };
-      });
-
       const bots_public = bots_private.map(bot => {
         return {
           name: bot.name,
@@ -313,6 +339,7 @@ export class SimulationBuilder {
       });
 
 
+
       return [
         {
           config: config_public,
@@ -331,31 +358,51 @@ export class SimulationBuilder {
     }
   }
 
-  private getPriceFromKey(key) {
-    return key.ushrn(64);
-  }
-
-  private getPriceLevels(data) {
-    const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(data);
-    const descending = accountFlags.bids;
-    const levels: [BN, BN][] = []; // (price, size)
-    for (const { key, quantity } of slab.items(descending)) {
-      const price = this.getPriceFromKey(key);
-      if (levels.length > 0 && levels[levels.length - 1][0].eq(price)) {
-        levels[levels.length - 1][1].iadd(quantity);
-      } else {
-        levels.push([price, quantity]);
-      }
-    }
-    return levels.map(([priceLots, sizeLots]) => { return {
-      //this.market.priceLotsToNumber(priceLots),
-      //this.market.baseSizeLotsToNumber(sizeLots),
-      priceLots: priceLots.toNumber(),
-      sizeLots: sizeLots.toNumber(),
-    }});
-  }
-
 }
+
+function getPriceLevels(market, baseToken, quoteToken, data): [number, number, BN, BN][] {
+  const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(data);
+  const descending = accountFlags.bids;
+  const levels: [BN, BN][] = []; // (price, size)
+  for (const { key, quantity } of slab.items(descending)) {
+    const price = key.ushrn(64);
+    if (levels.length > 0 && levels[levels.length - 1][0].eq(price)) {
+      levels[levels.length - 1][1].iadd(quantity);
+    } else {
+      levels.push([price, quantity]);
+    }
+  }
+  return levels.map(([priceLots, sizeLots]) => [
+    priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
+    baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
+    priceLots,
+    sizeLots,
+  ]);
+}
+
+function priceLotsToNumber(price: BN, baseLotSize: BN, baseSplTokenDecimals: number, quoteLotSize: BN, quoteSplTokenDecimals: number) {
+  return divideBnToNumber(price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)), baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)));
+}
+
+function baseSizeLotsToNumber(size: BN, baseLotSize: BN, baseSplTokenDecimals: number) {
+  return divideBnToNumber(size.mul(baseLotSize), baseSplTokenMultiplier(baseSplTokenDecimals));
+}
+
+function divideBnToNumber(numerator: BN, denominator: BN): number {
+  const quotient = numerator.div(denominator).toNumber();
+  const rem = numerator.umod(denominator);
+  const gcd = rem.gcd(denominator);
+  return quotient + rem.div(gcd).toNumber() / denominator.div(gcd).toNumber();
+}
+
+function baseSplTokenMultiplier(baseSplTokenDecimals: number) {
+  return new BN(10).pow(new BN(baseSplTokenDecimals));
+}
+
+function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
+  return new BN(10).pow(new BN(quoteSplTokenDecimals));
+}
+
 
 
 
@@ -368,44 +415,19 @@ export class SimulationBuilder {
     fs.writeFileSync('../monitor/src/config/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
     fs.writeFileSync('src/simulation-mainnet.json', JSON.stringify(simulation_public, null, 2));
   } else {
-    simulationBuilder.token("BTC", 1_000_000_000, 6);
-    //simulationBuilder.token("ETH", 1_000_000_000, 6);
-    //simulationBuilder.token("SOL", 1_000_000_000, 9);
-    simulationBuilder.token("USDC", 1_000_000_000, 6);
 
-    simulationBuilder.market({
-      baseSymbol: "BTC",
-      quoteSymbol: "USDC",
-      //TODO vaultSignerNonce: 0,
-      quoteDustThreshold: 100,
-      baseLotSize: 100,
-      quoteLotSize: 10,
-      feeRateBps: 0,
-    });
-    /*
-    simulationBuilder.market({
-      baseSymbol: "ETH",
-      quoteSymbol: "USDC",
-      //TODO vaultSignerNonce: 0,
-      quoteDustThreshold: 100,
-      baseLotSize: 1000,
-      quoteLotSize: 10,
-      feeRateBps: 0,
-    });
-    simulationBuilder.market({
-      baseSymbol: "SOL",
-      quoteSymbol: "USDC",
-      //TODO vaultSignerNonce: 0,
-      quoteDustThreshold: 100,
-      baseLotSize: 100000000,
-      quoteLotSize: 100,
-      feeRateBps: 0,
-    });
-    */
+    simulationBuilder.token("BTC");
+    simulationBuilder.token("ETH");
+    simulationBuilder.token("SOL");
+    simulationBuilder.token("USDC");
+
+    simulationBuilder.market("BTC/USDC");
+    simulationBuilder.market("ETH/USDC");
+    simulationBuilder.market("SOL/USDC");
 
     simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 10_000, "USDC", 10_000, { half_spread: 0.005 });
-    //simulationBuilder.bot("ETH", "maker", 250, "USDC", 100_000, {});
-    //simulationBuilder.bot("SOL", "maker", 500, "USDC", 100_000, {});
+    simulationBuilder.bot("ETH_mm_0", "maker", "ETH", 10_000, "USDC", 10_000, { half_spread: 0.005 });
+    simulationBuilder.bot("SOL_mm_0", "maker", "SOL", 10_000, "USDC", 10_000, { half_spread: 0.005 });
 
     const [simulation_public, simulation_private, simulation_orders] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));

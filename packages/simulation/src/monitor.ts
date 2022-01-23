@@ -10,9 +10,11 @@ import {
   decodeTokenAccountData,
 } from '@project-serum/token';
 import { Keypair, PublicKey } from '@solana/web3.js';
-
-import { SerumBook, SerumClient } from '@yyprime/yyprime-exchange-ts';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts';
+import {
+  SerumBook,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 
