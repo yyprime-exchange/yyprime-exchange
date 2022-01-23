@@ -13,11 +13,9 @@ export default function App() {
       <GlobalStyle />
       <ErrorBoundary>
         <ConfigurationProvider>
-
           <Suspense fallback={() => <Spin size="large" />}>
             <Routes />
           </Suspense>
-
         </ConfigurationProvider>
       </ErrorBoundary>
     </Suspense>

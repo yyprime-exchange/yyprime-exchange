@@ -1,20 +1,12 @@
 //import { Col, Row } from 'antd';
 import React from "react";
-import styled from 'styled-components';
-
 import FloatingElement from "./layout/FloatingElement";
-
-const Title = styled.div`
-  color: rgba(255, 255, 255, 1);
-  padding: 0 0 20px 0;
-`;
+import { Title } from './styles';
 
 export default function PriceChart() {
   return (
-    <FloatingElement style={{ width: '600px', height: '300px' }} >
+    <FloatingElement style={{ width: '600px', height: '300px' }}>
       <Title>Price Chart</Title>
-
-
     </FloatingElement>
   );
-};
+}

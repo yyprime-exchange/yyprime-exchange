@@ -1,14 +1,8 @@
 import { Row } from 'antd';
-import React from "react";
-import styled from 'styled-components';
-
+import React from 'react';
 import { useSerumRequests } from '../utils/serum';
 import FloatingElement from "./layout/FloatingElement";
-
-const Title = styled.div`
-  color: rgba(255, 255, 255, 1);
-  padding: 0 0 20px 0;
-`;
+import { Title } from './styles';
 
 export default function SerumRequests() {
   const requests = useSerumRequests();
