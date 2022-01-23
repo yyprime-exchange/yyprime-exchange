@@ -10,6 +10,7 @@ import SerumEvents from '../components/SerumEvents'
 import SerumRequests from '../components/SerumRequests'
 import SerumOrderbook from '../components/SerumOrderbook';
 import { ConnectionProvider } from '../utils/connection';
+import { PythConnectionProvider } from '../utils/pythConnection';
 import { PythProvider } from '../utils/pyth'
 import { SerumProvider } from '../utils/serum';
 import { SolanaProvider } from '../utils/solana';
@@ -32,11 +33,13 @@ export default function SimulationPage() {
     <>
       <ConnectionProvider>
         <SerumProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
-          <PythProvider baseSymbol={baseSymbol} >
-            <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
+          <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
+            <PythConnectionProvider>
+              <PythProvider baseSymbol={baseSymbol} >
               <SimulationPageInner />
-            </SolanaProvider>
-          </PythProvider>
+              </PythProvider>
+            </PythConnectionProvider>
+          </SolanaProvider>
         </SerumProvider>
       </ConnectionProvider>
     </>
