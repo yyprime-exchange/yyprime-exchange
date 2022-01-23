@@ -17,7 +17,8 @@ export default function SerumEvents() {
       <Title>Serum Events</Title>
       {events.slice(0, 7).map((event, index) => (
         <Row key={index}><pre>{
-          JSON.stringify(event).replace(/[{,]*(false)|[:](true)|(:|,)/g,"").replace(/[}{"]|( : )|(: )/g," ").replace(/[,]*(bid)/g,"").replace(":,","").replaceAll(":true,","").replaceAll("  "," ")
+          // take out anything false back to the next control char, take out the 'true', scrape all the control chars,
+          JSON.stringify(event).replace(/[{,]*(false)|[:](true)|(:|,)/g,"").replace(/[}{"]|( : )|(: )/g," ").replace(/[,]*(bid)|(ask)/g,"").replace(":,","").replaceAll(":true,","").replaceAll("  "," ")
         } </pre></Row>
       ))}
     </FloatingElement>
