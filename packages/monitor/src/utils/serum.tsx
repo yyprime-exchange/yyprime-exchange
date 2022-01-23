@@ -65,7 +65,7 @@ export function useSerum() {
 
 export function useSerumOrderbook(
   depth = 20,
-) {
+): [{ bids: number[][]; asks: number[][] }, boolean] {
   const { bids, asks, baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } = useSerum();
 
   // @ts-ignore
@@ -73,22 +73,23 @@ export function useSerumOrderbook(
   // @ts-ignore
   let askData = useAccountData(asks);
 
-  if (bidData && askData) {
-    function decode(buffer) {
-      const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(buffer);
-      return { accountFlags: accountFlags, slab: slab };
-    }
-    return {
-      bids: priceLevels(decode(bidData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]),
-      asks: priceLevels(decode(askData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]),
-    };
-  } else {
-    return { bids: [], asks: [] };
+  let b: number[][] = [];
+  let a: number[][] = [];
+
+  function decode(buffer) {
+    const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(buffer);
+    return { accountFlags: accountFlags, slab: slab };
   }
+
+  if (bidData && askData) {
+    b = priceLevels(decode(bidData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]);
+    a = priceLevels(decode(askData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]);
+  }
+  return [{ bids: b, asks: a }, !!b || !!a];
 }
 
 function priceLevels(orderbook, depth: number, baseLotSize: number, baseDecimals: number, quoteLotSize: number, quoteDecimals: number): [number, number, BN, BN][] {
-  const descending = orderbook.accountFlags.isBids;
+  const descending = orderbook.accountFlags.bids;
   const levels: [BN, BN][] = []; // (price, size)
   for (const { key, quantity } of orderbook.slab.items(descending)) {
     const price = key.ushrn(64);
@@ -101,8 +102,8 @@ function priceLevels(orderbook, depth: number, baseLotSize: number, baseDecimals
     }
   }
   return levels.map(([priceLots, sizeLots]) => [
-    priceLots.toNumber(), //priceLotsToNumber(priceLots, new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals),
-    sizeLots.toNumber(), //baseSizeLotsToNumber(sizeLots, new BN(baseLotSize), baseDecimals),
+    priceLotsToNumber(priceLots, new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals),
+    baseSizeLotsToNumber(sizeLots, new BN(baseLotSize), baseDecimals),
     priceLots,
     sizeLots,
   ]);

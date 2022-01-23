@@ -42,7 +42,7 @@ export default function SerumOrderbook({ depth = 7 }) {
 
   const { baseSymbol, quoteSymbol } = useSerum();
 
-  const orderbook = useSerumOrderbook(depth);
+  const [orderbook] = useSerumOrderbook(depth);
 
   const currentOrderbookData = useRef(null);
   const lastOrderbookData = useRef(null);
