@@ -27,6 +27,16 @@ export class TakerBot extends Bot {
   }
 
   public onPrice(token: PythToken, price: PythPrice) {
+      const thresh = 0.5;
+      if (price.price) {
+        var rando = 2.*(Math.random() - 0.5);
+        //bot may try to order the wrong side bc naive to spread
+        if( rando > thresh){
+         this.placeOrder( 'buy' , price.price, 1.,  'ioc' );
+        }else if (rando < -1.*thresh){
+         this.placeOrder( 'sell' , price.price, 1.,  'ioc' );
+        }
+      }
     //console.log(JSON.stringify(token));
     //console.log(JSON.stringify(price));
     //console.log('');
