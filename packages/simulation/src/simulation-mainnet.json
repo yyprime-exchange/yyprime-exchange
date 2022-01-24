@@ -10,9 +10,9 @@
       "url": "https://solana-api.projectserum.com/"
     },
     "solana": {
-      "http": "http://api.mainnet-beta.solana.com",
-      "https": "https://api.mainnet-beta.solana.com",
-      "wss": "wss://api.mainnet-beta.solana.com"
+      "http": "http://api.mainnet-beta.solana.com/",
+      "https": "https://api.mainnet-beta.solana.com/",
+      "wss": "wss://api.mainnet-beta.solana.com/"
     }
   },
   "tokens": [
@@ -20,56 +20,56 @@
       "symbol": "BTC",
       "mint": "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
       "decimals": 6,
-      "supply": "16149999997",
+      "supply": 16149.999997,
       "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
     },
     {
       "symbol": "ETH",
       "mint": "2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk",
       "decimals": 6,
-      "supply": "483499999997",
+      "supply": 483499.999997,
       "price": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB"
     },
     {
       "symbol": "MNGO",
       "mint": "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
       "decimals": 6,
-      "supply": "4999999999999995",
+      "supply": 4999999999.999995,
       "price": "79wm3jjcPr6RaNQ4DGvP5KxG1mNd3gEBsg6FsNVFezK4"
     },
     {
       "symbol": "RAY",
       "mint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
       "decimals": 6,
-      "supply": "555000000000000",
+      "supply": 555000000,
       "price": "AnLf8tVYCM816gmBjiy8n53eXKKEDydT5piYjjQDPgTB"
     },
     {
       "symbol": "SOL",
       "mint": "So11111111111111111111111111111111111111112",
       "decimals": 9,
-      "supply": "0",
+      "supply": 0,
       "price": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG"
     },
     {
       "symbol": "SRM",
       "mint": "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
       "decimals": 6,
-      "supply": "9995675509880939",
+      "supply": 9995675509.88094,
       "price": "3NBReDRTLKMQEKiLD5tGcx4kXbTf88b7f2xLS9UuGjym"
     },
     {
       "symbol": "USDC",
       "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
       "decimals": 6,
-      "supply": "4785000018759881",
+      "supply": 4785000018.759881,
       "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     },
     {
       "symbol": "USDT",
       "mint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
       "decimals": 6,
-      "supply": "1890000009537798",
+      "supply": 1890000009.537798,
       "price": "3vxLXJqLqF3JG5TCbYycbKWRBbCJQLxQmBGCkyqEEefL"
     }
   ],
@@ -94,7 +94,7 @@
       "baseLotSize": 100,
       "quoteLotSize": 10,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 13584110739
+      "referrerRebatesAccrued": 13557045801
     },
     {
       "symbol": "ETH/USDC",
@@ -116,7 +116,7 @@
       "baseLotSize": 1000,
       "quoteLotSize": 10,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 15669234669
+      "referrerRebatesAccrued": 15653828923
     },
     {
       "symbol": "MNGO/USDC",
@@ -160,7 +160,7 @@
       "baseLotSize": 100000,
       "quoteLotSize": 100,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 17463635105
+      "referrerRebatesAccrued": 17462851122
     },
     {
       "symbol": "SOL/USDC",
@@ -182,7 +182,7 @@
       "baseLotSize": 100000000,
       "quoteLotSize": 100,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 70605937454
+      "referrerRebatesAccrued": 70479055839
     },
     {
       "symbol": "SRM/USDC",
@@ -204,7 +204,7 @@
       "baseLotSize": 100000,
       "quoteLotSize": 100,
       "feeRateBps": 0,
-      "referrerRebatesAccrued": 9423342279
+      "referrerRebatesAccrued": 9428912847
     }
   ]
 }

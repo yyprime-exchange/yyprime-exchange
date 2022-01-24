@@ -39,8 +39,8 @@ export class SimulationBuilder {
     this.markets.push(symbol);
   }
 
-  public bot(name: string, type: string, base: string, baseBalance: number, quote: string, quoteBalance: number, params) {
-    this.bots.push({ name: name, type: type, symbol: `${base}/${quote}`, base, baseBalance, quote, quoteBalance, params });
+  public bot(name: string, type: string, symbol: string, params) {
+    this.bots.push({ name: name, type: type, symbol: symbol, params });
   }
 
   public async build() {
@@ -77,7 +77,7 @@ export class SimulationBuilder {
           symbol: token.symbol,
           mint: token.mint.toBase58(),
           decimals: token.data.data.parsed.info.decimals,
-          supply: token.data.data.parsed.info.supply,
+          supply: token.data.data.parsed.info.supply / this.pow10(token.data.data.parsed.info.decimals),
           price: priceKeys.get(token.symbol),
         };
       });
@@ -145,7 +145,7 @@ export class SimulationBuilder {
         solana: SOLANA_CLUSTERS[this.cluster],
         wallet: simulationWalletKeypair.publicKey.toBase58(),
         walletPrivateKey: Buffer.from(simulationWalletKeypair.secretKey).toString('base64'),
-        walletBalance: 100,
+        walletBalance: 10,
       };
 
       const config_public = {
@@ -169,7 +169,7 @@ export class SimulationBuilder {
           vault: vaultKeypair.publicKey.toBase58(),
           vaultPrivateKey: Buffer.from(vaultKeypair.secretKey).toString('base64'),
           decimals: mainnetToken!.decimals,
-          supply: 1_000_000, //mainnetToken!.supply,
+          supply: mainnetToken!.supply,
           price: priceKeys.get(symbol),
         };
       });
@@ -210,16 +210,19 @@ export class SimulationBuilder {
         const bidsKeypair: Keypair = Keypair.generate();
         const asksKeypair: Keypair = Keypair.generate();
 
+        const baseToken = tokensBySymbol.get(mainnetMarket!.baseSymbol);
+        const quoteToken = tokensBySymbol.get(mainnetMarket!.quoteSymbol);
+
         return {
           symbol: symbol,
           market: marketKeypair.publicKey.toBase58(),
           marketPrivateKey: Buffer.from(marketKeypair.secretKey).toString('base64'),
-          baseMint: tokensBySymbol.get(mainnetMarket!.baseSymbol).mint,
+          baseMint: baseToken.mint,
           baseVault: baseVaultKeypair.publicKey.toBase58(),
           baseVaultPrivateKey: Buffer.from(baseVaultKeypair.secretKey).toString('base64'),
           baseSymbol: mainnetMarket!.baseSymbol,
           basePrice: priceKeys.get(mainnetMarket!.baseSymbol),
-          quoteMint: tokensBySymbol.get(mainnetMarket!.quoteSymbol).mint,
+          quoteMint: quoteToken.mint,
           quoteVault: quoteVaultKeypair.publicKey.toBase58(),
           quoteVaultPrivateKey: Buffer.from(quoteVaultKeypair.secretKey).toString('base64'),
           quoteSymbol: mainnetMarket!.quoteSymbol,
@@ -235,7 +238,9 @@ export class SimulationBuilder {
           //vaultSignerNonce: mainnetMarket!.vaultSignerNonce,
           quoteDustThreshold: mainnetMarket!.quoteDustThreshold,
           baseLotSize: mainnetMarket!.baseLotSize,
+          baseDecimals: baseToken.decimals,
           quoteLotSize: mainnetMarket!.quoteLotSize,
+          quoteDecimals: quoteToken.decimals,
           feeRateBps: mainnetMarket!.feeRateBps,
         };
       });
@@ -260,60 +265,9 @@ export class SimulationBuilder {
           bids: market.bids,
           asks: market.asks,
           baseLotSize: market.baseLotSize,
+          baseDecimals: market.baseDecimals,
           quoteLotSize: market.quoteLotSize,
-        };
-      });
-
-
-
-      const bots_private = this.bots.map(bot => {
-        const walletKeypair: Keypair = Keypair.generate();
-        const openOrdersKeypair: Keypair = Keypair.generate();
-
-        return {
-          name: bot.name,
-          type: bot.type,
-          symbol: bot.symbol,
-          market: marketsBySymbol.get(bot.symbol).market,
-          base: bot.base,
-          baseBalance: bot.baseBalance,
-          baseDecimals: tokensBySymbol.get(bot.base).decimals,
-          baseMint: tokensBySymbol.get(bot.base).mint,
-          baseMintPrivateKey: tokensBySymbol.get(bot.base).mintPrivateKey,
-          baseVault: tokensBySymbol.get(bot.base).vault,
-          baseVaultPrivateKey: tokensBySymbol.get(bot.base).vaultPrivateKey,
-          quote: bot.quote,
-          quoteBalance: bot.quoteBalance,
-          quoteDecimals: tokensBySymbol.get(bot.quote).decimals,
-          quoteMint: tokensBySymbol.get(bot.quote).mint,
-          quoteMintPrivateKey: tokensBySymbol.get(bot.quote).mintPrivateKey,
-          quoteVault: tokensBySymbol.get(bot.quote).vault,
-          quoteVaultPrivateKey: tokensBySymbol.get(bot.quote).vaultPrivateKey,
-          params: bot.params,
-          wallet: walletKeypair.publicKey.toBase58(),
-          walletPrivateKey: Buffer.from(walletKeypair.secretKey).toString('base64'),
-          walletBalance: 100,
-          openOrders: openOrdersKeypair.publicKey.toBase58(),
-          openOrdersPrivateKey: Buffer.from(openOrdersKeypair.secretKey).toString('base64'),
-        };
-      });
-
-      const bots_public = bots_private.map(bot => {
-        return {
-          name: bot.name,
-          type: bot.type,
-          symbol: bot.symbol,
-          market: bot.market,
-          base: bot.base,
-          baseBalance: bot.baseBalance,
-          baseDecimals: bot.baseDecimals,
-          baseMint: bot.baseMint,
-          quote: bot.quote,
-          quoteBalance: bot.quoteBalance,
-          quoteDecimals: bot.quoteDecimals,
-          quoteMint: bot.quoteMint,
-          params: bot.params,
-          wallet: bot.wallet,
+          quoteDecimals: market.quoteDecimals,
         };
       });
 
@@ -343,6 +297,70 @@ export class SimulationBuilder {
 
 
 
+      const bots_private = this.bots.map(bot => {
+        const walletKeypair: Keypair = Keypair.generate();
+        const openOrdersKeypair: Keypair = Keypair.generate();
+
+        const orders = orders_private.find((order) => order.symbol === bot.symbol);
+        assert(orders);
+        assert(orders.asks.length > 0);
+        assert(orders.bids.length > 0);
+
+        const midPrice = (orders.asks[0][0] + orders.bids[0][0]) / 2;
+        const quoteBalance =
+          orders.asks.slice(0, 7).map(priceLevel => { return priceLevel[0] * priceLevel[1]; }).reduce((a: number, b: number) => { return a + b; }) +
+          orders.bids.slice(0, 7).map(priceLevel => { return priceLevel[0] * priceLevel[1]; }).reduce((a: number, b: number) => { return a + b; });
+        const baseBalance = quoteBalance / midPrice;
+
+        const market = marketsBySymbol.get(bot.symbol);
+        const baseToken = tokensBySymbol.get(market.baseSymbol);
+        const quoteToken = tokensBySymbol.get(market.quoteSymbol);
+
+        return {
+          name: bot.name,
+          type: bot.type,
+          symbol: bot.symbol,
+          market: market.market,
+          baseBalance: baseBalance,
+          baseDecimals: baseToken.decimals,
+          baseMint: baseToken.mint,
+          baseMintPrivateKey: baseToken.mintPrivateKey,
+          baseVault: baseToken.vault,
+          baseVaultPrivateKey: baseToken.vaultPrivateKey,
+          quoteBalance: quoteBalance,
+          quoteDecimals: quoteToken.decimals,
+          quoteMint: quoteToken.mint,
+          quoteMintPrivateKey: quoteToken.mintPrivateKey,
+          quoteVault: quoteToken.vault,
+          quoteVaultPrivateKey: quoteToken.vaultPrivateKey,
+          params: bot.params,
+          wallet: walletKeypair.publicKey.toBase58(),
+          walletPrivateKey: Buffer.from(walletKeypair.secretKey).toString('base64'),
+          walletBalance: 10,
+          openOrders: openOrdersKeypair.publicKey.toBase58(),
+          openOrdersPrivateKey: Buffer.from(openOrdersKeypair.secretKey).toString('base64'),
+        };
+      });
+
+      const bots_public = bots_private.map(bot => {
+        return {
+          name: bot.name,
+          type: bot.type,
+          symbol: bot.symbol,
+          market: bot.market,
+          baseBalance: bot.baseBalance,
+          baseDecimals: bot.baseDecimals,
+          baseMint: bot.baseMint,
+          quoteBalance: bot.quoteBalance,
+          quoteDecimals: bot.quoteDecimals,
+          quoteMint: bot.quoteMint,
+          params: bot.params,
+          wallet: bot.wallet,
+        };
+      });
+
+
+
       return [
         {
           config: config_public,
@@ -358,6 +376,14 @@ export class SimulationBuilder {
           orders: orders_private,
         },
       ];
+    }
+  }
+
+  private pow10(decimals: number): number {
+    switch(decimals) {
+      case 6: return 1_000_000;
+      case 9: return 1_000_000_000;
+      default: throw new Error("Unsupported number of decimals.");
     }
   }
 
@@ -427,9 +453,9 @@ function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
     simulationBuilder.market("ETH/USDC");
     simulationBuilder.market("SOL/USDC");
 
-    simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 500_000, "USDC", 500_000, { half_spread: 0.005 });
-    simulationBuilder.bot("ETH_mm_0", "maker", "ETH", 500_000, "USDC", 500_000, { half_spread: 0.005 });
-    simulationBuilder.bot("SOL_mm_0", "maker", "SOL", 500_000, "USDC", 500_000, { half_spread: 0.005 });
+    simulationBuilder.bot("BTC_mm_0", "maker", "BTC/USDC", { half_spread: 0.005 });
+    simulationBuilder.bot("ETH_mm_0", "maker", "ETH/USDC", { half_spread: 0.005 });
+    simulationBuilder.bot("SOL_mm_0", "maker", "SOL/USDC", { half_spread: 0.005 });
 
     const [simulation_public, simulation_private] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));

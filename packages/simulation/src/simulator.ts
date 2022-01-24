@@ -1,8 +1,7 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
-import { MakerBot } from "./maker";
 import {
   Bot,
-  //MakerBot,
+  MakerBot,
   TakerBot,
   PythClient,
   PythPrice,
