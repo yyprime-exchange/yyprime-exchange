@@ -7,14 +7,11 @@ import styled, { css } from 'styled-components';
 import { useSerum, useSerumOrderbook } from '../utils/serum';
 import { useInterval } from '../utils/useInterval';
 import FloatingElement from './layout/FloatingElement';
-
-const Title = styled.div`
-  color: rgba(255, 255, 255, 1);
-`;
+import { Title } from './styles';
 
 const SizeTitle = styled(Row)`
   padding: 20px 0 14px;
-  color: #434a59;
+  color: #367ecd;
 `;
 
 const Line = styled.div`
@@ -59,7 +56,8 @@ export default function SerumOrderbook({ depth = 7 }) {
       let bids = orderbook?.bids || [];
       let asks = orderbook?.asks || [];
 
-      let sum = (total, [, size], index) => index < depth ? total + size : total;
+      let sum = (total, [, size], index) =>
+        index < depth ? total + size : total;
       let totalSize = bids.reduce(sum, 0) + asks.reduce(sum, 0);
 
       let bidsToDisplay = getCumulativeOrderbookSide(bids, totalSize, false);
@@ -101,10 +99,12 @@ export default function SerumOrderbook({ depth = 7 }) {
   }
 
   return (
-    <FloatingElement style={{ width: '300px', height: '480px', overflow: 'hidden' }} >
+    <FloatingElement
+      style={{ width: '300px', height: '480px', overflow: 'hidden' }}
+    >
       <Title>Serum Orderbook</Title>
       <SizeTitle>
-        <Col span={12} style={{ textAlign: 'left' }}>
+        <Col span={12} style={{ textAlign: 'left'}}>
           Size ({baseSymbol.toUpperCase()})
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
@@ -135,10 +135,16 @@ export default function SerumOrderbook({ depth = 7 }) {
 }
 
 //TODO DUP
-function priceLotsToNumber(price, baseLotSize, baseSplTokenDecimals, quoteLotSize, quoteSplTokenDecimals) {
+function priceLotsToNumber(
+  price,
+  baseLotSize,
+  baseSplTokenDecimals,
+  quoteLotSize,
+  quoteSplTokenDecimals
+) {
   return divideBnToNumber(
     price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)),
-    baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)),
+    baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals))
   );
 }
 
@@ -146,7 +152,7 @@ function priceLotsToNumber(price, baseLotSize, baseSplTokenDecimals, quoteLotSiz
 function baseSizeLotsToNumber(size, baseLotSize, baseSplTokenDecimals) {
   return divideBnToNumber(
     size.mul(baseLotSize),
-    baseSplTokenMultiplier(baseSplTokenDecimals),
+    baseSplTokenMultiplier(baseSplTokenDecimals)
   );
 }
 
@@ -172,10 +178,21 @@ const OrderbookRow = React.memo(
   ({ side, price, size, sizePercent }) => {
     const element = useRef();
 
-    const { baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } = useSerum();
+    const { baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } =
+      useSerum();
 
-    const minOrderSize = baseSizeLotsToNumber(new BN(1), new BN(baseLotSize), baseDecimals);
-    const tickSize = priceLotsToNumber(new BN(1), new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals);
+    const minOrderSize = baseSizeLotsToNumber(
+      new BN(1),
+      new BN(baseLotSize),
+      baseDecimals
+    );
+    const tickSize = priceLotsToNumber(
+      new BN(1),
+      new BN(baseLotSize),
+      baseDecimals,
+      new BN(quoteLotSize),
+      quoteDecimals
+    );
 
     useEffect(() => {
       // eslint-disable-next-line
@@ -185,7 +202,7 @@ const OrderbookRow = React.memo(
         () =>
           element.current?.classList.contains('flash') &&
           element.current?.classList.remove('flash'),
-        250,
+        250
       );
       return () => clearTimeout(id);
     }, [price, size]);
@@ -202,7 +219,7 @@ const OrderbookRow = React.memo(
           {formattedSize}
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
-          <Line
+        <Line
             data-width={sizePercent + '%'}
             data-bgcolor={
               side === 'buy'
@@ -216,7 +233,7 @@ const OrderbookRow = React.memo(
     );
   },
   (prevProps, nextProps) =>
-    isEqual(prevProps, nextProps, ['price', 'size', 'sizePercent']),
+    isEqual(prevProps, nextProps, ['price', 'size', 'sizePercent'])
 );
 
 function getDecimalCount(value) {

@@ -1,14 +1,8 @@
 import { Row } from 'antd';
-import React from "react";
-import styled from 'styled-components';
-
+import React from 'react';
 import { useSolanaBots } from "../utils/solana";
-import FloatingElement from "./layout/FloatingElement";
-
-const Title = styled.div`
-  color: rgba(255, 255, 255, 1);
-  padding: 0 0 20px 0;
-`;
+import FloatingElement from './layout/FloatingElement';
+import { Title } from './styles';
 
 export default function Bots() {
   const bots = useSolanaBots();

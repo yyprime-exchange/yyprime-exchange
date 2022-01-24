@@ -13,7 +13,7 @@ export default function LinkAddress({
 }) {
   return (
     <div>
-      {title && <p style={{ color: 'white' }}>{title}</p>}
+      {title && <p style={{ color: '#e76e3c' }}>{title}</p>}
       <Button
         type="link"
         icon={<LinkOutlined />}
@@ -25,5 +25,5 @@ export default function LinkAddress({
         {shorten ? `${address.slice(0, 4)}...${address.slice(-4)}` : address}
       </Button>
     </div>
-  );
+  )
 }

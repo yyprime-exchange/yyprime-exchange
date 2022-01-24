@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  color: #2abdd2;
+  color: #e76e3c;
   font-weight: bold;
   cursor: pointer;
   img {
@@ -27,13 +27,12 @@ const LogoWrapper = styled.div`
 `;
 
 export default function TopBar() {
-
   const history = useHistory();
   const handleClick = useCallback(
     (e) => {
       history.push(e.key);
     },
-    [history],
+    [history]
   );
 
   const location = useLocation();
@@ -55,6 +54,7 @@ export default function TopBar() {
             display: 'flex',
             alignItems: 'flex-end',
             flex: 1,
+            color: '#dd3232',
           }}
         >
           <Menu.Item key={'/market/btc/usdc'} style={{ margin: '0 10px 0 20px' }}>
