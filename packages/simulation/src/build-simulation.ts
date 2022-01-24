@@ -103,6 +103,11 @@ export class SimulationBuilder {
             mintSymbols.has(market.quoteMint.toBase58()));
         })
         .map(market => {
+          const baseSymbol = `${mintSymbols.get(market.baseMint.toBase58())}`;
+          const quoteSymbol = `${mintSymbols.get(market.quoteMint.toBase58())}`;
+          const baseToken = tokens.find(token => { return token.symbol === baseSymbol; });
+          const quoteToken = tokens.find(token => { return token.symbol === quoteSymbol; });
+
           return {
             symbol: `${mintSymbols.get(market.baseMint.toBase58())}/${mintSymbols.get(market.quoteMint.toBase58())}`,
             market: market.ownAddress.toBase58(),
@@ -121,7 +126,9 @@ export class SimulationBuilder {
             vaultSignerNonce: new BN(market.vaultSignerNonce).toNumber(),
             quoteDustThreshold: new BN(market.quoteDustThreshold).toNumber(),
             baseLotSize: new BN(market.baseLotSize).toNumber(),
+            baseDecimals: baseToken.decimals,
             quoteLotSize: new BN(market.quoteLotSize).toNumber(),
+            quoteDecimals: quoteToken.decimals,
             feeRateBps: new BN(market.feeRateBps).toNumber(),
             referrerRebatesAccrued: new BN(market.referrerRebatesAccrued).toNumber()
           };
