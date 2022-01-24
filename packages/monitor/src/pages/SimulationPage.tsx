@@ -79,7 +79,7 @@ function SimulationPageInner() {
               </Row>
             </Wrapper>
           </Col>
-          {window.location.port !== '80' &&
+          {window.location.port !== '' &&
             <Col>
               <Wrapper>
                 <Row>

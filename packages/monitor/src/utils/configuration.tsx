@@ -10,7 +10,7 @@ const ConfigurationContext: React.Context<null | any> = React.createContext<null
 export function ConfigurationProvider({ children }) {
   return (
     <ConfigurationContext.Provider
-      value={ (window.location.port === '80') ? simulation_mainnet : simulation }
+      value={ (window.location.port === '') ? simulation_mainnet : simulation }
     >
       {children}
     </ConfigurationContext.Provider>
