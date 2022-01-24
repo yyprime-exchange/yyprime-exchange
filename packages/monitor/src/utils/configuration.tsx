@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 
 import simulation_mainnet from '../config/simulation-mainnet.json';
-import simulation from '../config/simulation.json';
+import simulation from '../config/simulation-mainnet.json';
+//import simulation from '../config/simulation.json';
 
 const ConfigurationContext: React.Context<null | any> = React.createContext<null | any>(
   null,
