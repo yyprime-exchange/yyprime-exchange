@@ -22,7 +22,6 @@ import * as simulation from './simulation.json';
   const solanaClient: SolanaClient = new SolanaClient(simulation);
 
   const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(simulation.config.walletPrivateKey, 'base64'));
-
   await solanaClient.requestAirdrop(simulation.config.walletBalance, wallet.publicKey);
 
   await solanaClient.createTokens(wallet);

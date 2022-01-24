@@ -9,7 +9,7 @@ import {
   decodeMintAccountData,
   decodeTokenAccountData,
 } from '@project-serum/token';
-import { Keypair, PublicKey } from '@solana/web3.js';
+import { Keypair, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import {
   SerumBook,
   SerumClient,
@@ -18,32 +18,35 @@ import {
 
 import * as simulation from './simulation.json';
 
-console.log(`[SIMULATION]`);
-console.log('');
-
 const serumClient: SerumClient = new SerumClient(simulation);
 const solanaClient: SolanaClient = new SolanaClient(simulation);
 
 (async () => {
   //console.log(`${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(simulation.config.serum.program)))}`);
 
-  /*
-  for (const token of simulation.tokens) {
-    console.log(`TOKEN: ${token.symbol}`);
+  console.log(`[SIMULATION]`);
+  console.log(`  simulation.config.wallet = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(simulation.config.wallet)))}`);
+  console.log(`  Balance = ${(await solanaClient.connection.getBalance(new PublicKey(simulation.config.wallet))) / LAMPORTS_PER_SOL} SOL`);
+  console.log('');
 
+  for (const token of simulation.tokens) {
     const mint: Keypair = Keypair.fromSecretKey(Buffer.from(token.mintPrivateKey, 'base64'));
     assert(mint.publicKey.toBase58() == new PublicKey(token.mint).toBase58());
 
     const vault: Keypair = Keypair.fromSecretKey(Buffer.from(token.vaultPrivateKey, 'base64'));
 
-    console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(mint.publicKey))}`);
-    console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(vault.publicKey))}`);
-    console.log(`  MintSupply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
+    console.log(`TOKEN: ${token.symbol}`);
+    console.log(`  mint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(mint.publicKey))}`);
+    console.log(`  vault = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(vault.publicKey))}`);
+    console.log(`  Supply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
     console.log('');
   }
+  /*
   */
 
+  /*
   await serumClient.initialize();
+  */
 
   for (const market of simulation.markets) {
     console.log(`MARKET: ${market.symbol}`);
@@ -78,19 +81,15 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log('');
   }
 
-  /*
   for (const bot of simulation.bots) {
-    console.log(`BOT: ${bot.name}`);
-
     const bot_wallet: Keypair = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
-
-    console.log(`  ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bot_wallet.publicKey))}`);
-    console.log(`  Balance = ${JSON.stringify(await solanaClient.getBalance(bot_wallet.publicKey))}`);
+    console.log(`BOT: ${bot.name}`);
+    console.log(`  bot.wallet = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(bot_wallet.publicKey))}`);
+    console.log(`  Balance = ${(await solanaClient.connection.getBalance(bot_wallet.publicKey)) / LAMPORTS_PER_SOL} SOL`);
     console.log(`  BaseTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.baseMint), bot_wallet.publicKey)))}`);
     console.log(`  QuoteTokenBalance = ${JSON.stringify(await solanaClient.getTokenBalance(await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.quoteMint), bot_wallet.publicKey)))}`);
     console.log('');
   }
-  */
 
 })().then(() => {
 

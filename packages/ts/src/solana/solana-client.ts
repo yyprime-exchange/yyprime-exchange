@@ -71,7 +71,7 @@ export class SolanaClient {
     await Promise.all(
       this.simulation.tokens.map(async (token) => {
         //if (token.symbol !== 'SOL') {
-          console.log(`createMint(${token.symbol})`);
+          console.log(`createMintAndVault(${token.symbol})`);
 
           const mint: Keypair = Keypair.fromSecretKey(Buffer.from(token.mintPrivateKey, 'base64'));
           const vault: Keypair = Keypair.fromSecretKey(Buffer.from(token.vaultPrivateKey, 'base64'));
@@ -104,7 +104,7 @@ export class SolanaClient {
             TokenInstructions.mintTo({
               mint: mint.publicKey,
               destination: vault.publicKey,
-              amount: new BN(token.mintSupply * this.pow10(token.decimals)),
+              amount: new BN(token.supply * this.pow10(token.decimals)),
               mintAuthority: owner.publicKey,
             }),
           );

@@ -169,7 +169,7 @@ export class SimulationBuilder {
           vault: vaultKeypair.publicKey.toBase58(),
           vaultPrivateKey: Buffer.from(vaultKeypair.secretKey).toString('base64'),
           decimals: mainnetToken!.decimals,
-          supply: mainnetToken!.supply,
+          supply: 1_000_000, //mainnetToken!.supply,
           price: priceKeys.get(symbol),
         };
       });
