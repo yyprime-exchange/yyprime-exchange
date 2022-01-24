@@ -11,9 +11,9 @@ export default function SerumEvents() {
       <Title>Serum Events</Title>
       {events.slice(0, 7).map((event, index) => (
         <Row key={index}>
-          <Col>{event.eventFlags.fill ? 'Fill' : 'Out'}</Col>
-          <Col>{event.eventFlags.bid ? 'Bid' : 'Ask'}</Col>
-          <Col>{event.eventFlags.maker ? 'Maker' : 'Taker'}</Col>
+          <Col span={4}>{event.eventFlags.fill ? 'Fill' : 'Out'}</Col>
+          <Col span={4}>{event.eventFlags.bid ? 'Bid' : 'Ask'}</Col>
+          <Col span={4}>{event.eventFlags.maker ? 'Maker' : 'Taker'}</Col>
         </Row>
       ))}
     </FloatingElement>
