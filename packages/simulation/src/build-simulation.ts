@@ -264,7 +264,6 @@ export class SimulationBuilder {
 
 
 
-      //const connection: Connection = new Connection('https://mango.rpcpool.com/946ef7337da3f5b8d3e4a34e7f88');
       const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
 
       const bookOrders = await Promise.all(markets_private.map(async (market) => {

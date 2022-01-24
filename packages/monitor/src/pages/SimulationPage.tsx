@@ -79,20 +79,22 @@ function SimulationPageInner() {
               </Row>
             </Wrapper>
           </Col>
-          <Col>
-            <Wrapper>
-              <Row>
-                <Col>
-                  <PriceChart />
-                </Col>
-              </Row>
-              <Row>
-                <Col style={{ height: '100%' }}>
-                  <Bots />
-                </Col>
-              </Row>
-            </Wrapper>
-          </Col>
+          {process.env.PORT && process.env.PORT !== '80' &&
+            <Col>
+              <Wrapper>
+                <Row>
+                  <Col>
+                    <PriceChart />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col style={{ height: '100%' }}>
+                    <Bots />
+                  </Col>
+                </Row>
+              </Wrapper>
+            </Col>
+          }
         </Row>
       </Wrapper>
     </>
