@@ -10,9 +10,11 @@ import {
   Transaction,
   TransactionInstruction,
 } from '@solana/web3.js';
-
-import { SerumBook, SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
+import {
+  SerumBook,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 

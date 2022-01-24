@@ -10,45 +10,99 @@
       "url": "http://127.0.0.1:8899/"
     },
     "solana": {
-      "http": "http://localhost:8899",
-      "ws": "ws://localhost:8900"
+      "http": "http://127.0.0.1:8899/",
+      "ws": "ws://127.0.0.1:8900/"
     },
-    "wallet": "2zLGDU9JkSa6Lm4EThjyafsVxfvzwYqVq3J8TgA1qqMQ"
+    "wallet": "8vg4LM3WQ7uMa5u5hFNWUVfqGuNiA5H8rQAXfx2jHgxT"
   },
   "tokens": [
     {
       "symbol": "BTC",
-      "mint": "HgEuru6AnyUV1sKqixP5SedigEq1fpAQv4bACUq9URSM",
-      "vault": "GwPe4oB3LLKnU1nnaCcyvghaoTAeLEeAuykokfL6pUkb",
+      "mint": "3UQputFSD5sADxDfMyTEUQuwg99qFxTZ69e6jEGDT2LE",
+      "vault": "CAtBP37EWH6U9rWceTKW111rHexaMGMC4wEC7rCLRN1i",
       "decimals": 6,
-      "mintSupply": 1000000000,
+      "supply": 16149.999997,
       "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
     },
     {
-      "symbol": "USDC",
-      "mint": "22KPEvpWLz2dRW8UiXoJ9V7Hxb8c2QiB8ik3cEzQF2xn",
-      "vault": "5SKNYQ28zvynDhzyA9qXEAuYmBDELX3hyZBTnbzdhPuq",
+      "symbol": "ETH",
+      "mint": "4YqHWEkzwG3ya5BVFQs2hiVU5TCNypZdfoTRATXEgnJJ",
+      "vault": "KHuPBdvcYtZQoqiYS4XH8qk9RbwmtkEwqWP9ti3qvPM",
       "decimals": 6,
-      "mintSupply": 1000000000,
+      "supply": 483499.999997,
+      "price": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB"
+    },
+    {
+      "symbol": "SOL",
+      "mint": "a6eX45zoWCXxL1ovqHgiFqva5Z1BstZvsv9bimZcqtg",
+      "vault": "AgT1ConLEvowTCHprHefhEDyigWTynrx6rVpt14ZtWic",
+      "decimals": 9,
+      "supply": 0,
+      "price": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG"
+    },
+    {
+      "symbol": "USDC",
+      "mint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
+      "vault": "48KahXT5xCu8YYdozWgmNPG4JRUngQBHweRH45V4Xfq6",
+      "decimals": 6,
+      "supply": 4785000018.759881,
       "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     }
   ],
   "markets": [
     {
       "symbol": "BTC/USDC",
-      "market": "4qFgf1192uPBodxA1u6RquEhqeM6LA9wENW3a4NCvpkE",
-      "baseMint": "HgEuru6AnyUV1sKqixP5SedigEq1fpAQv4bACUq9URSM",
+      "market": "HpN24niz4K3gjjkA82oDMXvPRwmU2ohLuTa9WY7nsf1v",
+      "baseMint": "3UQputFSD5sADxDfMyTEUQuwg99qFxTZ69e6jEGDT2LE",
       "baseSymbol": "BTC",
-      "baseDecimals": 6,
       "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
-      "quoteMint": "22KPEvpWLz2dRW8UiXoJ9V7Hxb8c2QiB8ik3cEzQF2xn",
+      "quoteMint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
       "quoteSymbol": "USDC",
-      "quoteDecimals": 6,
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
-      "requestQueue": "3KgpPG4uwCj52rQgcnL4uFZTL6HEXhqWEtR5W1Hb4pN2",
-      "eventQueue": "Bkdy7w69nKvcehMDEmnJHWFU6MAkVd5YTp7XEEWBtesy",
-      "bids": "6VDUZmwy3cGBZJYWTd5Mze7pJFeLfVbFcHhV9YsqCtxa",
-      "asks": "GNjSKLSjjK3CgyPmeNhLyGAoHZ2PqDML26WkRVeo8d1u"
+      "requestQueue": "7Y3s2ruRwCedVT2gJVcfh5mBbgdvSEw7VSCnn71e5LAw",
+      "eventQueue": "5WJXWwopwLXf4RGWkr4yFJZG91mtpGAd64A8DcCvG6hS",
+      "bids": "nQYgVUZ3q7aH11fo8UBAk98xeVZfHgwDiNyizgbRipK",
+      "asks": "3KZk7jtqeVvhG4kxKjqpPyTyk85xDpqVWY1WpJhuWaH8",
+      "baseLotSize": 100,
+      "baseDecimals": 6,
+      "quoteLotSize": 10,
+      "quoteDecimals": 6
+    },
+    {
+      "symbol": "ETH/USDC",
+      "market": "9YDXgKXBhVj3obDYTSb6ajikP6XFGDWZb3ZWUCkZJvP9",
+      "baseMint": "4YqHWEkzwG3ya5BVFQs2hiVU5TCNypZdfoTRATXEgnJJ",
+      "baseSymbol": "ETH",
+      "basePrice": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB",
+      "quoteMint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
+      "quoteSymbol": "USDC",
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "2BAiPYKrBz25kJ33SeJRADYu7JPaSAyhQD3WoorxHCQw",
+      "eventQueue": "EGcDKwtpgk5LxoBunvcv6jk3qoszYxEo6K77FfY8HkdS",
+      "bids": "5FB83cuTYNPes4FiTbhUqgZgyuvNDg7sWDvhSsqr8CuA",
+      "asks": "AT2Y4t1hPmbAKHrdxPVutBhekTnrKonuH9jfdGd1CzEK",
+      "baseLotSize": 1000,
+      "baseDecimals": 6,
+      "quoteLotSize": 10,
+      "quoteDecimals": 6
+    },
+    {
+      "symbol": "SOL/USDC",
+      "market": "AWemkiBYV2d8e746CBrLJA8vRZQUZ3ojsqJCXPocrv3L",
+      "baseMint": "a6eX45zoWCXxL1ovqHgiFqva5Z1BstZvsv9bimZcqtg",
+      "baseSymbol": "SOL",
+      "basePrice": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG",
+      "quoteMint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
+      "quoteSymbol": "USDC",
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "EqajENpgzzLe3xhhsjWxpugZCHofWtKgKBtjS31VUi7K",
+      "eventQueue": "4eqUTogxALvDefmRtkPUu44kYRVbpsksRk7cz8KAf2G8",
+      "bids": "HmCPh1i6JAmu8ewstZQcEC6vLvn3Ar32VEnhN7FRTzs2",
+      "asks": "8qiqEVg4axi12Ghu8S1tB1M57jM515vwRqDCGaDJKyhV",
+      "baseLotSize": 100000000,
+      "baseDecimals": 9,
+      "quoteLotSize": 100,
+      "quoteDecimals": 6
     }
   ],
   "bots": [
@@ -56,19 +110,49 @@
       "name": "BTC_mm_0",
       "type": "maker",
       "symbol": "BTC/USDC",
-      "market": "4qFgf1192uPBodxA1u6RquEhqeM6LA9wENW3a4NCvpkE",
-      "base": "BTC",
-      "baseBalance": 10000,
+      "market": "HpN24niz4K3gjjkA82oDMXvPRwmU2ohLuTa9WY7nsf1v",
+      "baseBalance": 54.49248810428011,
       "baseDecimals": 6,
-      "baseMint": "HgEuru6AnyUV1sKqixP5SedigEq1fpAQv4bACUq9URSM",
-      "quote": "USDC",
-      "quoteBalance": 10000,
+      "baseMint": "3UQputFSD5sADxDfMyTEUQuwg99qFxTZ69e6jEGDT2LE",
+      "quoteBalance": 1931377.25588,
       "quoteDecimals": 6,
-      "quoteMint": "22KPEvpWLz2dRW8UiXoJ9V7Hxb8c2QiB8ik3cEzQF2xn",
+      "quoteMint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
       "params": {
         "half_spread": 0.005
       },
-      "wallet": "u6hJWDKHsHYjQ7E78Livf1NFKRor7LHsrTCyhx7e7u8"
+      "wallet": "GxaUeGgdNw74rA2k3saHTuLqsoQo1cWKFSauSgzVN12b"
+    },
+    {
+      "name": "ETH_mm_0",
+      "type": "maker",
+      "symbol": "ETH/USDC",
+      "market": "9YDXgKXBhVj3obDYTSb6ajikP6XFGDWZb3ZWUCkZJvP9",
+      "baseBalance": 97.48331914684992,
+      "baseDecimals": 6,
+      "baseMint": "4YqHWEkzwG3ya5BVFQs2hiVU5TCNypZdfoTRATXEgnJJ",
+      "quoteBalance": 228662.72238999998,
+      "quoteDecimals": 6,
+      "quoteMint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
+      "params": {
+        "half_spread": 0.005
+      },
+      "wallet": "AUuB3C3a79rgnUF6MeLd7Ug8dUjUsY2PsPGNxkhkXKgc"
+    },
+    {
+      "name": "SOL_mm_0",
+      "type": "maker",
+      "symbol": "SOL/USDC",
+      "market": "AWemkiBYV2d8e746CBrLJA8vRZQUZ3ojsqJCXPocrv3L",
+      "baseBalance": 5862.135803459067,
+      "baseDecimals": 9,
+      "baseMint": "a6eX45zoWCXxL1ovqHgiFqva5Z1BstZvsv9bimZcqtg",
+      "quoteBalance": 526378.7602,
+      "quoteDecimals": 6,
+      "quoteMint": "25fTPJ2BHLCEMT4iMEEwcMktky7i21Sjhf1nBCCasLSJ",
+      "params": {
+        "half_spread": 0.005
+      },
+      "wallet": "BZEBLiR9PTi6U4cW4Dir1uRpnoNHq2uwgbSa9hz8HBvc"
     }
   ]
 }

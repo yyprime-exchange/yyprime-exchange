@@ -7,118 +7,216 @@
     },
     "serum": {
       "program": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
-      "url": "https://solana-api.projectserum.com"
+      "url": "https://solana-api.projectserum.com/"
     },
     "solana": {
-      "http": "http://api.mainnet-beta.solana.com",
-      "https": "https://api.mainnet-beta.solana.com",
-      "wss": "wss://api.mainnet-beta.solana.com"
+      "http": "http://api.mainnet-beta.solana.com/",
+      "https": "https://api.mainnet-beta.solana.com/",
+      "wss": "wss://api.mainnet-beta.solana.com/"
     }
   },
   "tokens": [
     {
-      "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
       "symbol": "BTC",
       "mint": "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 16149.999997,
+      "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
     },
     {
-      "price": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB",
       "symbol": "ETH",
       "mint": "2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 483499.999997,
+      "price": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB"
     },
     {
-      "price": "79wm3jjcPr6RaNQ4DGvP5KxG1mNd3gEBsg6FsNVFezK4",
       "symbol": "MNGO",
       "mint": "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 4999999999.999995,
+      "price": "79wm3jjcPr6RaNQ4DGvP5KxG1mNd3gEBsg6FsNVFezK4"
     },
     {
-      "price": "AnLf8tVYCM816gmBjiy8n53eXKKEDydT5piYjjQDPgTB",
       "symbol": "RAY",
       "mint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 555000000,
+      "price": "AnLf8tVYCM816gmBjiy8n53eXKKEDydT5piYjjQDPgTB"
     },
     {
-      "price": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG",
       "symbol": "SOL",
       "mint": "So11111111111111111111111111111111111111112",
-      "decimals": 9
+      "decimals": 9,
+      "supply": 0,
+      "price": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG"
     },
     {
-      "price": "3NBReDRTLKMQEKiLD5tGcx4kXbTf88b7f2xLS9UuGjym",
       "symbol": "SRM",
       "mint": "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 9995675509.88094,
+      "price": "3NBReDRTLKMQEKiLD5tGcx4kXbTf88b7f2xLS9UuGjym"
     },
     {
-      "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
       "symbol": "USDC",
       "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 4785000018.759881,
+      "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     },
     {
-      "price": "3vxLXJqLqF3JG5TCbYycbKWRBbCJQLxQmBGCkyqEEefL",
       "symbol": "USDT",
       "mint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
-      "decimals": 6
+      "decimals": 6,
+      "supply": 1890000009.537798,
+      "price": "3vxLXJqLqF3JG5TCbYycbKWRBbCJQLxQmBGCkyqEEefL"
     }
   ],
   "markets": [
     {
-      "baseLotSize": 100,
-      "quoteLotSize": 10,
-      "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
-      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
       "symbol": "BTC/USDC",
       "market": "A8YFbxQYFVqKZaoYJLLUVcQiWP7G2MeEgW5wsAQgMvFw",
       "baseMint": "9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E",
+      "baseVault": "GZ1YSupuUq9kB28kX9t1j9qCpN67AMMwn4Q72BzeSpfR",
       "baseSymbol": "BTC",
-      "baseDecimals": 6,
+      "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
       "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "quoteVault": "7sP9fug8rqZFLbXoEj8DETF81KasaRA1fr6jQb6ScKc5",
       "quoteSymbol": "USDC",
-      "quoteDecimals": 6,
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
       "requestQueue": "H6UaUrNVELJgTqao1CNL4252kShLKSfwoboT8tF7HNtB",
       "eventQueue": "6NQqaa48SnBBJZt9HyVPngcZFW81JfDv9EjRX2M4WkbP",
       "bids": "6wLt7CX1zZdFpa6uGJJpZfzWvG6W9rxXjquJDYiFwf9K",
-      "asks": "6EyVXMMA58Nf6MScqeLpw1jS12RCpry23u9VMfy8b65Y"
+      "asks": "6EyVXMMA58Nf6MScqeLpw1jS12RCpry23u9VMfy8b65Y",
+      "vaultSignerNonce": 0,
+      "quoteDustThreshold": 100,
+      "baseLotSize": 100,
+      "baseDecimals": 6,
+      "quoteLotSize": 10,
+      "quoteDecimals": 6,
+      "feeRateBps": 0,
+      "referrerRebatesAccrued": 13558282977
     },
     {
-      "baseLotSize": 1000,
-      "quoteLotSize": 10,
-      "basePrice": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB",
-      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
       "symbol": "ETH/USDC",
       "market": "4tSvZvnbyzHXLMTiFonMyxZoHmFqau1XArcRCVHLZ5gX",
       "baseMint": "2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk",
+      "baseVault": "7Nw66LmJB6YzHsgEGQ8oDSSsJ4YzUkEVAvysQuQw7tC4",
       "baseSymbol": "ETH",
-      "baseDecimals": 6,
+      "basePrice": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB",
       "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "quoteVault": "EsDTx47jjFACkBhy48Go2W7AQPk4UxtT4765f3tpK21a",
       "quoteSymbol": "USDC",
-      "quoteDecimals": 6,
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
       "requestQueue": "6yJsfduT4Av6xaECAoXf4cXHaQQYjf78D1FG3WDyuxdr",
       "eventQueue": "Eac7hqpaZxiBtG4MdyKpsgzcoVN6eMe9tAbsdZRYH4us",
       "bids": "8tFaNpFPWJ8i7inhKSfAcSestudiFqJ2wHyvtTfsBZZU",
-      "asks": "2po4TC8qiTgPsqcnbf6uMZRMVnPBzVwqqYfHP15QqREU"
+      "asks": "2po4TC8qiTgPsqcnbf6uMZRMVnPBzVwqqYfHP15QqREU",
+      "vaultSignerNonce": 1,
+      "quoteDustThreshold": 100,
+      "baseLotSize": 1000,
+      "baseDecimals": 6,
+      "quoteLotSize": 10,
+      "quoteDecimals": 6,
+      "feeRateBps": 0,
+      "referrerRebatesAccrued": 15621966036
     },
     {
-      "baseLotSize": 100000000,
-      "quoteLotSize": 100,
-      "basePrice": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG",
+      "symbol": "MNGO/USDC",
+      "market": "3zb9bvQ5jeY9wFyr9MSeNqkFf5Ch3DTvY49Q6476E4HF",
+      "baseMint": "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
+      "baseVault": "8QNJoRnphXewP4FnwZA3qczaY81XxcRVWYbFcDFXV9Eq",
+      "baseSymbol": "MNGO",
+      "basePrice": "79wm3jjcPr6RaNQ4DGvP5KxG1mNd3gEBsg6FsNVFezK4",
+      "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "quoteVault": "5BB47ehRbhqS8xPvTC6ZfTWWXbFyPeRB3VHh9g4fYG9U",
+      "quoteSymbol": "USDC",
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "3ZbV35RZRe3o4zzxeiJW7avJF8cX2sxKiBaZcr5wL4s3",
+      "eventQueue": "86KxAss2Ym6RwBWSpydvxJ6PqyawV99DFEccvNL25CKC",
+      "bids": "9jYsaBAgWD65n3AzCQkVah3f3VTg4gVPdeQaPKEpNfy7",
+      "asks": "FwpGNmuJiDmh2SXCJ9eFQVCkEvDFmKxZY1mSUXKBopei",
+      "vaultSignerNonce": 1,
+      "quoteDustThreshold": 100,
+      "baseLotSize": 1000000,
+      "baseDecimals": 6,
+      "quoteLotSize": 100,
+      "quoteDecimals": 6,
+      "feeRateBps": 0,
+      "referrerRebatesAccrued": 39306
+    },
+    {
+      "symbol": "RAY/USDC",
+      "market": "2xiv8A5xrJ7RnGdxXB42uFEkYHJjszEhaJyKKt4WaLep",
+      "baseMint": "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",
+      "baseVault": "GGcdamvNDYFhAXr93DWyJ8QmwawUHLCyRqWL3KngtLRa",
+      "baseSymbol": "RAY",
+      "basePrice": "AnLf8tVYCM816gmBjiy8n53eXKKEDydT5piYjjQDPgTB",
+      "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "quoteVault": "22jHt5WmosAykp3LPGSAKgY45p7VGh4DFWSwp21SWBVe",
+      "quoteSymbol": "USDC",
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "39mE6bYktM1XAKKmB6WN971X3Sa1yGkHxtCTWMkVrwN2",
+      "eventQueue": "H9dZt8kvz1Fe5FyRisb77KcYTaN8LEbuVAfJSnAaEABz",
+      "bids": "Hf84mYadE1VqSvVWAvCWc9wqLXak4RwXiPb4A91EAUn5",
+      "asks": "DC1HsWWRCXVg3wk2NndS5LTbce3axwUwUZH1RgnV4oDN",
+      "vaultSignerNonce": 0,
+      "quoteDustThreshold": 100,
+      "baseLotSize": 100000,
+      "baseDecimals": 6,
+      "quoteLotSize": 100,
+      "quoteDecimals": 6,
+      "feeRateBps": 0,
+      "referrerRebatesAccrued": 17462211110
+    },
+    {
       "symbol": "SOL/USDC",
       "market": "9wFFyRfZBsuAha4YcuxcXLKwMxJR43S7fPfQLusDBzvT",
       "baseMint": "So11111111111111111111111111111111111111112",
+      "baseVault": "36c6YqAwyGKQG66XEp2dJc5JqjaBNv7sVghEtJv4c7u6",
       "baseSymbol": "SOL",
-      "baseDecimals": 9,
+      "basePrice": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG",
       "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "quoteVault": "8CFo8bL8mZQK8abbFyypFMwEDd8tVJjHTTojMLgQTUSZ",
       "quoteSymbol": "USDC",
-      "quoteDecimals": 6,
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
       "requestQueue": "AZG3tFCFtiCqEwyardENBQNpHqxgzbMw8uKeZEw2nRG5",
       "eventQueue": "5KKsLVU6TcbVDK4BS6K1DGDxnh4Q9xjYJ8XaDCG5t8ht",
       "bids": "14ivtgssEBoBjuZJtSAPKYgpUK7DmnSwuPMqJoVTSgKJ",
-      "asks": "CEQdAFKdycHugujQg9k2wbmxjcpdYZyVLfV9WerTnafJ"
+      "asks": "CEQdAFKdycHugujQg9k2wbmxjcpdYZyVLfV9WerTnafJ",
+      "vaultSignerNonce": 1,
+      "quoteDustThreshold": 100,
+      "baseLotSize": 100000000,
+      "baseDecimals": 9,
+      "quoteLotSize": 100,
+      "quoteDecimals": 6,
+      "feeRateBps": 0,
+      "referrerRebatesAccrued": 70519454041
+    },
+    {
+      "symbol": "SRM/USDC",
+      "market": "ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA",
+      "baseMint": "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
+      "baseVault": "Ecfy8et9Mft9Dkavnuh4mzHMa2KWYUbBTA5oDZNoWu84",
+      "baseSymbol": "SRM",
+      "basePrice": "3NBReDRTLKMQEKiLD5tGcx4kXbTf88b7f2xLS9UuGjym",
+      "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "quoteVault": "hUgoKy5wjeFbZrXDW4ecr42T4F5Z1Tos31g68s5EHbP",
+      "quoteSymbol": "USDC",
+      "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
+      "requestQueue": "Hr8Z93aWe4hhJbC5i7YTsPaSToziVh3vyMfv9GRqKFCh",
+      "eventQueue": "6o44a9xdzKKDNY7Ff2Qb129mktWbsCT4vKJcg2uk41uy",
+      "bids": "AuL9JzRJ55MdqzubK4EutJgAumtkuFcRVuPUvTX39pN8",
+      "asks": "8Lx9U9wdE3afdqih1mCAXy3unJDfzSaXFqAvoLMjhwoD",
+      "vaultSignerNonce": 0,
+      "quoteDustThreshold": 100,
+      "baseLotSize": 100000,
+      "baseDecimals": 6,
+      "quoteLotSize": 100,
+      "quoteDecimals": 6,
+      "feeRateBps": 0,
+      "referrerRebatesAccrued": 9433654510
     }
   ]
 }

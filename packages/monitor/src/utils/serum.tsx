@@ -14,11 +14,11 @@ export interface SerumContextValues {
   symbol?: string,
   market?: PublicKey;
   baseSymbol?: string,
-  baseDecimals?: number,
   baseLotSize?: number;
+  baseDecimals?: number,
   quoteSymbol?: string,
-  quoteDecimals?: number,
   quoteLotSize?: number;
+  quoteDecimals?: number,
   requestQueue?: PublicKey;
   eventQueue?: PublicKey;
   bids?: PublicKey;
@@ -39,11 +39,11 @@ export function SerumProvider({ baseSymbol, quoteSymbol, children }) {
         symbol,
         market: new PublicKey(market!.market),
         baseSymbol,
-        baseDecimals: market!.baseDecimals,
         baseLotSize: market!.baseLotSize,
+        baseDecimals: market!.baseDecimals,
         quoteSymbol,
-        quoteDecimals: market!.quoteDecimals,
         quoteLotSize: market!.quoteLotSize,
+        quoteDecimals: market!.quoteDecimals,
         requestQueue: new PublicKey(market!.requestQueue),
         eventQueue: new PublicKey(market!.eventQueue),
         bids: new PublicKey(market!.bids),

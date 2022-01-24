@@ -1,3 +1,4 @@
+import assert from 'assert';
 import BN from 'bn.js';
 import { Col, Row } from 'antd';
 import React, { useRef, useEffect, useState } from 'react';
@@ -206,14 +207,11 @@ const OrderbookRow = React.memo(
       return () => clearTimeout(id);
     }, [price, size]);
 
-    let formattedSize =
-      minOrderSize && !isNaN(size)
-        ? Number(size).toFixed(getDecimalCount(minOrderSize) + 1)
-        : size;
-    let formattedPrice =
-      tickSize && !isNaN(price)
-        ? Number(price).toFixed(getDecimalCount(tickSize) + 1)
-        : price;
+    assert(minOrderSize);
+    let formattedSize = Number(size).toFixed(getDecimalCount(minOrderSize) + 1);
+
+    assert(tickSize);
+    let formattedPrice = Number(price).toFixed(getDecimalCount(tickSize) + 1);
 
     return (
       <Row ref={element} style={{ marginBottom: 1 }}>

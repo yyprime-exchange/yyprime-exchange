@@ -8,10 +8,11 @@ import {
   SystemProgram,
   Transaction
 } from "@solana/web3.js";
-
-import { PythClient } from '@yyprime/yyprime-exchange-ts/src/pyth';
-import { SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
+import {
+  PythClient,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 
@@ -21,7 +22,6 @@ import * as simulation from './simulation.json';
   const solanaClient: SolanaClient = new SolanaClient(simulation);
 
   const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(simulation.config.walletPrivateKey, 'base64'));
-
   await solanaClient.requestAirdrop(simulation.config.walletBalance, wallet.publicKey);
 
   await solanaClient.createTokens(wallet);
@@ -30,7 +30,7 @@ import * as simulation from './simulation.json';
 
   for (const bot of simulation.bots) {
     const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
-    await solanaClient.requestAirdrop(100, bot_wallet.publicKey);
+    await solanaClient.requestAirdrop(bot.walletBalance, bot_wallet.publicKey);
 
     //const baseTokenAccount = await solanaClient.getAssociatedTokenAddress(new PublicKey(bot.baseMint), bot_wallet.publicKey);
     const baseTokenAccount = await solanaClient.createTokenAccount(new PublicKey(bot.baseMint), bot_wallet.publicKey, bot_wallet);
@@ -77,6 +77,7 @@ import * as simulation from './simulation.json';
     );
     await sendAndConfirmTransaction(serumClient.connection, transaction, [bot_wallet, openOrders]);
   }
+
 })().then(() => {
   console.log(`Simulation started on ${simulation.config.cluster}`);
 });

@@ -9,6 +9,6 @@
   },
   "mainnet": {
     "program": "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
-    "url": "https://solana-api.projectserum.com"
+    "url": "https://solana-api.projectserum.com/"
   }
 }

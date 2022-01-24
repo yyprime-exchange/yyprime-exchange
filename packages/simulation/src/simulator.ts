@@ -1,9 +1,15 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
-
-import { Bot, MakerBot, TakerBot } from '@yyprime/yyprime-exchange-ts/src/bots';
-import { PythClient, PythPrice, PythToken } from '@yyprime/yyprime-exchange-ts/src/pyth';
-import { SerumBook, SerumClient } from '@yyprime/yyprime-exchange-ts/src/serum';
-import { SolanaClient } from '@yyprime/yyprime-exchange-ts/src/solana';
+import {
+  Bot,
+  MakerBot,
+  TakerBot,
+  PythClient,
+  PythPrice,
+  PythToken,
+  SerumBook,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 
@@ -29,8 +35,10 @@ export class Simulator {
       const market = this.serumClient.getMarket(bot.market);
       const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
 
+      let initialOrders = simulation.orders.find(orders => orders.symbol === bot.symbol);
+
       switch (bot.type) {
-        case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
+        case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet, initialOrders)); break;
         case "taker": this.bots.push(new TakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
         default: throw new Error(`Invalid bot type: ${bot.type}`);
       }

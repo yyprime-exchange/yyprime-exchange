@@ -1,7 +1,6 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types"],
     "outDir": "./lib",
     "target": "es6",
     "lib": ["es2019"],
@@ -11,8 +10,10 @@
     "declarationMap": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
+    "moduleResolution": "node",
     "sourceMap": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/**/*.test.js", "node_modules", "**/node_modules"]
