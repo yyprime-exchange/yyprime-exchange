@@ -41,42 +41,32 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     console.log(`  Supply: ${(await solanaClient.getMintSupply(new PublicKey(token.mint), token.decimals))}`);
     console.log('');
   }
-  /*
-  */
 
-  /*
   await serumClient.initialize();
-  */
 
   for (const market of simulation.markets) {
     console.log(`MARKET: ${market.symbol}`);
-
-    /*
     console.log(`  ${JSON.stringify(serumClient.getMarket(market.market))}`);
-
     console.log(`  baseMint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.baseMint)))}`);
     console.log(`  quoteMint = ${JSON.stringify(await solanaClient.connection.getParsedAccountInfo(new PublicKey(market.quoteMint)))}`);
-    */
 
-    /*
     const requestQueueAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.requestQueue));
     const requests = decodeRequestQueue(requestQueueAccount!.data);
     for (const request of requests) {
-      console.log(`  ${JSON.stringify(request)}`);
+      console.log(`  request ${JSON.stringify(request)}`);
     }
 
     const eventQueueAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.eventQueue));
     const events = decodeEventQueue(eventQueueAccount!.data);
     for (const event of events) {
-      console.log(`  ${JSON.stringify(event)}`);
+      console.log(`  event ${JSON.stringify(event)}`);
     }
 
     const asksAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.asks));
-    console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), asksAccount!.data))}`);
+    console.log(`  asks = ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), asksAccount!.data))}`);
 
     const bidsAccount = await solanaClient.connection.getAccountInfo(new PublicKey(market.bids));
-    console.log(`  ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), bidsAccount!.data))}`);
-    */
+    console.log(`  bids = ${JSON.stringify(Orderbook.decode(serumClient.getMarket(market.market), bidsAccount!.data))}`);
 
     console.log('');
   }
@@ -96,11 +86,11 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
   console.log(`Monitoring simulation on ${simulation.config.cluster}`);
 
   function onAsk(book: SerumBook) {
-    //console.log(`  ask ${JSON.stringify(book)}`);
+    console.log(`  ask ${JSON.stringify(book)}`);
   }
 
   function onBid(book: SerumBook) {
-    //console.log(`  bid ${JSON.stringify(book)}`);
+    console.log(`  bid ${JSON.stringify(book)}`);
   }
 
   function onEvent(book: SerumBook, events) {

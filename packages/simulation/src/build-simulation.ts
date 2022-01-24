@@ -259,32 +259,10 @@ export class SimulationBuilder {
           eventQueue: market.eventQueue,
           bids: market.bids,
           asks: market.asks,
+          baseLotSize: market.baseLotSize,
+          quoteLotSize: market.quoteLotSize,
         };
       });
-
-
-
-      const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
-
-      const bookOrders = await Promise.all(markets_private.map(async (market) => {
-        let asks: [number, number, BN, BN][] = [];
-        let bids: [number, number, BN, BN][] = [];
-
-        const mainnetMarket = simulationMainnet.markets.find(mainnetMarket => { return mainnetMarket.symbol === market.symbol; });
-        const mainnetBaseToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.baseSymbol; });
-        const mainnetQuoteToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.quoteSymbol; });
-
-        if (mainnetMarket && mainnetBaseToken && mainnetQuoteToken) {
-          asks = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
-          bids = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
-        }
-
-        return {
-          symbol: market.symbol,
-          asks: asks,
-          bids: bids,
-        };
-      }));
 
 
 
@@ -341,6 +319,30 @@ export class SimulationBuilder {
 
 
 
+      const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
+
+      const orders_private = await Promise.all(markets_private.map(async (market) => {
+        let asks: [number, number, BN, BN][] = [];
+        let bids: [number, number, BN, BN][] = [];
+
+        const mainnetMarket = simulationMainnet.markets.find(mainnetMarket => { return mainnetMarket.symbol === market.symbol; });
+        const mainnetBaseToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.baseSymbol; });
+        const mainnetQuoteToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.quoteSymbol; });
+
+        if (mainnetMarket && mainnetBaseToken && mainnetQuoteToken) {
+          asks = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
+          bids = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
+        }
+
+        return {
+          symbol: market.symbol,
+          asks: asks,
+          bids: bids,
+        };
+      }));
+
+
+
       return [
         {
           config: config_public,
@@ -353,8 +355,8 @@ export class SimulationBuilder {
           tokens: tokens_private,
           markets: markets_private,
           bots: bots_private,
+          orders: orders_private,
         },
-        bookOrders,
       ];
     }
   }
@@ -373,7 +375,7 @@ function getPriceLevels(market, baseToken, quoteToken, data): [number, number, B
       levels.push([price, quantity]);
     }
   }
-  return levels.map(([priceLots, sizeLots]) => [
+  return levels.slice(0, 7).map(([priceLots, sizeLots]) => [
     priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
     baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
     priceLots,
@@ -425,13 +427,12 @@ function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
     simulationBuilder.market("ETH/USDC");
     simulationBuilder.market("SOL/USDC");
 
-    simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 10_000, "USDC", 10_000, { half_spread: 0.005 });
-    simulationBuilder.bot("ETH_mm_0", "maker", "ETH", 10_000, "USDC", 10_000, { half_spread: 0.005 });
-    //simulationBuilder.bot("SOL_mm_0", "maker", "SOL", 10_000, "USDC", 10_000, { half_spread: 0.005 });
+    simulationBuilder.bot("BTC_mm_0", "maker", "BTC", 500_000, "USDC", 500_000, { half_spread: 0.005 });
+    simulationBuilder.bot("ETH_mm_0", "maker", "ETH", 500_000, "USDC", 500_000, { half_spread: 0.005 });
+    simulationBuilder.bot("SOL_mm_0", "maker", "SOL", 500_000, "USDC", 500_000, { half_spread: 0.005 });
 
-    const [simulation_public, simulation_private, simulation_orders] = await simulationBuilder.build();
+    const [simulation_public, simulation_private] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
     fs.writeFileSync('src/simulation.json', JSON.stringify(simulation_private, null, 2));
-    fs.writeFileSync('src/simulation-orders.json', JSON.stringify(simulation_orders, null, 2));
   }
 })();

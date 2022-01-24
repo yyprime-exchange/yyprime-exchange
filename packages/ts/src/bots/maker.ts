@@ -29,7 +29,6 @@ export class MakerBot extends Bot {
 
   public onPrice(token: PythToken, price: PythPrice) {
     (async () => {
-
       if (price.price) {
 
         if (!this.ordersSent) {
@@ -45,6 +44,7 @@ export class MakerBot extends Bot {
           //this.placeOrder('buy', bid_price, bid_size, 'limit'); // this.config.quoteBalance
 
 
+          /*
           const asks = [
             [6.041, 7.8],
             [6.051, 72.3],
@@ -72,11 +72,10 @@ export class MakerBot extends Bot {
           for (let k = 0; k < bids.length; k += 1) {
             await this.placeOrder('buy', bids[k][0], bids[k][1], 'postOnly');
           }
-        }
+          */
 
-        //console.log(JSON.stringify(token));
-        //console.log(JSON.stringify(price));
-        //console.log('');
+
+        }
       }
 
     })();
