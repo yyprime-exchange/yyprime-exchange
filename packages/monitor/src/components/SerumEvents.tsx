@@ -1,5 +1,4 @@
 import { Row } from 'antd';
-import React from "react";
 import React from 'react';
 import { useSerumEvents } from '../utils/serum';
 import FloatingElement from './layout/FloatingElement';
