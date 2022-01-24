@@ -14,7 +14,7 @@ export function SolanaProvider({ baseSymbol, quoteSymbol, children }) {
   const configuration = useConfiguration();
   const symbol = `${baseSymbol.toUpperCase()}/${quoteSymbol.toUpperCase()}`;
   const market = configuration.markets.find((market) => { return market.symbol === symbol; });
-  const bots = configuration.bots.filter((bot) => { return bot.market === market.market; });
+  const bots = (configuration.bots) ? configuration.bots.filter((bot) => { return bot.market === market.market; }) : [];
   return (
     <SolanaContext.Provider value={{ bots }} >
       {children}
