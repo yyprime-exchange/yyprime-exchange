@@ -9,7 +9,7 @@ export default function SerumEvents() {
   return (
     <FloatingElement style={{ width: '400px', height: '450px' }} >
       <Title>Serum Events</Title>
-      {events.slice(0, 7).map((event, index) => (
+      {events.slice(0, 15).map((event, index) => (
         <Row key={index}>
           <Col span={4}>{event.eventFlags.fill ? 'Fill' : 'Out'}</Col>
           <Col span={4}>{event.eventFlags.bid ? 'Bid' : 'Ask'}</Col>
