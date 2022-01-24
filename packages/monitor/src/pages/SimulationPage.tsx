@@ -79,7 +79,7 @@ function SimulationPageInner() {
               </Row>
             </Wrapper>
           </Col>
-          {process.env.PORT && process.env.PORT !== '80' &&
+          {(!process.env.PORT || process.env.PORT !== '80') &&
             <Col>
               <Wrapper>
                 <Row>
