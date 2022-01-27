@@ -37,7 +37,6 @@ const Price = styled.div`
 `;
 
 export default function SerumOrderbook({ depth = 7 }) {
-
   const { baseSymbol, quoteSymbol } = useSerum();
 
   const [orderbook] = useSerumOrderbook(depth);
@@ -65,7 +64,7 @@ export default function SerumOrderbook({ depth = 7 }) {
 
       currentOrderbookData.current = {
         bids: orderbook?.bids,
-        asks: orderbook?.asks,
+        asks: orderbook?.asks
       };
 
       setOrderbookData({ bids: bidsToDisplay, asks: asksToDisplay });
@@ -75,7 +74,7 @@ export default function SerumOrderbook({ depth = 7 }) {
   useEffect(() => {
     lastOrderbookData.current = {
       bids: orderbook?.bids,
-      asks: orderbook?.asks,
+      asks: orderbook?.asks
     };
   }, [orderbook]);
 
@@ -88,7 +87,7 @@ export default function SerumOrderbook({ depth = 7 }) {
           price,
           size,
           cumulativeSize,
-          sizePercent: Math.round((cumulativeSize / (totalSize || 1)) * 100),
+          sizePercent: Math.round((cumulativeSize / (totalSize || 1)) * 100)
         });
         return cumulative;
       }, []);
@@ -104,7 +103,7 @@ export default function SerumOrderbook({ depth = 7 }) {
     >
       <Title>Serum Orderbook</Title>
       <SizeTitle>
-        <Col span={12} style={{ textAlign: 'left'}}>
+        <Col span={12} style={{ textAlign: 'left' }}>
           Size ({baseSymbol.toUpperCase()})
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
@@ -219,7 +218,7 @@ const OrderbookRow = React.memo(
           {formattedSize}
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
-        <Line
+          <Line
             data-width={sizePercent + '%'}
             data-bgcolor={
               side === 'buy'

@@ -54,16 +54,25 @@ export default function TopBar() {
             display: 'flex',
             alignItems: 'flex-end',
             flex: 1,
-            color: '#dd3232',
+            color: '#dd3232'
           }}
         >
-          <Menu.Item key={'/market/btc/usdc'} style={{ margin: '0 10px 0 20px' }}>
+          <Menu.Item
+            key={'/market/btc/usdc'}
+            style={{ margin: '0 10px 0 20px' }}
+          >
             BTC/USDC
           </Menu.Item>
-          <Menu.Item key={'/market/eth/usdc'} style={{ margin: '0 10px 0 20px' }}>
+          <Menu.Item
+            key={'/market/eth/usdc'}
+            style={{ margin: '0 10px 0 20px' }}
+          >
             ETH/USDC
           </Menu.Item>
-          <Menu.Item key={'/market/sol/usdc'} style={{ margin: '0 10px 0 20px' }}>
+          <Menu.Item
+            key={'/market/sol/usdc'}
+            style={{ margin: '0 10px 0 20px' }}
+          >
             SOL/USDC
           </Menu.Item>
         </Menu>
@@ -72,8 +81,7 @@ export default function TopBar() {
             align="middle"
             style={{ paddingLeft: 5, paddingRight: 5 }}
             gutter={16}
-          >
-          </Row>
+          ></Row>
         </div>
       </Wrapper>
     </>

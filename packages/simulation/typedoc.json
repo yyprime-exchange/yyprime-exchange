@@ -1,8 +1,8 @@
 {
-    "entryPoints": ["src/index.ts"],
-    "out": "docs",
-    "excludePrivate": true,
-    "excludeProtected": true,
-    "excludeInternal": true,
-    "exclude": ["**/instruction.ts"]
+  "entryPoints": ["src/index.ts"],
+  "out": "docs",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "exclude": ["**/instruction.ts"]
 }

@@ -3,14 +3,14 @@ import React, { useContext } from 'react';
 import simulation_mainnet from '../config/simulation-mainnet.json';
 import simulation from '../config/simulation.json';
 
-const ConfigurationContext: React.Context<null | any> = React.createContext<null | any>(
-  null,
-);
+const ConfigurationContext: React.Context<null | any> = React.createContext<
+  null | any
+>(null);
 
 export function ConfigurationProvider({ children }) {
   return (
     <ConfigurationContext.Provider
-      value={ (window.location.port === '') ? simulation_mainnet : simulation }
+      value={window.location.port === '' ? simulation_mainnet : simulation}
     >
       {children}
     </ConfigurationContext.Provider>

@@ -5,18 +5,15 @@ import { Account, AccountInfo, Connection, PublicKey } from '@solana/web3.js';
 import { useConfiguration } from './configuration';
 import { setCache, useAsyncData } from './fetch-loop';
 
-const PythConnectionContext: React.Context<null | Connection> = React.createContext<null | Connection>(
-  null,
-);
+const PythConnectionContext: React.Context<null | Connection> =
+  React.createContext<null | Connection>(null);
 
 export function PythConnectionProvider({ children }) {
   const configuration = useConfiguration();
 
   const connection = useMemo((): Connection => {
     return new Connection(configuration.config.pyth.url, 'recent');
-  }, [
-    configuration.config.pyth,
-  ]);
+  }, [configuration.config.pyth]);
 
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
   // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
@@ -36,9 +33,7 @@ export function PythConnectionProvider({ children }) {
   }, [connection]);
 
   return (
-    <PythConnectionContext.Provider
-      value={ connection }
-    >
+    <PythConnectionContext.Provider value={connection}>
       {children}
     </PythConnectionContext.Provider>
   );
@@ -55,14 +50,14 @@ export function usePythConnection() {
 const accountListenerCount = new Map();
 
 export function useAccountInfo(
-  publicKey: PublicKey | undefined | null,
+  publicKey: PublicKey | undefined | null
 ): [AccountInfo<Buffer> | null | undefined, boolean] {
   const connection = usePythConnection();
   const cacheKey = tuple(connection, publicKey?.toBase58());
   const [accountInfo, loaded] = useAsyncData<AccountInfo<Buffer> | null>(
     async () => (publicKey ? connection.getAccountInfo(publicKey) : null),
     cacheKey,
-    { refreshInterval: 60_000 },
+    { refreshInterval: 60_000 }
   );
   useEffect(() => {
     if (!publicKey) {

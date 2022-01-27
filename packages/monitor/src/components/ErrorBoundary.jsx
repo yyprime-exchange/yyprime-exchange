@@ -5,7 +5,7 @@ const { Title } = Typography;
 
 export default class ErrorBoundary extends Component {
   state = {
-    hasError: false,
+    hasError: false
   };
 
   static getDerivedStateFromError(error) {

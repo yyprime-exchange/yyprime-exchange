@@ -7,7 +7,7 @@ import { Title } from './styles';
 export default function SerumEvents() {
   const events = useSerumEvents();
   return (
-    <FloatingElement style={{ width: '400px', height: '450px' }} >
+    <FloatingElement style={{ width: '400px', height: '450px' }}>
       <Title>Serum Events</Title>
       {events.slice(0, 15).map((event, index) => (
         <Row key={index}>
@@ -18,4 +18,4 @@ export default function SerumEvents() {
       ))}
     </FloatingElement>
   );
-};
+}

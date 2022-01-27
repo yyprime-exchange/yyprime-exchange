@@ -34,11 +34,18 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "styled-components": "^5.1.1",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "prettier": "^2.5.1"
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build"
+    "build": "craco build",
+    "format": "prettier -c \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
+    "format:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|md)\""
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none"
   },
   "browserslist": {
     "production": [
