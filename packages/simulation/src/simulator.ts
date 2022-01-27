@@ -1,8 +1,5 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
 import {
-  Bot,
-  MakerBot,
-  TakerBot,
   PythClient,
   PythPrice,
   PythToken,
@@ -10,6 +7,12 @@ import {
   SerumClient,
   SolanaClient,
 } from '@yyprime/yyprime-exchange-ts';
+
+import {
+  Bot,
+  MakerBot,
+  TakerBot,
+} from './bots';
 
 import * as simulation from './simulation.json';
 
@@ -45,6 +48,7 @@ export class Simulator {
     }
 
     this.pythClient.subscribe((token: PythToken, price: PythPrice) => { this.onPrice(token, price); });
+
     this.serumClient.subscribe(
       (book: SerumBook) => { this.onAsk(book); },
       (book: SerumBook) => { this.onBid(book); },

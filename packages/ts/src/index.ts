@@ -1,15 +1,3 @@
-import {
-  Bot,
-  MakerBot,
-  TakerBot,
-} from './bots';
-
-export {
-  Bot,
-  MakerBot,
-  TakerBot,
-};
-
 import PYTH_PRODUCTS from './pyth/products.json';
 import PYTH_PROGRAMS from './pyth/programs.json';
 import {
@@ -50,7 +38,6 @@ export {
   SolanaClient,
 };
 
-export * from "./bots"
 export * from "./pyth"
 export * from "./serum"
 export * from "./solana"

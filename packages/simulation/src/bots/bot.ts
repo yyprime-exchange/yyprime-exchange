@@ -1,9 +1,13 @@
 import { Market } from '@project-serum/serum';
 import { Account, Keypair, PublicKey, Transaction } from '@solana/web3.js';
 
-import { PythPrice, PythToken } from '../pyth';
-import { SerumBook, SerumClient } from '../serum';
-import { SolanaClient } from '../solana';
+import {
+  PythPrice,
+  PythToken,
+  SerumBook,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
 
 export abstract class Bot {
   config: any;

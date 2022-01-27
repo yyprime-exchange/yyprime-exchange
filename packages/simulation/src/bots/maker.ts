@@ -2,11 +2,15 @@ import { BN } from "@project-serum/anchor";
 import { Market } from '@project-serum/serum';
 import { Keypair, PublicKey } from '@solana/web3.js';
 
+import {
+  PythPrice,
+  PythToken,
+  SerumBook,
+  SerumClient,
+  SolanaClient,
+} from '@yyprime/yyprime-exchange-ts';
+
 import { Bot } from './bot';
-import { PythPrice, PythToken } from '../pyth';
-import { SerumBook, SerumClient } from '../serum';
-import { SolanaClient } from '../solana';
-//import { Bot, PythPrice, PythToken, SerumBook, SerumClient, SolanaClient } from '@yyprime/yyprime-exchange-ts';
 
 export class MakerBot extends Bot {
 

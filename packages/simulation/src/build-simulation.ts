@@ -464,6 +464,10 @@ function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
     simulationBuilder.bot("ETH_mm_0", "maker", "ETH/USDC", { half_spread: 0.005 });
     simulationBuilder.bot("SOL_mm_0", "maker", "SOL/USDC", { half_spread: 0.005 });
 
+    simulationBuilder.bot("BTC_t_0", "taker", "BTC/USDC", { });
+    simulationBuilder.bot("ETH_t_0", "taker", "ETH/USDC", { });
+    simulationBuilder.bot("SOL_t_0", "taker", "SOL/USDC", { });
+
     const [simulation_public, simulation_private] = await simulationBuilder.build();
     fs.writeFileSync('../monitor/src/config/simulation.json', JSON.stringify(simulation_public, null, 2));
     fs.writeFileSync('src/simulation.json', JSON.stringify(simulation_private, null, 2));
