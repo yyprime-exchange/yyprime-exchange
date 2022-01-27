@@ -1,38 +1,36 @@
 import BN from 'bn.js';
-import {
-  decodeEventQueue,
-  decodeRequestQueue,
-} from '@project-serum/serum';
-import { ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
+import { decodeEventQueue, decodeRequestQueue } from '@project-serum/serum';
+import { ORDERBOOK_LAYOUT } from '@project-serum/serum/lib/market';
 import React, { useContext } from 'react';
 import { PublicKey } from '@solana/web3.js';
 
-import { useAccountData } from './connection';//, useConnection
+import { useAccountData } from './connection'; //, useConnection
 import { useConfiguration } from './configuration';
 
 export interface SerumContextValues {
-  symbol?: string,
+  symbol?: string;
   market?: PublicKey;
-  baseSymbol?: string,
+  baseSymbol?: string;
   baseLotSize?: number;
-  baseDecimals?: number,
-  quoteSymbol?: string,
+  baseDecimals?: number;
+  quoteSymbol?: string;
   quoteLotSize?: number;
-  quoteDecimals?: number,
+  quoteDecimals?: number;
   requestQueue?: PublicKey;
   eventQueue?: PublicKey;
   bids?: PublicKey;
   asks?: PublicKey;
 }
 
-const SerumContext: React.Context<null | SerumContextValues> = React.createContext<null | SerumContextValues>(
-  null,
-);
+const SerumContext: React.Context<null | SerumContextValues> =
+  React.createContext<null | SerumContextValues>(null);
 
 export function SerumProvider({ baseSymbol, quoteSymbol, children }) {
   const configuration = useConfiguration();
   const symbol = `${baseSymbol.toUpperCase()}/${quoteSymbol.toUpperCase()}`;
-  const market = configuration.markets.find((market) => { return market.symbol === symbol; });
+  const market = configuration.markets.find((market) => {
+    return market.symbol === symbol;
+  });
   return (
     <SerumContext.Provider
       value={{
@@ -47,7 +45,7 @@ export function SerumProvider({ baseSymbol, quoteSymbol, children }) {
         requestQueue: new PublicKey(market!.requestQueue),
         eventQueue: new PublicKey(market!.eventQueue),
         bids: new PublicKey(market!.bids),
-        asks: new PublicKey(market!.asks),
+        asks: new PublicKey(market!.asks)
       }}
     >
       {children}
@@ -64,9 +62,10 @@ export function useSerum() {
 }
 
 export function useSerumOrderbook(
-  depth = 20,
+  depth = 20
 ): [{ bids: number[][]; asks: number[][] }, boolean] {
-  const { bids, asks, baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } = useSerum();
+  const { bids, asks, baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } =
+    useSerum();
 
   // @ts-ignore
   let bidData = useAccountData(bids);
@@ -82,13 +81,34 @@ export function useSerumOrderbook(
   }
 
   if (bidData && askData) {
-    b = priceLevels(decode(bidData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]);
-    a = priceLevels(decode(askData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]);
+    b = priceLevels(
+      decode(bidData),
+      depth,
+      baseLotSize!,
+      baseDecimals!,
+      quoteLotSize!,
+      quoteDecimals!
+    ).map(([price, size]) => [price, size]);
+    a = priceLevels(
+      decode(askData),
+      depth,
+      baseLotSize!,
+      baseDecimals!,
+      quoteLotSize!,
+      quoteDecimals!
+    ).map(([price, size]) => [price, size]);
   }
   return [{ bids: b, asks: a }, !!b || !!a];
 }
 
-function priceLevels(orderbook, depth: number, baseLotSize: number, baseDecimals: number, quoteLotSize: number, quoteDecimals: number): [number, number, BN, BN][] {
+function priceLevels(
+  orderbook,
+  depth: number,
+  baseLotSize: number,
+  baseDecimals: number,
+  quoteLotSize: number,
+  quoteDecimals: number
+): [number, number, BN, BN][] {
   const descending = orderbook.accountFlags.bids;
   const levels: [BN, BN][] = []; // (price, size)
   for (const { key, quantity } of orderbook.slab.items(descending)) {
@@ -102,24 +122,40 @@ function priceLevels(orderbook, depth: number, baseLotSize: number, baseDecimals
     }
   }
   return levels.map(([priceLots, sizeLots]) => [
-    priceLotsToNumber(priceLots, new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals),
+    priceLotsToNumber(
+      priceLots,
+      new BN(baseLotSize),
+      baseDecimals,
+      new BN(quoteLotSize),
+      quoteDecimals
+    ),
     baseSizeLotsToNumber(sizeLots, new BN(baseLotSize), baseDecimals),
     priceLots,
-    sizeLots,
+    sizeLots
   ]);
 }
 
-function priceLotsToNumber(price: BN, baseLotSize: BN, baseSplTokenDecimals: number, quoteLotSize: BN, quoteSplTokenDecimals: number) {
+function priceLotsToNumber(
+  price: BN,
+  baseLotSize: BN,
+  baseSplTokenDecimals: number,
+  quoteLotSize: BN,
+  quoteSplTokenDecimals: number
+) {
   return divideBnToNumber(
     price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)),
-    baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)),
+    baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals))
   );
 }
 
-function baseSizeLotsToNumber(size: BN, baseLotSize: BN, baseSplTokenDecimals: number) {
+function baseSizeLotsToNumber(
+  size: BN,
+  baseLotSize: BN,
+  baseSplTokenDecimals: number
+) {
   return divideBnToNumber(
     size.mul(baseLotSize),
-    baseSplTokenMultiplier(baseSplTokenDecimals),
+    baseSplTokenMultiplier(baseSplTokenDecimals)
   );
 }
 

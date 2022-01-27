@@ -1,4 +1,4 @@
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey } from '@solana/web3.js';
 import {
   Bot,
   MakerBot,
@@ -8,7 +8,7 @@ import {
   PythToken,
   SerumBook,
   SerumClient,
-  SolanaClient,
+  SolanaClient
 } from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
@@ -33,23 +33,59 @@ export class Simulator {
 
     for (const bot of this.simulation.bots) {
       const market = this.serumClient.getMarket(bot.market);
-      const bot_wallet = Keypair.fromSecretKey(Buffer.from(bot.walletPrivateKey, 'base64'));
+      const bot_wallet = Keypair.fromSecretKey(
+        Buffer.from(bot.walletPrivateKey, 'base64')
+      );
 
-      let initialOrders = simulation.orders.find(orders => orders.symbol === bot.symbol);
+      let initialOrders = simulation.orders.find(
+        (orders) => orders.symbol === bot.symbol
+      );
 
       switch (bot.type) {
-        case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet, initialOrders)); break;
-        case "taker": this.bots.push(new TakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
-        default: throw new Error(`Invalid bot type: ${bot.type}`);
+        case 'maker':
+          this.bots.push(
+            new MakerBot(
+              bot,
+              market,
+              this.serumClient,
+              this.solanaClient,
+              bot_wallet,
+              initialOrders
+            )
+          );
+          break;
+        case 'taker':
+          this.bots.push(
+            new TakerBot(
+              bot,
+              market,
+              this.serumClient,
+              this.solanaClient,
+              bot_wallet
+            )
+          );
+          break;
+        default:
+          throw new Error(`Invalid bot type: ${bot.type}`);
       }
     }
 
-    this.pythClient.subscribe((token: PythToken, price: PythPrice) => { this.onPrice(token, price); });
+    this.pythClient.subscribe((token: PythToken, price: PythPrice) => {
+      this.onPrice(token, price);
+    });
     this.serumClient.subscribe(
-      (book: SerumBook) => { this.onAsk(book); },
-      (book: SerumBook) => { this.onBid(book); },
-      (book: SerumBook, events) => { this.onEvent(book, events); },
-      (requests) => { this.onRequest(requests); },
+      (book: SerumBook) => {
+        this.onAsk(book);
+      },
+      (book: SerumBook) => {
+        this.onBid(book);
+      },
+      (book: SerumBook, events) => {
+        this.onEvent(book, events);
+      },
+      (requests) => {
+        this.onRequest(requests);
+      }
     );
   }
 
@@ -65,21 +101,16 @@ export class Simulator {
     }
   }
 
-  private onEvent(book: SerumBook, events) {
-  }
+  private onEvent(book: SerumBook, events) {}
 
-  private onRequest(requests) {
-  }
+  private onRequest(requests) {}
 
   private onPrice(token: PythToken, price: PythPrice) {
     for (let bot of this.bots) {
       bot.onPrice(token, price);
     }
   }
-
 }
-
-
 
 const simulator: Simulator = new Simulator(simulation);
 

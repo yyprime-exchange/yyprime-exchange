@@ -5,7 +5,7 @@ import { LinkOutlined } from '@ant-design/icons';
 export default function LinkAddress({
   title,
   address,
-  shorten = false,
+  shorten = false
 }: {
   title?: undefined | any;
   address: string;
@@ -25,5 +25,5 @@ export default function LinkAddress({
         {shorten ? `${address.slice(0, 4)}...${address.slice(-4)}` : address}
       </Button>
     </div>
-  )
+  );
 }

@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import Bots from '../components/Bots';
 import PriceChart from '../components/PriceChart';
 import PythPrice from '../components/PythPrice';
-import SerumEvents from '../components/SerumEvents'
-import SerumRequests from '../components/SerumRequests'
+import SerumEvents from '../components/SerumEvents';
+import SerumRequests from '../components/SerumRequests';
 import SerumOrderbook from '../components/SerumOrderbook';
 import { ConnectionProvider } from '../utils/connection';
 import { PythConnectionProvider } from '../utils/pythConnection';
-import { PythProvider } from '../utils/pyth'
+import { PythProvider } from '../utils/pyth';
 import { SerumProvider } from '../utils/serum';
 import { SolanaProvider } from '../utils/solana';
 
@@ -29,22 +29,22 @@ export default function SimulationPage() {
   const { baseSymbol, quoteSymbol } = useParams();
   useEffect(() => {
     if (baseSymbol) {
-      localStorage.setItem("baseSymbol", JSON.stringify(baseSymbol));
+      localStorage.setItem('baseSymbol', JSON.stringify(baseSymbol));
     }
   }, [baseSymbol]);
   useEffect(() => {
     if (quoteSymbol) {
-      localStorage.setItem("quoteSymbol", JSON.stringify(quoteSymbol));
+      localStorage.setItem('quoteSymbol', JSON.stringify(quoteSymbol));
     }
   }, [quoteSymbol]);
   return (
     <>
       <ConnectionProvider>
-        <SerumProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
-          <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
+        <SerumProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol}>
+          <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol}>
             <PythConnectionProvider>
-              <PythProvider baseSymbol={baseSymbol} >
-              <SimulationPageInner />
+              <PythProvider baseSymbol={baseSymbol}>
+                <SimulationPageInner />
               </PythProvider>
             </PythConnectionProvider>
           </SolanaProvider>
@@ -87,7 +87,7 @@ function SimulationPageInner() {
               </Row>
             </Wrapper>
           </Col>
-          {window.location.port !== '' &&
+          {window.location.port !== '' && (
             <Col>
               <Wrapper>
                 <Row>
@@ -102,7 +102,7 @@ function SimulationPageInner() {
                 </Row>
               </Wrapper>
             </Col>
-          }
+          )}
         </Row>
       </Wrapper>
     </>

@@ -1,24 +1,23 @@
 import BN from 'bn.js';
-import {
-  decodeEventQueue,
-  DexInstructions,
-} from "@project-serum/serum";
+import { decodeEventQueue, DexInstructions } from '@project-serum/serum';
 import {
   Keypair,
   LAMPORTS_PER_SOL,
   PublicKey,
   Transaction,
-  TransactionInstruction,
+  TransactionInstruction
 } from '@solana/web3.js';
 import {
   SerumBook,
   SerumClient,
-  SolanaClient,
+  SolanaClient
 } from '@yyprime/yyprime-exchange-ts';
 
 import * as simulation from './simulation.json';
 
-const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(simulation.config.walletPrivateKey, 'base64'));
+const wallet: Keypair = Keypair.fromSecretKey(
+  Buffer.from(simulation.config.walletPrivateKey, 'base64')
+);
 const walletTokenAccounts: Map<string, PublicKey> = new Map();
 
 const serumClient: SerumClient = new SerumClient(simulation);
@@ -27,24 +26,33 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
 const payer: Keypair = Keypair.generate();
 
 (async () => {
-  const airdropSignature = await serumClient.connection.requestAirdrop(payer.publicKey, 100 * LAMPORTS_PER_SOL);
+  const airdropSignature = await serumClient.connection.requestAirdrop(
+    payer.publicKey,
+    100 * LAMPORTS_PER_SOL
+  );
   await serumClient.connection.confirmTransaction(airdropSignature);
 
   await Promise.all(
     simulation.tokens.map(async (token) => {
-      const tokenAccount = await solanaClient.getAssociatedTokenAddress(new PublicKey(token.mint), wallet.publicKey);
+      const tokenAccount = await solanaClient.getAssociatedTokenAddress(
+        new PublicKey(token.mint),
+        wallet.publicKey
+      );
       walletTokenAccounts.set(token.mint, tokenAccount);
     })
   );
 
   await serumClient.initialize();
 })().then(() => {
-
   console.log(`Running crank on ${simulation.config.cluster}`);
 
-  const consumeEventsLimit: BN = new BN(process.env.CONSUME_EVENTS_LIMIT || '10');
+  const consumeEventsLimit: BN = new BN(
+    process.env.CONSUME_EVENTS_LIMIT || '10'
+  );
   const interval: number = parseInt(process.env.INTERVAL || '4000');
-  const maxUniqueAccounts: number = parseInt(process.env.MAX_UNIQUE_ACCOUNTS || '10');
+  const maxUniqueAccounts: number = parseInt(
+    process.env.MAX_UNIQUE_ACCOUNTS || '10'
+  );
 
   function onEvent(book: SerumBook, events) {
     if (events.length > 0) {
@@ -67,7 +75,7 @@ const payer: Keypair = Keypair.generate();
             pcFee: walletTokenAccounts.get(book.quoteMint),
             openOrdersAccounts,
             limit: consumeEventsLimit,
-            programId: new PublicKey(simulation.config.serum.program),
+            programId: new PublicKey(simulation.config.serum.program)
           })
         );
 
@@ -86,22 +94,27 @@ const payer: Keypair = Keypair.generate();
   serumClient.subscribe(
     null,
     null,
-    (book: SerumBook, events) => { onEvent(book, events); },
-    (requests) => { onRequest(requests); },
+    (book: SerumBook, events) => {
+      onEvent(book, events);
+    },
+    (requests) => {
+      onRequest(requests);
+    }
   );
 
   //let timerId = setTimeout(async function process() {
-    (async () => {
-      for (const book of serumClient.books.values()) {
-        const accountInfo = await serumClient.connection.getAccountInfo(new PublicKey(book.eventQueue));
-        if (!accountInfo) {
-          continue;
-        }
-        const events = decodeEventQueue(accountInfo.data);
-        onEvent(book, events);
+  (async () => {
+    for (const book of serumClient.books.values()) {
+      const accountInfo = await serumClient.connection.getAccountInfo(
+        new PublicKey(book.eventQueue)
+      );
+      if (!accountInfo) {
+        continue;
       }
-    })();
+      const events = decodeEventQueue(accountInfo.data);
+      onEvent(book, events);
+    }
+  })();
   //  timerId = setTimeout(process, interval);
   //}, interval);
-
 });

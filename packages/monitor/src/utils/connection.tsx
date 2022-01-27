@@ -5,9 +5,8 @@ import { Account, AccountInfo, Connection, PublicKey } from '@solana/web3.js';
 import { useConfiguration } from './configuration';
 import { setCache, useAsyncData } from './fetch-loop';
 
-const ConnectionContext: React.Context<null | Connection> = React.createContext<null | Connection>(
-  null,
-);
+const ConnectionContext: React.Context<null | Connection> =
+  React.createContext<null | Connection>(null);
 
 export function ConnectionProvider({ children }) {
   const configuration = useConfiguration();
@@ -18,11 +17,9 @@ export function ConnectionProvider({ children }) {
     } else if (configuration.config.solana.http) {
       return new Connection(configuration.config.solana.http, 'recent');
     } else {
-      throw new Error("Endpoint is not defined.");
+      throw new Error('Endpoint is not defined.');
     }
-  }, [
-    configuration.config.solana,
-  ]);
+  }, [configuration.config.solana]);
 
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
   // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
@@ -42,9 +39,7 @@ export function ConnectionProvider({ children }) {
   }, [connection]);
 
   return (
-    <ConnectionContext.Provider
-      value={ connection }
-    >
+    <ConnectionContext.Provider value={connection}>
       {children}
     </ConnectionContext.Provider>
   );
@@ -61,14 +56,14 @@ export function useConnection() {
 const accountListenerCount = new Map();
 
 export function useAccountInfo(
-  publicKey: PublicKey | undefined | null,
+  publicKey: PublicKey | undefined | null
 ): [AccountInfo<Buffer> | null | undefined, boolean] {
   const connection = useConnection();
   const cacheKey = tuple(connection, publicKey?.toBase58());
   const [accountInfo, loaded] = useAsyncData<AccountInfo<Buffer> | null>(
     async () => (publicKey ? connection.getAccountInfo(publicKey) : null),
     cacheKey,
-    { refreshInterval: 60_000 },
+    { refreshInterval: 60_000 }
   );
   useEffect(() => {
     if (!publicKey) {

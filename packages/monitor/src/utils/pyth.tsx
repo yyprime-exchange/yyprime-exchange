@@ -1,32 +1,33 @@
 import React, { useContext } from 'react';
-import { parsePriceData } from '@pythnetwork/client'
+import { parsePriceData } from '@pythnetwork/client';
 import { PublicKey } from '@solana/web3.js';
 
 import { useConfiguration } from './configuration';
 import { useAccountData } from './pythConnection';
 
 export interface PythContextValues {
-  symbol?: string,
+  symbol?: string;
   market?: PublicKey;
-  baseSymbol?: string,
+  baseSymbol?: string;
   basePrice?: PublicKey;
 }
 
-const PythContext: React.Context<null | PythContextValues> = React.createContext<null | PythContextValues>(
-  null,
-);
+const PythContext: React.Context<null | PythContextValues> =
+  React.createContext<null | PythContextValues>(null);
 
 export function PythProvider({ baseSymbol, children }) {
   const configuration = useConfiguration();
   const symbol = `${baseSymbol.toUpperCase()}/USDC`;
-  const market = configuration.markets.find((market) => { return market.symbol === symbol; });
+  const market = configuration.markets.find((market) => {
+    return market.symbol === symbol;
+  });
   return (
     <PythContext.Provider
       value={{
         symbol,
         market: new PublicKey(market!.market),
         baseSymbol,
-        basePrice: new PublicKey(market!.basePrice),
+        basePrice: new PublicKey(market!.basePrice)
       }}
     >
       {children}
@@ -34,7 +35,10 @@ export function PythProvider({ baseSymbol, children }) {
   );
 }
 
-export function usePythPrice(): { price: number | null | undefined; confidence: number | null | undefined } {
+export function usePythPrice(): {
+  price: number | null | undefined;
+  confidence: number | null | undefined;
+} {
   const context = useContext(PythContext);
   if (!context) {
     throw new Error('Missing Pyth context');
@@ -47,12 +51,12 @@ export function usePythPrice(): { price: number | null | undefined; confidence: 
     const pythPrice = parsePriceData(priceData);
     return {
       price: pythPrice.price,
-      confidence: pythPrice.confidence,
+      confidence: pythPrice.confidence
     };
   } else {
     return {
       price: null,
-      confidence: null,
+      confidence: null
     };
   }
 }

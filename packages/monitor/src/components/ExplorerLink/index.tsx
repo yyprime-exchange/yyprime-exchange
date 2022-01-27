@@ -1,32 +1,30 @@
-import React from 'react'
-import { Typography } from 'antd'
-import { PublicKey } from '@solana/web3.js'
-
+import React from 'react';
+import { Typography } from 'antd';
+import { PublicKey } from '@solana/web3.js';
 
 export function shortenAddress(address: string, chars = 4): string {
-  return `${address.slice(0, chars)}...${address.slice(-chars)}`
+  return `${address.slice(0, chars)}...${address.slice(-chars)}`;
 }
 
-
 export const ExplorerLink = (props: {
-  address: string | PublicKey
-  type: string
-  code?: boolean
-  style?: React.CSSProperties
-  length?: number
+  address: string | PublicKey;
+  type: string;
+  code?: boolean;
+  style?: React.CSSProperties;
+  length?: number;
 }) => {
-  const { type, code } = props
+  const { type, code } = props;
 
   const address =
     typeof props.address === 'string'
       ? props.address
-      : props.address?.toBase58()
+      : props.address?.toBase58();
 
   if (!address) {
-    return null
+    return null;
   }
 
-  const length = props.length ?? 9
+  const length = props.length ?? 9;
 
   return (
     <a
@@ -45,5 +43,5 @@ export const ExplorerLink = (props: {
         shortenAddress(address, length)
       )}
     </a>
-  )
-}
+  );
+};

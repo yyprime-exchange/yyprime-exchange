@@ -11,13 +11,13 @@ const Wrapper = styled.div`
 export default function FloatingElement({
   style = undefined,
   children,
-  stretchVertical = false,
+  stretchVertical = false
 }) {
   return (
     <Wrapper
       style={{
         height: stretchVertical ? 'calc(100% - 10px)' : undefined,
-        ...style,
+        ...style
       }}
     >
       {children}

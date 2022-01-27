@@ -7,7 +7,7 @@ const { useBreakpoint } = Grid;
 
 const footerElements = [
   { description: 'Twitter', link: helpUrls.twitter },
-  { description: 'GitHub', link: helpUrls.github },
+  { description: 'GitHub', link: helpUrls.github }
 ];
 
 export const CustomFooter = () => {
@@ -17,7 +17,7 @@ export const CustomFooter = () => {
       style={{
         height: '55px',
         paddingBottom: 10,
-        paddingTop: 10,
+        paddingTop: 10
       }}
     >
       <Row align="middle" gutter={[16, 4]}>

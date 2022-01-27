@@ -1,6 +1,6 @@
 //import { Col, Row } from 'antd';
-import React from "react";
-import FloatingElement from "./layout/FloatingElement";
+import React from 'react';
+import FloatingElement from './layout/FloatingElement';
 import { Title } from './styles';
 
 export default function PriceChart() {

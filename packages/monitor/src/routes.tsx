@@ -11,7 +11,7 @@ export function Routes() {
         <BasicLayout>
           <Switch>
             <Route exact path="/">
-              <Redirect to={"/market/sol/usdc"} />
+              <Redirect to={'/market/sol/usdc'} />
             </Route>
             <Route exact path="/market/:baseSymbol/:quoteSymbol">
               <SimulationPage />

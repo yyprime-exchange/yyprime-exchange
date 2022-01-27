@@ -19,7 +19,7 @@ class FetchLoopListener<T = any> {
     refreshInterval: number,
     refreshIntervalOnError: number | null,
     callback: () => void,
-    cacheNullValues: Boolean,
+    cacheNullValues: Boolean
   ) {
     this.cacheKey = cacheKey;
     this.fn = fn;
@@ -49,7 +49,7 @@ class FetchLoopInternal<T = any> {
 
   get refreshInterval(): number {
     return Math.min(
-      ...[...this.listeners].map((listener) => listener.refreshInterval),
+      ...[...this.listeners].map((listener) => listener.refreshInterval)
     );
   }
 
@@ -164,8 +164,8 @@ class FetchLoops {
         new FetchLoopInternal<T>(
           listener.cacheKey,
           listener.fn,
-          listener.cacheNullValues,
-        ),
+          listener.cacheNullValues
+        )
       );
     }
     this.loops.get(listener.cacheKey).addListener(listener);
@@ -196,7 +196,7 @@ export function useAsyncData<T = any>(
   asyncFn: () => Promise<T>,
   cacheKey: any,
   { refreshInterval = 60000, refreshIntervalOnError = null } = {},
-  cacheNullValues: Boolean = true,
+  cacheNullValues: Boolean = true
 ): [null | undefined | T, boolean] {
   const [, rerender] = useReducer((i) => i + 1, 0);
 
@@ -211,7 +211,7 @@ export function useAsyncData<T = any>(
       refreshInterval,
       refreshIntervalOnError,
       rerender,
-      cacheNullValues,
+      cacheNullValues
     );
     globalLoops.addListener(listener);
     return () => globalLoops.removeListener(listener);
@@ -249,7 +249,7 @@ export function refreshAllCaches(): void {
 export function setCache(
   cacheKey: any,
   value: any,
-  { initializeOnly = false } = {},
+  { initializeOnly = false } = {}
 ): void {
   if (initializeOnly && globalCache.has(cacheKey)) {
     return;
@@ -261,8 +261,6 @@ export function setCache(
   }
 }
 
-export function getCache(
-  cacheKey: any
-) {
+export function getCache(cacheKey: any) {
   return globalCache.get(cacheKey);
 }
