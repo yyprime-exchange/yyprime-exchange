@@ -7,7 +7,6 @@ import Bots from '../components/Bots';
 import PriceChart from '../components/PriceChart';
 import PythPrice from '../components/PythPrice';
 import SerumEvents from '../components/SerumEvents'
-import SerumRequests from '../components/SerumRequests'
 import SerumOrderbook from '../components/SerumOrderbook';
 import { ConnectionProvider } from '../utils/connection';
 import { PythConnectionProvider } from '../utils/pythConnection';
@@ -78,11 +77,6 @@ function SimulationPageInner() {
               <Row>
                 <Col>
                   <SerumEvents />
-                </Col>
-              </Row>
-              <Row>
-                <Col style={{ height: '100%' }}>
-                  <SerumRequests />
                 </Col>
               </Row>
             </Wrapper>
