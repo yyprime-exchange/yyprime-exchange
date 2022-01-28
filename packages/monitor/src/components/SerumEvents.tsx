@@ -9,6 +9,13 @@ export default function SerumEvents() {
   return (
     <FloatingElement style={{ width: '400px', height: '608px' }} >
       <Title>Serum Events</Title>
+        <Row>
+          <Col span={3}><b>Type</b></Col>
+          <Col span={3}> <b>State</b></Col>
+          <Col span={3}> <b>Side</b></Col>
+          <Col span={8}> <b>QtyRel</b></Col>
+          <Col span={7}> <b>QtyPd</b></Col>
+        </Row>
       {events.slice(0, 24).map((event, index) => (
         <Row key={index}>
           <Col span={3}>{event.eventFlags.maker ? 'Maker' : 'Taker'}</Col>
