@@ -10,29 +10,15 @@ export const RealTimeChart = ({range,yrange}) => {
   const { price, confidence } = usePythPrice();
   const { bestBid, bestAsk } = useSerumQuote();
 
-  let nameList;
-  let dataObj;
-  if (bestBid && bestAsk) {
-    nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ];
-    dataObj = {
-      "Pyth Price": price,
-      "Pyth Lower": (price && confidence) ? price - confidence : null,
-      "Pyth Upper": (price && confidence) ? price + confidence : null,
-      "Serum MidPrice": (bestBid && bestAsk) ? (bestBid + bestAsk) / 2 : null,
-      "Serum Best Bid": bestBid,
-      "Serum Best Ask": bestAsk,
-    };
-  } else if (price && confidence) {
-    nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper" ];
-    dataObj = {
-      "Pyth Price": price,
-      "Pyth Lower": (price && confidence) ? price - confidence : null,
-      "Pyth Upper": (price && confidence) ? price + confidence : null,
-    };
-  } else {
-    nameList = [];
-    dataObj = {};
-  }
+  const nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ];
+  const dataObj = {
+    "Pyth Price": price,
+    "Pyth Lower": (price && confidence) ? (price - confidence) : 0,
+    "Pyth Upper": (price && confidence) ? (price + confidence) : 0,
+    "Serum MidPrice": (bestBid && bestAsk) ? ((bestBid + bestAsk) / 2) : 0,
+    "Serum Best Bid": (bestBid && bestAsk) ? bestBid : 0,
+    "Serum Best Ask": (bestBid && bestAsk) ? bestAsk : 0,
+  };
 
   const defaultDataList = nameList.map((name) => ({
     name: name,
@@ -90,15 +76,16 @@ export const RealTimeChart = ({range,yrange}) => {
         show: false
       }
     },
-    colors: ["#0000FF", "#ff0000"],
+    colors: ["#0000FF", "#0000FF", "#0000FF", "#ff0000", "#ff0000", "#ff0000"],
     dataLabels: {
       enabled: false
     },
     stroke: {
-      width: [6, 1],
+      width: [3, 1, 1, 3, 1, 1],
       curve: "smooth"
     },
     legend: {
+      show: false,
       enabled: false,
       position: "top",
       horizontalAlign: "right",

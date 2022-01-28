@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { PublicKey } from '@solana/web3.js';
 
 import { useConfiguration } from './configuration';
-import { useAccountData } from './connection';
+import { useAccountData } from './pythConnection';
 
 export interface PythContextValues {
   symbol?: string,
