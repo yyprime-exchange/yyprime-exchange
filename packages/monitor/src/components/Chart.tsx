@@ -5,7 +5,53 @@ import { PythContext } from "../utils/pyth";
 import { SerumContext } from "../utils/serum";
 import { useChart } from "../utils/useChart";
 
-export const RealTimeChart = ({range,dataList,yrange}) => {
+export const RealTimeChart = ({range,yrange}) => {
+  const { price, currentMarkPrice, confidence, bestBid, bestAsk, currTime } = useChart()
+  const nameList = ["Pyth Price", "Serum Price"]
+  // "Pyth Confidential Upward Bound", "Pyth Confidential Lower Bound", "Best Bid", "Best Ask"]
+  
+  const defaultDataList = nameList.map((name) => ({
+    name: name,
+    data: [],
+  }));
+
+  const [dataList, setDataList] = React.useState<any>(defaultDataList);
+  // console.log(price, currentMarkPrice, confidence, "CHART INFO")
+  const dataObj = {"Pyth Price": price, "Serum Price": currentMarkPrice}
+
+  useEffect(() => {
+    const addData = (name, data) => {
+      return [
+        ...data,
+        {
+          x: currTime,
+          y: dataObj[name]
+        }
+      ];
+    };
+    // const data = [
+      // {name: "Pyth Price", data: chartData.historicalPythPrice},
+      // {name: "Serum Price", data: chartData.historicalSerumPrice},
+      // {name: "Pyth Confidential Upward Bound", data: chartData.con},
+      // {name: "Pyth Confidential Lower Bound", data: []},
+      // {name: "Best Bid", data: chartData.c},
+      // {name: "Best Ask", data: []},
+    // ]
+    // data.map((series) => series.data)
+    const interval = setInterval(() => {
+  
+      setDataList(
+        dataList.map(val => {
+          return {
+            name: val.name,
+            data: addData(val.name, val.data)
+          };
+        })
+      );
+    }, ADDING_DATA_INTERVAL_IN_MILLISECONDS);
+
+    return () => clearInterval(interval);
+  });
   const options = {
     zoom: {
       enabled: false
@@ -23,10 +69,10 @@ export const RealTimeChart = ({range,dataList,yrange}) => {
       },
       animations: {
         enabled: true,
-        easing: "easeout",
+        easing: "linear",
         dynamicAnimation: {
             enabled: true,
-            speed: 300
+            speed: 1000
         }
       },
       toolbar: {
@@ -76,9 +122,8 @@ export const RealTimeChart = ({range,dataList,yrange}) => {
       },
     },
     xaxis: {
-      type: "numeric",
+      type: "datetime",
       offsetX: 0,
-      range: range,
     },
     yaxis: {
       labels: {
@@ -93,8 +138,9 @@ export const RealTimeChart = ({range,dataList,yrange}) => {
 
     },
   };
+  // dataList.map(data => )
   // @ts-ignore
-  return <Chart key={'some-unique-key'} height="200px" type="line" options={options} series={dataList} />
+  return <Chart key={'some-unique-key'} height="300px" type="line" options={options} series={dataList} />
 };
 
 const TIME_RANGE_IN_MILLISECONDS = 30 * 1000;
@@ -102,44 +148,18 @@ const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
 const ADDING_DATA_RATIO = 0.8;
 
 export const InfoChart = () => {
-  const chartData = useChart()
-  const nameList = ["Pyth Price", "Serum Price"]
-  // "Pyth Confidential Upward Bound", "Pyth Confidential Lower Bound", "Best Bid", "Best Ask"]
-  
-  const defaultDataList = nameList.map((name) => ({
-    name: name,
-    data: [],
-  }));
 
-  const [dataList, setDataList] = React.useState<any>(defaultDataList);
-
-  useEffect(() => {
-    const data = [
-      {name: "Pyth Price", data: chartData.historicalPythPrice},
-      {name: "Serum Price", data: chartData.historicalSerumPrice},
-      // {name: "Pyth Confidential Upward Bound", data: chartData.con},
-      // {name: "Pyth Confidential Lower Bound", data: []},
-      // {name: "Best Bid", data: chartData.c},
-      // {name: "Best Ask", data: []},
-
-    ]
-    const interval = setInterval(() => {
-      setDataList(
-        data
-      );
-    }, ADDING_DATA_INTERVAL_IN_MILLISECONDS);
-
-    return () => clearInterval(interval);
-  });
-
-  return (useMemo(()=>  <div>
-  <RealTimeChart
-    dataList={dataList}
-    range={10}
-    yrange={0}
-  />
-</div>, [dataList])
+return(  <RealTimeChart
+  range={10}
+  yrange={0}
+/>)
+//   return (useMemo(()=>  <div>
+//   <RealTimeChart
+//     range={10}
+//     yrange={0}
+//   />
+// </div>, [dataList])
    
-  );
+//   );
 };
 
