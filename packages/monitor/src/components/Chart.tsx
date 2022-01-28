@@ -7,32 +7,11 @@ import { useChart } from "../utils/useChart";
 
 export const RealTimeChart = ({range,dataList,yrange}) => {
   const options = {
-    
     zoom: {
       enabled: false
     },
-    // series: [
-    //   // {
-    //   //   name: "Pyth Confidential Upward Bound",
-    //   //   data: [28 + 5, 29 + 5, 33 + 5, 36 + 5, 32 + 5, 32 + 5, 33 + 4]
-    //   // },
-    //   // {
-    //   //   name: "Pyth Confidential Lower Bound",
-    //   //   data: [28 - 5, 29 - 5, 33 - 5, 36 - 5, 32 - 5, 32 - 5, 33 - 5]
-    //   // },
-    //   {
-    //     name: "Pyth Price",
-    //     data: [28, 29, 33, 36, 32, 32, 33]
-    //   },
-    //   {
-    //     name: "Serum Price",
-    //     data: [24, 26, 32, 37, 29, 30, 32]
-    //   }
-    // ],
     chart: {
       foreColor: "#FFFFFF",
-      // background: "#262D47",
-      height: 350,
       type: "line",
       dropShadow: {
         enabled: true,
@@ -47,7 +26,7 @@ export const RealTimeChart = ({range,dataList,yrange}) => {
         easing: "easeout",
         dynamicAnimation: {
             enabled: true,
-            // speed: 250
+            speed: 300
         }
       },
       toolbar: {
@@ -92,13 +71,13 @@ export const RealTimeChart = ({range,dataList,yrange}) => {
     tooltip: {
       theme: "dark",
       x: {
-        show: false,
+        show: true,
         format: "yyyy/MM/dd HH:mm:ss.f",
       },
     },
     xaxis: {
       type: "numeric",
-      offsetX: 5,
+      offsetX: 0,
       range: range,
     },
     yaxis: {
@@ -115,18 +94,17 @@ export const RealTimeChart = ({range,dataList,yrange}) => {
     },
   };
   // @ts-ignore
-  return <Chart key={'some-unique-key'} height="300" width="1000" type="line" options={options} series={dataList} />
+  return <Chart key={'some-unique-key'} height="200px" type="line" options={options} series={dataList} />
 };
 
 const TIME_RANGE_IN_MILLISECONDS = 30 * 1000;
 const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
 const ADDING_DATA_RATIO = 0.8;
 
-export const PriceChart = () => {
-  // const [yrange, setYrange] = useState([0, 0])
+export const InfoChart = () => {
   const chartData = useChart()
   const nameList = ["Pyth Price", "Serum Price"]
-  // "Pyth Confidential Upward Bound", "Pyth Confidential Lower Bound"];
+  // "Pyth Confidential Upward Bound", "Pyth Confidential Lower Bound", "Best Bid", "Best Ask"]
   
   const defaultDataList = nameList.map((name) => ({
     name: name,
@@ -139,8 +117,11 @@ export const PriceChart = () => {
     const data = [
       {name: "Pyth Price", data: chartData.historicalPythPrice},
       {name: "Serum Price", data: chartData.historicalSerumPrice},
-      // {name: "Pyth Confidential Upward Bound", data: chartData.c},
+      // {name: "Pyth Confidential Upward Bound", data: chartData.con},
       // {name: "Pyth Confidential Lower Bound", data: []},
+      // {name: "Best Bid", data: chartData.c},
+      // {name: "Best Ask", data: []},
+
     ]
     const interval = setInterval(() => {
       setDataList(
