@@ -8,36 +8,44 @@ import { useSerumQuote } from "../utils/serum";
 
 export const RealTimeChart = ({range,yrange}) => {
   const { price, confidence } = usePythPrice();
-
   const { bestBid, bestAsk } = useSerumQuote();
-  const midPrice = (bestBid && bestAsk) ? (bestBid + bestAsk) / 2 : null;
 
-  const currTime = new Date();
-
-  const nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ]
+  let nameList;
+  let dataObj;
+  if (bestBid && bestAsk) {
+    nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ];
+    dataObj = {
+      "Pyth Price": price,
+      "Pyth Lower": (price && confidence) ? price - confidence : null,
+      "Pyth Upper": (price && confidence) ? price + confidence : null,
+      "Serum MidPrice": (bestBid && bestAsk) ? (bestBid + bestAsk) / 2 : null,
+      "Serum Best Bid": bestBid,
+      "Serum Best Ask": bestAsk,
+    };
+  } else if (price && confidence) {
+    nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper" ];
+    dataObj = {
+      "Pyth Price": price,
+      "Pyth Lower": (price && confidence) ? price - confidence : null,
+      "Pyth Upper": (price && confidence) ? price + confidence : null,
+    };
+  } else {
+    nameList = [];
+    dataObj = {};
+  }
 
   const defaultDataList = nameList.map((name) => ({
     name: name,
     data: [],
   }));
-
   const [dataList, setDataList] = React.useState<any>(defaultDataList);
-
-  const dataObj = {
-    "Pyth Price": price,
-    "Pyth Lower": (price && confidence) ? price - confidence : null,
-    "Pyth Upper": (price && confidence) ? price + confidence : null,
-    "Serum MidPrice": midPrice,
-    "Serum Best Bid": bestBid,
-    "Serum Best Ask": bestAsk,
-  }
 
   useEffect(() => {
     const addData = (name, data) => {
       return [
         ...data,
         {
-          x: currTime,
+          x: new Date(),
           y: dataObj[name]
         }
       ];
