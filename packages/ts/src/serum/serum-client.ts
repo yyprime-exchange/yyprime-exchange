@@ -58,6 +58,7 @@ export class SerumClient {
   simulation;
 
   books: Map<string, SerumBook>;
+  booksByBaseMint: Map<string, SerumBook>;
   bookEvents: Map<string, BookEvent>;
 
   constructor(
@@ -68,6 +69,7 @@ export class SerumClient {
     this.simulation = simulation;
 
     this.books = new Map<string, SerumBook>();
+    this.booksByBaseMint = new Map<string, SerumBook>();
     this.bookEvents = new Map<string, BookEvent>();
 
     simulation.markets.forEach((market) => {
@@ -76,6 +78,7 @@ export class SerumClient {
       };
 
       this.books.set(market.market, book);
+      this.booksByBaseMint.set(market.baseMint, book);
 
       this.bookEvents.set(market.asks, { event: "asks", book: book });
       this.bookEvents.set(market.bids, { event: "bids", book: book });
@@ -262,7 +265,6 @@ export class SerumClient {
     onAsk: ((book: SerumBook) => void) | null,
     onBid: ((book: SerumBook) => void) | null,
     onEvent: ((book: SerumBook, events) => void) | null,
-    onRequest: ((requests) => void) | null,
   ) {
     this.connection.onProgramAccountChange(
       this.serumProgram,
@@ -274,7 +276,6 @@ export class SerumClient {
             case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onAsk) onAsk(bookEvent.book); break;
             case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onBid) onBid(bookEvent.book); break;
             case "eventQueue": if (onEvent) onEvent(bookEvent.book, decodeEventQueue(keyedAccountInfo.accountInfo.data)); break;
-            case "requestQueue": if (onRequest) onRequest(decodeRequestQueue(keyedAccountInfo.accountInfo.data)); break;
             default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
         }

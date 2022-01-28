@@ -41,9 +41,9 @@ export class Simulator {
       let initialOrders = simulation.orders.find(orders => orders.symbol === bot.symbol);
 
       switch (bot.type) {
-        case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet, initialOrders)); break;
+        //case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet, initialOrders)); break;
         case "taker": this.bots.push(new TakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
-        default: throw new Error(`Invalid bot type: ${bot.type}`);
+        //default: throw new Error(`Invalid bot type: ${bot.type}`);
       }
     }
 
@@ -53,7 +53,6 @@ export class Simulator {
       (book: SerumBook) => { this.onAsk(book); },
       (book: SerumBook) => { this.onBid(book); },
       (book: SerumBook, events) => { this.onEvent(book, events); },
-      (requests) => { this.onRequest(requests); },
     );
   }
 
@@ -72,12 +71,16 @@ export class Simulator {
   private onEvent(book: SerumBook, events) {
   }
 
-  private onRequest(requests) {
+  public onExit() {
+    for (let bot of this.bots) {
+      bot.onExit();
+    }
   }
 
   private onPrice(token: PythToken, price: PythPrice) {
+    const book: SerumBook = this.serumClient.booksByBaseMint.get(token.mint);
     for (let bot of this.bots) {
-      bot.onPrice(token, price);
+      bot.onPrice(book, token, price);
     }
   }
 
@@ -90,5 +93,11 @@ const simulator: Simulator = new Simulator(simulation);
 (async () => {
   await simulator.initialize();
 })().then(() => {
+  //process.on('SIGINT', function () {
+    //console.log('Caught keyboard interrupt. Canceling orders');
+    //simulator.onExit();
+    ////exit();
+  //});
+
   console.log(`Running simulation on ${simulation.config.cluster}`);
 });

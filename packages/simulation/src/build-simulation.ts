@@ -304,6 +304,49 @@ export class SimulationBuilder {
 
 
 
+      const pools_private = markets_private.map(market => {
+
+        const orders = orders_private.find((order) => order.symbol === market.symbol);
+        assert(orders);
+        assert(orders.asks.length > 0);
+        assert(orders.bids.length > 0);
+
+        const midPrice = (orders.asks[0][0] + orders.bids[0][0]) / 2;
+        const quoteBalance =
+          orders.asks.slice(0, 7).map(priceLevel => { return priceLevel[0] * priceLevel[1]; }).reduce((a: number, b: number) => { return a + b; }) +
+          orders.bids.slice(0, 7).map(priceLevel => { return priceLevel[0] * priceLevel[1]; }).reduce((a: number, b: number) => { return a + b; });
+        const baseBalance = quoteBalance / midPrice;
+
+        const baseToken = tokensBySymbol.get(market.baseSymbol);
+        const quoteToken = tokensBySymbol.get(market.quoteSymbol);
+
+        return {
+          symbol: market.symbol,
+          market: market.market,
+          baseBalance: baseBalance,
+          baseDecimals: baseToken.decimals,
+          basePrice: market.basePrice,
+          quoteBalance: quoteBalance,
+          quoteDecimals: quoteToken.decimals,
+          quotePrice: market.quotePrice,
+        };
+      });
+
+      const pools_public = pools_private.map(pool => {
+        return {
+          symbol: pool.symbol,
+          market: pool.market,
+          baseBalance: pool.baseBalance,
+          baseDecimals: pool.baseDecimals,
+          basePrice: pool.basePrice,
+          quoteBalance: pool.quoteBalance,
+          quoteDecimals: pool.quoteDecimals,
+          quotePrice: pool.quotePrice,
+        };
+      });
+
+
+
       const bots_private = this.bots.map(bot => {
         const walletKeypair: Keypair = Keypair.generate();
         const openOrdersKeypair: Keypair = Keypair.generate();
@@ -373,12 +416,14 @@ export class SimulationBuilder {
           config: config_public,
           tokens: tokens_public,
           markets: markets_public,
+          pools: pools_public,
           bots: bots_public,
         },
         {
           config: config_private,
           tokens: tokens_private,
           markets: markets_private,
+          pools: pools_private,
           bots: bots_private,
           orders: orders_private,
         },

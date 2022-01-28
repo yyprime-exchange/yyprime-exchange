@@ -29,18 +29,12 @@ export class MakerBot extends Bot {
   }
 
   public onAsk(book: SerumBook) {
-    //console.log(JSON.stringify(book));
   }
 
   public onBid(book: SerumBook) {
-    //console.log(JSON.stringify(book));
   }
 
-  public onExit() {
-    //TODO cancel all orders.
-  }
-
-  public onPrice(token: PythToken, price: PythPrice) {
+  public onPrice(book: SerumBook, token: PythToken, price: PythPrice) {
     (async () => {
       if (price.price) {
 

@@ -99,17 +99,10 @@ const solanaClient: SolanaClient = new SolanaClient(simulation);
     }
   }
 
-  function onRequest(requests) {
-    for (const request of requests) {
-      console.log(`  request ${JSON.stringify(request)}`);
-    }
-  }
-
   serumClient.subscribe(
     (book: SerumBook) => { onAsk(book); },
     (book: SerumBook) => { onBid(book); },
     (book: SerumBook, events) => { onEvent(book, events); },
-    (requests) => { onRequest(requests); },
   );
 
 });

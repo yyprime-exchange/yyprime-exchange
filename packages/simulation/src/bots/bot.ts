@@ -40,8 +40,11 @@ export abstract class Bot {
 
   public abstract onAsk(book: SerumBook);
   public abstract onBid(book: SerumBook);
-  public abstract onExit();
-  public abstract onPrice(token: PythToken, price: PythPrice);
+  public abstract onPrice(book: SerumBook, token: PythToken, price: PythPrice);
+
+  public onExit() {
+    //TODO cancel all orders.
+  }
 
   public async cancelOrder(orderId: string) {
     const orders = await this.getOrders();
@@ -71,6 +74,11 @@ export abstract class Bot {
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
 
+    console.log(`side = ${side}`);
+    console.log(`price = ${price}`);
+    console.log(`size = ${size}`);
+    console.log(`orderType = ${orderType}`);
+    console.log(``);
 
 //TODO
 //Price must be an increment of X
@@ -95,6 +103,8 @@ export abstract class Bot {
     this.baseSizeNumberToLots(size).mul(this.priceNumberToLots(price)),
   ),
 */
+//priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
+//baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
 
     const { transaction, signers } = await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
       owner: this.walletAccount,
