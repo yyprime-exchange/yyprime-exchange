@@ -81,22 +81,22 @@ function SimulationPageInner() {
               </Row>
             </Wrapper>
           </Col>
-          {window.location.port !== '' &&
-            <Col>
+          <Col>
               <Wrapper>
                 <Row>
                   <Col>
                     <PriceChart />
                   </Col>
                 </Row>
-                <Row>
-                  <Col style={{ height: '100%' }}>
-                    <Bots />
-                  </Col>
-                </Row>
+                {window.location.port !== '' &&
+                  <Row>
+                    <Col style={{ height: '100%' }}>
+                      <Bots />
+                    </Col>
+                  </Row>
+                }
               </Wrapper>
             </Col>
-          }
         </Row>
       </Wrapper>
     </>

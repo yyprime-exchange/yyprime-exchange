@@ -13,47 +13,47 @@
       "http": "http://127.0.0.1:8899/",
       "ws": "ws://127.0.0.1:8900/"
     },
-    "wallet": "8xS5JF4gJ7cjxVv1Qq1MFfka2nRkv1Vkj1BVLv3HCE5i",
-    "walletPrivateKey": "mv8Ec84/96efyIxkfQtON4JwIt1eBFHZnVkTy/7fk9p2NRq2mjHyzdJlm6wW4ss9y881Ol2NjmVi6BX3GsDanQ==",
+    "wallet": "5j1SdCgYV2uqYtz7LvnGjc2fN1MuiRMepNwTFYjHsq8t",
+    "walletPrivateKey": "bwx0BekBJbXk+mGTk+oG7wuq+rt7/KV0GkBj8D239gtGMaQncCu+vFVyIgV/2CglBI2gEParBDKYL9m7nQIYWQ==",
     "walletBalance": 10
   },
   "tokens": [
     {
       "symbol": "BTC",
-      "mint": "7bP4AMaivLAsBz36V2U4MojSzeYDuiEG3NZAKj9j3HT3",
-      "mintPrivateKey": "awTW10aw40ZO4dpTW7Cw8WQLYV65j/upCocFqxCqbzxh9M5he8lBRY3Um9YDZkDq5lSLTUOOMACtufAiLRAelg==",
-      "vault": "3cKNeUPKTHPXdgvVsw4WjsKgoRX5NCTPgq7pcQvCsxdY",
-      "vaultPrivateKey": "bwLtiYHISXmmRUPPAHsqn2lxCBvsPSD5lgfjHLp38Comw3oREmKGKMk9dxv4ZYqJ6N0ROAjbdQ0z7SdhfKEi4w==",
+      "mint": "DQFLrbQXZBvoYSNnhSAH29gZUvCh2LsipKuGhwKix6MN",
+      "mintPrivateKey": "Z8mYlVcLwXfoXzxsq5jhcsiHBp5C3r+XckVQgaHoSum4QNGS4nplV669dcQfR63Le8kljJFYyfYIjwyF6eReOQ==",
+      "vault": "9WDMNXK8CEBq197Y1rZG9fJa9Ky1aWdTGKVYgodPX68L",
+      "vaultPrivateKey": "TTcwcrON2bJDzLmDpGUNRFBur1o752O4ZpujKH3Y2Ut+WU3wYhqjiUHBdrYgAk+C9DMrWy99SbTtpXjK3rpt7Q==",
       "decimals": 6,
       "supply": 16149.999997,
       "price": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU"
     },
     {
       "symbol": "ETH",
-      "mint": "cbWryPP2Tje1dbgTQ7FKbMspgBJeM8E3sUjXELL94nY",
-      "mintPrivateKey": "bkBc1w/en9bVma7KRz8p/kxjL46b8JgeNkghXRa8E2MJHlq5NazWfj3fd3NN7RsLfmDCBGrgQ5aNptCKLcsSTQ==",
-      "vault": "DxCgQmAZJQFmnsTwzGU4SAGLhXSBLzSF8nS8tikbbLfC",
-      "vaultPrivateKey": "yNv+LGLXC9+JjyE+zeTIIcRl8WJ0JJmd24AMp/T5nI3AcGTFv0JFofJdUPM+x4j+6jido5g+lKwgnG0Ys5jOYw==",
+      "mint": "F4kz4peyenYXaCtf8uZHYugjtr9yXW9WpHdeKoFn7SUo",
+      "mintPrivateKey": "TJRYkL3kybeZZsuEdC1GeMkL+GJar1oM6Hut5QqMBTjQ+heWxoG/xyBAolrTg8f77sKxoTLABjFJMCYwdbx30A==",
+      "vault": "CiJm6rjzmfWE6oHteHKB4y8d9JyDLbWERnKh1fecmz59",
+      "vaultPrivateKey": "RE6l+sf/rHNNIqIli1acVSkdjl5o31YxG1nnl2iPaCeuBXN5JGtTNCOueLMwSjFF9IZ9FcDVEY0kTXdAi95DpA==",
       "decimals": 6,
       "supply": 483499.999997,
       "price": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB"
     },
     {
       "symbol": "SOL",
-      "mint": "CcyiDhUrChRsbgUEMd5aS8iNegrYDCmLbu8fPfvcxPYk",
-      "mintPrivateKey": "z8IU8HQ8zICqtSLbn+u1/a9+URskLMakFN4bRamCQrusqAHpaexXEcbJlsxZqIDq1Wyccn2EweKOYstY2kxKsQ==",
-      "vault": "AHgCmWQr6jTH3WjZRZCfyYLgSTdHxWjaoJLwRxvRk2H2",
-      "vaultPrivateKey": "HbWM6YVmnbnMoaezH2bI5MCAQkB/Rh4gMO8O/Z21T5+J/s1YKBZlAuJNeoR8exLAPCQ2tG03v2QpikawZObE3Q==",
+      "mint": "F73VAjYZHEdGrS4y1qFXw4eiGPBFSKVwnoxk2czK28E",
+      "mintPrivateKey": "xzTHfaiESUdCX1dilCIK5yfnw9VHYFMq92gnV2BGDMMDnPbJHBrmk+/QASS7SfdSW8tDgYxX1ozVRo5UIQRTxw==",
+      "vault": "7SAE9vEFcLP4ekRFxjH1S6kYx8dQaDAVwqavG3absGn6",
+      "vaultPrivateKey": "Jc6vnsqfRZGKPHTIC5nu8zYDswjOUQUPO2WGcMaHG/JfmBMVmuTOR9QVWI1SIK6bdL1OeS+DYnzDPiS44dH54w==",
       "decimals": 9,
       "supply": 0,
       "price": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG"
     },
     {
       "symbol": "USDC",
-      "mint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "mintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "vault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "vaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "mint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "mintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "vault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "vaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "decimals": 6,
       "supply": 4785000018.759881,
       "price": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
@@ -62,26 +62,26 @@
   "markets": [
     {
       "symbol": "BTC/USDC",
-      "market": "7QGiKhwn5qRCjphywhUMFCosLBLS6w9D5S5e7hFQqmU9",
-      "marketPrivateKey": "BJsPa1CwAo5v/ircJCQUizSTAMYcZWZCeExRVS1IhnxfHD8NcE0v0Cy+so3vU1+I6QpWftup/HwjcWpXvKk1Bg==",
-      "baseMint": "7bP4AMaivLAsBz36V2U4MojSzeYDuiEG3NZAKj9j3HT3",
-      "baseVault": "4irjytvHbAjPDyujYPXBWCTury5HBdxqKa1iZ9h7w9s7",
-      "baseVaultPrivateKey": "bRnM3XUV10i+J8kBaMTFkM7xXFYDYFr4HJXimvYYk0s3TB3IPVfgDPGNtkTjcx6lnfA7TFMW6j7GukNX3qNHSg==",
+      "market": "94M5nm3AHrQS7uiHE3Q6kw7f917zpXXc2wx2ehqRTRmT",
+      "marketPrivateKey": "s/ev8NcTvv4wAw+MAwA+lOhB1kQFJUDK9w/gBHsyGsN3uPH9OxgQ6i48p9a4oyXey2rPq5A/3oFqGJwJL7oagg==",
+      "baseMint": "DQFLrbQXZBvoYSNnhSAH29gZUvCh2LsipKuGhwKix6MN",
+      "baseVault": "ARRawwSXqKxT5f2pajp37D5HwbGhTxYukuKScHFknhUh",
+      "baseVaultPrivateKey": "PPrKObwLRb+dNOEfoXuFO7QTqev+zRh34een6/iBexuL+uuh376/nyxsku/bdBXp/iuKXR3SXcdRY4ioWed13g==",
       "baseSymbol": "BTC",
       "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteVault": "8mDPfsfmcTj5wf4mRgzwmQMEw7RB2ZgZ1o7hPsXS4Ru9",
-      "quoteVaultPrivateKey": "Ffl8nQdvMaT4Hk5Jfh3cY+T36EgOun/mIUdP5fvjFi9zVV/d+FfDermGjt1JammL9Fs2UC11OCVPT9dDFXLgeA==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteVault": "2CczwbLsFRU6AjQRgNzDb6XgQgSPXERjsuoBDJN5W6BK",
+      "quoteVaultPrivateKey": "xETEfc8t/b7+r28HEIcZK666maVQAWjyxNkTcMWvZLQR1ceuxIguH1Or3LJUAA7mFjyLPQZI+z4+VEFm+FBzMg==",
       "quoteSymbol": "USDC",
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
-      "requestQueue": "5sNC9XxfSzCAkTcJuSFagMGc6ptsu3JJa5HUJWwKSa5m",
-      "requestQueuePrivateKey": "4hHCXykMgBoINmqvdGF7VPewRtQ89jWyfR+VJyYuG1VIVcAQMDgzJsXqNrTlktxyMyaZvE/RnSIxwRgDqiLGQA==",
-      "eventQueue": "39P6gdh2w3ZC3VBmtMJ2yfRvASTuBCW93WKXdbRHK44W",
-      "eventQueuePrivateKey": "GDBbSSSvQn/A/l0Blt7ywS21J5sHWuQcR4HGGoeH2ZYf3QGwju6UkPlrzk8ca6qhRwvrg17Tkkk5KNPv1d9bhw==",
-      "bids": "3xG3sKEn9TMhU9k3aJ33owJUZKU3vc9wumixyHBJg3Ws",
-      "bidsPrivateKey": "zuah1GEWKuWN0K8rlTOP0V9iexiHBwDFJfsJmyQyy2kr31W17pUliWUo7oH5La9HoudXrxno0WP6f0hl11mUdA==",
-      "asks": "4gr4z2Dw7btVXHEoGhtEyRG7iWd4RCDq5dTYRs4swfRy",
-      "asksPrivateKey": "KHEw0kRRabK/koXVU0p92B58dCZTU0Erk8JoqCJeK6w2yDHII9U1vIr3yN10jn4OzyulysNWs6H9Tgpnj21y8A==",
+      "requestQueue": "Co5PhqFzuyjNJLnQ3H2f52dbVewUxHKazLCaNaAHYdmL",
+      "requestQueuePrivateKey": "UHWWDpcwezuO/KEPmSHRU/ktbQ14s6VDiQOVyQoYKtqvPj0kNTiGtW8plgJjq82hn0UQcplgA2z82cZUe2KvUw==",
+      "eventQueue": "5TaQa2sdeVhD1EVpY3rEyvfzpoEfoFgX1zFiK52XrLe4",
+      "eventQueuePrivateKey": "ZuESLRoaOV72KPPQFgBtlldfAGffTgIK70K4+hkcdoZCPZ8XDk+JwY8ZEyhx8ViExprFZZyH8Fq81rLEx+6wOQ==",
+      "bids": "CYgaucc9FmyHXZMeaPv9yRetyEyBQg7h5LKYoDX35dSg",
+      "bidsPrivateKey": "V9f+dVSn4oU1ODUPW6170dlSB+LOfHSFXRYHXWWJ/N6rjlHZrCKL2qc2bNGMbEsz52WA58vHPSyJljwFOAc3YQ==",
+      "asks": "DUjWJYxJnHFwCWc2kczP9Qqt9ERbZTS2co8LioLMSxEU",
+      "asksPrivateKey": "wy0WMIGOopyH4Tq+WBM6HT1zN1f1k5Y0uc2bRryYvrG5ZvxbAbPibs31+f/sMYsfbI0b9mNQEYCzqC7nLkVa0Q==",
       "quoteDustThreshold": 100,
       "baseLotSize": 100,
       "baseDecimals": 6,
@@ -91,26 +91,26 @@
     },
     {
       "symbol": "ETH/USDC",
-      "market": "DxvooFqr2RifXFHS55UUcj2JBpm72mQ17g67GUag1zPC",
-      "marketPrivateKey": "OypL1twqdeAxuRln1lApcpPHewy6DUbJ4c9qKVKn+HXAoAb3z+Kmn4kqGYkZUIEtN2rZ3KSfFUHs9fP85rczWw==",
-      "baseMint": "cbWryPP2Tje1dbgTQ7FKbMspgBJeM8E3sUjXELL94nY",
-      "baseVault": "GRkAtFbUBHxdnWHyNvbTQ8ELBbFbNmJ6eMkb2CEE1gjg",
-      "baseVaultPrivateKey": "gHPqCUyCnrC3oRjiDe1ujKCZd86EK/Y+fh2K3VNAN5HlNg5mUSJwNxp1fVfSuVjR+A4SmlsvxDknoo0F3nDEVw==",
+      "market": "GK6KZp7g48CcarZ74saa8WqC5N3rR7btq3jcTnY7Ccb1",
+      "marketPrivateKey": "VlGSVvEAuT/bHGWUWjc3Wv6WoFpJ7Pnv8PPz1eGgvRfjgcYfMjbvm4wT7ms9/ghhkAk1jeCn3erNGAIh8DzpWA==",
+      "baseMint": "F4kz4peyenYXaCtf8uZHYugjtr9yXW9WpHdeKoFn7SUo",
+      "baseVault": "4828jc3dxTe9ZjX8pNHoWd6pzei6G8ZkHhRY4HsDsPKo",
+      "baseVaultPrivateKey": "VMbn17QOHUNgsbuH1qblbNUqY48XrsveGO4w9VUuew4uX2huIhT2fXM5LtXnSakvyj4msX6/B8+tgfKbZ6P5qg==",
       "baseSymbol": "ETH",
       "basePrice": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB",
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteVault": "BWAE7ZKCFaYCfnGTossxV8i7nUEKBqRGquc6fvnWcqHb",
-      "quoteVaultPrivateKey": "7lawSmCkgQOMRkwKa8ZPrchqx3nXgYESTlWTFwmO+wmcDSUK14h5NahMBPYt8J9GIIo+HrI3GW/vgUQJpXaDKg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteVault": "BGWEDugNm5AwwUg353VmWoGiy7wwJYqnoJ2U74LCshBX",
+      "quoteVaultPrivateKey": "KO1HieSN1GfAWjX70y32jO4tZ0vEtQb+HqbtnzJrYyqYjaEr7EaB3dvTvjauGbOSPv7uPOjiPfjv+eXC/RphIg==",
       "quoteSymbol": "USDC",
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
-      "requestQueue": "9MnG7gTTsDubA3D7AQ62NCj1xJrEwDAG99riTaYE4JVk",
-      "requestQueuePrivateKey": "r5qQ3b40lTnJa1eI6buTX+W6u+THX2oN2hWK1apIY+x8MEm1VoG51ZawdTKN2AeQ1lxK5qEGCtZiEbStDkFuzw==",
-      "eventQueue": "4QkYCq5fbxjj24abNbj9eVTgXvECd6XG9jj8jcKwcVPw",
-      "eventQueuePrivateKey": "wEXVdN/5tjPPBl3K6UQ86cVwp8ClQdyWrARbznvQ1isyqKXgug//Vpn29B5LCWCxX69+lWaK0tleh8HIEpCl+g==",
-      "bids": "31zLxLLj2ruzmQeBRziF9Xvh6gwBusD2So8vpqHoKvov",
-      "bidsPrivateKey": "x0cx4ogyIMPeuOooxqmbVNwfh3dlh5nTX36h6ajWAAUd+DaEhsEIxS0qkZjFSS9TXfRYI8B68HtgU1gK6a1hRQ==",
-      "asks": "BkP6oXHzeJf4soRPSY4qoxhaoqh5SqyU1Z5vg7n3BEvF",
-      "asksPrivateKey": "y2syq01LWFzM8tUSZhHbNJiYbHrC4RHfjbWRb4/P+aKfsdUoMPfy39pviri4bTJ53xaH9Jew5Gbg5vXHeE0PtA==",
+      "requestQueue": "2x82WnqE1FcckaJWTnzxqRNiTNSny4hNK86ibshsiYXt",
+      "requestQueuePrivateKey": "WFAF2TERoJYV2PyxWzkmL2l8ftqEvSYMCHvygHtt1Goc+pNreOq5BMNSVR02yFYGK6Dtdljq6wb/7IKVaguBYw==",
+      "eventQueue": "DHRjmoXvqE64MJZ2p9RsQCcYHN1gRWdng8JQh7m74nLg",
+      "eventQueuePrivateKey": "8sHA/JPawUlmVynPlktMCSuN6X2P4M3li46b4O/8IOi2gYG9Ik3gLnaVkBpaWzA0G8o+Kd6YaxBeHj2BTx3GoQ==",
+      "bids": "vPZ2TUejBqucfSZCeeH9Xjg4vCdr7yvrfkHgyG5GeZd",
+      "bidsPrivateKey": "cJ+digUG5Hg6w7cJeltlNtzpCjSmEHRA5uyNAnDJFKoNrUheIUI38p7EgbHMR0SlibI/IVACY2XY6dCZn9akEA==",
+      "asks": "Gv8x3Rqyua1Xip1Mvkt4CieKH3cEaeNjbHNWHc4omkqT",
+      "asksPrivateKey": "QaQB52ye+iXPg7+VoOF88e2Xe7rQurFHl0bSjCwXbzHsfBMh8N2wRvZfQlPLqlm1Ymi7+mMNzzpio81GvccqZg==",
       "quoteDustThreshold": 100,
       "baseLotSize": 1000,
       "baseDecimals": 6,
@@ -120,26 +120,26 @@
     },
     {
       "symbol": "SOL/USDC",
-      "market": "Bx3UESqyWVVmYetQYw5CLWGK7aMUnRgCsfwxUg4TgUmq",
-      "marketPrivateKey": "YRUEcVoLpUfKLqSIaYCSrM+WjT1CbZ+RVmOC0WhiGgiirpsmK+K0OLrRPzXjaee2CVKkegDrJclDqZOe9seXzA==",
-      "baseMint": "CcyiDhUrChRsbgUEMd5aS8iNegrYDCmLbu8fPfvcxPYk",
-      "baseVault": "6kUAXJNw9z1EzcRQJCc4uspYxaKcWS6QDqrtVvuVoXm6",
-      "baseVaultPrivateKey": "W3Z/a+OmVUXTF73CwVcBTKf8sDTs3uar80NfcdvNZKtVbR/CPRpHLjGZnRXRKLDcLCSpmkJLXOvytLAkKFlH5Q==",
+      "market": "5hcMTxswqbcarcP2KPcrkDnbBCMDqYwmMKedVh7kLBiD",
+      "marketPrivateKey": "hOwHAGPL1LCulZ7iRKsTW3eY4Jf+5P6Huoaj/kRr/yxF1fQiwLBaD0phFXT3+3sruMTd9mBdvf5yQ8l4oO8/Jg==",
+      "baseMint": "F73VAjYZHEdGrS4y1qFXw4eiGPBFSKVwnoxk2czK28E",
+      "baseVault": "4mdpP7bMgbMTokdPDZmPzUvQGuRB32cLnYUkd9J9hJdZ",
+      "baseVaultPrivateKey": "BTn9xT1O/tWLdXqAgOsid9B7znNzEooSU2lCsCEpFNw4Aj7SlaEyF3QAl8MUfxDzL1+H5f1MNHUF2PNdaR4/DA==",
       "baseSymbol": "SOL",
       "basePrice": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG",
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteVault": "CmQh1XDxyzLbRG5RwihJyiD4pywnsiZgp3S7t1Z2864T",
-      "quoteVaultPrivateKey": "IloZT8pT9lzm6nCQlC338yBueAeFBKcOi+wdrcS8D/Ou0OXflMFaIc6Odc2VV4tM5tlqu/RtYdOrs6bH6TtyJA==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteVault": "hH1XtEEXmf7TqJSZjq9Jn1jGLJxjznx6XQgfN99DeVv",
+      "quoteVaultPrivateKey": "SZgpoGQKfC2XMGspDnnP/OPO3BRrwx2T7eh6D1DdmosKUVWBGN6PHt99ZdJT52tfDe2x7Xl24bbZL3vYR6V7YQ==",
       "quoteSymbol": "USDC",
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD",
-      "requestQueue": "CeYJYNNcxZdELGZvJfa9QcryqRXXyR7rRjHaygmkaY34",
-      "requestQueuePrivateKey": "u5JOKuFSR7LfjVYtuDCDG4K4hqYatia0Blr/XASLnWatDnCc5cMtDqFaO3PL2XK2kJLJegZm62OmpyqEV2oY6w==",
-      "eventQueue": "J5XSLDS2hd69zNkrmwZZztUWXkoQv2ftknw2WXpj8LPb",
-      "eventQueuePrivateKey": "mIamMMPw82zSVAhKZsTfI2s6Mr6ZtyPYrE6SYyslrbD9v2p57ZsQhmiMvOkbG5y/gzhDazGWTPUDErujHiB34g==",
-      "bids": "CnJa8mwdHoogJoF9sdEZh4ySrZ7qu51NnmhhQ425wp2a",
-      "bidsPrivateKey": "JZJGY/WWxPH0adVJ33MkHyYHhOPiaSCeBzrzsZw1O/GvC499M4wn5M7Pjp+HOMPW06ze3fgHoks9xvbDzoychw==",
-      "asks": "CLSbFNn8KnyKtYE565UES98N1aosv9NwQ67AG6mwHYry",
-      "asksPrivateKey": "nqoW4vBng3lbtV1l1qhapOeprIpD+jscw4AswgO+yheoa4bdDj9a1sV7pd5g0rZR5WZHjkzPWTVyj3DvNuULzg==",
+      "requestQueue": "6qMB4SuxMeVAEdBxqcVPyAfXuargeLJ4U5Z6tPdPH99R",
+      "requestQueuePrivateKey": "z4LYrcpo39F/ozuH/wX29e52w9AYn4QKxxsUpMvKmJ9WrR+nUnNpN82oI/S9j1Rmj2vzpGlwXXCchoWrKtz1aA==",
+      "eventQueue": "5v5Sujs8P7daKLZZJKgLrcmn5sqAgmmTtQRb3Y3HMNi1",
+      "eventQueuePrivateKey": "Ln8ZgLTbZb5CG5DsU1ZhU5YvdQv+HVtrLbyvzmBdk/FJB4751PHagHZ8lh4S1ecpuJk/E7hjDS6I8yGfx4gBXg==",
+      "bids": "Hj7W1Z3F2CrB76b3nzBNnNi3Q8EjfLUBMbuTwKmumD2D",
+      "bidsPrivateKey": "PW7idfBLSMb/rattJWwy6TH643bL0f4vbB3+MAuI6+P4hLwMP3vWE4W2QAvHFuFHPNa2Zc/E4PLslsVflg7tFg==",
+      "asks": "5EWc2bK5Ja6wjrWkF2Ty6xBsJxcmg8KdrK8s4tACQbva",
+      "asksPrivateKey": "gtP6f576dbc8fkXpsjx63upK4Gcq1tlDDMgMiMeDQno+5MV/+hkFdDPehO+tSxN84FXuJucXSDR7Olsyzk/tEw==",
       "quoteDustThreshold": 100,
       "baseLotSize": 100000000,
       "baseDecimals": 9,
@@ -151,31 +151,31 @@
   "pools": [
     {
       "symbol": "BTC/USDC",
-      "market": "7QGiKhwn5qRCjphywhUMFCosLBLS6w9D5S5e7hFQqmU9",
-      "baseBalance": 139.53829093767575,
+      "market": "94M5nm3AHrQS7uiHE3Q6kw7f917zpXXc2wx2ehqRTRmT",
+      "baseBalance": 96.08376416373365,
       "baseDecimals": 6,
       "basePrice": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
-      "quoteBalance": 5147811.7447,
+      "quoteBalance": 3578956.8727,
       "quoteDecimals": 6,
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     },
     {
       "symbol": "ETH/USDC",
-      "market": "DxvooFqr2RifXFHS55UUcj2JBpm72mQ17g67GUag1zPC",
-      "baseBalance": 378.52219886041394,
+      "market": "GK6KZp7g48CcarZ74saa8WqC5N3rR7btq3jcTnY7Ccb1",
+      "baseBalance": 327.9238672314782,
       "baseDecimals": 6,
       "basePrice": "JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB",
-      "quoteBalance": 931037.80426,
+      "quoteBalance": 809729.2884,
       "quoteDecimals": 6,
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     },
     {
       "symbol": "SOL/USDC",
-      "market": "Bx3UESqyWVVmYetQYw5CLWGK7aMUnRgCsfwxUg4TgUmq",
-      "baseBalance": 14011.998588047147,
+      "market": "5hcMTxswqbcarcP2KPcrkDnbBCMDqYwmMKedVh7kLBiD",
+      "baseBalance": 18675.73134057772,
       "baseDecimals": 9,
       "basePrice": "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG",
-      "quoteBalance": 1279183.3751,
+      "quoteBalance": 1699734.3365000002,
       "quoteDecimals": 6,
       "quotePrice": "Gnt27xtC473ZT2Mw5u8wZ68Z3gULkSTb5DuxJy7eJotD"
     }
@@ -185,151 +185,151 @@
       "name": "BTC_mm_0",
       "type": "maker",
       "symbol": "BTC/USDC",
-      "market": "7QGiKhwn5qRCjphywhUMFCosLBLS6w9D5S5e7hFQqmU9",
-      "baseBalance": 139.53829093767575,
+      "market": "94M5nm3AHrQS7uiHE3Q6kw7f917zpXXc2wx2ehqRTRmT",
+      "baseBalance": 96.08376416373365,
       "baseDecimals": 6,
-      "baseMint": "7bP4AMaivLAsBz36V2U4MojSzeYDuiEG3NZAKj9j3HT3",
-      "baseMintPrivateKey": "awTW10aw40ZO4dpTW7Cw8WQLYV65j/upCocFqxCqbzxh9M5he8lBRY3Um9YDZkDq5lSLTUOOMACtufAiLRAelg==",
-      "baseVault": "3cKNeUPKTHPXdgvVsw4WjsKgoRX5NCTPgq7pcQvCsxdY",
-      "baseVaultPrivateKey": "bwLtiYHISXmmRUPPAHsqn2lxCBvsPSD5lgfjHLp38Comw3oREmKGKMk9dxv4ZYqJ6N0ROAjbdQ0z7SdhfKEi4w==",
-      "quoteBalance": 5147811.7447,
+      "baseMint": "DQFLrbQXZBvoYSNnhSAH29gZUvCh2LsipKuGhwKix6MN",
+      "baseMintPrivateKey": "Z8mYlVcLwXfoXzxsq5jhcsiHBp5C3r+XckVQgaHoSum4QNGS4nplV669dcQfR63Le8kljJFYyfYIjwyF6eReOQ==",
+      "baseVault": "9WDMNXK8CEBq197Y1rZG9fJa9Ky1aWdTGKVYgodPX68L",
+      "baseVaultPrivateKey": "TTcwcrON2bJDzLmDpGUNRFBur1o752O4ZpujKH3Y2Ut+WU3wYhqjiUHBdrYgAk+C9DMrWy99SbTtpXjK3rpt7Q==",
+      "quoteBalance": 3578956.8727,
       "quoteDecimals": 6,
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteMintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "quoteVault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "quoteVaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteMintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "quoteVault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "quoteVaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "params": {
         "half_spread": 0.005
       },
-      "wallet": "73u5tggGjrULVBU7dCTpruZEpXbPJEAauHXD62ijRgYN",
-      "walletPrivateKey": "hS5iQ6w+QumEnDYRsqvRx9W3tvju7aNyVHDfCb2A8mJZ5CzUWpb8RNGBTKk6l61pXpxN9VLNGrAGodohSGCZVw==",
+      "wallet": "C1hEKWwBgwFfivC6kenxfJJ6Xkjd9mU9kQ4ETeXRqM1M",
+      "walletPrivateKey": "HqG4HgzUW2fPf3wKxEDJNHvqYo/dxq0TD1UtaWatrYGjngtDApnNZHhFhFEmUBAAzBIRtwuXzxYyO9ifD/u35A==",
       "walletBalance": 10,
-      "openOrders": "FyNWTEs1TmfosYNgapwLP1GxyPbPQdajkPh8Gb44y8GJ",
-      "openOrdersPrivateKey": "dt/wJUZyq3yA6RA+hB85sxtWpF6+8ymDmlVoL01RmgzedHYSx6wcN+36l9wsMycH8P4Qj2KqjG6cmZOeaT3ZQw=="
+      "openOrders": "2KDNU1PKragLsfMWtHpHSU8CW6ce9GczkJef5tTPdSVJ",
+      "openOrdersPrivateKey": "HPTvwfNpIlA7Deq6kCMOoyZbkfCOtyGUHeZvAjg557UThiDfBj+7IK4pqnWQm/h1ibPlcdMuxOKmMaFTZ/Zq7Q=="
     },
     {
       "name": "ETH_mm_0",
       "type": "maker",
       "symbol": "ETH/USDC",
-      "market": "DxvooFqr2RifXFHS55UUcj2JBpm72mQ17g67GUag1zPC",
-      "baseBalance": 378.52219886041394,
+      "market": "GK6KZp7g48CcarZ74saa8WqC5N3rR7btq3jcTnY7Ccb1",
+      "baseBalance": 327.9238672314782,
       "baseDecimals": 6,
-      "baseMint": "cbWryPP2Tje1dbgTQ7FKbMspgBJeM8E3sUjXELL94nY",
-      "baseMintPrivateKey": "bkBc1w/en9bVma7KRz8p/kxjL46b8JgeNkghXRa8E2MJHlq5NazWfj3fd3NN7RsLfmDCBGrgQ5aNptCKLcsSTQ==",
-      "baseVault": "DxCgQmAZJQFmnsTwzGU4SAGLhXSBLzSF8nS8tikbbLfC",
-      "baseVaultPrivateKey": "yNv+LGLXC9+JjyE+zeTIIcRl8WJ0JJmd24AMp/T5nI3AcGTFv0JFofJdUPM+x4j+6jido5g+lKwgnG0Ys5jOYw==",
-      "quoteBalance": 931037.80426,
+      "baseMint": "F4kz4peyenYXaCtf8uZHYugjtr9yXW9WpHdeKoFn7SUo",
+      "baseMintPrivateKey": "TJRYkL3kybeZZsuEdC1GeMkL+GJar1oM6Hut5QqMBTjQ+heWxoG/xyBAolrTg8f77sKxoTLABjFJMCYwdbx30A==",
+      "baseVault": "CiJm6rjzmfWE6oHteHKB4y8d9JyDLbWERnKh1fecmz59",
+      "baseVaultPrivateKey": "RE6l+sf/rHNNIqIli1acVSkdjl5o31YxG1nnl2iPaCeuBXN5JGtTNCOueLMwSjFF9IZ9FcDVEY0kTXdAi95DpA==",
+      "quoteBalance": 809729.2884,
       "quoteDecimals": 6,
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteMintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "quoteVault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "quoteVaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteMintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "quoteVault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "quoteVaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "params": {
         "half_spread": 0.005
       },
-      "wallet": "EEpWjYjmviGNWwyScS12sGrrurRk3f4V61LV2McWLQw9",
-      "walletPrivateKey": "TiZDP0ktU7shNyBD2BMBeqHKSAbVWhCsGgsA1pehxo3EsjQKVawoUU34PS2Y/5c04jEAf3RWUo2d+Y0H0mv0qA==",
+      "wallet": "4Yc8HWarqvK4tXfafXtyhPGtG5pbXsgQGHRuG5CBxgD8",
+      "walletPrivateKey": "g7vHILhXj7DSh1QBWxKXLNoioj+6qLftQEKSLV8VE1I0q8hR7YtLnCOxSh70VvsX7SbicQhEdJzWCRXZgz100w==",
       "walletBalance": 10,
-      "openOrders": "68HMHpU29Z8AxGH4LmJ1EM5FXMToS6ZbqsTCywHieymv",
-      "openOrdersPrivateKey": "7Gb2p4bPOHXTxEDUW4EZTuO+9Q8Ljj6oJeIaQUafXeZMJ/yy1H8gqukskcNMcilJR19Vt+deqY4VPokeMzQ35Q=="
+      "openOrders": "37N9J5L9MDUeqyWf8oSiAqrrkrARY5bApqr3HhU5nckS",
+      "openOrdersPrivateKey": "+6ynm/BbBDQR1wnGp1k8JTZnNtQaL/56pxTDPTvdcLIfWMPi6FjOPIKJgRX4AXjc6JCYVGlfilplIjgabwDQ6w=="
     },
     {
       "name": "SOL_mm_0",
       "type": "maker",
       "symbol": "SOL/USDC",
-      "market": "Bx3UESqyWVVmYetQYw5CLWGK7aMUnRgCsfwxUg4TgUmq",
-      "baseBalance": 14011.998588047147,
+      "market": "5hcMTxswqbcarcP2KPcrkDnbBCMDqYwmMKedVh7kLBiD",
+      "baseBalance": 18675.73134057772,
       "baseDecimals": 9,
-      "baseMint": "CcyiDhUrChRsbgUEMd5aS8iNegrYDCmLbu8fPfvcxPYk",
-      "baseMintPrivateKey": "z8IU8HQ8zICqtSLbn+u1/a9+URskLMakFN4bRamCQrusqAHpaexXEcbJlsxZqIDq1Wyccn2EweKOYstY2kxKsQ==",
-      "baseVault": "AHgCmWQr6jTH3WjZRZCfyYLgSTdHxWjaoJLwRxvRk2H2",
-      "baseVaultPrivateKey": "HbWM6YVmnbnMoaezH2bI5MCAQkB/Rh4gMO8O/Z21T5+J/s1YKBZlAuJNeoR8exLAPCQ2tG03v2QpikawZObE3Q==",
-      "quoteBalance": 1279183.3751,
+      "baseMint": "F73VAjYZHEdGrS4y1qFXw4eiGPBFSKVwnoxk2czK28E",
+      "baseMintPrivateKey": "xzTHfaiESUdCX1dilCIK5yfnw9VHYFMq92gnV2BGDMMDnPbJHBrmk+/QASS7SfdSW8tDgYxX1ozVRo5UIQRTxw==",
+      "baseVault": "7SAE9vEFcLP4ekRFxjH1S6kYx8dQaDAVwqavG3absGn6",
+      "baseVaultPrivateKey": "Jc6vnsqfRZGKPHTIC5nu8zYDswjOUQUPO2WGcMaHG/JfmBMVmuTOR9QVWI1SIK6bdL1OeS+DYnzDPiS44dH54w==",
+      "quoteBalance": 1699734.3365000002,
       "quoteDecimals": 6,
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteMintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "quoteVault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "quoteVaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteMintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "quoteVault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "quoteVaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "params": {
         "half_spread": 0.005
       },
-      "wallet": "J8tnM7GeuJM2azv62EXhyovyShGfwMhRsunvjgdoxxxQ",
-      "walletPrivateKey": "qWjagO58ggt2SswxaIb2OoLvKyVj4UWaex6OC0WDq1f+nEsXSeQkHuWMMaiBV1PcZsCUutrZXpYphudF1FN1AQ==",
+      "wallet": "HWiiaoV1JADKLi89o4znusrEhCvHZJ3R9zRxn5kZ3chW",
+      "walletPrivateKey": "Bf/KdlpUqjcwoBll4dKAVTuDIk4NlpQ2y+boZEKh3Pr1WAD4A2k9mWrobMaQsjlVS1oNfQOndSsKGWwgsTvJyQ==",
       "walletBalance": 10,
-      "openOrders": "ET2RmsdcoU5wFDBDf9YkRKXuot8261AN9DzqR3aLbJwz",
-      "openOrdersPrivateKey": "T6z7XD4OSTYQ3JDNEaB27UR2hT+PZ0x5bsAzYgC0KB3H0qUN0gj1iuoxalouLqQJ5vFuaJpvuYBZv/JpRaHpeQ=="
+      "openOrders": "3mShPCqMEh9NFS4kvqDm89ByeUHgyWAJeixznPgVtfuF",
+      "openOrdersPrivateKey": "u3USFHYMvF/1fADSE5Q0TCP5yfHZTJm9hg0ptEDQMy4pGfv7JOZRjYlVHqXoTty2BPyXiQBkrcb2bC/fd2g7Rg=="
     },
     {
       "name": "BTC_t_0",
       "type": "taker",
       "symbol": "BTC/USDC",
-      "market": "7QGiKhwn5qRCjphywhUMFCosLBLS6w9D5S5e7hFQqmU9",
-      "baseBalance": 139.53829093767575,
+      "market": "94M5nm3AHrQS7uiHE3Q6kw7f917zpXXc2wx2ehqRTRmT",
+      "baseBalance": 96.08376416373365,
       "baseDecimals": 6,
-      "baseMint": "7bP4AMaivLAsBz36V2U4MojSzeYDuiEG3NZAKj9j3HT3",
-      "baseMintPrivateKey": "awTW10aw40ZO4dpTW7Cw8WQLYV65j/upCocFqxCqbzxh9M5he8lBRY3Um9YDZkDq5lSLTUOOMACtufAiLRAelg==",
-      "baseVault": "3cKNeUPKTHPXdgvVsw4WjsKgoRX5NCTPgq7pcQvCsxdY",
-      "baseVaultPrivateKey": "bwLtiYHISXmmRUPPAHsqn2lxCBvsPSD5lgfjHLp38Comw3oREmKGKMk9dxv4ZYqJ6N0ROAjbdQ0z7SdhfKEi4w==",
-      "quoteBalance": 5147811.7447,
+      "baseMint": "DQFLrbQXZBvoYSNnhSAH29gZUvCh2LsipKuGhwKix6MN",
+      "baseMintPrivateKey": "Z8mYlVcLwXfoXzxsq5jhcsiHBp5C3r+XckVQgaHoSum4QNGS4nplV669dcQfR63Le8kljJFYyfYIjwyF6eReOQ==",
+      "baseVault": "9WDMNXK8CEBq197Y1rZG9fJa9Ky1aWdTGKVYgodPX68L",
+      "baseVaultPrivateKey": "TTcwcrON2bJDzLmDpGUNRFBur1o752O4ZpujKH3Y2Ut+WU3wYhqjiUHBdrYgAk+C9DMrWy99SbTtpXjK3rpt7Q==",
+      "quoteBalance": 3578956.8727,
       "quoteDecimals": 6,
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteMintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "quoteVault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "quoteVaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteMintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "quoteVault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "quoteVaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "params": {},
-      "wallet": "6u1ytTJXh9JVKKaDJeTAPLRgZWE8v53bWi7CDjvY6szE",
-      "walletPrivateKey": "015KU1abp+0odr5deovA7LxIvnEAyoQ4wfQ6pyMalHlXnb7m+tfI2KHxxHW9iLnZ09cri0zPQpYK3YK93xVHVw==",
+      "wallet": "Cv1oJQ9JCC3Wy6UmcjRyqQX2z4Z8zbD96KoYJmZAeYg3",
+      "walletPrivateKey": "1DT5ryd64DF6+5vhjXySKUvH2sVza9SsYgn126Bp5uWxBT3e/0v5ifDSJ1oeKeNLROLTx263Dz9EJwyVmX0yDA==",
       "walletBalance": 10,
-      "openOrders": "3Cp7KgmxdGdLtDs8REvr2k6NxJcw4MRTeoWxPzb6FnEF",
-      "openOrdersPrivateKey": "JdyhLgs/Z6L1W7+qwq8LuJRKU/Hp4wwOq4UH+OtD3YwgvgdxQhhoLNy5sZ/Av9/3HUUBzDE705cQwkinC6t1VA=="
+      "openOrders": "DbvyYmdKzJDBorQ9dybxDSrXuJP8RQS7Q7xKC5u6epE3",
+      "openOrdersPrivateKey": "5i9p6ecXryRSK56zBP/Qpcno0vbY53bpPBBBfX9vByW7PwUy5vPu3/a55d03Vfz44RDVMVBMNozs627WdiB+qA=="
     },
     {
       "name": "ETH_t_0",
       "type": "taker",
       "symbol": "ETH/USDC",
-      "market": "DxvooFqr2RifXFHS55UUcj2JBpm72mQ17g67GUag1zPC",
-      "baseBalance": 378.52219886041394,
+      "market": "GK6KZp7g48CcarZ74saa8WqC5N3rR7btq3jcTnY7Ccb1",
+      "baseBalance": 327.9238672314782,
       "baseDecimals": 6,
-      "baseMint": "cbWryPP2Tje1dbgTQ7FKbMspgBJeM8E3sUjXELL94nY",
-      "baseMintPrivateKey": "bkBc1w/en9bVma7KRz8p/kxjL46b8JgeNkghXRa8E2MJHlq5NazWfj3fd3NN7RsLfmDCBGrgQ5aNptCKLcsSTQ==",
-      "baseVault": "DxCgQmAZJQFmnsTwzGU4SAGLhXSBLzSF8nS8tikbbLfC",
-      "baseVaultPrivateKey": "yNv+LGLXC9+JjyE+zeTIIcRl8WJ0JJmd24AMp/T5nI3AcGTFv0JFofJdUPM+x4j+6jido5g+lKwgnG0Ys5jOYw==",
-      "quoteBalance": 931037.80426,
+      "baseMint": "F4kz4peyenYXaCtf8uZHYugjtr9yXW9WpHdeKoFn7SUo",
+      "baseMintPrivateKey": "TJRYkL3kybeZZsuEdC1GeMkL+GJar1oM6Hut5QqMBTjQ+heWxoG/xyBAolrTg8f77sKxoTLABjFJMCYwdbx30A==",
+      "baseVault": "CiJm6rjzmfWE6oHteHKB4y8d9JyDLbWERnKh1fecmz59",
+      "baseVaultPrivateKey": "RE6l+sf/rHNNIqIli1acVSkdjl5o31YxG1nnl2iPaCeuBXN5JGtTNCOueLMwSjFF9IZ9FcDVEY0kTXdAi95DpA==",
+      "quoteBalance": 809729.2884,
       "quoteDecimals": 6,
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteMintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "quoteVault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "quoteVaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteMintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "quoteVault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "quoteVaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "params": {},
-      "wallet": "2LXwvvQkbPsSdY1nrF9N9QWKX37u64BpCFeVJU6LxQgN",
-      "walletPrivateKey": "oT+x+HXFrHNRDIaUHoDRFRaY848yYcHGnri0mMY14uwT3LbZZrFtoeBqm98xeVj/eUep3m0U5MnZphEWMdeTTw==",
+      "wallet": "EU8MwyPFqsSL1ppDBabiagfyjxtJekRKmkmhqNyx4jss",
+      "walletPrivateKey": "YCPguTOVjQOzwlNNXXMI520Saa8d8GOAv+0vKHP0OvTIGu9od8AGt7B8H6TRThFhvVha8LibulqoGqEgfo0Slg==",
       "walletBalance": 10,
-      "openOrders": "A6myWXS5A24oqrvSGXk9AYJSzs8DKWJM1uZ8Lo9jbrJG",
-      "openOrdersPrivateKey": "ZFZkL5+eboLPvZsHJ2Kr+uJMfS4VGwbUI94ek3PsNwSHM/Bg6eUs6ohGW4Pu9FHlCRDYBG2W0ntSVGukQtlwvQ=="
+      "openOrders": "7Pdx78xqhyv8R9iXvU88WNxm8EVZFsnZVi332UEvE1hg",
+      "openOrdersPrivateKey": "N55hPuHpiIRhBE98/lVndb4FXg/YgZ3cVCvZ6m3weDte8q3Q7xk1Niezjlucwh3yZKZhYz8AQuftrzMM0gl37w=="
     },
     {
       "name": "SOL_t_0",
       "type": "taker",
       "symbol": "SOL/USDC",
-      "market": "Bx3UESqyWVVmYetQYw5CLWGK7aMUnRgCsfwxUg4TgUmq",
-      "baseBalance": 14011.998588047147,
+      "market": "5hcMTxswqbcarcP2KPcrkDnbBCMDqYwmMKedVh7kLBiD",
+      "baseBalance": 18675.73134057772,
       "baseDecimals": 9,
-      "baseMint": "CcyiDhUrChRsbgUEMd5aS8iNegrYDCmLbu8fPfvcxPYk",
-      "baseMintPrivateKey": "z8IU8HQ8zICqtSLbn+u1/a9+URskLMakFN4bRamCQrusqAHpaexXEcbJlsxZqIDq1Wyccn2EweKOYstY2kxKsQ==",
-      "baseVault": "AHgCmWQr6jTH3WjZRZCfyYLgSTdHxWjaoJLwRxvRk2H2",
-      "baseVaultPrivateKey": "HbWM6YVmnbnMoaezH2bI5MCAQkB/Rh4gMO8O/Z21T5+J/s1YKBZlAuJNeoR8exLAPCQ2tG03v2QpikawZObE3Q==",
-      "quoteBalance": 1279183.3751,
+      "baseMint": "F73VAjYZHEdGrS4y1qFXw4eiGPBFSKVwnoxk2czK28E",
+      "baseMintPrivateKey": "xzTHfaiESUdCX1dilCIK5yfnw9VHYFMq92gnV2BGDMMDnPbJHBrmk+/QASS7SfdSW8tDgYxX1ozVRo5UIQRTxw==",
+      "baseVault": "7SAE9vEFcLP4ekRFxjH1S6kYx8dQaDAVwqavG3absGn6",
+      "baseVaultPrivateKey": "Jc6vnsqfRZGKPHTIC5nu8zYDswjOUQUPO2WGcMaHG/JfmBMVmuTOR9QVWI1SIK6bdL1OeS+DYnzDPiS44dH54w==",
+      "quoteBalance": 1699734.3365000002,
       "quoteDecimals": 6,
-      "quoteMint": "J6WDPVMpygZMAAkK5S9Nts8j5CdiXAj8oB3KgFo9HakZ",
-      "quoteMintPrivateKey": "S4wJYJkT9aoXJETswZQL86ilCJb7xS4QP5gq4POXz9n9/50bJpuu9msfSe0zrP3EEpQnYasZ2jRvElFHR8pIQg==",
-      "quoteVault": "6XqLhP1v7upWEH8yv8xtxCWGNuF6fqbJfexKQx5Pm4WD",
-      "quoteVaultPrivateKey": "OQ3LFnALdHgbLIiQhlIEr9uq4HJiLKzL2ep8TFyq9pdSMIRDUu8WXqA18Z+ziiLFIHNglnDzbi8icxnGtPvoCg==",
+      "quoteMint": "5Ps5HiB5eSF4c4ZLwXAcJKDNw8NjXqW2UGejzzwywMWR",
+      "quoteMintPrivateKey": "E5/UT1o9M5HhrTAxKgcMuEEMWk741U1BiqMvCD4d6WlBSiTvn6ILaG9UpbSCYms9Ni291hiB07L+m2fo0/KH6g==",
+      "quoteVault": "DwZc2xPriwYYXAZrD5QG1hBm2XY4KJQGzPCwYv3UaMwm",
+      "quoteVaultPrivateKey": "xlAB9/Y4hBA46XuAXAz0ftz9xN+QCTYj0GHE/GH7WCzARnjopZfvWnKAhvQ1hkDALK0nvzOgFGlthJ7V3pFTEA==",
       "params": {},
-      "wallet": "288DggAAy98aU488mP6nLsD91AA3yasuGefe81iet8Jb",
-      "walletPrivateKey": "PqroPdxOJ9Wjlun/Sf9fNsHKyMjZwhMTmyQ/nbJjlpEQruovont1o6iF0HJhe6WWf/0kPUir9nMNfISLkcWmYA==",
+      "wallet": "2Cz2xDiCpogNFAXC8PLpb2iuca5Xcx23dcZr2H8QTdo1",
+      "walletPrivateKey": "IhVkdh7KVh0wY670fnRckug/Y3GFT0+6wIXqzrVCZVYR7ZBhbzCz3IPNH0FZjh8FoyTYBNY8o1udVxNp9kp63A==",
       "walletBalance": 10,
-      "openOrders": "CRDuVQ6oQG6RSkdi82ESKY33EGt2GMZ4aTFftT47tD3r",
-      "openOrdersPrivateKey": "lBaD/s3xGFzL+MHOs8oKGXT8AOJnY33FL+C6P+/h4nSppRZbSOQBkaZdhA3l0x5hBRKyoOfUI6u2SI3vyHAPjQ=="
+      "openOrders": "CB2HeWcMwYzw8Kd1J8QGZW8uuH7eRyp1h2yutierHrEq",
+      "openOrdersPrivateKey": "mQiF+EBjwV16AOibmMtWivk1oCtpscVSfvyyoWi4ETumAdHLb+oWA04j/xbfn6vPdkr4kVLWEsXPfgLSkRzJdg=="
     }
   ],
   "orders": [
@@ -337,90 +337,90 @@
       "symbol": "BTC/USDC",
       "asks": [
         [
-          36910.2,
-          0.0948,
-          "05a1ce",
-          "03b4"
+          37251.3,
+          0.0944,
+          "05af21",
+          "03b0"
         ],
         [
-          36925,
-          0.4743,
-          "05a262",
-          "1287"
+          37266.2,
+          0.4721,
+          "05afb6",
+          "1271"
         ],
         [
-          36928.4,
-          8.5869,
-          "05a284",
-          "014f6d"
+          37292.8,
+          0.0022,
+          "05b0c0",
+          "16"
         ],
         [
-          36936.1,
-          11.6979,
-          "05a2d1",
-          "01c8f3"
-        ],
-        [
-          36952.6,
+          37305.2,
           12.5,
-          "05a376",
+          "05b13c",
           "01e848"
         ],
         [
-          36969,
-          3.4132,
-          "05a41a",
-          "8554"
+          37324.9,
+          5.5972,
+          "05b201",
+          "daa4"
         ],
         [
-          36973.2,
-          6.9457,
-          "05a444",
-          "010f51"
+          37328.5,
+          5.7666,
+          "05b225",
+          "e142"
+        ],
+        [
+          37360.4,
+          3.3343,
+          "05b364",
+          "823f"
         ]
       ],
       "bids": [
         [
-          36873.3,
-          0.0949,
-          "05a05d",
-          "03b5"
+          37245.3,
+          12.7526,
+          "05aee5",
+          "01f226"
         ],
         [
-          36858.6,
-          0.4748,
-          "059fca",
-          "128c"
+          37214,
+          0.0944,
+          "05adac",
+          "03b0"
         ],
         [
-          36842.1,
+          37199.2,
+          0.4726,
+          "05ad18",
+          "1276"
+        ],
+        [
+          37186.5,
+          20.9836,
+          "05ac99",
+          "0333ac"
+        ],
+        [
+          37185,
+          13.577,
+          "05ac8a",
+          "02125a"
+        ],
+        [
+          37164.3,
           12.5,
-          "059f25",
+          "05abbb",
           "01e848"
         ],
         [
-          36838.8,
-          31.6199,
-          "059f04",
-          "04d327"
-        ],
-        [
-          36802.2,
-          29.2429,
-          "059d96",
-          "04764d"
-        ],
-        [
-          36792.4,
-          0.0022,
-          "059d34",
-          "16"
-        ],
-        [
-          36788.2,
-          22.0201,
-          "059d0a",
-          "035c29"
+          37114.6,
+          8,
+          "05a9ca",
+          "013880"
         ]
       ]
     },
@@ -428,90 +428,90 @@
       "symbol": "ETH/USDC",
       "asks": [
         [
-          2464.34,
+          2473.16,
           0.041,
-          "03c2a2",
+          "03c614",
           "29"
         ],
         [
-          2468.34,
+          2474.31,
           0.043,
-          "03c432",
+          "03c687",
           "2b"
         ],
         [
-          2469.31,
-          41.549,
-          "03c493",
-          "a24d"
+          2478.47,
+          63.442,
+          "03c827",
+          "f7d2"
         ],
         [
-          2470.89,
-          39.227,
-          "03c531",
-          "993b"
+          2478.56,
+          68.512,
+          "03c830",
+          "010ba0"
         ],
         [
-          2471.75,
+          2480.6,
           0.077,
-          "03c587",
+          "03c8fc",
           "4d"
         ],
         [
-          2471.8,
-          45.712,
-          "03c58c",
-          "b290"
+          2483.07,
+          32.904,
+          "03c9f3",
+          "8088"
         ],
         [
-          2471.94,
-          46.132,
-          "03c59a",
-          "b434"
+          2484.12,
+          0.154,
+          "03ca5c",
+          "9a"
         ]
       ],
       "bids": [
         [
-          2454.99,
+          2465.36,
+          62.775,
+          "03c308",
+          "f537"
+        ],
+        [
+          2464.08,
+          45.828,
+          "03c288",
+          "b304"
+        ],
+        [
+          2463.78,
           0.041,
-          "03befb",
+          "03c26a",
           "29"
         ],
         [
-          2454.61,
-          38.544,
-          "03bed5",
-          "9690"
-        ],
-        [
-          2453.56,
+          2459.5,
           0.043,
-          "03be6c",
+          "03c0be",
           "2b"
         ],
         [
-          2450.6,
-          27.359,
-          "03bd44",
-          "6adf"
+          2456.39,
+          0.077,
+          "03bf87",
+          "4d"
         ],
         [
-          2450.38,
-          36.38,
-          "03bd2e",
-          "8e1c"
+          2454.89,
+          53.661,
+          "03bef1",
+          "d19d"
         ],
         [
-          2449.38,
-          52.636,
-          "03bcca",
-          "cd9c"
-        ],
-        [
-          2448.97,
-          50.698,
-          "03bca1",
-          "c60a"
+          2452.91,
+          0.155,
+          "03be2b",
+          "9b"
         ]
       ]
     },
@@ -519,90 +519,90 @@
       "symbol": "SOL/USDC",
       "asks": [
         [
-          91.313,
-          155.4,
-          "0164b1",
-          "0612"
+          91.031,
+          2367,
+          "016397",
+          "5c76"
         ],
         [
-          91.324,
-          556.5,
-          "0164bc",
-          "15bd"
+          91.089,
+          473.4,
+          "0163d1",
+          "127e"
         ],
         [
-          91.386,
-          610.8,
-          "0164fa",
-          "17dc"
+          91.205,
+          300,
+          "016445",
+          "0bb8"
         ],
         [
-          91.402,
-          2973.5,
-          "01650a",
-          "7427"
+          91.349,
+          1000,
+          "0164d5",
+          "2710"
         ],
         [
-          91.452,
-          3100.3,
-          "01653c",
-          "791b"
+          91.396,
+          3116.4,
+          "016504",
+          "79bc"
         ],
         [
-          91.459,
-          2620.7,
-          "016543",
-          "665f"
+          91.6,
+          332.8,
+          "0165d0",
+          "0d00"
         ],
         [
-          91.46,
-          777,
-          "016544",
-          "1e5a"
+          91.601,
+          2000,
+          "0165d1",
+          "4e20"
         ]
       ],
       "bids": [
         [
-          91.271,
-          0.1,
-          "016487",
-          "01"
+          90.995,
+          778,
+          "016373",
+          "1e64"
         ],
         [
-          91.193,
-          300,
-          "016439",
-          "0bb8"
+          90.971,
+          232.5,
+          "01635b",
+          "0915"
         ],
         [
-          91.185,
-          155.5,
-          "016431",
-          "0613"
-        ],
-        [
-          91.165,
-          663.1,
-          "01641d",
-          "19e7"
-        ],
-        [
-          91.113,
-          311.3,
-          "0163e9",
-          "0c29"
-        ],
-        [
-          91.039,
-          778.8,
-          "01639f",
-          "1e6c"
-        ],
-        [
-          91.027,
+          90.836,
           1000,
-          "016393",
+          "0162d4",
           "2710"
+        ],
+        [
+          90.8,
+          329.6,
+          "0162b0",
+          "0ce0"
+        ],
+        [
+          90.724,
+          2945.5,
+          "016264",
+          "730f"
+        ],
+        [
+          90.698,
+          1793.5,
+          "01624a",
+          "460f"
+        ],
+        [
+          90.658,
+          2000,
+          "016222",
+          "4e20"
         ]
       ]
     }

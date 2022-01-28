@@ -8,11 +8,9 @@ import {
   SolanaClient,
 } from '@yyprime/yyprime-exchange-ts';
 
-import {
-  Bot,
-  MakerBot,
-  TakerBot,
-} from './bots';
+import { Bot } from './bots/bot';
+import { MakerBot } from './bots/maker';
+import { TakerBot } from './bots/taker';
 
 import * as simulation from './simulation.json';
 
@@ -41,9 +39,9 @@ export class Simulator {
       let initialOrders = simulation.orders.find(orders => orders.symbol === bot.symbol);
 
       switch (bot.type) {
-        //case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet, initialOrders)); break;
+        case "maker": this.bots.push(new MakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet, initialOrders)); break;
         case "taker": this.bots.push(new TakerBot(bot, market, this.serumClient, this.solanaClient, bot_wallet)); break;
-        //default: throw new Error(`Invalid bot type: ${bot.type}`);
+        default: throw new Error(`Invalid bot type: ${bot.type}`);
       }
     }
 
