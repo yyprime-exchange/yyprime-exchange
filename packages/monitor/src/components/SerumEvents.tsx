@@ -16,7 +16,7 @@ export default function SerumEvents() {
           <Col span={8}> <b>QtyRel</b></Col>
           <Col span={7}> <b>QtyPd</b></Col>
         </Row>
-      {events.slice(0, 24).map((event, index) => (
+      {events.slice(0, 23).map((event, index) => (
         <Row key={index}>
           <Col span={3}>{event.eventFlags.maker ? 'Maker' : 'Taker'}</Col>
           <Col span={3}>{event.eventFlags.fill ? 'Fill' : 'Out'}</Col>
