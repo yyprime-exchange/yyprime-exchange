@@ -5,17 +5,7 @@ import FloatingElement from './layout/FloatingElement';
 import { Title } from './styles';
 
 export default function PythPrice() {
-  // const context = useContext(PythContext);
   const pythPrice = usePythPrice()
-  // const [pythPrice, setPythPrice] = useState<any>({price: undefined, confidence: undefined})
-
-  // useEffect(()=> {
-  //   const timer = setInterval(()=> setPythPrice(() => usePythPrice()), 1000)
-
-  //   return () => clearInterval(timer)
-  // })
-  // const pythPrice = usePythPrice();
-  
   return (
     <FloatingElement style={{ width: '300px', height: '120px' }}>
       <Title>Pyth Price</Title>

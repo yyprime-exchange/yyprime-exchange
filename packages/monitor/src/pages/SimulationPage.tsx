@@ -43,7 +43,7 @@ export default function SimulationPage() {
           <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
             <PythConnectionProvider>
               <PythProvider baseSymbol={baseSymbol} >
-              <SimulationPageInner />
+                <SimulationPageInner />
               </PythProvider>
             </PythConnectionProvider>
           </SolanaProvider>

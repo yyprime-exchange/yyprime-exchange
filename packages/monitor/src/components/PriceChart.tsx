@@ -5,8 +5,8 @@ import { Title } from './styles';
 import { InfoChart } from '../components/Chart'
 export default function PriceChart() {
   return (
-    <FloatingElement style={{ width: '600px' }}>
-      <Title>Price Chart</Title>
+    <FloatingElement style={{ width: '600px', height: '400px' }}>
+      <Title>Pyth vs. Serum</Title>
       <InfoChart/>
     </FloatingElement>
   );

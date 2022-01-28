@@ -1,23 +1,34 @@
-import { time } from "console";
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
-import { PythContext } from "../utils/pyth";
-import { SerumContext } from "../utils/serum";
-import { useChart } from "../utils/useChart";
+
+import { usePythPrice } from "../utils/pyth";
+import { useSerumQuote } from "../utils/serum";
 
 export const RealTimeChart = ({range,yrange}) => {
-  const { price, currentMarkPrice, confidence, bestBid, bestAsk, currTime } = useChart()
-  const nameList = ["Pyth Price", "Serum Price"]
-  // "Pyth Confidential Upward Bound", "Pyth Confidential Lower Bound", "Best Bid", "Best Ask"]
-  
+  const { price, confidence } = usePythPrice();
+
+  const { bestBid, bestAsk } = useSerumQuote();
+  const midPrice = (bestBid && bestAsk) ? (bestBid + bestAsk) / 2 : null;
+
+  const currTime = new Date();
+
+  const nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ]
+
   const defaultDataList = nameList.map((name) => ({
     name: name,
     data: [],
   }));
 
   const [dataList, setDataList] = React.useState<any>(defaultDataList);
-  // console.log(price, currentMarkPrice, confidence, "CHART INFO")
-  const dataObj = {"Pyth Price": price, "Serum Price": currentMarkPrice}
+
+  const dataObj = {
+    "Pyth Price": price,
+    "Pyth Lower": (price && confidence) ? price - confidence : null,
+    "Pyth Upper": (price && confidence) ? price + confidence : null,
+    "Serum MidPrice": midPrice,
+    "Serum Best Bid": bestBid,
+    "Serum Best Ask": bestAsk,
+  }
 
   useEffect(() => {
     const addData = (name, data) => {
@@ -29,17 +40,7 @@ export const RealTimeChart = ({range,yrange}) => {
         }
       ];
     };
-    // const data = [
-      // {name: "Pyth Price", data: chartData.historicalPythPrice},
-      // {name: "Serum Price", data: chartData.historicalSerumPrice},
-      // {name: "Pyth Confidential Upward Bound", data: chartData.con},
-      // {name: "Pyth Confidential Lower Bound", data: []},
-      // {name: "Best Bid", data: chartData.c},
-      // {name: "Best Ask", data: []},
-    // ]
-    // data.map((series) => series.data)
     const interval = setInterval(() => {
-  
       setDataList(
         dataList.map(val => {
           return {
@@ -49,9 +50,9 @@ export const RealTimeChart = ({range,yrange}) => {
         })
       );
     }, ADDING_DATA_INTERVAL_IN_MILLISECONDS);
-
     return () => clearInterval(interval);
   });
+
   const options = {
     zoom: {
       enabled: false
@@ -79,40 +80,21 @@ export const RealTimeChart = ({range,yrange}) => {
         show: false
       }
     },
-
     colors: ["#0000FF", "#ff0000"],
     dataLabels: {
       enabled: false
     },
     stroke: {
-    //   dashArray: [4, 4, 0, 0],
       width: [6, 1],
       curve: "smooth"
     },
-    title: {
-      text: "Pyth Price Vs. Serum Orderbook",
-      align: "left"
-    },
-    // grid: {
-    //   borderColor: "#e7e7e7",
-    //   row: {
-    //     colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-    //     opacity: 0.5
-    //   }
-    // },
-    // markers: {
-    //   size: 1
-    // },
     legend: {
-      enabled: false, 
+      enabled: false,
       position: "top",
       horizontalAlign: "right",
       floating: true,
       offsetY: -10,
       offsetX: -5
-    },
-    subtitle: {
-      align: "right"
     },
     tooltip: {
       theme: "dark",
@@ -133,33 +115,16 @@ export const RealTimeChart = ({range,yrange}) => {
       },
       title: { text: "Price (USD)" },
       forceNiceScale: true,
-      // min: yrange[0],
-      // max: yrange[1]
-
     },
   };
-  // dataList.map(data => )
   // @ts-ignore
   return <Chart key={'some-unique-key'} height="300px" type="line" options={options} series={dataList} />
 };
 
-const TIME_RANGE_IN_MILLISECONDS = 30 * 1000;
 const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
-const ADDING_DATA_RATIO = 0.8;
 
 export const InfoChart = () => {
-
-return(  <RealTimeChart
-  range={10}
-  yrange={0}
-/>)
-//   return (useMemo(()=>  <div>
-//   <RealTimeChart
-//     range={10}
-//     yrange={0}
-//   />
-// </div>, [dataList])
-   
-//   );
+  return (
+    <RealTimeChart range={10} yrange={0} />
+  );
 };
-
