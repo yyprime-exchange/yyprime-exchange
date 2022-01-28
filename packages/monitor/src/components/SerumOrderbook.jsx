@@ -37,7 +37,7 @@ const Price = styled.div`
 `;
 
 export default function SerumOrderbook({ depth = 7 }) {
-
+  
   const { baseSymbol, quoteSymbol } = useSerum();
 
   const [orderbook] = useSerumOrderbook(depth);
@@ -46,7 +46,7 @@ export default function SerumOrderbook({ depth = 7 }) {
   const lastOrderbookData = useRef(null);
 
   const [orderbookData, setOrderbookData] = useState(null);
-
+  
   useInterval(() => {
     if (
       !currentOrderbookData.current ||

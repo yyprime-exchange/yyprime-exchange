@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
 import { parsePriceData } from '@pythnetwork/client'
 import { PublicKey } from '@solana/web3.js';
 
 import { useConfiguration } from './configuration';
-import { useAccountData } from './pythConnection';
+import { useAccountData } from './connection';
+// import { useMarkPrice } from './serum';
 
 export interface PythContextValues {
   symbol?: string,
@@ -12,11 +13,13 @@ export interface PythContextValues {
   basePrice?: PublicKey;
 }
 
-const PythContext: React.Context<null | PythContextValues> = React.createContext<null | PythContextValues>(
+// const initialState = { market: "" ,baseSymbol: "",  basePrice:  "", historicalPythPrice: [], dispatch: undefined}
+export const PythContext: React.Context<null | PythContextValues> = React.createContext<null | PythContextValues>(
   null,
 );
 
 export function PythProvider({ baseSymbol, children }) {
+  // const [priceState, dispatch] = useReducer(reducer, initialState)
   const configuration = useConfiguration();
   const symbol = `${baseSymbol.toUpperCase()}/USDC`;
   const market = configuration.markets.find((market) => { return market.symbol === symbol; });
@@ -42,7 +45,7 @@ export function usePythPrice(): { price: number | null | undefined; confidence: 
 
   // @ts-ignore
   let priceData = useAccountData(context.basePrice);
-
+  
   if (priceData) {
     const pythPrice = parsePriceData(priceData);
     return {
