@@ -7,8 +7,7 @@ import { useChart } from "../utils/useChart";
 
 export const RealTimeChart = ({range,yrange}) => {
   const { price, currentMarkPrice, confidence, bestBid, bestAsk, currTime } = useChart()
-  const nameList = ["Pyth Price", "Serum Price"]
-  // "Pyth Confidential Upward Bound", "Pyth Confidential Lower Bound", "Best Bid", "Best Ask"]
+  const nameList = ["Pyth Price", "Serum Price", "Pyth Confidence(upper)", "Pyth Confidence(lower)", "Best Bid", "Best Ask"]
   
   const defaultDataList = nameList.map((name) => ({
     name: name,
@@ -17,7 +16,9 @@ export const RealTimeChart = ({range,yrange}) => {
 
   const [dataList, setDataList] = React.useState<any>(defaultDataList);
   // console.log(price, currentMarkPrice, confidence, "CHART INFO")
-  const dataObj = {"Pyth Price": price, "Serum Price": currentMarkPrice}
+  const dataObj = {"Pyth Price": price, "Serum Price": currentMarkPrice, 
+        "Pyth Confidential Upward Bound": price! + confidence!, "Pyth Confidential Lower Bound": price! - confidence!, 
+        "Best Bid": bestBid, "Best Ask": bestAsk}
 
   useEffect(() => {
     const addData = (name, data) => {
@@ -25,7 +26,7 @@ export const RealTimeChart = ({range,yrange}) => {
         ...data,
         {
           x: currTime,
-          y: dataObj[name]
+          y: dataObj[name]?.toFixed(3)
         }
       ];
     };
@@ -53,6 +54,15 @@ export const RealTimeChart = ({range,yrange}) => {
     return () => clearInterval(interval);
   });
   const options = {
+    tooltip: {
+      enabled: true, 
+      theme: "dark",
+      shared: false,
+      x: {
+        show: true,
+        format: "yyyy/MM/dd HH:mm:ss.f",
+      },
+    },
     zoom: {
       enabled: false
     },
@@ -72,7 +82,7 @@ export const RealTimeChart = ({range,yrange}) => {
         easing: "linear",
         dynamicAnimation: {
             enabled: true,
-            speed: 1000
+            speed: 300
         }
       },
       toolbar: {
@@ -80,47 +90,25 @@ export const RealTimeChart = ({range,yrange}) => {
       }
     },
 
-    colors: ["#0000FF", "#ff0000"],
-    dataLabels: {
-      enabled: false
-    },
+    colors: ["#0000FF", "#ff0000",  "#953553", "#953553", "#FFA500", "#FFA500",],
+    // dataLabels: {
+    //   enabled: true,
+    //   enabledOnSeries: [0, 1]
+    // },
     stroke: {
-    //   dashArray: [4, 4, 0, 0],
-      width: [6, 1],
+      dashArray: [0, 0, 4, 4, 4, 4],
+      width: [6, 2],
       curve: "smooth"
     },
-    title: {
-      text: "Pyth Price Vs. Serum Orderbook",
-      align: "left"
-    },
-    // grid: {
-    //   borderColor: "#e7e7e7",
-    //   row: {
-    //     colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-    //     opacity: 0.5
-    //   }
-    // },
-    // markers: {
-    //   size: 1
-    // },
     legend: {
-      enabled: false, 
+      enabled: true, 
       position: "top",
-      horizontalAlign: "right",
-      floating: true,
-      offsetY: -10,
-      offsetX: -5
+      offsetY: 5,
     },
     subtitle: {
       align: "right"
     },
-    tooltip: {
-      theme: "dark",
-      x: {
-        show: true,
-        format: "yyyy/MM/dd HH:mm:ss.f",
-      },
-    },
+
     xaxis: {
       type: "datetime",
       offsetX: 0,
@@ -133,12 +121,8 @@ export const RealTimeChart = ({range,yrange}) => {
       },
       title: { text: "Price (USD)" },
       forceNiceScale: true,
-      // min: yrange[0],
-      // max: yrange[1]
-
     },
   };
-  // dataList.map(data => )
   // @ts-ignore
   return <Chart key={'some-unique-key'} height="300px" type="line" options={options} series={dataList} />
 };
@@ -153,13 +137,5 @@ return(  <RealTimeChart
   range={10}
   yrange={0}
 />)
-//   return (useMemo(()=>  <div>
-//   <RealTimeChart
-//     range={10}
-//     yrange={0}
-//   />
-// </div>, [dataList])
-   
-//   );
 };
 
