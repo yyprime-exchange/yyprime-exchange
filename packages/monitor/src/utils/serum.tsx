@@ -1,16 +1,15 @@
 import BN from 'bn.js';
 import { decodeEventQueue } from '@project-serum/serum';
-import { Market, ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
+import { ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
 import React, { useContext, useEffect, useState } from 'react';
 import { PublicKey } from '@solana/web3.js';
 
 import { useConfiguration } from './configuration';
-import { useAccountData, useConnection } from './connection';
+import { useAccountData } from './connection';
 
 export interface SerumContextValues {
-  market?: Market | undefined | null;
   symbol?: string,
-  marketAddress?: PublicKey;
+  market?: PublicKey;
   baseSymbol?: string,
   baseLotSize?: number;
   baseDecimals?: number,
@@ -29,50 +28,23 @@ export const SerumContext: React.Context<null | SerumContextValues> = React.crea
 
 export function SerumProvider({ baseSymbol, quoteSymbol, children }) {
   const configuration = useConfiguration();
-  const connection = useConnection();
   const symbol = `${baseSymbol.toUpperCase()}/${quoteSymbol.toUpperCase()}`;
-  const marketInfo = configuration.markets.find((market) => { return market.symbol === symbol; });
-  const [market, setMarket] = useState<Market | null>();
-
-  useEffect(() => {
-    if (
-      market &&
-      marketInfo &&
-      // @ts-ignore
-      market._decoded.ownAddress?.equals(marketInfo?.market)
-    ) {
-      return;
-    }
-    setMarket(null);
-    if (!marketInfo || !marketInfo.market) {
-      console.log('Error loading market')
-      debugger;
-      return;
-    }
-    Market.load(connection, new PublicKey(marketInfo.market), {}, new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"))
-      .then(setMarket)
-      .catch((e) => {
-        console.log('Error loading market while loading')
-      });
-    // eslint-disable-next-line
-  }, [connection, marketInfo]);
-
+  const market = configuration.markets.find((market) => { return market.symbol === symbol; });
   return (
     <SerumContext.Provider
       value={{
         symbol,
-        marketAddress: new PublicKey(marketInfo!.market),
+        market: new PublicKey(market!.market),
         baseSymbol,
-        baseDecimals: marketInfo!.baseDecimals,
-        baseLotSize: marketInfo!.baseLotSize,
+        baseDecimals: market!.baseDecimals,
+        baseLotSize: market!.baseLotSize,
         quoteSymbol,
-        quoteDecimals: marketInfo!.quoteDecimals,
-        quoteLotSize: marketInfo!.quoteLotSize,
-        requestQueue: new PublicKey(marketInfo!.requestQueue),
-        eventQueue: new PublicKey(marketInfo!.eventQueue),
-        bids: new PublicKey(marketInfo!.bids),
-        asks: new PublicKey(marketInfo!.asks),
-        market: market,
+        quoteDecimals: market!.quoteDecimals,
+        quoteLotSize: market!.quoteLotSize,
+        requestQueue: new PublicKey(market!.requestQueue),
+        eventQueue: new PublicKey(market!.eventQueue),
+        bids: new PublicKey(market!.bids),
+        asks: new PublicKey(market!.asks),
       }}
     >
       {children}
@@ -92,8 +64,6 @@ export function useSerumOrderbook(
   depth = 20,
 ): [{ bids: number[][]; asks: number[][] }, boolean] {
   const { bids, asks, baseLotSize, baseDecimals, quoteLotSize, quoteDecimals } = useSerum();
-  // console.log(bids?.toBase58(), "bids address")
-  // console.log(asks?.toBase58(), "asks address")
 
   // @ts-ignore
   let bidData = useAccountData(bids);
@@ -104,12 +74,10 @@ export function useSerumOrderbook(
   let a: number[][] = [];
 
   if (bidData && askData) {
-    // console.log("seeing bid and ask data inside serumorderbook")
     function decode(buffer) {
       const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(buffer);
       return { accountFlags: accountFlags, slab: slab };
     }
-
     return [{
       bids: priceLevels(decode(bidData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]),
       asks: priceLevels(decode(askData), depth, baseLotSize!, baseDecimals!, quoteLotSize!, quoteDecimals!).map(([price, size]) => [price, size]),
