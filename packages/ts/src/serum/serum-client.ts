@@ -290,7 +290,6 @@ export class SerumClient {
             case "asks": bookEvent.book.ask = toPriceLevels(keyedAccountInfo.accountInfo.data, depth, bookEvent.book.baseLotSize, bookEvent.book.baseDecimals, bookEvent.book.quoteLotSize, bookEvent.book.quoteDecimals); if (onAsk) onAsk(bookEvent.book); break;
             case "bids": bookEvent.book.bid = toPriceLevels(keyedAccountInfo.accountInfo.data, depth, bookEvent.book.baseLotSize, bookEvent.book.baseDecimals, bookEvent.book.quoteLotSize, bookEvent.book.quoteDecimals); if (onBid) onBid(bookEvent.book); break;
             case "eventQueue": if (onEvent) onEvent(bookEvent.book, decodeEventQueue(keyedAccountInfo.accountInfo.data)); break;
-            default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
         }
       },

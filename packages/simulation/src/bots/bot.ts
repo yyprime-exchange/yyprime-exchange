@@ -74,39 +74,6 @@ export abstract class Bot {
   }
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
-
-    console.log(`side = ${side}`);
-    console.log(`price = ${price}`);
-    console.log(`size = ${size}`);
-    console.log(`orderType = ${orderType}`);
-    console.log(``);
-
-//TODO
-//Price must be an increment of X
-//Tick price decided when the market was created. You can only move the price by multiple of this.
-
-/*
-  const baseUnit = Math.pow(10, baseTokenInfo.decimals);
-  const quoteUnit = Math.pow(10, quoteTokenInfo.decimals);
-
-  const nativePrice = new BN(price * quoteUnit)
-    .mul(perpMarket.baseLotSize)
-    .div(perpMarket.quoteLotSize.mul(new BN(baseUnit)));
-  const nativeQuantity = new BN(quantity * baseUnit).div(
-    perpMarket.baseLotSize,
-  );
-*/
-
-/*
-  limitPrice: this.priceNumberToLots(price),
-  maxBaseQuantity: this.baseSizeNumberToLots(size),
-  maxQuoteQuantity: new BN(this._decoded.quoteLotSize.toNumber()).mul(
-    this.baseSizeNumberToLots(size).mul(this.priceNumberToLots(price)),
-  ),
-*/
-//priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
-//baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
-
     const { transaction, signers } = await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
       owner: this.walletAccount,
       payer: (side == "sell") ?
@@ -125,21 +92,16 @@ export abstract class Bot {
     transaction.feePayer = this.wallet.publicKey;
     return await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
 
-    /*
-    const transaction = new Transaction();
+    //const transaction = new Transaction();
     //const transaction = this.market.makeMatchOrdersTransaction(5);
-
-    let { transaction: placeOrderTx, signers: placeOrderSigners } = await this.market.makePlaceOrderTransaction(
-      this.serumClient.connection,
-      params,
-    );
-    transaction.add(placeOrderTx);
-
+    //let { transaction: placeOrderTx, signers: placeOrderSigners } = await this.market.makePlaceOrderTransaction(
+      //this.serumClient.connection,
+      //params,
+    //);
+    //transaction.add(placeOrderTx);
     //transaction.add(this.market.makeMatchOrdersTransaction(5));
-
     //transaction.feePayer = this.wallet.publicKey;
-    return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
-    */
+    //return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
   }
 
   //TODO send multiple orders.
