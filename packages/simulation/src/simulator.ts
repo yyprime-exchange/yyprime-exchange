@@ -81,7 +81,7 @@ export class Simulator {
 
   private onPrice(token: PythToken, price: PythPrice) {
     const book: SerumBook = this.serumClient.booksByBaseMint.get(token.mint);
-    if (book && book.ask && book.bid && price.price) {
+    if (book && book.ask && book.ask.length > 0 && book.bid && book.bid.length > 0 && price.price) {
       for (let bot of this.bots) {
         bot.onPrice(book, token, price);
       }

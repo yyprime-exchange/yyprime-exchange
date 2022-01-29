@@ -11,10 +11,10 @@ export default function SerumEvents() {
       <Title>Serum Events</Title>
         <Row>
           <Col span={3}><b>Type</b></Col>
-          <Col span={3}> <b>State</b></Col>
-          <Col span={3}> <b>Side</b></Col>
-          <Col span={8}> <b>QtyRel</b></Col>
-          <Col span={7}> <b>QtyPd</b></Col>
+          <Col span={3}><b>State</b></Col>
+          <Col span={3}><b>Side</b></Col>
+          <Col span={8}><b>QtyRel</b></Col>
+          <Col span={7}><b>QtyPd</b></Col>
         </Row>
       {events.slice(0, 22).map((event, index) => (
         <Row key={index}>
