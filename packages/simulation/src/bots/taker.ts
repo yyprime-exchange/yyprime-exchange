@@ -35,11 +35,6 @@ export class TakerBot extends Bot {
 
     // hit the midpt
     //if( rando > thresh) this.placeOrder('sell', +(book.basePrice), 1., 'ioc')
-
-    //console.log(`rando = ${rando}`);
-    //console.log(`thresh = ${thresh}`);
-    //console.log(`+(book.bid) = ${+(book.bid)}`);
-    //console.log(``);
   }
 
   public onPrice(book: SerumBook, token: PythToken, price: PythPrice) {
@@ -48,21 +43,15 @@ export class TakerBot extends Bot {
     const rshift = 0.5 + tbias;
     const rando = 2. * (Math.random() - rshift);
 
-    console.log(`book.ask[0] = ${JSON.stringify(book.ask[0])}`);
-    console.log(`book.bid[0] = ${JSON.stringify(book.bid[0])}`);
     if (rando > thresh || rando < -thresh) {
-      console.log(`rando = ${rando}`);
-      console.log(`thresh = ${thresh}`);
-
-      async () => {
+      (async () => {
         if (rando > thresh) {
-          this.placeOrder('buy', book.ask[0][0], book.ask[0][1], 'ioc');
+          await this.placeOrder('buy', book.ask[0][0], book.ask[0][1], 'ioc');
         } else if (rando < -thresh) {
-          this.placeOrder('sell', book.bid[0][0], book.bid[0][1], 'ioc');
+          await this.placeOrder('sell', book.bid[0][0], book.bid[0][1], 'ioc');
         }
-      }
+      })();
     }
-    console.log(``);
   }
 
 }
