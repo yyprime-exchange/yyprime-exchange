@@ -5,23 +5,23 @@ import { PublicKey } from '@solana/web3.js';
 import { useConfiguration } from './configuration';
 import { useAccountData } from './pythConnection';
 
-export interface PythContextValues {
+export interface PythPriceContextValues {
   symbol?: string,
   market?: PublicKey;
   baseSymbol?: string,
   basePrice?: PublicKey;
 }
 
-export const PythContext: React.Context<null | PythContextValues> = React.createContext<null | PythContextValues>(
+export const PythPriceContext: React.Context<null | PythPriceContextValues> = React.createContext<null | PythPriceContextValues>(
   null,
 );
 
-export function PythProvider({ baseSymbol, children }) {
+export function PythPriceProvider({ baseSymbol, children }) {
   const configuration = useConfiguration();
   const symbol = `${baseSymbol.toUpperCase()}/USDC`;
   const market = configuration.markets.find((market) => { return market.symbol === symbol; });
   return (
-    <PythContext.Provider
+    <PythPriceContext.Provider
       value={{
         symbol,
         market: new PublicKey(market!.market),
@@ -30,12 +30,12 @@ export function PythProvider({ baseSymbol, children }) {
       }}
     >
       {children}
-    </PythContext.Provider>
+    </PythPriceContext.Provider>
   );
 }
 
 export function usePythPrice(): { price: number | null | undefined; confidence: number | null | undefined } {
-  const context = useContext(PythContext);
+  const context = useContext(PythPriceContext);
   if (!context) {
     throw new Error('Missing Pyth context');
   }

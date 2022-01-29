@@ -91,11 +91,11 @@ const simulator: Simulator = new Simulator(simulation);
 (async () => {
   await simulator.initialize();
 })().then(() => {
-  //process.on('SIGINT', function () {
-    //console.log('Caught keyboard interrupt. Canceling orders');
-    //simulator.onExit();
-    ////exit();
-  //});
+  process.on('SIGINT', function () {
+    console.log('Caught keyboard interrupt. Canceling orders');
+    simulator.onExit();
+    process.exit(0);
+  });
 
   console.log(`Running simulation on ${simulation.config.cluster}`);
 });

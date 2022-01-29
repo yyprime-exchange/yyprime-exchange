@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import { usePythPrice } from '../utils/pyth';
+import { usePythPrice } from '../utils/pythPrice';
 import FloatingElement from './layout/FloatingElement';
 import { Title } from './styles';
 

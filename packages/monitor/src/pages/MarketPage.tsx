@@ -9,8 +9,8 @@ import PythPrice from '../components/PythPrice';
 import SerumEvents from '../components/SerumEvents'
 import SerumOrderbook from '../components/SerumOrderbook';
 import { ConnectionProvider } from '../utils/connection';
+import { PythPriceProvider } from '../utils/pythPrice'
 import { PythConnectionProvider } from '../utils/pythConnection';
-import { PythProvider } from '../utils/pyth'
 import { SerumProvider } from '../utils/serum';
 import { SolanaProvider } from '../utils/solana';
 
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function SimulationPage() {
+export default function MarketPage() {
   const { baseSymbol, quoteSymbol } = useParams();
   useEffect(() => {
     if (baseSymbol) {
@@ -42,9 +42,9 @@ export default function SimulationPage() {
         <SerumProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
           <SolanaProvider baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} >
             <PythConnectionProvider>
-              <PythProvider baseSymbol={baseSymbol} >
-                <SimulationPageInner />
-              </PythProvider>
+              <PythPriceProvider baseSymbol={baseSymbol} >
+                <MarketPageInner />
+              </PythPriceProvider>
             </PythConnectionProvider>
           </SolanaProvider>
         </SerumProvider>
@@ -53,7 +53,7 @@ export default function SimulationPage() {
   );
 }
 
-function SimulationPageInner() {
+function MarketPageInner() {
   return (
     <>
       <Wrapper>

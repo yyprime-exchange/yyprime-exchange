@@ -17,15 +17,14 @@ export class MakerBot extends Bot {
   constructor(config: any, market: Market, serumClient: SerumClient, solanaClient: SolanaClient, wallet: Keypair, initialOrders) {
     super(config, market, serumClient, solanaClient, wallet);
 
+    /*
     if (initialOrders) {
       (async () => {
         initialOrders.asks.forEach(async (order) => { await this.placeOrder('sell', order[0], order[1], 'postOnly'); });
         initialOrders.bids.forEach(async (order) => { await this.placeOrder('buy', order[0], order[1], 'postOnly'); });
       })();
     }
-  }
-
-  public async initialize(): Promise<void> {
+    */
   }
 
   public onAsk(book: SerumBook) {

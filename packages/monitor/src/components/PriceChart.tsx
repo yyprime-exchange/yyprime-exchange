@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 
 import FloatingElement from "./layout/FloatingElement";
 import { Title } from './styles';
-import { usePythPrice } from "../utils/pyth";
+import { usePythPrice } from "../utils/pythPrice";
 import { useSerumQuote } from "../utils/serum";
 
 export const RealTimeChart = ({range,yrange}) => {

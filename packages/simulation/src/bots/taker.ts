@@ -34,11 +34,11 @@ export class TakerBot extends Bot {
   }
 
   public onPrice(book: SerumBook, token: PythToken, price: PythPrice) {
+    /*
     const thresh = 0.05;
     const tbias = 0.0;
     const rshift = 0.5 + tbias;
     if (price.price) {
-      console.log(`price.price = ${price.price}`);
       async () => {
         const rando = 2. * (Math.random() - rshift);
         //bot may try to order the wrong side bc naive to spread
@@ -49,6 +49,7 @@ export class TakerBot extends Bot {
         }
       }
     }
+    */
   }
 
 }
