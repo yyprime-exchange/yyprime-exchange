@@ -22,7 +22,7 @@ export class TakerBot extends Bot {
     const tbias = 0.0;
     const rshift = 0.5 + tbias;
     var rando = 2. * (Math.random() - rshift);
-    if( rando > thresh) this.placeOrder('buy', +(book.ask), 1., 'ioc')
+    //if( rando > thresh) this.placeOrder('buy', +(book.ask), 1., 'ioc')
   }
 
   public onBid(book: SerumBook) {
@@ -30,26 +30,35 @@ export class TakerBot extends Bot {
     const tbias = 0.0;
     const rshift = 0.5 + tbias;
     const rando = 2. * (Math.random() - rshift);
-    if( rando > thresh) this.placeOrder('sell', +(book.bid), 1., 'ioc')
+    //if( rando > thresh) this.placeOrder('sell', +(book.bid), 1., 'ioc')
+
+    //console.log(`rando = ${rando}`);
+    //console.log(`thresh = ${thresh}`);
+    //console.log(`+(book.bid) = ${+(book.bid)}`);
+    //console.log(``);
   }
 
   public onPrice(book: SerumBook, token: PythToken, price: PythPrice) {
-    /*
-    const thresh = 0.05;
+    const thresh = 1 - 0.05;
     const tbias = 0.0;
     const rshift = 0.5 + tbias;
-    if (price.price) {
+    const rando = 2. * (Math.random() - rshift);
+
+    console.log(`book.ask[0] = ${JSON.stringify(book.ask[0])}`);
+    console.log(`book.bid[0] = ${JSON.stringify(book.bid[0])}`);
+    if (rando > thresh || rando < -thresh) {
+      console.log(`rando = ${rando}`);
+      console.log(`thresh = ${thresh}`);
+
       async () => {
-        const rando = 2. * (Math.random() - rshift);
-        //bot may try to order the wrong side bc naive to spread
         if (rando > thresh) {
-          this.placeOrder('buy', price.price, 1., 'ioc');
+          this.placeOrder('buy', book.ask[0][0], book.ask[0][1], 'ioc');
         } else if (rando < -thresh) {
-          this.placeOrder('sell', price.price, 1., 'ioc');
+          this.placeOrder('sell', book.bid[0][0], book.bid[0][1], 'ioc');
         }
       }
     }
-    */
+    console.log(``);
   }
 
 }

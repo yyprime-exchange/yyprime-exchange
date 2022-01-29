@@ -11,6 +11,9 @@ import {
   TokenInstructions,
 } from "@project-serum/serum";
 import {
+  ORDERBOOK_LAYOUT,
+} from "@project-serum/serum/lib/market";
+import {
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import {
@@ -30,11 +33,13 @@ export interface SerumBook {
   market: string;
   baseMint: string;
   baseSymbol: string;
-  //baseDecimals: number;
+  baseLotSize: number;
+  baseDecimals: number;
   basePrice: string;
   quoteMint: string;
   quoteSymbol: string;
-  //quoteDecimals: number;
+  quoteLotSize: number;
+  quoteDecimals: number;
   quotePrice: string;
   requestQueue: string;
   eventQueue: string;
@@ -42,8 +47,8 @@ export interface SerumBook {
   asks: string;
 
   serumMarket: Market | undefined;
-  ask: Orderbook | undefined;
-  bid: Orderbook | undefined;
+  ask: [number, number, BN, BN][] | undefined;
+  bid: [number, number, BN, BN][] | undefined;
 }
 
 interface BookEvent {
@@ -261,20 +266,29 @@ export class SerumClient {
     );
   }
 
-  public subscribe(
+  public async subscribe(
     onAsk: ((book: SerumBook) => void) | null,
     onBid: ((book: SerumBook) => void) | null,
     onEvent: ((book: SerumBook, events) => void) | null,
   ) {
+    await Promise.all(
+      this.simulation.markets.map(async (market) => {
+        const book: SerumBook = this.books.get(market.market)!;
+        const depth = 20; //TODO make this configurable.
+        book.ask = toPriceLevels((await this.connection.getAccountInfo(new PublicKey(market.asks), this.commitment))!.data, depth, book.baseLotSize, book.baseDecimals, book.quoteLotSize, book.quoteDecimals);
+        book.bid = toPriceLevels((await this.connection.getAccountInfo(new PublicKey(market.bids), this.commitment))!.data, depth, book.baseLotSize, book.baseDecimals, book.quoteLotSize, book.quoteDecimals);
+      })
+    );
     this.connection.onProgramAccountChange(
       this.serumProgram,
       (keyedAccountInfo: KeyedAccountInfo, context: Context) => {
         const key = keyedAccountInfo.accountId.toBase58();
         const bookEvent = this.bookEvents.get(key);
         if (bookEvent && bookEvent.book.serumMarket) {
+          const depth = 20; //TODO make this configurable.
           switch (bookEvent.event) {
-            case "asks": bookEvent.book.ask = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onAsk) onAsk(bookEvent.book); break;
-            case "bids": bookEvent.book.bid = Orderbook.decode(bookEvent.book.serumMarket, keyedAccountInfo.accountInfo.data); if (onBid) onBid(bookEvent.book); break;
+            case "asks": bookEvent.book.ask = toPriceLevels(keyedAccountInfo.accountInfo.data, depth, bookEvent.book.baseLotSize, bookEvent.book.baseDecimals, bookEvent.book.quoteLotSize, bookEvent.book.quoteDecimals); if (onAsk) onAsk(bookEvent.book); break;
+            case "bids": bookEvent.book.bid = toPriceLevels(keyedAccountInfo.accountInfo.data, depth, bookEvent.book.baseLotSize, bookEvent.book.baseDecimals, bookEvent.book.quoteLotSize, bookEvent.book.quoteDecimals); if (onBid) onBid(bookEvent.book); break;
             case "eventQueue": if (onEvent) onEvent(bookEvent.book, decodeEventQueue(keyedAccountInfo.accountInfo.data)); break;
             default: throw new Error(`Invalid key type: ${bookEvent.event}`);
           }
@@ -292,5 +306,54 @@ export class SerumClient {
       }).filter(market => { return market !== undefined; })
     );
   }
+}
 
+//priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
+//baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
+export function toPriceLevels(data, depth: number, baseLotSize: number, baseDecimals: number, quoteLotSize: number, quoteDecimals: number): [number, number, BN, BN][] {
+  const { accountFlags, slab } = decodeOrderBook(data);
+  const descending = accountFlags.bids;
+  const levels: [BN, BN][] = []; // (price, size)
+  for (const { key, quantity } of slab.items(descending)) {
+    const price = key.ushrn(64);
+    if (levels.length > 0 && levels[levels.length - 1][0].eq(price)) {
+      levels[levels.length - 1][1].iadd(quantity);
+    } else {
+      levels.push([price, quantity]);
+    }
+  }
+  return levels.slice(0, 7).map(([priceLots, sizeLots]) => [
+    priceLotsToNumber(priceLots, new BN(baseLotSize), baseDecimals, new BN(quoteLotSize), quoteDecimals),
+    baseSizeLotsToNumber(sizeLots, new BN(baseLotSize), baseDecimals),
+    priceLots,
+    sizeLots,
+  ]);
+}
+
+function decodeOrderBook(buffer) {
+  const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(buffer);
+  return { accountFlags: accountFlags, slab: slab };
+}
+
+function priceLotsToNumber(price: BN, baseLotSize: BN, baseSplTokenDecimals: number, quoteLotSize: BN, quoteSplTokenDecimals: number) {
+  return divideBnToNumber(price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)), baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)));
+}
+
+function baseSizeLotsToNumber(size: BN, baseLotSize: BN, baseSplTokenDecimals: number) {
+  return divideBnToNumber(size.mul(baseLotSize), baseSplTokenMultiplier(baseSplTokenDecimals));
+}
+
+function divideBnToNumber(numerator: BN, denominator: BN): number {
+  const quotient = numerator.div(denominator).toNumber();
+  const rem = numerator.umod(denominator);
+  const gcd = rem.gcd(denominator);
+  return quotient + rem.div(gcd).toNumber() / denominator.div(gcd).toNumber();
+}
+
+function baseSplTokenMultiplier(baseSplTokenDecimals: number) {
+  return new BN(10).pow(new BN(baseSplTokenDecimals));
+}
+
+function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
+  return new BN(10).pow(new BN(quoteSplTokenDecimals));
 }

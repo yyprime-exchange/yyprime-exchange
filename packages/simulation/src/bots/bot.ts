@@ -1,4 +1,5 @@
 import { Market } from '@project-serum/serum';
+import { Order } from '@project-serum/serum/lib/market';
 import { Account, Keypair, PublicKey, Transaction } from '@solana/web3.js';
 
 import {
@@ -17,8 +18,6 @@ export abstract class Bot {
   };
 
   market: Market;
-
-  // Maintain a list of open orders. Process ACK, FIL, and CXL.
 
   public position = {
     currentPosition: 0,
@@ -43,7 +42,9 @@ export abstract class Bot {
   public abstract onPrice(book: SerumBook, token: PythToken, price: PythPrice);
 
   public onExit() {
-    //TODO cancel all orders.
+    (async () => {
+      await this.cancelAllOrders();
+    })();
   }
 
   public async cancelOrder(orderId: string) {
@@ -58,17 +59,17 @@ export abstract class Bot {
 
   public async cancelAllOrders() {
     const orders = await this.getOrders();
-    const transaction = new Transaction();
-    //const transaction = this.market.makeMatchOrdersTransaction(5);
+    //const transaction = new Transaction();
+    const transaction = this.market.makeMatchOrdersTransaction(5);
     orders.forEach((order) => {
       transaction.add(this.market.makeCancelOrderInstruction(this.serumClient.connection, this.wallet.publicKey, order));
     });
-    //transaction.add(this.market.makeMatchOrdersTransaction(5));
+    transaction.add(this.market.makeMatchOrdersTransaction(5));
     //transaction.feePayer = this.wallet.publicKey;
     return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
   }
 
-  public async getOrders() {
+  public async getOrders(): Promise<Order[]> {
     return await this.market.loadOrdersForOwner(this.serumClient.connection, this.wallet.publicKey);
   }
 

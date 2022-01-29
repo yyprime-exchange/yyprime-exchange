@@ -1,7 +1,6 @@
 import assert from 'assert';
 import { Buffer } from 'buffer';
 import { BN } from "@project-serum/anchor";
-import { ORDERBOOK_LAYOUT } from "@project-serum/serum/lib/market";
 import * as fs from 'fs';
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import {
@@ -13,6 +12,7 @@ import {
   SOLANA_CLUSTERS,
   SOLANA_TOKENS,
   SolanaClient,
+  toPriceLevels,
 } from '@yyprime/yyprime-exchange-ts';
 
 import * as simulationMainnet from './simulation-mainnet.json';
@@ -287,12 +287,11 @@ export class SimulationBuilder {
         let bids: [number, number, BN, BN][] = [];
 
         const mainnetMarket = simulationMainnet.markets.find(mainnetMarket => { return mainnetMarket.symbol === market.symbol; });
-        const mainnetBaseToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.baseSymbol; });
-        const mainnetQuoteToken = simulationMainnet.tokens.find(mainnetToken => { return mainnetToken.symbol === market.quoteSymbol; });
+        const depth = 7; //TODO make this configurable.
 
-        if (mainnetMarket && mainnetBaseToken && mainnetQuoteToken) {
-          asks = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data);
-          bids = getPriceLevels(mainnetMarket, mainnetBaseToken, mainnetQuoteToken, (await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data);
+        if (mainnetMarket) {
+          asks = toPriceLevels((await connection.getAccountInfo(new PublicKey(mainnetMarket.asks)))!.data, depth, mainnetMarket.baseLotSize, mainnetMarket.baseDecimals, mainnetMarket.quoteLotSize, mainnetMarket.quoteDecimals);
+          bids = toPriceLevels((await connection.getAccountInfo(new PublicKey(mainnetMarket.bids)))!.data, depth, mainnetMarket.baseLotSize, mainnetMarket.baseDecimals, mainnetMarket.quoteLotSize, mainnetMarket.quoteDecimals);
         }
 
         return {
@@ -443,49 +442,6 @@ export class SimulationBuilder {
     }
   }
 
-}
-
-function getPriceLevels(market, baseToken, quoteToken, data): [number, number, BN, BN][] {
-  const { accountFlags, slab } = ORDERBOOK_LAYOUT.decode(data);
-  const descending = accountFlags.bids;
-  const levels: [BN, BN][] = []; // (price, size)
-  for (const { key, quantity } of slab.items(descending)) {
-    const price = key.ushrn(64);
-    if (levels.length > 0 && levels[levels.length - 1][0].eq(price)) {
-      levels[levels.length - 1][1].iadd(quantity);
-    } else {
-      levels.push([price, quantity]);
-    }
-  }
-  return levels.slice(0, 7).map(([priceLots, sizeLots]) => [
-    priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
-    baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
-    priceLots,
-    sizeLots,
-  ]);
-}
-
-function priceLotsToNumber(price: BN, baseLotSize: BN, baseSplTokenDecimals: number, quoteLotSize: BN, quoteSplTokenDecimals: number) {
-  return divideBnToNumber(price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)), baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)));
-}
-
-function baseSizeLotsToNumber(size: BN, baseLotSize: BN, baseSplTokenDecimals: number) {
-  return divideBnToNumber(size.mul(baseLotSize), baseSplTokenMultiplier(baseSplTokenDecimals));
-}
-
-function divideBnToNumber(numerator: BN, denominator: BN): number {
-  const quotient = numerator.div(denominator).toNumber();
-  const rem = numerator.umod(denominator);
-  const gcd = rem.gcd(denominator);
-  return quotient + rem.div(gcd).toNumber() / denominator.div(gcd).toNumber();
-}
-
-function baseSplTokenMultiplier(baseSplTokenDecimals: number) {
-  return new BN(10).pow(new BN(baseSplTokenDecimals));
-}
-
-function quoteSplTokenMultiplier(quoteSplTokenDecimals: number) {
-  return new BN(10).pow(new BN(quoteSplTokenDecimals));
 }
 
 

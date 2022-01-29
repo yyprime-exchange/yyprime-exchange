@@ -1,4 +1,4 @@
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import {
   PythClient,
   PythPrice,
@@ -47,7 +47,7 @@ export class Simulator {
 
     this.pythClient.subscribe((token: PythToken, price: PythPrice) => { this.onPrice(token, price); });
 
-    this.serumClient.subscribe(
+    await this.serumClient.subscribe(
       (book: SerumBook) => { this.onAsk(book); },
       (book: SerumBook) => { this.onBid(book); },
       (book: SerumBook, events) => { this.onEvent(book, events); },
@@ -55,14 +55,18 @@ export class Simulator {
   }
 
   private onAsk(book: SerumBook) {
-    for (let bot of this.bots) {
-      bot.onAsk(book);
+    if (book && book.ask && book.bid) {
+      for (let bot of this.bots) {
+        bot.onAsk(book);
+      }
     }
   }
 
   private onBid(book: SerumBook) {
-    for (let bot of this.bots) {
-      bot.onBid(book);
+    if (book && book.ask && book.bid) {
+      for (let bot of this.bots) {
+        bot.onBid(book);
+      }
     }
   }
 
@@ -77,8 +81,10 @@ export class Simulator {
 
   private onPrice(token: PythToken, price: PythPrice) {
     const book: SerumBook = this.serumClient.booksByBaseMint.get(token.mint);
-    for (let bot of this.bots) {
-      bot.onPrice(book, token, price);
+    if (book && book.ask && book.bid && price.price) {
+      for (let bot of this.bots) {
+        bot.onPrice(book, token, price);
+      }
     }
   }
 

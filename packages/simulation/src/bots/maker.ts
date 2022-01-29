@@ -17,6 +17,8 @@ export class MakerBot extends Bot {
   constructor(config: any, market: Market, serumClient: SerumClient, solanaClient: SolanaClient, wallet: Keypair, initialOrders) {
     super(config, market, serumClient, solanaClient, wallet);
 
+    //TODO cancel all open orders.
+
     /*
     if (initialOrders) {
       (async () => {
