@@ -1,5 +1,5 @@
-import { Keypair } from '@solana/web3.js';
 import { Market } from '@project-serum/serum';
+import { Keypair } from '@solana/web3.js';
 
 import {
   PythPrice,
@@ -18,19 +18,23 @@ export class TakerBot extends Bot {
   }
 
   public onAsk(book: SerumBook) {
-    const thresh = 0.05;
-    const tbias = 0.0;
-    const rshift = 0.5 + tbias;
-    var rando = 2. * (Math.random() - rshift);
-    //if( rando > thresh) this.placeOrder('buy', +(book.ask), 1., 'ioc')
-  }
-
-  public onBid(book: SerumBook) {
-    const thresh = 0.05;
+    const thresh = 0.75; // aggressiveness
     const tbias = 0.0;
     const rshift = 0.5 + tbias;
     const rando = 2. * (Math.random() - rshift);
-    //if( rando > thresh) this.placeOrder('sell', +(book.bid), 1., 'ioc')
+
+    // hit the midpt
+    //if( rando > thresh) this.placeOrder('buy', +(book.basePrice), 1., 'ioc')
+  }
+
+  public onBid(book: SerumBook) {
+    const thresh = 0.75; // aggressiveness
+    const tbias = 0.0;
+    const rshift = 0.5 + tbias;
+    const rando = 2. * (Math.random() - rshift);
+
+    // hit the midpt
+    //if( rando > thresh) this.placeOrder('sell', +(book.basePrice), 1., 'ioc')
 
     //console.log(`rando = ${rando}`);
     //console.log(`thresh = ${thresh}`);

@@ -1,8 +1,8 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import { usePythPrices } from '../utils/pythPools';
 import FloatingElement from './layout/FloatingElement';
 import { Title } from './styles';
+import { usePythPrices } from '../utils/pythPools';
 
 export default function Pools() {
   const pythPrices = usePythPrices() //TODO change this to handle all prices.

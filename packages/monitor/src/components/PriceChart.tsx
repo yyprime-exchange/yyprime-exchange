@@ -13,11 +13,11 @@ export const RealTimeChart = ({range,yrange}) => {
   const nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ];
   const dataObj = {
     "Pyth Price": price,
-    "Pyth Lower": (price && confidence) ? (price - confidence) : 0,
-    "Pyth Upper": (price && confidence) ? (price + confidence) : 0,
-    "Serum MidPrice": (bestBid && bestAsk) ? ((bestBid + bestAsk) / 2) : 0,
-    "Serum Best Bid": (bestBid && bestAsk) ? bestBid : 0,
-    "Serum Best Ask": (bestBid && bestAsk) ? bestAsk : 0,
+    "Pyth Lower": (price && confidence) ? (price - confidence) : null,
+    "Pyth Upper": (price && confidence) ? (price + confidence) : null,
+    "Serum MidPrice": (bestBid && bestAsk) ? ((bestBid + bestAsk) / 2) : null,
+    "Serum Best Bid": (bestBid && bestAsk) ? bestBid : null,
+    "Serum Best Ask": (bestBid && bestAsk) ? bestAsk : null,
   };
 
   const defaultDataList = nameList.map((name) => ({
@@ -62,36 +62,25 @@ export const RealTimeChart = ({range,yrange}) => {
         top: 100,
         left: 7,
         blur: 10,
-        opacity: 0.2
+        opacity: 0.2,
       },
       animations: {
-        enabled: true,
-        easing: "linear",
-        dynamicAnimation: {
-          enabled: true,
-          speed: 1000
-        }
+        enabled: false,
       },
       toolbar: {
-        show: false
+        show: false,
       }
     },
     colors: ["#0000FF", "#0000FF", "#0000FF", "#ff0000", "#ff0000", "#ff0000"],
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     stroke: {
       width: [3, 1, 1, 3, 1, 1],
-      curve: "smooth"
+      curve: "smooth",
     },
     legend: {
       show: false,
-      enabled: false,
-      position: "top",
-      horizontalAlign: "right",
-      floating: true,
-      offsetY: -10,
-      offsetX: -5
     },
     tooltip: {
       theme: "dark",
@@ -108,7 +97,7 @@ export const RealTimeChart = ({range,yrange}) => {
       labels: {
         show: true,
         formatter: (val) => val.toFixed(3),
-        align: "right"
+        align: "right",
       },
       title: { text: "Price (USD)" },
       forceNiceScale: true,

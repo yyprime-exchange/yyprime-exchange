@@ -1,8 +1,7 @@
 import { parsePriceData } from '@pythnetwork/client'
 import React, { useContext } from 'react';
-import { PublicKey } from '@solana/web3.js';
 
-import { useConfiguration } from './configuration';
+//import { useConfiguration } from './configuration';
 import { useAccountData } from './pythConnection';
 
 export interface PythPoolsContextValues {
@@ -14,7 +13,7 @@ export const PythPoolsContext: React.Context<null | PythPoolsContextValues> = Re
 );
 
 export function PythPoolsProvider({ children }) {
-  const configuration = useConfiguration();
+  //const configuration = useConfiguration();
   return (
     <PythPoolsContext.Provider
       value={{
