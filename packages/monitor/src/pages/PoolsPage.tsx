@@ -2,9 +2,10 @@ import { Col, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
+import Pools from '../components/Pools';
 import { ConnectionProvider } from '../utils/connection';
-//import { PythProvider } from '../utils/pyth'
 import { PythConnectionProvider } from '../utils/pythConnection';
+import { PythPoolsProvider } from '../utils/pythPools'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -17,16 +18,13 @@ const Wrapper = styled.div`
 `;
 
 export default function PoolsPage() {
-  /*
-          <PythProvider>
-            <PoolsPageInner />
-          </PythProvider>
-  */
   return (
     <>
       <ConnectionProvider>
         <PythConnectionProvider>
-          <PoolsPageInner />
+          <PythPoolsProvider>
+            <PoolsPageInner />
+          </PythPoolsProvider>
         </PythConnectionProvider>
       </ConnectionProvider>
     </>
@@ -38,6 +36,9 @@ function PoolsPageInner() {
     <>
       <Wrapper>
         <Row>
+          <Col>
+            <Pools />
+          </Col>
         </Row>
       </Wrapper>
     </>
