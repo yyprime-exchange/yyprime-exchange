@@ -28,7 +28,15 @@ Then Solana:
 sh -c "$(curl -sSfL https://release.solana.com/v1.9.4/install)"
 ```
 
+### Setting Up Development Environment
 
+```
+yarn 
+cd scripts
+bash run_install_deps_to_start.sh
+```
+
+The monitor should display YY'X charts.
 
 
 
