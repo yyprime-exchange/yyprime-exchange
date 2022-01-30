@@ -7,9 +7,9 @@ import { Title } from './styles';
 export default function SerumEvents() {
   const events = useSerumEvents();
   return (
-    <FloatingElement style={{ width: '400px', height: '608px' }} >
-      <Title>Serum Events</Title>
-        <Row>
+    <FloatingElement style={{  width: '400px', height: '608px' }} >
+      <Title >Serum Events</Title>
+        <Row style={{color: "#FF0000"}} >
           <Col span={3}><b>Type</b></Col>
           <Col span={3}><b>State</b></Col>
           <Col span={3}><b>Side</b></Col>
