@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
-import { Row,Col } from 'antd';
 
 import FloatingElement from "./layout/FloatingElement";
 import { Title } from './styles';
@@ -119,7 +118,7 @@ export const InfoChart = () => {
 export default function PriceChart() {
   return (
     <FloatingElement style={{ width: '600px', height: '400px' }}>
-      <Title><Row><Col span={2} style={{color: "#0000FF"}}>Pyth </Col> <Col span={2}>and</Col> <Col span={3} style={{color: "#FF0000"}}>Serum</Col></Row></Title>
+      <Title>Pyth vs. Serum</Title>
       <InfoChart/>
     </FloatingElement>
   );
