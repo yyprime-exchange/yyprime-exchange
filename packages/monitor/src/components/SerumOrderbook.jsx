@@ -10,7 +10,7 @@ import FloatingElement from './layout/FloatingElement';
 import { Title } from './styles';
 
 const SizeTitle = styled(Row)`
-  padding: 20px 0 14px;
+  padding: 0px 0 8px;
   color: #367ecd;
 `;
 
@@ -37,7 +37,7 @@ const Price = styled.div`
 `;
 
 export default function SerumOrderbook({ depth = 7 }) {
-  
+
   const { baseSymbol, quoteSymbol } = useSerum();
 
   const [orderbook] = useSerumOrderbook(depth);
@@ -46,7 +46,7 @@ export default function SerumOrderbook({ depth = 7 }) {
   const lastOrderbookData = useRef(null);
 
   const [orderbookData, setOrderbookData] = useState(null);
-  
+
   useInterval(() => {
     if (
       !currentOrderbookData.current ||

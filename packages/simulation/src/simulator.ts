@@ -1,4 +1,4 @@
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import {
   PythClient,
   PythPrice,
@@ -8,11 +8,9 @@ import {
   SolanaClient,
 } from '@yyprime/yyprime-exchange-ts';
 
-import {
-  Bot,
-  MakerBot,
-  TakerBot,
-} from './bots';
+import { Bot } from './bots/bot';
+import { MakerBot } from './bots/maker';
+import { TakerBot } from './bots/taker';
 
 import * as simulation from './simulation.json';
 
@@ -49,35 +47,44 @@ export class Simulator {
 
     this.pythClient.subscribe((token: PythToken, price: PythPrice) => { this.onPrice(token, price); });
 
-    this.serumClient.subscribe(
+    await this.serumClient.subscribe(
       (book: SerumBook) => { this.onAsk(book); },
       (book: SerumBook) => { this.onBid(book); },
       (book: SerumBook, events) => { this.onEvent(book, events); },
-      (requests) => { this.onRequest(requests); },
     );
   }
 
   private onAsk(book: SerumBook) {
-    for (let bot of this.bots) {
-      bot.onAsk(book);
+    if (book && book.ask && book.bid) {
+      for (let bot of this.bots) {
+        bot.onAsk(book);
+      }
     }
   }
 
   private onBid(book: SerumBook) {
-    for (let bot of this.bots) {
-      bot.onBid(book);
+    if (book && book.ask && book.bid) {
+      for (let bot of this.bots) {
+        bot.onBid(book);
+      }
     }
   }
 
   private onEvent(book: SerumBook, events) {
   }
 
-  private onRequest(requests) {
+  public onExit() {
+    for (let bot of this.bots) {
+      bot.onExit();
+    }
   }
 
   private onPrice(token: PythToken, price: PythPrice) {
-    for (let bot of this.bots) {
-      bot.onPrice(token, price);
+    const book: SerumBook = this.serumClient.booksByBaseMint.get(token.mint);
+    if (book && book.ask && book.ask.length > 0 && book.bid && book.bid.length > 0 && price.price) {
+      for (let bot of this.bots) {
+        bot.onPrice(book, token, price);
+      }
     }
   }
 
@@ -90,5 +97,11 @@ const simulator: Simulator = new Simulator(simulation);
 (async () => {
   await simulator.initialize();
 })().then(() => {
+  process.on('SIGINT', function () {
+    console.log('Caught keyboard interrupt. Canceling orders');
+    simulator.onExit();
+    process.exit(0);
+  });
+
   console.log(`Running simulation on ${simulation.config.cluster}`);
 });

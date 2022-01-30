@@ -17,6 +17,8 @@ export class MakerBot extends Bot {
   constructor(config: any, market: Market, serumClient: SerumClient, solanaClient: SolanaClient, wallet: Keypair, initialOrders) {
     super(config, market, serumClient, solanaClient, wallet);
 
+    //TODO cancel all open orders.
+
     if (initialOrders) {
       (async () => {
         initialOrders.asks.forEach(async (order) => { await this.placeOrder('sell', order[0], order[1], 'postOnly'); });
@@ -25,22 +27,13 @@ export class MakerBot extends Bot {
     }
   }
 
-  public async initialize(): Promise<void> {
-  }
-
   public onAsk(book: SerumBook) {
-    //console.log(JSON.stringify(book));
   }
 
   public onBid(book: SerumBook) {
-    //console.log(JSON.stringify(book));
   }
 
-  public onExit() {
-    //TODO cancel all orders.
-  }
-
-  public onPrice(token: PythToken, price: PythPrice) {
+  public onPrice(book: SerumBook, token: PythToken, price: PythPrice) {
     (async () => {
       if (price.price) {
 

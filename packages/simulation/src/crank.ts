@@ -77,17 +77,10 @@ const payer: Keypair = Keypair.generate();
     }
   }
 
-  function onRequest(requests) {
-    for (const request of requests) {
-      console.log(`  request ${JSON.stringify(request)}`);
-    }
-  }
-
   serumClient.subscribe(
     null,
     null,
     (book: SerumBook, events) => { onEvent(book, events); },
-    (requests) => { onRequest(requests); },
   );
 
   //let timerId = setTimeout(async function process() {

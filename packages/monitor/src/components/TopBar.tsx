@@ -66,6 +66,9 @@ export default function TopBar() {
           <Menu.Item key={'/market/sol/usdc'} style={{ margin: '0 10px 0 20px' }}>
             SOL/USDC
           </Menu.Item>
+          <Menu.Item key={'/pools'} style={{ margin: '0 10px 0 20px' }}>
+            LIQUIDITY POOLS
+          </Menu.Item>
         </Menu>
         <div>
           <Row

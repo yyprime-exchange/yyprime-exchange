@@ -1,4 +1,5 @@
 import { Market } from '@project-serum/serum';
+import { Order } from '@project-serum/serum/lib/market';
 import { Account, Keypair, PublicKey, Transaction } from '@solana/web3.js';
 
 import {
@@ -17,8 +18,6 @@ export abstract class Bot {
   };
 
   market: Market;
-
-  // Maintain a list of open orders. Process ACK, FIL, and CXL.
 
   public position = {
     currentPosition: 0,
@@ -40,8 +39,13 @@ export abstract class Bot {
 
   public abstract onAsk(book: SerumBook);
   public abstract onBid(book: SerumBook);
-  public abstract onExit();
-  public abstract onPrice(token: PythToken, price: PythPrice);
+  public abstract onPrice(book: SerumBook, token: PythToken, price: PythPrice);
+
+  public onExit() {
+    (async () => {
+      await this.cancelAllOrders();
+    })();
+  }
 
   public async cancelOrder(orderId: string) {
     const orders = await this.getOrders();
@@ -55,46 +59,23 @@ export abstract class Bot {
 
   public async cancelAllOrders() {
     const orders = await this.getOrders();
-    const transaction = new Transaction();
-    //const transaction = this.market.makeMatchOrdersTransaction(5);
+    //const transaction = new Transaction();
+    const transaction = this.market.makeMatchOrdersTransaction(5);
     orders.forEach((order) => {
       transaction.add(this.market.makeCancelOrderInstruction(this.serumClient.connection, this.wallet.publicKey, order));
     });
-    //transaction.add(this.market.makeMatchOrdersTransaction(5));
+    transaction.add(this.market.makeMatchOrdersTransaction(5));
     //transaction.feePayer = this.wallet.publicKey;
     return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
   }
 
-  public async getOrders() {
+  public async getOrders(): Promise<Order[]> {
     return await this.market.loadOrdersForOwner(this.serumClient.connection, this.wallet.publicKey);
   }
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
 
-
-//TODO
-//Price must be an increment of X
-//Tick price decided when the market was created. You can only move the price by multiple of this.
-
-/*
-  const baseUnit = Math.pow(10, baseTokenInfo.decimals);
-  const quoteUnit = Math.pow(10, quoteTokenInfo.decimals);
-
-  const nativePrice = new BN(price * quoteUnit)
-    .mul(perpMarket.baseLotSize)
-    .div(perpMarket.quoteLotSize.mul(new BN(baseUnit)));
-  const nativeQuantity = new BN(quantity * baseUnit).div(
-    perpMarket.baseLotSize,
-  );
-*/
-
-/*
-  limitPrice: this.priceNumberToLots(price),
-  maxBaseQuantity: this.baseSizeNumberToLots(size),
-  maxQuoteQuantity: new BN(this._decoded.quoteLotSize.toNumber()).mul(
-    this.baseSizeNumberToLots(size).mul(this.priceNumberToLots(price)),
-  ),
-*/
+    //TODO check for funds. Cancel if insufficient funds.
 
     const { transaction, signers } = await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
       owner: this.walletAccount,
@@ -114,21 +95,16 @@ export abstract class Bot {
     transaction.feePayer = this.wallet.publicKey;
     return await this.serumClient.connection.sendTransaction(transaction, signers.concat(this.walletAccount));
 
-    /*
-    const transaction = new Transaction();
+    //const transaction = new Transaction();
     //const transaction = this.market.makeMatchOrdersTransaction(5);
-
-    let { transaction: placeOrderTx, signers: placeOrderSigners } = await this.market.makePlaceOrderTransaction(
-      this.serumClient.connection,
-      params,
-    );
-    transaction.add(placeOrderTx);
-
+    //let { transaction: placeOrderTx, signers: placeOrderSigners } = await this.market.makePlaceOrderTransaction(
+      //this.serumClient.connection,
+      //params,
+    //);
+    //transaction.add(placeOrderTx);
     //transaction.add(this.market.makeMatchOrdersTransaction(5));
-
     //transaction.feePayer = this.wallet.publicKey;
-    return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
-    */
+    //return await this.serumClient.connection.sendTransaction(transaction, [this.wallet]);
   }
 
   //TODO send multiple orders.

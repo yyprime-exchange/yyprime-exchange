@@ -4,15 +4,13 @@
 
 ## Purpose
 
-Serum trading strategies to provide liquidity within EMA-defined bands
+YY'X is a protocol that uses Pooled Market Making to supply liquidity to Serum markets.
 
-1. Serum trading bots that implement a specific strategy (i.e “provide liquidity 5% above and below the 30 minute moving average")
+1. Users deposit tokens into liquidity pools. Users can deposit any quantity of BTC, ETH, SOL, or USDC. In return users receive an equivalent amount of deposit tokens. Users can redeem their deposit tokens at any time.
 
-1. Users would have the ability to deposit funds into the protocol, choosing from a few reasonable choices of parameters (EMA length, market depth, etc.)
+1. Market Makers run the liquidity pools. They convert the tokens in the liquidity pools to Serum orders and place them on the order book. By providing liquidity the market makers earn a return over time which is equal to the spread paid by takers minus trading costs. The returns earned from market making are then split between the market makers and the liquidity pool participants.
 
-1. The strategy would ideally reference Pyth Network for pricing
-
-1. Solana is likely the only blockchain robust enough to support orderbooks.  
+1. The Market Making bots use the Pyth Price feed as a reference price to avoid adverse selection resulting in impermanent loss for liquidity providers.
 
 ## Development
 
@@ -30,45 +28,10 @@ Then Solana:
 sh -c "$(curl -sSfL https://release.solana.com/v1.9.4/install)"
 ```
 
-Then bootstrap the workspace in root:
 
-```
-yarn
-```
 
-### Building trading strategies program
 
-Build yyprime_program package:
 
-```
-yarn yyx-program:build
-```
-
-### Building Frontend
-
-Build yyprime_program package:
-
-```
-yarn frontend:build
-yarn frontend:start
-
-```
-
-### Testing
-
-To run all tests:
-
-```
-yarn test
-```
-
-### Linting
-
-To lint:
-
-```
-yarn lint
-```
 
 # Attribution
 

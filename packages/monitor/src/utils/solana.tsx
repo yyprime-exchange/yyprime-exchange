@@ -31,11 +31,12 @@ export function useSolanaBots() {
   return context.bots.map((bot) => {
     return {
       name: bot.name,
-      initialBaseTokens: bot.baseBalance,
-      baseTokens: null,
+      type: bot.type,
+      baseSymbol: bot.baseSymbol,
+      baseTokens: bot.baseBalance, //TODO update this.
       baseUnsettledFunds: null,
-      initialQuoteTokens: bot.quoteBalance,
-      quoteTokens: null,
+      quoteSymbol: bot.quoteSymbol,
+      quoteTokens: bot.quoteBalance, //TODO update this.
       quoteUnsettledFunds: null,
   }});
 }
