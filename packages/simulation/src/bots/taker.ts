@@ -46,9 +46,11 @@ export class TakerBot extends Bot {
     if (rando > thresh || rando < -thresh) {
       (async () => {
         if (rando > thresh) {
-          await this.placeOrder('buy', book.ask[0][0], book.ask[0][1], 'ioc');
+          const balance = this.solanaClient.getBalance( this.wallet.publicKey );
+          if ( await balance > book.ask[0][0]*book.ask[0][1] ) await this.placeOrder('buy', book.ask[0][0], book.ask[0][1], 'ioc');
         } else if (rando < -thresh) {
-          await this.placeOrder('sell', book.bid[0][0], book.bid[0][1], 'ioc');
+          const balance = this.solanaClient.getBalance( this.wallet.publicKey );
+          if ( this.position.currentPosition >= book.bid[0][1] || await balance >= book.bid[0][0]*book.bid[0][1] ) await this.placeOrder('sell', book.bid[0][0], book.bid[0][1], 'ioc');
         }
       })();
     }
