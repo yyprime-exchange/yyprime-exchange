@@ -134,7 +134,6 @@ export default function SerumOrderbook({ depth = 7 }) {
   );
 }
 
-//TODO DUP
 function priceLotsToNumber(
   price,
   baseLotSize,
@@ -148,7 +147,6 @@ function priceLotsToNumber(
   );
 }
 
-//TODO DUP
 function baseSizeLotsToNumber(size, baseLotSize, baseSplTokenDecimals) {
   return divideBnToNumber(
     size.mul(baseLotSize),
@@ -156,7 +154,6 @@ function baseSizeLotsToNumber(size, baseLotSize, baseSplTokenDecimals) {
   );
 }
 
-//TODO DUP
 function divideBnToNumber(numerator, denominator) {
   const quotient = numerator.div(denominator).toNumber();
   const rem = numerator.umod(denominator);
@@ -164,12 +161,10 @@ function divideBnToNumber(numerator, denominator) {
   return quotient + rem.div(gcd).toNumber() / denominator.div(gcd).toNumber();
 }
 
-//TODO DUP
 function baseSplTokenMultiplier(baseSplTokenDecimals) {
   return new BN(10).pow(new BN(baseSplTokenDecimals));
 }
 
-//TODO DUP
 function quoteSplTokenMultiplier(quoteSplTokenDecimals) {
   return new BN(10).pow(new BN(quoteSplTokenDecimals));
 }

@@ -303,8 +303,6 @@ export class SerumClient {
   }
 }
 
-//priceLotsToNumber(priceLots, new BN(market.baseLotSize), baseToken.decimals, new BN(market.quoteLotSize), quoteToken.decimals),
-//baseSizeLotsToNumber(sizeLots, new BN(market.baseLotSize), baseToken.decimals),
 export function toPriceLevels(data, depth: number, baseLotSize: number, baseDecimals: number, quoteLotSize: number, quoteDecimals: number): [number, number, BN, BN][] {
   const { accountFlags, slab } = decodeOrderBook(data);
   const descending = accountFlags.bids;
