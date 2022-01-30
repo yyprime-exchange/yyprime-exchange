@@ -30,16 +30,33 @@ sh -c "$(curl -sSfL https://release.solana.com/v1.9.4/install)"
 
 ### Setting Up Development Environment
 
+There are several scripts in the scripts directory to run YY'X. They are numbered in the order in which you should run them. First, you will need to start a local validator to host the Serum DEX.
+
 ```
-yarn 
-cd scripts
-bash run_install_deps_to_start.sh
+. 1_run_local_validator.sh
 ```
 
-The monitor should display YY'X charts.
+Once the validator is running you can start the UI by running
 
+```
+. 2_run_monitor.sh
+```
 
+This will start the web server and open a new browser tab. It will take a minute to load; so while you're waiting you can start the simulation.
 
+```
+. 3_run_simulation.sh
+```
+
+This scripts does several things necessary to run a simulation. First, we need to build a simulation. This consists of generating simulation.json which contains the configuration settings for the simulation including token, faucet, market, bot, and pool accounts. Once we have generated the simulation we run init-sim to initialize the Solana account state. This is the most time consuming part of the process. Once this is finished we can start the simulation. The bots will send orders and we can see the activity in the UI.
+
+Once the simulation is running we can start the crank to settle the trades.
+
+```
+. 4_run_crank.sh
+```
+
+A full simulation requires all four of these processes to run.
 
 # Attribution
 
