@@ -1,20 +1,33 @@
 import { assert } from "chai";
-import { Token } from "@solana/spl-token";
 import { Keypair } from '@solana/web3.js';
 import { SolanaClient } from '../src/solana'
 
 describe('solana', () => {
 
   it('Connect to devnet.', async () => {
-    const cluster: string = 'devnet';
-    const solanaClient = new SolanaClient(cluster);
+    const solanaClient = new SolanaClient(
+      {
+        config: {
+          solana: {
+            http: "http://api.devnet.solana.com/"
+          }
+        }
+      }
+    );
   });
 
   it('Request airdrop.', async () => {
-    const cluster: string = 'localnet';
-    const solanaClient = new SolanaClient(cluster);
+    const solanaClient = new SolanaClient(
+      {
+        config: {
+          solana: {
+            http: "http://api.devnet.solana.com/"
+          }
+        }
+      }
+    );
 
-    const keypair: Keypair = solanaClient.generateKeypair();
+    const keypair: Keypair = Keypair.generate();
 
     let balance: number = await solanaClient.getBalance(keypair.publicKey);
     assert.equal(balance, 0);
@@ -26,10 +39,17 @@ describe('solana', () => {
   });
 
   it('Send SOL.', async () => {
-    const cluster: string = 'localnet';
-    const solanaClient = new SolanaClient(cluster);
+    const solanaClient = new SolanaClient(
+      {
+        config: {
+          solana: {
+            http: "http://api.devnet.solana.com/"
+          }
+        }
+      }
+    );
 
-    const keypair1: Keypair = solanaClient.generateKeypair();
+    const keypair1: Keypair = Keypair.generate();
 
     let balance1: number = await solanaClient.getBalance(keypair1.publicKey);
     assert.equal(balance1, 0);
@@ -40,7 +60,7 @@ describe('solana', () => {
     assert.equal(balance1, 1_000_000_000);
 
 
-    const keypair2: Keypair = solanaClient.generateKeypair();
+    const keypair2: Keypair = Keypair.generate();
 
     let balance2: number = await solanaClient.getBalance(keypair2.publicKey);
     assert.equal(balance2, 0);
@@ -52,43 +72,6 @@ describe('solana', () => {
     balance2 = await solanaClient.getBalance(keypair2.publicKey);
     assert.equal(balance1, 500_000_000 - costToSend);
     assert.equal(balance2, 500_000_000);
-  });
-
-  it('Create token mint.', async () => {
-    const cluster: string = 'localnet';
-    const solanaClient = new SolanaClient(cluster);
-
-    const mintAuthority: Keypair = solanaClient.generateKeypair();
-    await solanaClient.requestAirdrop(2, mintAuthority.publicKey);
-
-    const mintToken: Token = await solanaClient.createMint(mintAuthority, 1_000_000);
-
-    const supply = await solanaClient.getMintSupply(mintToken.publicKey);
-    assert.equal(supply, 1_000_000);
-
-    const balance = await solanaClient.getTokenBalance(mintToken, mintAuthority.publicKey);
-    assert.equal(balance, 1_000_000);
-  });
-
-  it('Send tokens.', async () => {
-    const cluster: string = 'localnet';
-    const solanaClient = new SolanaClient(cluster);
-
-    const mintAuthority: Keypair = solanaClient.generateKeypair();
-    await solanaClient.requestAirdrop(2, mintAuthority.publicKey);
-
-    const mintToken: Token = await solanaClient.createMint(mintAuthority, 1_000_000);
-
-    const user: Keypair = solanaClient.generateKeypair();
-    await solanaClient.requestAirdrop(2, user.publicKey);
-
-    await solanaClient.sendToken(500_000, mintToken, mintAuthority, user.publicKey);
-
-    const balance1 = await solanaClient.getTokenBalance(mintToken, mintAuthority.publicKey);
-    assert.equal(balance1, 500_000);
-
-    const balance2 = await solanaClient.getTokenBalance(mintToken, user.publicKey);
-    assert.equal(balance2, 500_000);
   });
 
 });
