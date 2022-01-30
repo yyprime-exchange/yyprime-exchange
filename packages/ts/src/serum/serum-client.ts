@@ -1,13 +1,9 @@
 import { Buffer } from 'buffer';
-import {
-  BN,
-} from "@project-serum/anchor";
+import { BN } from "@project-serum/anchor";
 import {
   decodeEventQueue,
-  decodeRequestQueue,
   DexInstructions,
   Market,
-  Orderbook,
   TokenInstructions,
 } from "@project-serum/serum";
 import {
@@ -334,11 +330,11 @@ function decodeOrderBook(buffer) {
   return { accountFlags: accountFlags, slab: slab };
 }
 
-function priceLotsToNumber(price: BN, baseLotSize: BN, baseSplTokenDecimals: number, quoteLotSize: BN, quoteSplTokenDecimals: number) {
+export function priceLotsToNumber(price: BN, baseLotSize: BN, baseSplTokenDecimals: number, quoteLotSize: BN, quoteSplTokenDecimals: number) {
   return divideBnToNumber(price.mul(quoteLotSize).mul(baseSplTokenMultiplier(baseSplTokenDecimals)), baseLotSize.mul(quoteSplTokenMultiplier(quoteSplTokenDecimals)));
 }
 
-function baseSizeLotsToNumber(size: BN, baseLotSize: BN, baseSplTokenDecimals: number) {
+export function baseSizeLotsToNumber(size: BN, baseLotSize: BN, baseSplTokenDecimals: number) {
   return divideBnToNumber(size.mul(baseLotSize), baseSplTokenMultiplier(baseSplTokenDecimals));
 }
 

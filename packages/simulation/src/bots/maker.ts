@@ -1,6 +1,5 @@
-import { BN } from "@project-serum/anchor";
 import { Market } from '@project-serum/serum';
-import { Keypair, PublicKey } from '@solana/web3.js';
+import { Keypair } from '@solana/web3.js';
 
 import {
   PythPrice,
