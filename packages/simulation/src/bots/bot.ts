@@ -74,6 +74,9 @@ export abstract class Bot {
   }
 
   public async placeOrder(side: 'buy' | 'sell', price: number, size: number, orderType?: 'limit' | 'ioc' | 'postOnly') {
+
+    //TODO check for funds. Cancel if insufficient funds.
+
     const { transaction, signers } = await this.market.makePlaceOrderTransaction(this.serumClient.connection, {
       owner: this.walletAccount,
       payer: (side == "sell") ?
