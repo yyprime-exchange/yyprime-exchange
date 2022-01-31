@@ -1,11 +1,16 @@
-import { Col, Row } from 'antd';
-import React from 'react';
-import styled from 'styled-components';
+import { Col, Row } from "antd";
+import React, { useContext } from "react";
+import styled from "styled-components";
 
-import Pools from '../components/Pools';
-import { ConnectionProvider } from '../utils/connection';
-import { PythConnectionProvider } from '../utils/pythConnection';
-import { PythPoolsProvider } from '../utils/pythPools'
+import Pools from "../components/Pools";
+import { ConfigurationProvider } from "../utils/configuration";
+import { ConnectionProvider } from "../utils/connection";
+import { PythConnectionProvider } from "../utils/pythConnection";
+import {
+  PythPoolsContext,
+  PythPoolsProvider,
+  usePythPrices,
+} from "../utils/pythPools";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -20,24 +25,28 @@ const Wrapper = styled.div`
 export default function PoolsPage() {
   return (
     <>
-      <ConnectionProvider>
-        <PythConnectionProvider>
-          <PythPoolsProvider>
-            <PoolsPageInner />
-          </PythPoolsProvider>
-        </PythConnectionProvider>
-      </ConnectionProvider>
+      <ConfigurationProvider>
+        <ConnectionProvider>
+          <PythConnectionProvider>
+            <PythPoolsProvider>
+              <PoolsPageInner />
+            </PythPoolsProvider>
+          </PythConnectionProvider>
+        </ConnectionProvider>
+      </ConfigurationProvider>
     </>
   );
 }
 
 function PoolsPageInner() {
+  const prices = usePythPrices();
+  const [pricingState, dispatch] = useContext(PythPoolsContext);
   return (
     <>
       <Wrapper>
-        <Row>
+        <Row style={{ justifyContent: "center", marginTop: "35px" }}>
           <Col>
-            <Pools />
+            <Pools pricingState={pricingState} />
           </Col>
         </Row>
       </Wrapper>

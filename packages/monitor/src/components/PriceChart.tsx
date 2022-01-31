@@ -2,22 +2,32 @@ import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
 
 import FloatingElement from "./layout/FloatingElement";
-import { Title } from './styles';
+import { Title } from "./styles";
 import { usePythPrice } from "../utils/pythPrice";
 import { useSerumQuote } from "../utils/serum";
+import { useHistory } from "react-router-dom";
 
-export const RealTimeChart = ({range,yrange}) => {
+export const RealTimeChart = ({ range, yrange }) => {
   const { price, confidence } = usePythPrice();
   const { bestBid, bestAsk } = useSerumQuote();
+  const history = useHistory();
 
-  const nameList = [ "Pyth Price", "Pyth Lower", "Pyth Upper", "Serum MidPrice", "Serum Best Bid", "Serum Best Ask" ];
+  const nameList = [
+    "Pyth Price",
+    "Pyth Lower",
+    "Pyth Upper",
+    "Serum MidPrice",
+    "Serum Best Bid",
+    "Serum Best Ask",
+  ];
+
   const dataObj = {
     "Pyth Price": price,
-    "Pyth Lower": (price && confidence) ? (price - confidence) : null,
-    "Pyth Upper": (price && confidence) ? (price + confidence) : null,
-    "Serum MidPrice": (bestBid && bestAsk) ? ((bestBid + bestAsk) / 2) : null,
-    "Serum Best Bid": (bestBid && bestAsk) ? bestBid : null,
-    "Serum Best Ask": (bestBid && bestAsk) ? bestAsk : null,
+    "Pyth Lower": price && confidence ? price - confidence : null,
+    "Pyth Upper": price && confidence ? price + confidence : null,
+    "Serum MidPrice": bestBid && bestAsk ? (bestBid + bestAsk) / 2 : null,
+    "Serum Best Bid": bestBid && bestAsk ? bestBid : null,
+    "Serum Best Ask": bestBid && bestAsk ? bestAsk : null,
   };
 
   const defaultDataList = nameList.map((name) => ({
@@ -32,16 +42,16 @@ export const RealTimeChart = ({range,yrange}) => {
         ...data,
         {
           x: new Date(),
-          y: dataObj[name]
-        }
+          y: dataObj[name],
+        },
       ];
     };
     const interval = setInterval(() => {
       setDataList(
-        dataList.map(val => {
+        dataList.map((val) => {
           return {
             name: val.name,
-            data: addData(val.name, val.data)
+            data: addData(val.name, val.data),
           };
         })
       );
@@ -49,9 +59,16 @@ export const RealTimeChart = ({range,yrange}) => {
     return () => clearInterval(interval);
   });
 
+  useEffect(() => {
+    return history.listen((location) => {
+      setDataList(() => defaultDataList);
+      console.log(`You changed the page to: ${location.pathname}`);
+    });
+  }, [history]);
+
   const options = {
     zoom: {
-      enabled: false
+      enabled: false,
     },
     chart: {
       foreColor: "#FFFFFF",
@@ -69,7 +86,7 @@ export const RealTimeChart = ({range,yrange}) => {
       },
       toolbar: {
         show: false,
-      }
+      },
     },
     colors: ["#0000FF", "#0000FF", "#0000FF", "#ff0000", "#ff0000", "#ff0000"],
     dataLabels: {
@@ -103,23 +120,31 @@ export const RealTimeChart = ({range,yrange}) => {
       forceNiceScale: true,
     },
   };
+
   // @ts-ignore
-  return <Chart key={'some-unique-key'} height="300px" type="line" options={options} series={dataList} />
+  return (
+    <Chart
+      key={"some-unique-key"}
+      height="300px"
+      type="line"
+      // @ts-ignore
+      options={options}
+      series={dataList}
+    />
+  );
 };
 
 const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
 
 export const InfoChart = () => {
-  return (
-    <RealTimeChart range={10} yrange={0} />
-  );
+  return <RealTimeChart range={10} yrange={0} />;
 };
 
 export default function PriceChart() {
   return (
-    <FloatingElement style={{ width: '600px', height: '400px' }}>
+    <FloatingElement style={{ width: "600px", height: "400px" }}>
       <Title>Pyth vs. Serum</Title>
-      <InfoChart/>
+      <InfoChart />
     </FloatingElement>
   );
 }
