@@ -39,18 +39,18 @@ There are several scripts in the scripts directory to run YY'X. They are numbere
 Once the validator is running you can start the UI by running
 
 ```
-. 2_run_monitor.sh
-```
-
-This will start the web server and open a new browser tab. It will take a minute to load; so while you're waiting you can start the simulation.
-
-```
-. 3_run_simulation.sh
+. 2_run_simulation.sh
 ```
 
 This scripts does several things necessary to run a simulation. First, we need to build a simulation. This consists of generating simulation.json which contains the configuration settings for the simulation including token, faucet, market, bot, and pool accounts. Once we have generated the simulation we run init-sim to initialize the Solana account state. This is the most time consuming part of the process. Once this is finished we can start the simulation. The bots will send orders and we can see the activity in the UI.
 
 Once the simulation is running we can start the crank to settle the trades.
+
+```
+. 3_run_monitor.sh
+```
+
+This will start the web server and open a new browser tab. It will take a minute to load; so while you're waiting you can start the simulation.
 
 ```
 . 4_run_crank.sh
