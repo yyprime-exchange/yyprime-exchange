@@ -6,7 +6,7 @@ import { usePythPrices } from "../utils/pythPools";
 import { Table, Divider, Tag } from "antd";
 import { ColumnType } from "antd/lib/table";
 import Meta from "antd/lib/card/Meta";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import CountUp, { useCountUp } from "react-countup";
 import useNumberFormatter from "../hooks/useNumberFormatter";
@@ -44,7 +44,7 @@ export default function Pools({ pricingState }) {
   const [poolsConfig, setPoolsConfig] = useState([]);
   const [liquidityData, setliquidityData] = useState(data);
   const [TVL, setTVL] = useState(0);
-
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
 
   const { update } = useCountUp({
@@ -133,12 +133,14 @@ export default function Pools({ pricingState }) {
     return () => clearInterval(interval);
   }, [poolsConfig]);
 
-  const goToDashboard = (pair) => {
-    return <Redirect exact to={`/#/market/${pair.base}/${pair.quote}`} />;
+  const goToDashboard = (record) => {
+    const pairs = record.name.split("/");
+    history.push(`/market/${String(pairs[0]).toLocaleLowerCase()}/${"usdc"}`);
   };
 
-  const getPairImage = () => {
+  const getPairImage = (symbol: string) => {
     // return (<Image> </Image>)
+    return;
   };
 
   return (
