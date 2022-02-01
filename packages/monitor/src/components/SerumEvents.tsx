@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import { BN } from "@project-serum/anchor";
+import BN from 'bn.js';
 import React from 'react';
 
 import { useSerum, useSerumEvents } from '../utils/serum';
