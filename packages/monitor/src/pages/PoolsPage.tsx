@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 
 import Pools from "../components/Pools";
-import { ConfigurationProvider } from "../utils/configuration";
 import { ConnectionProvider } from "../utils/connection";
 import { PythConnectionProvider } from "../utils/pythConnection";
 import {
@@ -25,15 +24,13 @@ const Wrapper = styled.div`
 export default function PoolsPage() {
   return (
     <>
-      <ConfigurationProvider>
-        <ConnectionProvider>
-          <PythConnectionProvider>
-            <PythPoolsProvider>
-              <PoolsPageInner />
-            </PythPoolsProvider>
-          </PythConnectionProvider>
-        </ConnectionProvider>
-      </ConfigurationProvider>
+      <ConnectionProvider>
+        <PythConnectionProvider>
+          <PythPoolsProvider>
+            <PoolsPageInner />
+          </PythPoolsProvider>
+        </PythConnectionProvider>
+      </ConnectionProvider>
     </>
   );
 }
