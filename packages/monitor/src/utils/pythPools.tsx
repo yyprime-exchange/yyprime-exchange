@@ -7,6 +7,7 @@ import {
 import { AccountInfo, PublicKey } from "@solana/web3.js";
 import { useConnection, getMultipleAccounts } from "./connection";
 import { useConfiguration } from "./configuration";
+import { usePythConnection } from "./pythConnection";
 
 export interface PairName {
   base: string;
@@ -81,7 +82,7 @@ export function usePythPrices() {
   if (!context) {
     throw new Error("Missing Pyth context");
   }
-  const connection = useConnection();
+  const connection = usePythConnection();
   const configuration = useConfiguration();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
