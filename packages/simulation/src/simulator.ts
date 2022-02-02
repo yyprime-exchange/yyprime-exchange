@@ -6,7 +6,7 @@ import {
   SerumBook,
   SerumClient,
   SolanaClient,
-} from '@yyprime/yyprime-exchange-ts';
+} from '../../ts/src/index';
 
 import { Bot } from './bots/bot';
 import { MakerBot } from './bots/maker';

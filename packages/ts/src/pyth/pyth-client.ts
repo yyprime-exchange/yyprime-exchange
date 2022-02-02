@@ -36,7 +36,7 @@ export class PythClient {
     simulation,
   ) {
     this.cluster = simulation.config.cluster;
-    this.connection = new Connection(simulation.config.pyth.url);
+    this.connection = new Connection(simulation.config.pyth.url, "processed");
     this.tokens = new Map<string, PythToken>();
     simulation.tokens.forEach((token) => {
       this.tokens.set(token.price, token);

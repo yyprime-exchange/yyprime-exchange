@@ -65,7 +65,7 @@ export class SerumClient {
   constructor(
     simulation,
   ) {
-    this.connection = new Connection(simulation.config.serum.url);
+    this.connection = new Connection(simulation.config.serum.url, "processed");
     this.serumProgram = new PublicKey(simulation.config.serum.program);
     this.simulation = simulation;
 

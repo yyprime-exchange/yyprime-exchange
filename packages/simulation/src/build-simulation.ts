@@ -13,7 +13,7 @@ import {
   SOLANA_TOKENS,
   SolanaClient,
   toPriceLevels,
-} from '@yyprime/yyprime-exchange-ts';
+} from '../../ts/src/index';
 
 import * as simulationMainnet from './simulation-mainnet.json';
 
@@ -63,7 +63,7 @@ export class SimulationBuilder {
         solana: SOLANA_CLUSTERS[this.cluster],
       };
 
-      const connection: Connection = new Connection(config.serum.url);
+      const connection: Connection = new Connection(config.serum.url, "processed");
 
       //const pythProducts = await PythClient.query(connection, new PublicKey(config.pyth.program));
       const serumMarkets = await SerumClient.query(connection, new PublicKey(config.serum.program));
@@ -280,7 +280,7 @@ export class SimulationBuilder {
 
 
 
-      const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url);
+      const connection: Connection = new Connection(SERUM_PROGRAMS['mainnet'].url, "processed");
 
       const orders_private = await Promise.all(markets_private.map(async (market) => {
         let asks: [number, number, BN, BN][] = [];

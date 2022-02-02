@@ -30,9 +30,9 @@ export class SolanaClient {
     simulation,
   ) {
     if (simulation.config.solana.https) {
-      this.connection = new Connection(simulation.config.solana.https);
+      this.connection = new Connection(simulation.config.solana.https, "processed");
     } else if (simulation.config.solana.http) {
-      this.connection = new Connection(simulation.config.solana.http);
+      this.connection = new Connection(simulation.config.solana.http, "processed");
     } else {
       throw new Error("Endpoint is not defined.");
     }

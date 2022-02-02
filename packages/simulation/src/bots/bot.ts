@@ -8,7 +8,7 @@ import {
   SerumBook,
   SerumClient,
   SolanaClient,
-} from '@yyprime/yyprime-exchange-ts';
+} from '../../../ts/src/index';
 
 export abstract class Bot {
   config: any;

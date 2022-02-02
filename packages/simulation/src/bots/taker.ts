@@ -7,7 +7,7 @@ import {
   SerumBook,
   SerumClient,
   SolanaClient,
-} from '@yyprime/yyprime-exchange-ts';
+} from '../../../ts/src/index';
 
 import { Bot } from './bot';
 
