@@ -4,7 +4,8 @@
 
 ## Purpose
 
-YY'X is a protocol that uses Pooled Market Making to supply liquidity to Serum markets.
+YY'X is a protocol for Pooled Market Making to supply liquidity to Serum markets.
+Users and Operators (Market Makers) should be multiple, scalable and open access.
 
 1. Users deposit tokens into liquidity pools. Users can deposit any quantity of BTC, ETH, SOL, or USDC. In return users receive an equivalent amount of deposit tokens. Users can redeem their deposit tokens at any time.
 
@@ -30,27 +31,30 @@ sh -c "$(curl -sSfL https://release.solana.com/v1.9.4/install)"
 
 ### Setting Up Development Environment
 
-There are several scripts in the scripts directory to run YY'X. They are numbered in the order in which you should run them. First, you will need to start a local validator to host the Serum DEX.
+There are several scripts to run YY'X numbered in running order. 
+
+First, to start a local validator to host the Serum DEX, in the scripts directory:
 
 ```
 . 1_run_local_validator.sh
 ```
 
-Once the validator is running you can start the UI by running
+Once the validator is running start the UI by running:
 
 ```
 . 2_run_monitor.sh
 ```
 
-This will start the web server and open a new browser tab. It will take a minute to load; so while you're waiting you can start the simulation.
+This will start the web server and open a new browser tab. It will take a minute to load; so go ahead and start the simulation.
 
 ```
 . 3_run_simulation.sh
 ```
 
-This scripts does several things necessary to run a simulation. First, we need to build a simulation. This consists of generating simulation.json which contains the configuration settings for the simulation including token, faucet, market, bot, and pool accounts. Once we have generated the simulation we run init-sim to initialize the Solana account state. This is the most time consuming part of the process. Once this is finished we can start the simulation. The bots will send orders and we can see the activity in the UI.
+This script does several things necessary to run a simulation. First, build a simulation. This consists of generating simulation.json which contains the configuration settings for the simulation including token, faucet, market, bot, and pool accounts. Once the simulation is generated then run init-sim to initialize the Solana account state. This is the most time consuming part of the process. Then start the simulation. The bots will send orders and users can see the activity in the UI.
 
-Once the simulation is running we can start the crank to settle the trades.
+Once the simulation is running start the crank to settle the trades.
+The crank (4) won't run without this step (3).
 
 ```
 . 4_run_crank.sh
@@ -60,13 +64,13 @@ A full simulation requires all four of these processes to run.
 
 # Attribution
 
-**The strenght of the Solana ecosystem derives from the Open Source contributions of its participants. If we have created something useful, it is by standing on the shoulders of giants. Without the Open Source community yyprime would not have been possible.**
+**The strength of the Solana ecosystem derives from the Open Source contributions of its participants. If this is something useful, it is by standing on the shoulders of giants. Without the Open Source community yyprime would not have been possible.**
 
 ## Projects
 
 - *Mango*
 
-Mango is the GOAT. The Mango code is well designed, well written, and easy to read. If you want to understand the Serum DEX this is a great starting point.
+Mango - some say it's the GOAT. The Mango code is well designed, well written, and easy to read. To better understand the Serum DEX this is a great starting point.
 
 https://github.com/blockworks-foundation/mango-client-v3
 
